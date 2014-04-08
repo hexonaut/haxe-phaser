@@ -1,0 +1,51 @@
+package phaser.sound;
+
+@:native("Phaser.Sound")
+extern class Sound {
+	function new (game:phaser.core.Game, key:String, ?volume:Float = 1, ?loop:Bool = false);
+	var game:phaser.core.Game;
+	var name:String;
+	var key:String;
+	var loop:Bool;
+	var _volume:Float;
+	var markers:Dynamic;
+	var context:Dynamic;
+	var _buffer:Dynamic;
+	var _muted:Bool;
+	var autoplay:Bool;
+	var totalDuration:Float;
+	var startTime:Float;
+	var currentTime:Float;
+	var duration:Float;
+	var stopTime:Float;
+	var paused:Bool;
+	var pausedPosition:Float;
+	var pausedTime:Float;
+	var isPlaying:Bool;
+	var currentMarker:String;
+	var pendingPlayback(default, null):Bool;
+	var usingWebAudio(default, null):Bool;
+	var usingAudioTag:Bool;
+	var externalNode:Dynamic;
+	var onDecoded:phaser.core.Signal;
+	var onPlay:phaser.core.Signal;
+	var onPause:phaser.core.Signal;
+	var onResume:phaser.core.Signal;
+	var onLoop:phaser.core.Signal;
+	var onStop:phaser.core.Signal;
+	var onMute:phaser.core.Signal;
+	var onMarkerComplete:phaser.core.Signal;
+	function soundHasUnlocked (key:String):Void;
+	function addMarker (name:String, start:Dynamic, stop:Dynamic, volume:Dynamic, loop:Dynamic):Void;
+	function removeMarker (name:String):Void;
+	function update ():Void;
+	function play (?marker:String = '', ?position:Float = 0, ?volume:Float = 1, ?loop:Bool = false, ?forceRestart:Bool = true):phaser.sound.Sound;
+	function restart (?marker:String = '', ?position:Float = 0, ?volume:Float = 1, ?loop:Bool = false):Void;
+	function pause ():Void;
+	function resume ():Void;
+	function stop ():Void;
+	var isDecoding(default, null):Bool;
+	var isDecoded(default, null):Bool;
+	var mute:Bool;
+	var volume(default, null):Float;
+}

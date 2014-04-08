@@ -1,0 +1,13 @@
+{
+  "name": "phaser",
+  "license": "MIT",
+  "tags": ["js"],
+  "description": "Haxe externs for Phaser - the popular JavaScript game engine.",
+  "contributors": ["Blank101"],
+  "releasenote": "Initial.",
+  "version": "0.0.1",
+  "url": "https://github.com/Blank101/haxe-phaser",
+  "dependencies": {
+    
+  }
+}

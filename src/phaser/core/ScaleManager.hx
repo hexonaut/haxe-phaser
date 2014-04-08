@@ -1,0 +1,58 @@
+package phaser.core;
+
+@:native("Phaser.ScaleManager")
+extern class ScaleManager {
+	function new (game:phaser.core.Game, width:Float, height:Float);
+	var game:phaser.core.Game;
+	var width:Float;
+	var height:Float;
+	var minWidth:Float;
+	var maxWidth:Float;
+	var minHeight:Float;
+	var maxHeight:Float;
+	var forceLandscape:Bool;
+	var forcePortrait:Bool;
+	var incorrectOrientation:Bool;
+	var pageAlignHorizontally:Bool;
+	var pageAlignVertically:Bool;
+	var maxIterations:Float;
+	var orientationSprite:phaser.pixi.display.Sprite;
+	var enterLandscape:phaser.core.Signal;
+	var enterPortrait:phaser.core.Signal;
+	var enterIncorrectOrientation:phaser.core.Signal;
+	var leaveIncorrectOrientation:phaser.core.Signal;
+	var hasResized:phaser.core.Signal;
+	var fullScreenTarget:Dynamic;
+	var enterFullScreen:phaser.core.Signal;
+	var leaveFullScreen:phaser.core.Signal;
+	var orientation:Float;
+	var scaleFactor(default, null):phaser.geom.Point;
+	var scaleFactorInversed(default, null):phaser.geom.Point;
+	var margin(default, null):phaser.geom.Point;
+	var aspectRatio(default, null):Float;
+	var sourceAspectRatio(default, null):Float;
+	var event:Dynamic;
+	var scaleMode:Float;
+	var fullScreenScaleMode:Float;
+	var _startHeight:Float;
+	var _width:Float;
+	var _height:Float;
+	static var EXACT_FIT:Float;
+	static var NO_SCALE:Float;
+	static var SHOW_ALL:Float;
+	function startFullScreen (antialias:Bool):Void;
+	function stopFullScreen ():Void;
+	function fullScreenChange (event:Dynamic):Void;
+	function forceOrientation (forceLandscape:Bool, ?forcePortrait:Bool = false, ?orientationImage:String = ''):Void;
+	function checkOrientationState ():Void;
+	function checkOrientation (event:Dynamic):Void;
+	function checkResize (event:Dynamic):Void;
+	function refresh ():Void;
+	function setSize ():Void;
+	function setMaximum ():Void;
+	function setShowAll ():Void;
+	function setExactFit ():Void;
+	var isFullScreen(default, null):Bool;
+	var isPortrait(default, null):Bool;
+	var isLandscape(default, null):Bool;
+}
