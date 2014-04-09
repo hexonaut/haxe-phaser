@@ -2,7 +2,14 @@ package phaser.gameobjects;
 
 @:native("Phaser.TileSprite")
 extern class TileSprite {
-	function new (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:String, frame:String);
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:String, frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:String, frame:Float):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float):Void {})
+	function new (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float);
 	var game:phaser.core.Game;
 	var name:String;
 	var type(default, null):Float;
@@ -25,7 +32,14 @@ extern class TileSprite {
 	function postUpdate ():Void;
 	function autoScroll ():Void;
 	function stopScroll ():Void;
-	function loadTexture (key:String, frame:String):Void;
+	@:overload(function (key:String, frame:String):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:String):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, frame:String):Void {})
+	@:overload(function (key:phaser.pixi.textures.Texture, frame:String):Void {})
+	@:overload(function (key:String, frame:Float):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, frame:Float):Void {})
+	function loadTexture (key:phaser.pixi.textures.Texture, frame:Float):Void;
 	function destroy (?destroyChildren:Bool = true):Void;
 	function play (name:String, ?frameRate:Float, ?loop:Bool = false, ?killOnComplete:Bool = false):phaser.animation.Animation;
 	function reset (x:Float, y:Float):Dynamic;

@@ -17,6 +17,7 @@ extern class Physics {
 	static var CHIPMUNK:Float;
 	function parseConfig ():Void;
 	function startSystem (The:Float):Void;
+	@:overload(function (object:Dynamic, ?system:Float, ?debug:Bool = false):Void {})
 	function enable (object:Dynamic, ?system:Float, ?debug:Bool = false):Void;
 	function preUpdate ():Void;
 	function update ():Void;

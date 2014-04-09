@@ -25,7 +25,22 @@ extern class Button extends phaser.gameobjects.Image {
 	var freezeFrames:Bool;
 	var forceOut:Bool;
 	function clearFrames ():Void;
-	function setFrames (?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:String):Void;
+	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:Float, ?outFrame:String, ?downFrame:String, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:Float, ?downFrame:String, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:Float, ?outFrame:Float, ?downFrame:String, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:Float, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:Float, ?outFrame:String, ?downFrame:Float, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:Float, ?downFrame:Float, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:Float, ?outFrame:Float, ?downFrame:Float, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:Float):Void {})
+	@:overload(function (?overFrame:Float, ?outFrame:String, ?downFrame:String, ?upFrame:Float):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:Float, ?downFrame:String, ?upFrame:Float):Void {})
+	@:overload(function (?overFrame:Float, ?outFrame:Float, ?downFrame:String, ?upFrame:Float):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:Float, ?upFrame:Float):Void {})
+	@:overload(function (?overFrame:Float, ?outFrame:String, ?downFrame:Float, ?upFrame:Float):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:Float, ?downFrame:Float, ?upFrame:Float):Void {})
+	function setFrames (?overFrame:Float, ?outFrame:Float, ?downFrame:Float, ?upFrame:Float):Void;
 	function setSounds (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void;
 	function setOverSound (sound:phaser.sound.Sound, ?marker:String):Void;
 	function setOutSound (sound:phaser.sound.Sound, ?marker:String):Void;

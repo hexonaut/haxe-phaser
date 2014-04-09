@@ -2,7 +2,8 @@ package phaser.core;
 
 @:native("Phaser.StateManager")
 extern class StateManager {
-	function new (game:phaser.core.Game, ?pendingState:phaser.core.State);
+	@:overload(function (game:phaser.core.Game, ?pendingState:phaser.core.State):Void {})
+	function new (game:phaser.core.Game, ?pendingState:Dynamic);
 	var game:phaser.core.Game;
 	var states:Dynamic;
 	var _pendingState:phaser.core.State;
@@ -23,7 +24,9 @@ extern class StateManager {
 	var onResumedCallback:Dynamic;
 	var onShutDownCallback:Dynamic;
 	function boot ():Void;
-	function add (key:String, state:phaser.core.State, ?autoStart:Bool = false):Void;
+	@:overload(function (key:String, state:phaser.core.State, ?autoStart:Bool = false):Void {})
+	@:overload(function (key:String, state:Dynamic, ?autoStart:Bool = false):Void {})
+	function add (key:String, state:Dynamic, ?autoStart:Bool = false):Void;
 	function remove (key:String):Void;
 	function start (key:String, ?clearWorld:Bool = true, ?clearCache:Bool = false, parameter:Dynamic):Void;
 	function dummy ():Void;

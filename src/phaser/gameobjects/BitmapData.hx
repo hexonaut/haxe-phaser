@@ -16,7 +16,10 @@ extern class BitmapData {
 	var textureFrame:phaser.animation.Frame;
 	var type:Float;
 	var dirty:Bool;
-	function add (object:phaser.gameobjects.Sprite):Void;
+	@:overload(function (object:phaser.gameobjects.Sprite):Void {})
+	@:overload(function (object:Dynamic):Void {})
+	@:overload(function (object:phaser.gameobjects.Image):Void {})
+	function add (object:Dynamic):Void;
 	function clear ():Void;
 	function resize ():Void;
 	function setPixel32 (x:Float, y:Float, red:Float, green:Float, blue:Float, alpha:Float):Void;

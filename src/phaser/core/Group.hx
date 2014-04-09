@@ -2,7 +2,9 @@ package phaser.core;
 
 @:native("Phaser.Group")
 extern class Group {
-	function new (game:phaser.core.Game, parent:phaser.core.Group, ?name:String, ?addToStage:Bool = false, ?enableBody:Bool = false, ?physicsBodyType:Float = 0);
+	@:overload(function (game:phaser.core.Game, parent:phaser.core.Group, ?name:String, ?addToStage:Bool = false, ?enableBody:Bool = false, ?physicsBodyType:Float = 0):Void {})
+	@:overload(function (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, ?name:String, ?addToStage:Bool = false, ?enableBody:Bool = false, ?physicsBodyType:Float = 0):Void {})
+	function new (game:phaser.core.Game, parent:Dynamic, ?name:String, ?addToStage:Bool = false, ?enableBody:Bool = false, ?physicsBodyType:Float = 0);
 	var game:phaser.core.Game;
 	var name:String;
 	var z:Float;
@@ -25,8 +27,10 @@ extern class Group {
 	function add (child:Dynamic):Dynamic;
 	function addAt (child:Dynamic, index:Float):Dynamic;
 	function getAt (index:Float):Dynamic;
-	function create (x:Float, y:Float, key:String, ?frame:Float, ?exists:Bool = true):phaser.gameobjects.Sprite;
-	function createMultiple (quantity:Float, key:String, ?frame:Float, ?exists:Bool = false):Void;
+	@:overload(function (x:Float, y:Float, key:String, ?frame:Float, ?exists:Bool = true):phaser.gameobjects.Sprite {})
+	function create (x:Float, y:Float, key:String, ?frame:String, ?exists:Bool = true):phaser.gameobjects.Sprite;
+	@:overload(function (quantity:Float, key:String, ?frame:Float, ?exists:Bool = false):Void {})
+	function createMultiple (quantity:Float, key:String, ?frame:String, ?exists:Bool = false):Void;
 	function updateZ ():Void;
 	function next ():Void;
 	function previous ():Void;

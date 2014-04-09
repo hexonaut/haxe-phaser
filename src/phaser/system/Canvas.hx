@@ -8,7 +8,8 @@ extern class Canvas {
 	function setBackgroundColor (canvas:Dynamic, ?color:String):Dynamic;
 	function setTouchAction (canvas:Dynamic, ?value:String):Dynamic;
 	function setUserSelect (canvas:Dynamic, ?value:String):Dynamic;
-	function addToDOM (canvas:Dynamic, parent:String, ?overflowHidden:Bool = true):Dynamic;
+	@:overload(function (canvas:Dynamic, parent:String, ?overflowHidden:Bool = true):Dynamic {})
+	function addToDOM (canvas:Dynamic, parent:Dynamic, ?overflowHidden:Bool = true):Dynamic;
 	function setTransform (context:Dynamic, translateX:Float, translateY:Float, scaleX:Float, scaleY:Float, skewX:Float, skewY:Float):Dynamic;
 	function setSmoothingEnabled (context:Dynamic, value:Bool):Dynamic;
 	function setImageRenderingCrisp (canvas:Dynamic):Dynamic;

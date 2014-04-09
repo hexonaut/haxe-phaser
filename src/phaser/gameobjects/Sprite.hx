@@ -26,7 +26,14 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	function preUpdate ():Bool;
 	function update ():Void;
 	function postUpdate ():Void;
-	function loadTexture (key:String, frame:String):Void;
+	@:overload(function (key:String, frame:String):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:String):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, frame:String):Void {})
+	@:overload(function (key:phaser.pixi.textures.Texture, frame:String):Void {})
+	@:overload(function (key:String, frame:Float):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, frame:Float):Void {})
+	function loadTexture (key:phaser.pixi.textures.Texture, frame:Float):Void;
 	function crop (rect:phaser.geom.Rectangle):Void;
 	function revive (?health:Float = 1):Dynamic;
 	function kill ():Dynamic;

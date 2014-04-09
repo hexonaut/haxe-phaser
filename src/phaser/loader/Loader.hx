@@ -23,7 +23,8 @@ extern class Loader {
 	static var TEXTURE_ATLAS_JSON_HASH:Float;
 	static var TEXTURE_ATLAS_XML_STARLING:Float;
 	static var PHYSICS_LIME_CORONA:Float;
-	function setPreloadSprite (sprite:phaser.gameobjects.Sprite, ?direction:Float = 0):Void;
+	@:overload(function (sprite:phaser.gameobjects.Sprite, ?direction:Float = 0):Void {})
+	function setPreloadSprite (sprite:phaser.gameobjects.Image, ?direction:Float = 0):Void;
 	function checkKeyExists (type:String, key:String):Bool;
 	function getAssetIndex (type:String, key:String):Float;
 	function getAsset (type:String, key:String):Dynamic;
@@ -36,7 +37,8 @@ extern class Loader {
 	function script (key:String, url:String, ?callback:Dynamic, ?callbackContext:Dynamic):phaser.loader.Loader;
 	function binary (key:String, url:String, ?callback:Dynamic, ?callbackContext:Dynamic):phaser.loader.Loader;
 	function spritesheet (key:String, url:String, frameWidth:Float, frameHeight:Float, ?frameMax:Float, ?margin:Float = 0, ?spacing:Float = 0):phaser.loader.Loader;
-	function audio (key:String, urls:Array<Dynamic>, autoDecode:Bool):phaser.loader.Loader;
+	@:overload(function (key:String, urls:Array<Dynamic>, autoDecode:Bool):phaser.loader.Loader {})
+	function audio (key:String, urls:String, autoDecode:Bool):phaser.loader.Loader;
 	function tilemap (key:String, ?mapDataURL:String, ?mapData:Dynamic, ?format:Float):phaser.loader.Loader;
 	function physics (key:String, ?dataURL:String, ?jsonData:Dynamic, ?format:String):phaser.loader.Loader;
 	function bitmapFont (key:String, textureURL:String, ?xmlURL:String, ?xmlData:Dynamic, ?xSpacing:Float = 0, ?ySpacing:Float = 0):phaser.loader.Loader;
@@ -48,7 +50,8 @@ extern class Loader {
 	function removeAll ():Void;
 	function start ():Void;
 	function loadFile ():Void;
-	function getAudioURL (urls:Dynamic):Void;
+	@:overload(function (urls:Dynamic):Void {})
+	function getAudioURL (urls:String):Void;
 	function fileError (index:Float):Void;
 	function fileComplete (index:Float):Void;
 	function jsonLoadComplete (index:Float):Void;

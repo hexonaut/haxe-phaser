@@ -33,8 +33,14 @@ extern class Pointer {
 	var circle:phaser.geom.Circle;
 	function start (event:Dynamic):Void;
 	function update ():Void;
+	@:overload(function (event:Dynamic, ?fromClick:Bool = false):Void {})
+	@:overload(function (event:Dynamic, ?fromClick:Bool = false):Void {})
 	function move (event:Dynamic, ?fromClick:Bool = false):Void;
+	@:overload(function (event:Dynamic):Void {})
+	@:overload(function (event:Dynamic):Void {})
 	function leave (event:Dynamic):Void;
+	@:overload(function (event:Dynamic):Void {})
+	@:overload(function (event:Dynamic):Void {})
 	function stop (event:Dynamic):Void;
 	function justPressed (?duration:Float):Bool;
 	function justReleased (?duration:Float):Bool;

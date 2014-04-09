@@ -22,12 +22,16 @@ extern class Body {
 	var _groupCallbacks:Dynamic;
 	var _groupCallbackContext:Dynamic;
 	var debugBody:phaser.physics.p2.BodyDebug;
-	function createBodyCallback (object:phaser.gameobjects.Sprite, callback:Dynamic, callbackContext:Dynamic):Void;
+	@:overload(function (object:phaser.gameobjects.Sprite, callback:Dynamic, callbackContext:Dynamic):Void {})
+	@:overload(function (object:phaser.gameobjects.TileSprite, callback:Dynamic, callbackContext:Dynamic):Void {})
+	@:overload(function (object:phaser.physics.p2.Body, callback:Dynamic, callbackContext:Dynamic):Void {})
+	function createBodyCallback (object:Dynamic, callback:Dynamic, callbackContext:Dynamic):Void;
 	function createGroupCallback (group:Dynamic, callback:Dynamic, callbackContext:Dynamic):Void;
 	function getCollisionMask ():Float;
 	function updateCollisionMask (?shape:Dynamic):Void;
 	function setCollisionGroup (group:Dynamic, ?shape:Dynamic):Void;
 	function clearCollision (?clearGroup:Bool = true, ?clearMask:Bool = true, ?shape:Dynamic):Void;
+	@:overload(function (group:Dynamic, ?callback:Dynamic, ?callbackContext:Dynamic, ?shape:Dynamic):Void {})
 	function collides (group:Dynamic, ?callback:Dynamic, ?callbackContext:Dynamic, ?shape:Dynamic):Void;
 	function adjustCenterOfMass ():Void;
 	function applyDamping (dt:Float):Void;
@@ -36,7 +40,10 @@ extern class Body {
 	function setZeroRotation ():Void;
 	function setZeroVelocity ():Void;
 	function setZeroDamping ():Void;
-	function toLocalFrame (out:Dynamic, worldPoint:Dynamic):Void;
+	@:overload(function (out:Dynamic, worldPoint:Dynamic):Void {})
+	@:overload(function (out:Array<Dynamic>, worldPoint:Dynamic):Void {})
+	@:overload(function (out:Dynamic, worldPoint:Array<Dynamic>):Void {})
+	function toLocalFrame (out:Array<Dynamic>, worldPoint:Array<Dynamic>):Void;
 	function toWorldFrame (out:Array<Dynamic>, localPoint:Array<Dynamic>):Void;
 	function rotateLeft (speed:Float):Void;
 	function rotateRight (speed:Float):Void;
@@ -62,16 +69,25 @@ extern class Body {
 	function addParticle (?offsetX:Float = 0, ?offsetY:Float = 0, ?rotation:Float = 0):Dynamic;
 	function addLine (length:Float, ?offsetX:Float = 0, ?offsetY:Float = 0, ?rotation:Float = 0):Dynamic;
 	function addCapsule (length:Float, radius:Float, ?offsetX:Float = 0, ?offsetY:Float = 0, ?rotation:Float = 0):Dynamic;
-	function addPolygon (options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):Bool;
+	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):Bool {})
+	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Float, points:Dynamic):Bool {})
+	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):Bool {})
+	function addPolygon (options:Dynamic, options:Bool, options:Bool, options:Float, points:Dynamic):Bool;
+	@:overload(function (shape:Dynamic):Bool {})
+	@:overload(function (shape:Dynamic):Bool {})
+	@:overload(function (shape:Dynamic):Bool {})
+	@:overload(function (shape:Dynamic):Bool {})
 	function removeShape (shape:Dynamic):Bool;
 	function setCircle (radius:Float, ?offsetX:Float = 0, ?offsetY:Float = 0, ?rotation:Float = 0):Void;
 	function setRectangle (?width:Float = 16, ?height:Float = 16, ?offsetX:Float = 0, ?offsetY:Float = 0, ?rotation:Float = 0):Dynamic;
-	function setRectangleFromSprite (?sprite:phaser.gameobjects.Sprite):Dynamic;
+	@:overload(function (?sprite:phaser.gameobjects.Sprite):Dynamic {})
+	function setRectangleFromSprite (?sprite:phaser.gameobjects.Image):Dynamic;
 	function setMaterial (material:Dynamic, ?shape:Dynamic):Void;
 	function shapeChanged ():Void;
 	function loadPhaserPolygon (key:String, object:String):Void;
 	function addPolygonFixture (fixtureData:String):Void;
-	function loadPolygon (key:String, object:String, options:Dynamic, options:Bool, options:Bool, options:Bool):Bool;
+	@:overload(function (key:String, object:String, options:Dynamic, options:Bool, options:Bool, options:Bool):Bool {})
+	function loadPolygon (key:String, object:String, options:Dynamic, options:Bool, options:Bool, options:Float):Bool;
 	static var DYNAMIC:Dynamic;
 	static var STATIC:Dynamic;
 	static var KINEMATIC:Dynamic;

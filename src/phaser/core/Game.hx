@@ -2,7 +2,8 @@ package phaser.core;
 
 @:native("Phaser.Game")
 extern class Game {
-	function new (?width:Float = 800, ?height:Float = 600, ?renderer:Float, ?parent:String = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic);
+	@:overload(function (?width:Float = 800, ?height:Float = 600, ?renderer:Float, ?parent:String = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
+	function new (?width:Float = 800, ?height:Float = 600, ?renderer:Float, ?parent:Dynamic = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic);
 	var id:Float;
 	var config:Dynamic;
 	var physicsConfig:Dynamic;

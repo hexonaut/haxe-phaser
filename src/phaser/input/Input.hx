@@ -67,7 +67,8 @@ extern class Input {
 	function stopPointer (event:Dynamic):phaser.input.Pointer;
 	function getPointer (state:Bool):phaser.input.Pointer;
 	function getPointerFromIdentifier (identifier:Float):phaser.input.Pointer;
-	function getLocalPosition (displayObject:phaser.gameobjects.Sprite, pointer:phaser.input.Pointer):phaser.geom.Point;
+	@:overload(function (displayObject:phaser.gameobjects.Sprite, pointer:phaser.input.Pointer):phaser.geom.Point {})
+	function getLocalPosition (displayObject:phaser.gameobjects.Image, pointer:phaser.input.Pointer):phaser.geom.Point;
 	function hitTest (displayObject:Dynamic, pointer:phaser.input.Pointer, localPoint:phaser.geom.Point):Void;
 	var x:Float;
 	var y:Float;

@@ -2,6 +2,7 @@ package phaser.animation;
 
 @:native("Phaser.Animation")
 extern class Animation {
+	@:overload(function (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, delay:Float, loop:Bool):Void {})
 	function new (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, delay:Float, loop:Bool);
 	var game:phaser.core.Game;
 	var _parent:phaser.gameobjects.Sprite;

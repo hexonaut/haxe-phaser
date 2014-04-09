@@ -26,7 +26,10 @@ extern class Emitter extends phaser.core.Group {
 	var on:Bool;
 	var emitX:Bool;
 	var emitY:Bool;
-	function makeParticles (keys:Dynamic, frames:Dynamic, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter;
+	@:overload(function (keys:Dynamic, frames:Dynamic, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
+	@:overload(function (keys:String, frames:Dynamic, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
+	@:overload(function (keys:Dynamic, frames:Float, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
+	function makeParticles (keys:String, frames:Float, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter;
 	function kill ():Void;
 	function revive ():Void;
 	function start (?explode:Bool = true, ?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 0):Void;
@@ -35,7 +38,8 @@ extern class Emitter extends phaser.core.Group {
 	function setXSpeed (?min:Float = 0, ?max:Float = 0):Void;
 	function setYSpeed (?min:Float = 0, ?max:Float = 0):Void;
 	function setRotation (?min:Float = 0, ?max:Float = 0):Void;
-	function at (object:Dynamic):Void;
+	@:overload(function (object:Dynamic):Void {})
+	function at (object:phaser.gameobjects.Sprite):Void;
 	var left(default, null):Float;
 	var right(default, null):Float;
 	var top(default, null):Float;

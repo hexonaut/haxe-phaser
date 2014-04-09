@@ -20,7 +20,9 @@ extern class Camera {
 	static var FOLLOW_PLATFORMER:Float;
 	static var FOLLOW_TOPDOWN:Float;
 	static var FOLLOW_TOPDOWN_TIGHT:Float;
-	function follow (target:phaser.gameobjects.Sprite, ?style:Float):Void;
+	@:overload(function (target:phaser.gameobjects.Sprite, ?style:Float):Void {})
+	@:overload(function (target:phaser.gameobjects.Image, ?style:Float):Void {})
+	function follow (target:phaser.gameobjects.Text, ?style:Float):Void;
 	function focusOn (displayObject:Dynamic):Void;
 	function focusOnXY (x:Float, y:Float):Void;
 	function update ():Void;

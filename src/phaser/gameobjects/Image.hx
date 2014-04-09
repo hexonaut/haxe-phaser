@@ -2,7 +2,14 @@ package phaser.gameobjects;
 
 @:native("Phaser.Image")
 extern class Image {
-	function new (game:phaser.core.Game, x:Float, y:Float, key:String, frame:String);
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:String, frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:String, frame:Float):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
+	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:Float):Void {})
+	function new (game:phaser.core.Game, x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:Float);
 	var game:phaser.core.Game;
 	var exists:Bool;
 	var name:String;
@@ -20,7 +27,14 @@ extern class Image {
 	function preUpdate ():Void;
 	function update ():Void;
 	function postUpdate ():Void;
-	function loadTexture (key:String, frame:String):Void;
+	@:overload(function (key:String, frame:String):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:String):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, frame:String):Void {})
+	@:overload(function (key:phaser.pixi.textures.Texture, frame:String):Void {})
+	@:overload(function (key:String, frame:Float):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, frame:Float):Void {})
+	function loadTexture (key:phaser.pixi.textures.Texture, frame:Float):Void;
 	function crop (rect:phaser.geom.Rectangle):Void;
 	function revive ():phaser.gameobjects.Image;
 	function kill ():phaser.gameobjects.Image;

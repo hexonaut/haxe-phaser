@@ -7,7 +7,15 @@ extern class RenderTexture {
 	var key:String;
 	var type:Float;
 	var _temp:phaser.geom.Point;
-	function renderXY (displayObject:phaser.gameobjects.Sprite, x:Float, y:Float, clear:Bool):Void;
-	function render (displayObject:phaser.gameobjects.Sprite, position:phaser.geom.Point, clear:Bool):Void;
+	@:overload(function (displayObject:phaser.gameobjects.Sprite, x:Float, y:Float, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.Image, x:Float, y:Float, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.Text, x:Float, y:Float, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.BitmapText, x:Float, y:Float, clear:Bool):Void {})
+	function renderXY (displayObject:phaser.core.Group, x:Float, y:Float, clear:Bool):Void;
+	@:overload(function (displayObject:phaser.gameobjects.Sprite, position:phaser.geom.Point, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.Image, position:phaser.geom.Point, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.Text, position:phaser.geom.Point, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.BitmapText, position:phaser.geom.Point, clear:Bool):Void {})
+	function render (displayObject:phaser.core.Group, position:phaser.geom.Point, clear:Bool):Void;
 	function resize (width:Float, height:Float):Void;
 }
