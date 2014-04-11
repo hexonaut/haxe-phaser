@@ -97,7 +97,7 @@ extern class TileSprite {
 	
 	/**
 	 * By default Sprites won't add themselves to any physics system and their physics body will be null.
-	 * To enable them for physics you need to call game.physics.enable(sprite, system) where sprite is this object 
+	 * To enable them for physics you need to call game.physics.enable(sprite, system) where sprite is this object
 	 * and system is the Physics system you want to use to manage this body. Once enabled you can access all physics related properties via Sprite.body.
 	 * 
 	 * Important: Enabling a Sprite for P2 or Ninja physics will automatically set Sprite.anchor to 0.5 so the physics body is centered on the Sprite.
@@ -214,5 +214,15 @@ extern class TileSprite {
 	 * activated for this object and it will then start to process click/touch events and more.
 	 */
 	var inputEnabled:Bool;
+	
+	/**
+	 * The position of the TileSprite on the x axis relative to the local coordinates of the parent.
+	 */
+	var x:Float;
+	
+	/**
+	 * The position of the TileSprite on the y axis relative to the local coordinates of the parent.
+	 */
+	var y:Float;
 	
 }

@@ -123,7 +123,7 @@ extern class GameObjectFactory {
 	 * A RetroFont uses a bitmap which contains fixed with characters for the font set. You use character spacing to define the set.
 	 * If you need variable width character support then use a BitmapText object instead. The main difference between a RetroFont and a BitmapText
 	 * is that a RetroFont creates a single texture that you can apply to a game object, where-as a BitmapText creates one Sprite object per letter of text.
-	 * The texture can be asssigned or one or multiple images/sprites, but note that the text the RetroFont uses will be shared across them all, 
+	 * The texture can be asssigned or one or multiple images/sprites, but note that the text the RetroFont uses will be shared across them all,
 	 * i.e. if you need each Image to have different text in it, then you need to create multiple RetroFont objects.
 	 */
 	function retroFont (font:String, characterWidth:Float, characterHeight:Float, chars:String, charsPerRow:Float, ?xSpacing:Float = 0, ?ySpacing:Float = 0, ?xOffset:Float = 0, ?yOffset:Float = 0):phaser.gameobjects.RetroFont;

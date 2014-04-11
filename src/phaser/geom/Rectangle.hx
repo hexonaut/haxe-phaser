@@ -184,7 +184,7 @@ extern class Rectangle {
 	
 	/**
 	 * Determines whether or not this Rectangle object is empty. A Rectangle object is empty if its width or height is less than or equal to 0.
-	 * If set to true then all of the Rectangle properties are set to 0. 
+	 * If set to true then all of the Rectangle properties are set to 0.
 	 */
 	var empty:Bool;
 	

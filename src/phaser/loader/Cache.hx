@@ -234,9 +234,9 @@ extern class Cache {
 	function getBitmapFont (key:String):Dynamic;
 	
 	/**
-	 * Get a physics data object from the cache by its key. You can get either the entire data set or just a single object from it.
+	 * Get a physics data object from the cache by its key. You can get either the entire data set, a single object or a single fixture of an object from it.
 	 */
-	function getPhysicsData (key:String, ?object:String):Dynamic;
+	function getPhysicsData (key:String, ?object:String, fixtureKey:String):Dynamic;
 	
 	/**
 	 * Checks if an image key exists.

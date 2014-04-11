@@ -48,12 +48,4 @@ extern class Graphics extends phaser.pixi.display.DisplayObjectContainer {
 	 */
 	var isMask:Dynamic;
 	
-	/**
-	 * If cacheAsBitmap is true the graphics object will then be rendered as if it was a sprite.
-	 * This is useful if your graphics element does not change often as it will speed up the rendering of the object
-	 * It is also usful as the graphics object will always be antialiased because it will be rendered using canvas
-	 * Not recommended if you are constanly redrawing the graphics element.
-	 */
-	var cacheAsBitmap:Bool;
-	
 }

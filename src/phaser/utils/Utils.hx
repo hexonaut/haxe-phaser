@@ -36,4 +36,9 @@ extern class Utils {
 	 */
 	function extend (deep:Bool, target:Dynamic):Dynamic;
 	
+	/**
+	 * jshint freeze: false
+	 */
+	var bind:Dynamic;
+	
 }

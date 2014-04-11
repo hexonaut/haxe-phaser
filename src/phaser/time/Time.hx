@@ -64,12 +64,12 @@ extern class Time {
 	var msMax:Float;
 	
 	/**
-	 * The elapsed time calculated for the physics motion updates.
+	 * The elapsed time calculated for the physics motion updates. In a stable 60fps system this will be 0.016 every frame.
 	 */
 	var physicsElapsed:Float;
 	
 	/**
-	 * If you need to cap the delta timer, set the value here.
+	 * If you need to cap the delta timer, set the value here. For 60fps the delta should be 0.016, so try variances just above this.
 	 */
 	var deltaCap:Float;
 	

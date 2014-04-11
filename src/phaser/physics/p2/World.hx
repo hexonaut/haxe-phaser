@@ -36,17 +36,12 @@ extern class World {
 	/**
 	 * The gravity applied to all bodies each step.
 	 */
-	var gravity:Dynamic;
+	var gravity:phaser.physics.p2.InversePointProxy;
 	
 	/**
-	 * The bounds body contains the 4 walls that border the World. Define or disable with setBounds.
+	 * An object containing the 4 wall bodies that bound the physics world.
 	 */
-	var bounds:Dynamic;
-	
-	/**
-	 * The wall bounds shapes.
-	 */
-	var _wallShapes:Array<Dynamic>;
+	var walls:Dynamic;
 	
 	/**
 	 * Dispatched when a new Body is added to the World.
@@ -89,6 +84,16 @@ extern class World {
 	var onContactMaterialRemoved:phaser.core.Signal;
 	
 	/**
+	 * A postBroadphase callback.
+	 */
+	var postBroadphaseCallback:Dynamic;
+	
+	/**
+	 * The context under which the callbacks are fired.
+	 */
+	var callbackContext:Dynamic;
+	
+	/**
 	 * Dispatched when a first contact is created between two bodies. This event is fired before the step has been done.
 	 */
 	var onBeginContact:phaser.core.Signal;
@@ -99,6 +104,31 @@ extern class World {
 	var onEndContact:phaser.core.Signal;
 	
 	/**
+	 * An array containing the collision groups that have been defined in the World.
+	 */
+	var collisionGroups:Array<Dynamic>;
+	
+	/**
+	 * A default collision group.
+	 */
+	var nothingCollisionGroup:phaser.physics.p2.CollisionGroup;
+	
+	/**
+	 * A default collision group.
+	 */
+	var boundsCollisionGroup:phaser.physics.p2.CollisionGroup;
+	
+	/**
+	 * A default collision group.
+	 */
+	var everythingCollisionGroup:phaser.physics.p2.CollisionGroup;
+	
+	/**
+	 * An array of the bodies the world bounds collides with.
+	 */
+	var boundsCollidesWith:Array<Dynamic>;
+	
+	/**
 	 * Internal var used to hold references to bodies to remove from the world on the next step.
 	 */
 	var _toRemove:Array<Dynamic>;
@@ -106,17 +136,7 @@ extern class World {
 	/**
 	 * Internal var.
 	 */
-	var collisionGroups:Array<Dynamic>;
-	
-	/**
-	 * Internal var.
-	 */
 	var _collisionGroupID:Float;
-	
-	/**
-	 * @const
-	 */
-	static var LIME_CORONA_JSON:Float;
 	
 	/**
 	 * This will add a P2 Physics body into the removal list for the next step.
@@ -474,9 +494,24 @@ extern class World {
 	var friction:Float;
 	
 	/**
-	 * @name Phaser.Physics.P2#restituion
+	 * @name Phaser.Physics.P2#defaultFriction
+	 */
+	var defaultFriction:Float;
+	
+	/**
+	 * @name Phaser.Physics.P2#restitution
 	 */
 	var restitution:Float;
+	
+	/**
+	 * @name Phaser.Physics.P2#defaultRestitution
+	 */
+	var defaultRestitution:Float;
+	
+	/**
+	 * @name Phaser.Physics.P2#contactMaterial
+	 */
+	var contactMaterial:Dynamic;
 	
 	/**
 	 * @name Phaser.Physics.P2#applySpringForces

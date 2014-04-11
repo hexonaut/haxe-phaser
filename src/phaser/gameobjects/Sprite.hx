@@ -67,7 +67,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	
 	/**
 	 * By default Sprites won't add themselves to any physics system and their physics body will be null.
-	 * To enable them for physics you need to call game.physics.enable(sprite, system) where sprite is this object 
+	 * To enable them for physics you need to call game.physics.enable(sprite, system) where sprite is this object
 	 * and system is the Physics system you want to use to manage this body. Once enabled you can access all physics related properties via Sprite.body.
 	 * 
 	 * Important: Enabling a Sprite for P2 or Ninja physics will automatically set Sprite.anchor to 0.5 so the physics body is centered on the Sprite.
@@ -158,6 +158,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	/**
 	 * Crop allows you to crop the texture used to display this Sprite.
 	 * Cropping takes place from the top-left of the Sprite and can be modified in real-time by providing an updated rectangle object.
+	 * Note that cropping a Sprite will reset its animation to the first frame. You cannot currently crop an animated Sprite.
 	 */
 	function crop (rect:phaser.geom.Rectangle):Void;
 	
@@ -206,6 +207,17 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	 * If the requested animation is already playing this request will be ignored. If you need to reset an already running animation do so directly on the Animation object itself.
 	 */
 	function play (name:String, ?frameRate:Float, ?loop:Bool = false, ?killOnComplete:Bool = false):phaser.animation.Animation;
+	
+	/**
+	 * Checks to see if the bounds of this Sprite overlaps with the bounds of the given Display Object, which can be a Sprite, Image, TileSprite or anything that extends those such as a Button.
+	 * This check ignores the Sprites hitArea property and runs a Sprite.getBounds comparison on both objects to determine the result.
+	 * Therefore it's relatively expensive to use in large quantities (i.e. with lots of Sprites at a high frequency), but should be fine for low-volume testing where physics isn't required.
+	 */
+	@:overload(function (displayObject:phaser.gameobjects.Sprite):Bool {})
+	@:overload(function (displayObject:phaser.gameobjects.Image):Bool {})
+	@:overload(function (displayObject:phaser.gameobjects.TileSprite):Bool {})
+	@:overload(function (displayObject:phaser.gameobjects.Button):Bool {})
+	function overlap (displayObject:phaser.pixi.display.DisplayObject):Bool;
 	
 	/**
 	 * Indicates the rotation of the Sprite, in degrees, from its original orientation. Values from 0 to 180 represent clockwise rotation; values from 0 to -180 represent counterclockwise rotation.

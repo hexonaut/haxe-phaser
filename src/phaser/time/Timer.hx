@@ -136,7 +136,7 @@ extern class Timer {
 	/**
 	 * Starts this Timer running.
 	 */
-	function start ():Void;
+	function start (?delay:Float = 0):Void;
 	
 	/**
 	 * Stops this Timer from running. Does not cause it to be destroyed if autoDestroy is set to true.

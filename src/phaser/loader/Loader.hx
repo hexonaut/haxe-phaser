@@ -62,7 +62,7 @@ extern class Loader {
 	var preloadSprite:Dynamic;
 	
 	/**
-	 * The crossOrigin value applied to loaded images.
+	 * The crossOrigin value applied to loaded images. Very often this needs to be set to 'anonymous'.
 	 */
 	var crossOrigin:Dynamic;
 	
@@ -111,7 +111,12 @@ extern class Loader {
 	/**
 	 * @constant
 	 */
-	static var PHYSICS_LIME_CORONA:Float;
+	static var PHYSICS_LIME_CORONA_JSON:Float;
+	
+	/**
+	 * @constant
+	 */
+	static var PHYSICS_PHASER_JSON:Float;
 	
 	/**
 	 * You can set a Sprite to be a "preload" sprite by passing it to this method.

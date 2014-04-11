@@ -153,25 +153,25 @@ extern class TilemapLayer {
 	function resizeWorld ():Void;
 	
 	/**
-	 * Take an x coordinate that doesn't account for scrollFactorX and 'fix' it 
+	 * Take an x coordinate that doesn't account for scrollFactorX and 'fix' it
 	 * into a scrolled local space. Used primarily internally
 	 */
 	function _fixX (x:Float):Float;
 	
 	/**
-	 * Take an x coordinate that <em>does</em> account for scrollFactorX and 'unfix' it 
+	 * Take an x coordinate that <em>does</em> account for scrollFactorX and 'unfix' it
 	 * back to camera space. Used primarily internally
 	 */
 	function _unfixX (x:Float):Float;
 	
 	/**
-	 * Take a y coordinate that doesn't account for scrollFactorY and 'fix' it 
+	 * Take a y coordinate that doesn't account for scrollFactorY and 'fix' it
 	 * into a scrolled local space. Used primarily internally
 	 */
 	function _fixY (y:Float):Float;
 	
 	/**
-	 * Take a y coordinate that <em>does</em> account for scrollFactorY and 'unfix' it 
+	 * Take a y coordinate that <em>does</em> account for scrollFactorY and 'unfix' it
 	 * back to camera space. Used primarily internally
 	 */
 	function _unfixY (y:Float):Float;

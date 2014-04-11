@@ -129,6 +129,11 @@ extern class StateManager {
 	function start (key:String, ?clearWorld:Bool = true, ?clearCache:Bool = false, parameter:Dynamic):Void;
 	
 	/**
+	 * Restarts the current State. State.shutDown will be called (if it exists) before the State is restarted.
+	 */
+	function restart (?clearWorld:Bool = true, ?clearCache:Bool = false, parameter:Dynamic):Void;
+	
+	/**
 	 * Used by onInit and onShutdown when those functions don't exist on the state
 	 */
 	function dummy ():Void;
@@ -159,7 +164,8 @@ extern class StateManager {
 	function getCurrentState ():phaser.core.State;
 	
 	/**
-	 * Nuke the entire game from orbit
+	 * Removes all StateManager callback references to the State object, nulls the game reference and clears the States object.
+	 * You don't recover from this without rebuilding the Phaser instance again.
 	 */
 	function destroy ():Void;
 	

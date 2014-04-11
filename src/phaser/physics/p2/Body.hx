@@ -58,11 +58,6 @@ extern class Body {
 	var gravity:phaser.geom.Point;
 	
 	/**
-	 * Dispatched when the shape/s of this Body impact with another. The event will be sent 2 parameters, this Body and the impact Body.
-	 */
-	var onImpact:phaser.core.Signal;
-	
-	/**
 	 * Dispatched when a first contact is created between shapes in two bodies. This event is fired during the step, so collision has already taken place.
 	 * The event will be sent 4 parameters: The body it is in contact with, the shape from this body that caused the contact, the shape from the contact body and the contact equation data array.
 	 */
@@ -85,6 +80,16 @@ extern class Body {
 	var removeNextStep:Bool;
 	
 	/**
+	 * Reference to the debug body.
+	 */
+	var debugBody:phaser.physics.p2.BodyDebug;
+	
+	/**
+	 * Internal var that determines if this Body collides with the world bounds or not.
+	 */
+	var _collideWorldBounds:Bool;
+	
+	/**
 	 * Array of Body callbacks.
 	 */
 	var _bodyCallbacks:Dynamic;
@@ -103,11 +108,6 @@ extern class Body {
 	 * Array of Grouo callback contexts.
 	 */
 	var _groupCallbackContext:Dynamic;
-	
-	/**
-	 * Reference to the debug body.
-	 */
-	var debugBody:phaser.physics.p2.BodyDebug;
 	
 	/**
 	 * Sets a callback to be fired any time a shape in this Body impacts with a shape in the given Body. The impact test is performed against body.id values.
@@ -377,7 +377,7 @@ extern class Body {
 	 * Adds the given Material to all Shapes that belong to this Body.
 	 * If you only wish to apply it to a specific Shape in this Body then provide that as the 2nd parameter.
 	 */
-	function setMaterial (material:Dynamic, ?shape:Dynamic):Void;
+	function setMaterial (material:phaser.physics.p2.Material, ?shape:Dynamic):Void;
 	
 	/**
 	 * Updates the debug draw if any body shapes change.
@@ -388,12 +388,12 @@ extern class Body {
 	 * Reads the shape data from a physics data file stored in the Game.Cache and adds it as a polygon to this Body.
 	 * The shape data format is based on the custom phaser export in.
 	 */
-	function loadPhaserPolygon (key:String, object:String):Void;
+	function addPhaserPolygon (key:String, object:String):Void;
 	
 	/**
 	 * Add a polygon fixture. This is used during #loadPhaserPolygon.
 	 */
-	function addPolygonFixture (fixtureData:String):Void;
+	function addFixture (fixtureData:String):Array<Dynamic>;
 	
 	/**
 	 * Reads the shape data from a physics data file stored in the Game.Cache and adds it as a polygon to this Body.

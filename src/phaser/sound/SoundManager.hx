@@ -41,7 +41,7 @@ extern class SoundManager {
 	var _volume:Float;
 	
 	/**
-	 * An array containing all the sounds 
+	 * An array containing all the sounds
 	 */
 	var _sounds:Array<Dynamic>;
 	
@@ -119,6 +119,17 @@ extern class SoundManager {
 	 * Adds a new Sound into the SoundManager.
 	 */
 	function add (key:String, ?volume:Float = 1, ?loop:Bool = false, ?connect:Bool = true):phaser.sound.Sound;
+	
+	/**
+	 * Removes a Sound from the SoundManager. The removed Sound is destroyed before removal.
+	 */
+	function remove (sound:phaser.sound.Sound):Bool;
+	
+	/**
+	 * Removes all Sounds from the SoundManager that have an asset key matching the given value.
+	 * The removed Sounds are destroyed before removal.
+	 */
+	function removeByKey (key:String):Float;
 	
 	/**
 	 * Adds a new Sound into the SoundManager and starts it playing.

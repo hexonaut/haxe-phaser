@@ -52,9 +52,9 @@ extern class Game {
 	var antialias:Bool;
 	
 	/**
-	 * The Pixi Renderer
+	 * The Pixi Renderer.
 	 */
-	var renderer:Float;
+	var renderer:Dynamic;
 	
 	/**
 	 * The Renderer this game will use. Either Phaser.AUTO, Phaser.CANVAS or Phaser.WEBGL.
@@ -64,7 +64,7 @@ extern class Game {
 	/**
 	 * The StateManager.
 	 */
-	var state:Float;
+	var state:phaser.core.StateManager;
 	
 	/**
 	 * Whether the game engine is booted, aka available.
@@ -132,9 +132,9 @@ extern class Game {
 	var stage:phaser.core.Stage;
 	
 	/**
-	 * Reference to game clock.
+	 * Reference to the core game clock.
 	 */
-	var time:Dynamic;
+	var time:phaser.time.Time;
 	
 	/**
 	 * Reference to the tween manager.
@@ -164,7 +164,7 @@ extern class Game {
 	/**
 	 * A handy reference to world.camera.
 	 */
-	var camera:Dynamic;
+	var camera:phaser.core.Camera;
 	
 	/**
 	 * A handy reference to renderer.view, the canvas that the game is being rendered in to.

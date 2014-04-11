@@ -178,7 +178,7 @@ extern class Tween {
 	function yoyo (yoyo:Bool):phaser.tween.Tween;
 	
 	/**
-	 * Set easing function this tween will use, i.e. Phaser.Easing.Linear.None. 
+	 * Set easing function this tween will use, i.e. Phaser.Easing.Linear.None.
 	 */
 	function easing (easing:Dynamic):phaser.tween.Tween;
 	
@@ -212,7 +212,7 @@ extern class Tween {
 	function onUpdateCallback (callback:Dynamic):phaser.tween.Tween;
 	
 	/**
-	 * Pauses the tween. 
+	 * Pauses the tween.
 	 */
 	function pause ():Void;
 	

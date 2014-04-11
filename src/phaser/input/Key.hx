@@ -14,6 +14,11 @@ extern class Key {
 	var game:phaser.core.Game;
 	
 	/**
+	 * An enabled key processes its update and dispatches events. You can toggle this at run-time to disable a key without deleting it.
+	 */
+	var enabled:Bool;
+	
+	/**
 	 * Stores the most recent DOM event.
 	 */
 	var event(default, null):Dynamic;
@@ -100,7 +105,8 @@ extern class Key {
 	function processKeyUp (event:Dynamic):Void;
 	
 	/**
-	 * Resets the state of this Key.
+	 * Resets the state of this Key. This sets isDown to false, isUp to true, resets the time to be the current time and clears any callbacks
+	 * associated with the onDown and onUp events and nulls the onHoldCallback if set.
 	 */
 	function reset ():Void;
 	

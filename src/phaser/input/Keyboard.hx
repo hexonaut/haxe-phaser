@@ -59,6 +59,11 @@ extern class Keyboard {
 	var _onKeyUp:Dynamic;
 	
 	/**
+	 * Internal cache var
+	 */
+	var _i:Float;
+	
+	/**
 	 * Add callbacks to the Keyboard handler so that each time a key is pressed down or released the callbacks are activated.
 	 */
 	function addCallbacks (context:Dynamic, onDown:Dynamic, ?onUp:Dynamic):Void;
@@ -80,15 +85,21 @@ extern class Keyboard {
 	function createCursorKeys ():Dynamic;
 	
 	/**
-	 * Starts the Keyboard event listeners running (keydown and keyup). They are attached to the document.body.
+	 * Starts the Keyboard event listeners running (keydown and keyup). They are attached to the window.
 	 * This is called automatically by Phaser.Input and should not normally be invoked directly.
 	 */
 	function start ():Void;
 	
 	/**
-	 * Stops the Keyboard event listeners from running (keydown and keyup). They are removed from the document.body.
+	 * Stops the Keyboard event listeners from running (keydown and keyup). They are removed from the window.
 	 */
 	function stop ():Void;
+	
+	/**
+	 * Stops the Keyboard event listeners from running (keydown and keyup). They are removed from the window.
+	 * Also clears all key captures and currently created Key objects.
+	 */
+	function destroy ():Void;
 	
 	/**
 	 * By default when a key is pressed Phaser will not stop the event from propagating up to the browser.

@@ -136,6 +136,11 @@ extern class InputHandler {
 	/**
 	 * Internal cache var.
 	 */
+	var _wasEnabled:Bool;
+	
+	/**
+	 * Internal cache var.
+	 */
 	var _tempPoint:phaser.geom.Point;
 	
 	/**
@@ -147,6 +152,16 @@ extern class InputHandler {
 	 * Starts the Input Handler running. This is called automatically when you enable input on a Sprite, or can be called directly if you need to set a specific priority.
 	 */
 	function start (priority:Float, useHandCursor:Bool):phaser.gameobjects.Sprite;
+	
+	/**
+	 * Handles when the parent Sprite is added to a new Group.
+	 */
+	function addedToGroup ():Void;
+	
+	/**
+	 * Handles when the parent Sprite is removed from a Group.
+	 */
+	function removedFromGroup ():Void;
 	
 	/**
 	 * Resets the Input Handler and disables it.

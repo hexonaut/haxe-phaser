@@ -65,9 +65,9 @@ extern class State {
 	var stage:phaser.core.Stage;
 	
 	/**
-	 * Reference to game clock.
+	 * Reference to the core game clock.
 	 */
-	var time:Dynamic;
+	var time:phaser.time.Time;
 	
 	/**
 	 * Reference to the tween manager.
@@ -87,7 +87,7 @@ extern class State {
 	/**
 	 * Reference to the physics manager.
 	 */
-	var physics:Dynamic;
+	var physics:phaser.physics.Physics;
 	
 	/**
 	 * Reference to the random data generator.

@@ -304,24 +304,42 @@ extern class Tilemap {
 	function hasTile (x:Float, y:Float, layer:phaser.tilemap.TilemapLayer):Bool;
 	
 	/**
+	 * Removes the tile located at the given coordinates and updates the collision data.
+	 */
+	@:overload(function (x:Float, y:Float, ?layer:Float):phaser.tilemap.Tile {})
+	@:overload(function (x:Float, y:Float, ?layer:String):phaser.tilemap.Tile {})
+	function removeTile (x:Float, y:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
+	
+	/**
+	 * Removes the tile located at the given coordinates and updates the collision data. The coordinates are given in pixel values.
+	 */
+	@:overload(function (x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:Float):phaser.tilemap.Tile {})
+	@:overload(function (x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:String):phaser.tilemap.Tile {})
+	function removeTileWorldXY (x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
+	
+	/**
 	 * Puts a tile of the given index value at the coordinate specified.
+	 * If you pass null as the tile it will pass your call over to Tilemap.removeTile instead.
 	 */
 	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, ?layer:Float):phaser.tilemap.Tile {})
 	@:overload(function (tile:Float, x:Float, y:Float, ?layer:Float):phaser.tilemap.Tile {})
+	@:overload(function (tile:Dynamic, x:Float, y:Float, ?layer:Float):phaser.tilemap.Tile {})
 	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, ?layer:String):phaser.tilemap.Tile {})
 	@:overload(function (tile:Float, x:Float, y:Float, ?layer:String):phaser.tilemap.Tile {})
+	@:overload(function (tile:Dynamic, x:Float, y:Float, ?layer:String):phaser.tilemap.Tile {})
 	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile {})
-	function putTile (tile:Float, x:Float, y:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
+	@:overload(function (tile:Float, x:Float, y:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile {})
+	function putTile (tile:Dynamic, x:Float, y:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
 	
 	/**
 	 * Puts a tile into the Tilemap layer. The coordinates are given in pixel values.
 	 */
-	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:Float):Void {})
-	@:overload(function (tile:Float, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:Float):Void {})
-	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:String):Void {})
-	@:overload(function (tile:Float, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:String):Void {})
-	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:phaser.tilemap.TilemapLayer):Void {})
-	function putTileWorldXY (tile:Float, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:phaser.tilemap.TilemapLayer):Void;
+	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:Float):phaser.tilemap.Tile {})
+	@:overload(function (tile:Float, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:Float):phaser.tilemap.Tile {})
+	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:String):phaser.tilemap.Tile {})
+	@:overload(function (tile:Float, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:String):phaser.tilemap.Tile {})
+	@:overload(function (tile:phaser.tilemap.Tile, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile {})
+	function putTileWorldXY (tile:Float, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
 	
 	/**
 	 * Gets a tile from the Tilemap Layer. The coordinates are given in tile values.

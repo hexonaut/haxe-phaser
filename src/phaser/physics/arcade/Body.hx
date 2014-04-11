@@ -248,6 +248,16 @@ extern class Body {
 	var tilePadding:phaser.geom.Point;
 	
 	/**
+	 * Is this Body in a preUpdate or postUpdate state?
+	 */
+	var phase:Float;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _reset:Bool;
+	
+	/**
 	 * Internal cache var.
 	 */
 	var _sx:Float;
@@ -303,6 +313,11 @@ extern class Body {
 	 * Resets all Body values (velocity, acceleration, rotation, etc)
 	 */
 	function reset (x:Float, y:Float):Void;
+	
+	/**
+	 * Tests if a world point lies within this Body.
+	 */
+	function hitTest (x:Float, y:Float):Bool;
 	
 	/**
 	 * Returns true if the bottom of this Body is in contact with either the world bounds or a tile.

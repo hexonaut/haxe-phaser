@@ -9,17 +9,17 @@ extern class Math {
 	function PI2 ():Void;
 	
 	/**
-	 * Two number are fuzzyEqual if their difference is less than &epsilon;. 
+	 * Two number are fuzzyEqual if their difference is less than &epsilon;.
 	 */
 	function fuzzyEqual (a:Float, b:Float, epsilon:Float):Bool;
 	
 	/**
-	 * a is fuzzyLessThan b if it is less than b + &epsilon;. 
+	 * a is fuzzyLessThan b if it is less than b + &epsilon;.
 	 */
 	function fuzzyLessThan (a:Float, b:Float, epsilon:Float):Bool;
 	
 	/**
-	 * a is fuzzyGreaterThan b if it is more than b - &epsilon;.  
+	 * a is fuzzyGreaterThan b if it is more than b - &epsilon;.
 	 */
 	function fuzzyGreaterThan (a:Float, b:Float, epsilon:Float):Bool;
 	

@@ -157,12 +157,12 @@ extern class Group {
 	/**
 	 * Advances the Group cursor to the next object in the Group. If it's at the end of the Group it wraps around to the first object.
 	 */
-	function next ():Void;
+	function next ():Dynamic;
 	
 	/**
 	 * Moves the Group cursor to the previous object in the Group. If it's at the start of the Group it wraps around to the last object.
 	 */
-	function previous ():Void;
+	function previous ():Dynamic;
 	
 	/**
 	 * Swaps the position of two children in this Group. Both children must be in this Group.
@@ -302,7 +302,7 @@ extern class Group {
 	 * For example: Group.forEach(awardBonusGold, this, true, 100, 500)
 	 * Note: Currently this will skip any children which are Groups themselves.
 	 */
-	function forEach (callback:Dynamic, callbackContext:Dynamic, checkExists:Bool):Void;
+	function forEach (callback:Dynamic, callbackContext:Dynamic, ?checkExists:Bool = false):Void;
 	
 	/**
 	 * Allows you to call your own function on each member of this Group where child.exists=true. You must pass the callback and context in which it will run.
@@ -330,6 +330,12 @@ extern class Group {
 	 * For example to depth sort Sprites for Zelda-style game you might call group.sort('y', Phaser.Group.SORT_ASCENDING) at the bottom of your State.update().
 	 */
 	function sort (?index:String = 'z', ?order:Float):Void;
+	
+	/**
+	 * This allows you to use your own sort handler function.
+	 * It will be sent two parameters: the two children involved in the comparison (a and b). It should return -1 if a > b, 1 if a &lt; b or 0 if a === b.
+	 */
+	function customSort (sortHandler:Dynamic, context:Dynamic):Void;
 	
 	/**
 	 * An internal helper function for the sort process.
@@ -393,18 +399,18 @@ extern class Group {
 	/**
 	 * Removes the given child from this Group and sets its group property to null.
 	 */
-	function remove (child:Dynamic):Bool;
+	function remove (child:Dynamic, ?destroy:Bool = false):Bool;
 	
 	/**
 	 * Removes all children from this Group, setting all group properties to null.
 	 * The Group container remains on the display list.
 	 */
-	function removeAll ():Void;
+	function removeAll (?destroy:Bool = false):Void;
 	
 	/**
 	 * Removes all children from this Group whos index falls beteen the given startIndex and endIndex values.
 	 */
-	function removeBetween (startIndex:Float, endIndex:Float):Void;
+	function removeBetween (startIndex:Float, ?endIndex:Float, ?destroy:Bool = false):Void;
 	
 	/**
 	 * Destroys this Group. Removes all children, then removes the container from the display list and nulls references.

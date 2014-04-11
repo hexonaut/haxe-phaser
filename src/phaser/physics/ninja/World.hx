@@ -225,6 +225,6 @@ extern class World {
 	/**
 	 * The core separation function to separate two physics bodies.
 	 */
-	function separate (body1:phaser.physics.ninja.Body, body2:phaser.physics.ninja.Body, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool;
+	function separate (body1:phaser.physics.ninja.Body, body2:phaser.physics.ninja.Body):Bool;
 	
 }

@@ -144,6 +144,11 @@ extern class Pointer {
 	var positionDown:phaser.geom.Point;
 	
 	/**
+	 * A Phaser.Point object containing the x/y values of the pointer when it was last released.
+	 */
+	var positionUp:phaser.geom.Point;
+	
+	/**
 	 * A Phaser.Circle that is centered on the x/y coordinates of this pointer, useful for hit detection.
 	 * The Circle size is 44px (Apples recommended "finger tip" size).
 	 */

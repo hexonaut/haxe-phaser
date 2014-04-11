@@ -6,7 +6,7 @@ extern class PluginManager {
 	/**
 	 * The Plugin Manager is responsible for the loading, running and unloading of Phaser Plugins.
 	 */
-	function new (game:phaser.core.Game, parent:Dynamic);
+	function new (game:phaser.core.Game);
 	
 	/**
 	 * A reference to the currently running game.
@@ -14,33 +14,34 @@ extern class PluginManager {
 	var game:phaser.core.Game;
 	
 	/**
-	 * Description.
-	 */
-	var _parent:Dynamic;
-	
-	/**
-	 * Description.
+	 * An array of all the plugins being managed by this PluginManager.
 	 */
 	var plugins:Array<Dynamic>;
 	
 	/**
-	 * Description.
+	 * Internal cache var.
 	 */
-	var _pluginsLength:Array<Dynamic>;
+	var _len:Float;
 	
 	/**
-	 * Add a new Plugin to the PluginManager.
-	 * The plugin's game and parent reference are set to this game and pluginmanager parent.
+	 * Internal cache var.
 	 */
+	var _i:Float;
+	
+	/**
+	 * Add a new Plugin into the PluginManager.
+	 * The Plugin must have 2 properties: game and parent. Plugin.game is set to ths game reference the PluginManager uses, and parent is set to the PluginManager.
+	 */
+	@:overload(function (plugin:Dynamic):phaser.core.Plugin {})
 	function add (plugin:phaser.core.Plugin):phaser.core.Plugin;
 	
 	/**
-	 * Remove a Plugin from the PluginManager.
+	 * Remove a Plugin from the PluginManager. It calls Plugin.destroy on the plugin before removing it from the manager.
 	 */
 	function remove (plugin:phaser.core.Plugin):Void;
 	
 	/**
-	 * Removes all Plugins from the PluginManager.
+	 * Remove all Plugins from the PluginManager. It calls Plugin.destroy on every plugin before removing it from the manager.
 	 */
 	function removeAll ():Void;
 	
@@ -76,7 +77,7 @@ extern class PluginManager {
 	function postRender ():Void;
 	
 	/**
-	 * Clear down this PluginManager and null out references
+	 * Clear down this PluginManager, calls destroy on every plugin and nulls out references.
 	 */
 	function destroy ():Void;
 	

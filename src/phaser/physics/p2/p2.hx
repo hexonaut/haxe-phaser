@@ -4,14 +4,14 @@ package phaser.physics.p2;
 extern class p2 {
 	
 	/**
-	 * Alias for {@link mat2.multiply}
-	 */
-	var mul:Dynamic;
-	
-	/**
 	 * Alias for {@link vec2.subtract}
 	 */
 	var sub:Dynamic;
+	
+	/**
+	 * Alias for {@link vec2.multiply}
+	 */
+	var mul:Dynamic;
 	
 	/**
 	 * Alias for {@link vec2.divide}
@@ -74,9 +74,19 @@ extern class p2 {
 	var world:phaser.physics.p2.p2;
 	
 	/**
-	 * Set to true to use bounding box checks instead of bounding radius.
+	 * The bounding volume type to use in the broadphase algorithms.
 	 */
-	var useBoundingBoxes:Bool;
+	var boundingVolumeType:Float;
+	
+	/**
+	 * Axis aligned bounding box type.
+	 */
+	static var AABB:Float;
+	
+	/**
+	 * Bounding circle type.
+	 */
+	static var BOUNDING:Float;
 	
 	/**
 	 * @property contactEquations
@@ -129,11 +139,6 @@ extern class p2 {
 	var frictionRelaxation:Float;
 	
 	/**
-	 * The root node of the QuadTree which covers the entire area being segmented.
-	 */
-	var root:Dynamic;
-	
-	/**
 	 * List of bodies currently in the broadphase.
 	 */
 	var axisListX:Array<Dynamic>;
@@ -159,11 +164,9 @@ extern class p2 {
 	var bodyB:Dynamic;
 	
 	/**
-	 * onstraint.prototype.update = function(){
-	 *     throw new Error("method update() not implmemented in this Constraint subclass!");
-	 * };
+	 * Set to true if you want the connected bodies to collide.
 	 */
-	var DISTANCE:Dynamic;
+	var collideConnected:Bool;
 	
 	/**
 	 * The distance to keep.
@@ -176,9 +179,19 @@ extern class p2 {
 	var angle:Float;
 	
 	/**
-	 * The gear ratio
+	 * The gear ratio.
 	 */
 	var ratio:Float;
+	
+	/**
+	 * The offset of bodyB in bodyA's frame.
+	 */
+	var localOffsetB:Array<Dynamic>;
+	
+	/**
+	 * The offset angle of bodyB in bodyA's frame.
+	 */
+	var localAngleB:Float;
 	
 	/**
 	 * @property localAnchorA
@@ -236,22 +249,32 @@ extern class p2 {
 	var motorSpeed:Float;
 	
 	/**
-	 * Vector from body i center of mass to the contact point.
+	 * @property {Array} pivotA
 	 */
-	var ri:Array<Dynamic>;
+	var pivotA:Array<Dynamic>;
 	
 	/**
-	 * Vector from body j center of mass to the contact point.
+	 * @property {Array} pivotB
 	 */
-	var rj:Array<Dynamic>;
+	var pivotB:Array<Dynamic>;
+	
+	/**
+	 * Vector from body i center of mass to the contact point.
+	 */
+	var contactPointA:Array<Dynamic>;
+	
+	/**
+	 * World-oriented vector from body A center of mass to the contact point.
+	 */
+	var contactPointB:Array<Dynamic>;
 	
 	/**
 	 * The normal vector, pointing out of body i
 	 */
-	var ni:Array<Dynamic>;
+	var normalA:Array<Dynamic>;
 	
 	/**
-	 * Set to true if this is the first impact between the bodies (not persistant contact).
+	 * This property is set to true if this is the first impact between the bodies (not persistant contact).
 	 */
 	var firstImpact:Bool;
 	
@@ -266,24 +289,14 @@ extern class p2 {
 	var shapeB:Dynamic;
 	
 	/**
-	 * Minimum force to apply when solving
+	 * Minimum force to apply when solving.
 	 */
 	var minForce:Float;
 	
 	/**
-	 * Max force to apply when solving
+	 * Max force to apply when solving.
 	 */
 	var maxForce:Float;
-	
-	/**
-	 * First body participating in the constraint
-	 */
-	var bi:Dynamic;
-	
-	/**
-	 * Second body participating in the constraint
-	 */
-	var bj:Dynamic;
 	
 	/**
 	 * The number of time steps needed to stabilize the constraint equation. Typically between 3 and 5 time steps.
@@ -304,6 +317,11 @@ extern class p2 {
 	var offset:Dynamic;
 	
 	/**
+	 * Indicates if stiffness or relaxation was changed.
+	 */
+	var needsUpdate:Bool;
+	
+	/**
 	 * The resulting constraint multiplier from the last solve. This is mostly equivalent to the force produced by the constraint.
 	 */
 	var multiplier:Float;
@@ -319,9 +337,14 @@ extern class p2 {
 	var enabled:Bool;
 	
 	/**
-	 * Tangent vector that the friction force will act along, in world coords.
+	 * The default stiffness when creating a new Equation.
 	 */
-	var t:Dynamic;
+	static var DEFAULT:Float;
+	
+	/**
+	 * Tangent vector that the friction force will act along. World oriented.
+	 */
+	var t:Array<Dynamic>;
 	
 	/**
 	 * A ContactEquation connected to this friction. The contact equation can be used to rescale the max force for the friction.
@@ -380,7 +403,7 @@ extern class p2 {
 	
 	/**
 	 * The local shape offsets, relative to the body center of mass. This is an
-	 * array of Float32Array.
+	 * array of Array.
 	 */
 	var shapeOffsets:Array<Dynamic>;
 	
@@ -420,74 +443,95 @@ extern class p2 {
 	var interpolatedPosition:Array<Dynamic>;
 	
 	/**
+	 * The interpolated angle of the body.
+	 */
+	var interpolatedAngle:Float;
+	
+	/**
+	 * The previous position of the body.
+	 */
+	var previousPosition:Array<Dynamic>;
+	
+	/**
+	 * The previous angle of the body.
+	 */
+	var previousAngle:Float;
+	
+	/**
 	 * The velocity of the body
 	 */
-	var velocity:Dynamic;
+	var velocity:Array<Dynamic>;
 	
 	/**
 	 * Constraint velocity that was added to the body during the last step.
 	 */
-	var vlambda:Dynamic;
+	var vlambda:Array<Dynamic>;
 	
 	/**
 	 * Angular constraint velocity that was added to the body during last step.
 	 */
-	var wlambda:Dynamic;
+	var wlambda:Array<Dynamic>;
 	
 	/**
-	 * The angular velocity of the body
+	 * The angular velocity of the body, in radians per second.
 	 */
 	var angularVelocity:Float;
 	
 	/**
-	 * The force acting on the body
+	 * The force acting on the body. Since the body force (and {{#crossLink "Body/angularForce:property"}}{{/crossLink}}) will be zeroed after each step, so you need to set the force before each step.
 	 */
-	var force:Dynamic;
+	var force:Array<Dynamic>;
 	
 	/**
-	 * The angular force acting on the body
+	 * The angular force acting on the body. See {{#crossLink "Body/force:property"}}{{/crossLink}}.
 	 */
 	var angularForce:Float;
 	
 	/**
-	 * The linear damping acting on the body in the velocity direction
+	 * The linear damping acting on the body in the velocity direction. Should be a value between 0 and 1.
 	 */
 	var damping:Float;
 	
 	/**
-	 * The angular force acting on the body
+	 * The angular force acting on the body. Should be a value between 0 and 1.
 	 */
 	var angularDamping:Float;
 	
 	/**
-	 * The type of motion this body has. Should be one of: Body.STATIC (the body
-	 * does not move), Body.DYNAMIC (body can move and respond to collisions)
-	 * and Body.KINEMATIC (only moves according to its .velocity).
+	 * The type of motion this body has. Should be one of: {{#crossLink "Body/STATIC:property"}}Body.STATIC{{/crossLink}}, {{#crossLink "Body/DYNAMIC:property"}}Body.DYNAMIC{{/crossLink}} and {{#crossLink "Body/KINEMATIC:property"}}Body.KINEMATIC{{/crossLink}}.
+	 * 
+	 * <ul>
+	 * <li>Static bodies do not move, and they do not respond to forces or collision.</li>
+	 * <li>Dynamic bodies body can move and respond to collisions and forces.</li>
+	 * <li>Kinematic bodies only moves according to its .velocity, and does not respond to collisions or force.</li>
+	 * </ul>
 	 */
 	var motionState:Float;
 	
 	/**
-	 * Bounding circle radius
+	 * Bounding circle radius.
 	 */
 	var boundingRadius:Float;
 	
 	/**
-	 * Bounding box of this body
+	 * Bounding box of this body.
 	 */
 	var aabb:Dynamic;
 	
 	/**
-	 * Indicates if the AABB needs update. Update it with .updateAABB()
+	 * Indicates if the AABB needs update. Update it with {{#crossLink "Body/updateAABB:method"}}.updateAABB(){{/crossLink}}.
 	 */
 	var aabbNeedsUpdate:Bool;
 	
 	/**
-	 * If true, the body will automatically fall to sleep.
+	 * If true, the body will automatically fall to sleep. Note that you need to enable sleeping in the {{#crossLink "World"}}{{/crossLink}} before anything will happen.
 	 */
 	var allowSleep:Bool;
 	
 	/**
-	 * One of Body.AWAKE, Body.SLEEPY, Body.SLEEPING
+	 * One of {{#crossLink "Body/AWAKE:property"}}Body.AWAKE{{/crossLink}}, {{#crossLink "Body/SLEEPY:property"}}Body.SLEEPY{{/crossLink}} and {{#crossLink "Body/SLEEPING:property"}}Body.SLEEPING{{/crossLink}}.
+	 * 
+	 * The body is initially Body.AWAKE. If its velocity norm is below .sleepSpeedLimit, the sleepState will become Body.SLEEPY. If the body continues to be Body.SLEEPY for .sleepTimeLimit seconds, it will fall asleep (Body.SLEEPY).
 	 */
 	var sleepState:Float;
 	
@@ -505,6 +549,11 @@ extern class p2 {
 	 * Gravity scaling factor. If you want the body to ignore gravity, set this to zero. If you want to reverse gravity, set it to -1.
 	 */
 	var gravityScale:Float;
+	
+	/**
+	 * The last time when the body went to SLEEPY state.
+	 */
+	var timeLastSleepy:Float;
 	
 	/**
 	 * @event sleepy
@@ -577,6 +626,21 @@ extern class p2 {
 	var triangles:Array<Dynamic>;
 	
 	/**
+	 * An array of numbers, or height values, that are spread out along the x axis.
+	 */
+	var data:Array<Dynamic>;
+	
+	/**
+	 * Max value of the data
+	 */
+	var maxValue:Float;
+	
+	/**
+	 * The width of each element
+	 */
+	var elementWidth:Float;
+	
+	/**
 	 * Total width of the rectangle
 	 */
 	var width:Float;
@@ -585,6 +649,22 @@ extern class p2 {
 	 * Total height of the rectangle
 	 */
 	var height:Float;
+	
+	/**
+	 * The type of the shape. One of:
+	 * 
+	 * <ul>
+	 * <li>{{#crossLink "Shape/CIRCLE:property"}}Shape.CIRCLE{{/crossLink}}</li>
+	 * <li>{{#crossLink "Shape/PARTICLE:property"}}Shape.PARTICLE{{/crossLink}}</li>
+	 * <li>{{#crossLink "Shape/PLANE:property"}}Shape.PLANE{{/crossLink}}</li>
+	 * <li>{{#crossLink "Shape/CONVEX:property"}}Shape.CONVEX{{/crossLink}}</li>
+	 * <li>{{#crossLink "Shape/LINE:property"}}Shape.LINE{{/crossLink}}</li>
+	 * <li>{{#crossLink "Shape/RECTANGLE:property"}}Shape.RECTANGLE{{/crossLink}}</li>
+	 * <li>{{#crossLink "Shape/CAPSULE:property"}}Shape.CAPSULE{{/crossLink}}</li>
+	 * <li>{{#crossLink "Shape/HEIGHTFIELD:property"}}Shape.HEIGHTFIELD{{/crossLink}}</li>
+	 * </ul>
+	 */
+	var type:Float;
 	
 	/**
 	 * Collision group that this shape belongs to (bit mask). See <a href="http://www.aurelienribon.com/blog/2011/07/box2d-tutorial-collision-filtering/">this tutorial</a>.
@@ -657,14 +737,9 @@ extern class p2 {
 	var iterations:Float;
 	
 	/**
-	 * The error tolerance. If the total error is below this limit, the solver will stop. Set to zero for as good solution as possible.
+	 * The error tolerance, per constraint. If the total error is below this limit, the solver will stop iterating. Set to zero for as good solution as possible, but to something larger than zero to make computations faster.
 	 */
 	var tolerance:Float;
-	
-	/**
-	 * Whether to use .stiffness and .relaxation parameters from the Solver instead of each Equation individually.
-	 */
-	var useGlobalEquationParameters:Bool;
 	
 	/**
 	 * Set to true to set all right hand side terms to zero when solving. Can be handy for a few applications.
@@ -672,29 +747,15 @@ extern class p2 {
 	var useZeroRHS:Bool;
 	
 	/**
-	 * Number of friction iterations to skip. If .skipFrictionIterations=2, then no FrictionEquations will be iterated until the third iteration.
+	 * Number of solver iterations that are done to approximate normal forces. When these iterations are done, friction force will be computed from the contact normal forces. These friction forces will override any other friction forces set from the World for example.
+	 * The solver will use less iterations if the solution is below the .tolerance.
 	 */
-	var skipFrictionIterations:Float;
+	var frictionIterations:Float;
 	
 	/**
-	 * Current bodies in this island.
+	 * The number of iterations that were made during the last solve. If .tolerance is zero, this value will always be equal to .iterations, but if .tolerance is larger than zero, and the solver can quit early, then this number will be somewhere between 1 and .iterations.
 	 */
-	var bodies:Array<Dynamic>;
-	
-	/**
-	 * The solver used in the workers.
-	 */
-	var subsolver:Dynamic;
-	
-	/**
-	 * Number of islands. Read only.
-	 */
-	var numIslands:Float;
-	
-	/**
-	 * Fires before an island is solved.
-	 */
-	var beforeSolveIslandEvent:Dynamic;
+	var usedIterations:Float;
 	
 	/**
 	 * Function that is used to sort all equations before each solve.
@@ -707,12 +768,52 @@ extern class p2 {
 	static var ARRAY:Array<Dynamic>;
 	
 	/**
-	 * All springs in the world.
+	 * Current bodies in this island.
+	 */
+	var bodies:Array<Dynamic>;
+	
+	/**
+	 * The resulting {{#crossLink "Island"}}{{/crossLink}}s.
+	 */
+	var islands:Array<Dynamic>;
+	
+	/**
+	 * The resulting graph nodes.
+	 */
+	var nodes:Array<Dynamic>;
+	
+	/**
+	 * The node queue, used when traversing the graph of nodes.
+	 */
+	var queue:Array<Dynamic>;
+	
+	/**
+	 * The body that is contained in this node.
+	 */
+	var a0:Dynamic;
+	
+	/**
+	 * Neighboring IslandNodes
+	 */
+	var neighbors:Array<Dynamic>;
+	
+	/**
+	 * If this node was visiting during the graph traversal.
+	 */
+	var visited:Bool;
+	
+	/**
+	 * All springs in the world. To add a spring to the world, use {{#crossLink "World/addSpring:method"}}{{/crossLink}}.
 	 */
 	var springs:Array<Dynamic>;
 	
 	/**
-	 * The solver used to satisfy constraints and contacts.
+	 * Disabled body collision pairs. See {{#crossLink "World/disableBodyCollision:method"}}.
+	 */
+	var disabledBodyCollisionPairs:Array<Dynamic>;
+	
+	/**
+	 * The solver used to satisfy constraints and contacts. Default is {{#crossLink "GSSolver"}}{{/crossLink}}.
 	 */
 	var solver:Dynamic;
 	
@@ -722,9 +823,29 @@ extern class p2 {
 	var narrowphase:Dynamic;
 	
 	/**
+	 * The island manager of this world.
+	 */
+	var islandManager:Dynamic;
+	
+	/**
 	 * Gravity in the world. This is applied on all bodies in the beginning of each step().
 	 */
-	var a0:Dynamic;
+	var gravity:Array<Dynamic>;
+	
+	/**
+	 * Gravity to use when approximating the friction max force (mu<em>mass</em>gravity).
+	 */
+	var frictionGravity:Float;
+	
+	/**
+	 * Set to true if you want .frictionGravity to be automatically set to the length of .gravity.
+	 */
+	var useWorldGravityAsFrictionGravity:Bool;
+	
+	/**
+	 * If the length of .gravity is zero, and .useWorldGravityAsFrictionGravity=true, then switch to using .frictionGravity for friction instead. This fallback is useful for gravityless games.
+	 */
+	var useFrictionGravityOnZeroGravity:Bool;
 	
 	/**
 	 * Whether to do timing measurements during the step() or not.
@@ -747,14 +868,14 @@ extern class p2 {
 	var constraints:Array<Dynamic>;
 	
 	/**
-	 * Friction between colliding bodies. This value is used if no matching ContactMaterial is found for a Material pair.
+	 * Dummy default material in the world, used in .defaultContactMaterial
 	 */
-	var defaultFriction:Float;
+	var defaultMaterial:Dynamic;
 	
 	/**
-	 * Default coefficient of restitution between colliding bodies. This value is used if no matching ContactMaterial is found for a Material pair.
+	 * The default contact material to use, if no contact material was set for the colliding materials.
 	 */
-	var defaultRestitution:Float;
+	var defaultContactMaterial:Dynamic;
 	
 	/**
 	 * For keeping track of what time step size we used last step
@@ -792,6 +913,21 @@ extern class p2 {
 	var time:Float;
 	
 	/**
+	 * Is true during the step().
+	 */
+	var stepping:Bool;
+	
+	/**
+	 * Bodies that are scheduled to be removed at the end of the step.
+	 */
+	var bodiesToBeRemoved:Array<Dynamic>;
+	
+	/**
+	 * Whether to enable island splitting. Island splitting can be an advantage for many things, including solver performance. See {{#crossLink "IslandManager"}}{{/crossLink}}.
+	 */
+	var islandSplit:Bool;
+	
+	/**
 	 * Set to true if you want to the world to emit the "impact" event. Turning this off could improve performance.
 	 */
 	var emitImpactEvent:Bool;
@@ -802,12 +938,12 @@ extern class p2 {
 	var postStepEvent:Dynamic;
 	
 	/**
-	 * @event addBody
+	 * Fired when a body is added to the world.
 	 */
 	var addBodyEvent:Dynamic;
 	
 	/**
-	 * @event removeBody
+	 * Fired when a body is removed from the world.
 	 */
 	var removeBodyEvent:Dynamic;
 	
@@ -827,6 +963,11 @@ extern class p2 {
 	 * prevent collisions between objects that you don't want.
 	 */
 	var postBroadphaseEvent:Dynamic;
+	
+	/**
+	 * Enable or disable island sleeping. Note that you must enable {{#crossLink "World/islandSplit:property"}}.islandSplit{{/crossLink}} for this to work.
+	 */
+	var enableIslandSleeping:Bool;
 	
 	/**
 	 * Fired when two shapes starts start to overlap. Fired in the narrowphase, during step.

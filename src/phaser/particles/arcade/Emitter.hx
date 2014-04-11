@@ -29,14 +29,19 @@ extern class Emitter extends phaser.core.Group {
 	var maxParticleSpeed:phaser.geom.Point;
 	
 	/**
-	 * The minimum possible scale of a particle.
+	 * The minimum possible scale of a particle. This is applied to the X and Y axis. If you need to control each axis see minParticleScaleX.
 	 */
 	var minParticleScale:Float;
 	
 	/**
-	 * The maximum possible scale of a particle.
+	 * The maximum possible scale of a particle. This is applied to the X and Y axis. If you need to control each axis see maxParticleScaleX.
 	 */
 	var maxParticleScale:Float;
+	
+	/**
+	 * An array of the calculated scale easing data applied to particles with scaleRates > 0.
+	 */
+	var scaleData:Array<Dynamic>;
 	
 	/**
 	 * The minimum possible angular velocity of a particle.
@@ -49,12 +54,27 @@ extern class Emitter extends phaser.core.Group {
 	var maxRotation:Float;
 	
 	/**
+	 * The minimum possible alpha value of a particle.
+	 */
+	var minParticleAlpha:Float;
+	
+	/**
+	 * The maximum possible alpha value of a particle.
+	 */
+	var maxParticleAlpha:Float;
+	
+	/**
+	 * An array of the calculated alpha easing data applied to particles with alphaRates > 0.
+	 */
+	var alphaData:Array<Dynamic>;
+	
+	/**
 	 * Sets the body.gravity.y of each particle sprite to this value on launch.
 	 */
 	var gravity:Float;
 	
 	/**
-	 * For emitting your own particle class types. They must extend Phaser.Sprite.
+	 * For emitting your own particle class types. They must extend Phaser.Particle.
 	 */
 	var particleClass:Dynamic;
 	
@@ -79,9 +99,68 @@ extern class Emitter extends phaser.core.Group {
 	var lifespan:Float;
 	
 	/**
-	 * How much each particle should bounce on each axis.  1 = full bounce, 0 = no bounce.
+	 * How much each particle should bounce on each axis. 1 = full bounce, 0 = no bounce.
 	 */
 	var bounce:phaser.geom.Point;
+	
+	/**
+	 * Determines whether the emitter is currently emitting particles. It is totally safe to directly toggle this.
+	 */
+	var on:Bool;
+	
+	/**
+	 * When a particle is created its anchor will be set to match this Point object (defaults to x/y: 0.5 to aid in rotation)
+	 */
+	var particleAnchor:phaser.geom.Point;
+	
+	/**
+	 * The blendMode as set on the particle when emitted from the Emitter. Defaults to NORMAL. Needs browser capable of supporting canvas blend-modes (most not available in WebGL)
+	 */
+	var blendMode:Float;
+	
+	/**
+	 * The point the particles are emitted from.
+	 * Emitter.x and Emitter.y control the containers location, which updates all current particles
+	 * Emitter.emitX and Emitter.emitY control the emission location relative to the x/y position.
+	 */
+	var emitX:Float;
+	
+	/**
+	 * The point the particles are emitted from.
+	 * Emitter.x and Emitter.y control the containers location, which updates all current particles
+	 * Emitter.emitX and Emitter.emitY control the emission location relative to the x/y position.
+	 */
+	var emitY:Float;
+	
+	/**
+	 * When a new Particle is emitted this controls if it will automatically scale in size. Use Emitter.setScale to configure.
+	 */
+	var autoScale:Bool;
+	
+	/**
+	 * When a new Particle is emitted this controls if it will automatically change alpha. Use Emitter.setAlpha to configure.
+	 */
+	var autoAlpha:Bool;
+	
+	/**
+	 * If this is true then when the Particle is emitted it will be bought to the top of the Emitters display list.
+	 */
+	var particleBringToTop:Bool;
+	
+	/**
+	 * If this is true then when the Particle is emitted it will be sent to the back of the Emitters display list.
+	 */
+	var particleSendToBack:Bool;
+	
+	/**
+	 * Internal particle scale var.
+	 */
+	var _minParticleScale:phaser.geom.Point;
+	
+	/**
+	 * Internal particle scale var.
+	 */
+	var _maxParticleScale:phaser.geom.Point;
 	
 	/**
 	 * Internal helper for deciding how many particles to launch.
@@ -109,31 +188,13 @@ extern class Emitter extends phaser.core.Group {
 	var _frames:Dynamic;
 	
 	/**
-	 * Determines whether the emitter is currently emitting particles. It is totally safe to directly toggle this.
+	 * This function generates a new set of particles for use by this emitter.
+	 * The particles are stored internally waiting to be emitted via Emitter.start.
 	 */
-	var on:Bool;
-	
-	/**
-	 * The point the particles are emitted from.
-	 * Emitter.x and Emitter.y control the containers location, which updates all current particles
-	 * Emitter.emitX and Emitter.emitY control the emission location relative to the x/y position.
-	 */
-	var emitX:Bool;
-	
-	/**
-	 * The point the particles are emitted from.
-	 * Emitter.x and Emitter.y control the containers location, which updates all current particles
-	 * Emitter.emitX and Emitter.emitY control the emission location relative to the x/y position.
-	 */
-	var emitY:Bool;
-	
-	/**
-	 * This function generates a new array of particle sprites to attach to the emitter.
-	 */
-	@:overload(function (keys:Array<Dynamic>, frames:Array<Dynamic>, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
-	@:overload(function (keys:String, frames:Array<Dynamic>, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
-	@:overload(function (keys:Array<Dynamic>, frames:Float, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
-	function makeParticles (keys:String, frames:Float, quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter;
+	@:overload(function (keys:Array<Dynamic>, ?frames:Array<Dynamic> = 0, ?quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
+	@:overload(function (keys:String, ?frames:Array<Dynamic> = 0, ?quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
+	@:overload(function (keys:Array<Dynamic>, ?frames:Float = 0, ?quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter {})
+	function makeParticles (keys:String, ?frames:Float = 0, ?quantity:Float, ?collide:Bool = false, ?collideWorldBounds:Bool = false):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * Call this function to turn off all the particles and the emitter.
@@ -151,7 +212,7 @@ extern class Emitter extends phaser.core.Group {
 	function start (?explode:Bool = true, ?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 0):Void;
 	
 	/**
-	 * This function can be used both internally and externally to emit the next particle.
+	 * This function can be used both internally and externally to emit the next particle in the queue.
 	 */
 	function emitParticle ():Void;
 	
@@ -171,15 +232,34 @@ extern class Emitter extends phaser.core.Group {
 	function setYSpeed (?min:Float = 0, ?max:Float = 0):Void;
 	
 	/**
-	 * A more compact way of setting the angular velocity constraints of the emitter.
+	 * A more compact way of setting the angular velocity constraints of the particles.
 	 */
 	function setRotation (?min:Float = 0, ?max:Float = 0):Void;
 	
 	/**
+	 * A more compact way of setting the alpha constraints of the particles.
+	 * The rate parameter, if set to a value above zero, lets you set the speed at which the Particle change in alpha from min to max.
+	 * If rate is zero, which is the default, the particle won't change alpha - instead it will pick a random alpha between min and max on emit.
+	 */
+	function setAlpha (?min:Float = 1, ?max:Float = 1, ?rate:Float = 0, ?ease:Float, ?yoyo:Bool = false):Void;
+	
+	/**
+	 * A more compact way of setting the scale constraints of the particles.
+	 * The rate parameter, if set to a value above zero, lets you set the speed and ease which the Particle uses to change in scale from min to max across both axis.
+	 * If rate is zero, which is the default, the particle won't change scale during update, instead it will pick a random scale between min and max on emit.
+	 */
+	function setScale (?minX:Float = 1, ?maxX:Float = 1, ?minY:Float = 1, ?maxY:Float = 1, ?rate:Float = 0, ?ease:Float, ?yoyo:Bool = false):Void;
+	
+	/**
 	 * Change the emitters center to match the center of any object with a center property, such as a Sprite.
+	 * If the object doesn't have a center property it will be set to object.x + object.width / 2
 	 */
 	@:overload(function (object:Dynamic):Void {})
-	function at (object:phaser.gameobjects.Sprite):Void;
+	@:overload(function (object:phaser.gameobjects.Sprite):Void {})
+	@:overload(function (object:phaser.gameobjects.Image):Void {})
+	@:overload(function (object:phaser.gameobjects.TileSprite):Void {})
+	@:overload(function (object:phaser.gameobjects.Text):Void {})
+	function at (object:phaser.pixi.display.DisplayObject):Void;
 	
 	/**
 	 * @name Phaser.Particles.Arcade.Emitter#left

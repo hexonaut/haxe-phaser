@@ -39,7 +39,7 @@ extern class TweenManager {
 	function add (tween:phaser.tween.Tween):phaser.tween.Tween;
 	
 	/**
-	 * Create a tween object for a specific object. The object can be any JavaScript object or Phaser object such as Sprite. 
+	 * Create a tween object for a specific object. The object can be any JavaScript object or Phaser object such as Sprite.
 	 */
 	function create (object:Dynamic):phaser.tween.Tween;
 	

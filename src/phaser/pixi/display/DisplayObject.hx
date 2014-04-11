@@ -95,7 +95,8 @@ extern class DisplayObject {
 	var a0:Bool;
 	
 	/**
-	 * The area the filter is applied to 
+	 * The area the filter is applied to like the hitArea this is used as more of an optimisation
+	 * rather than figuring out the dimensions of the displayObject each frame you can set this rectangle
 	 */
 	var filterArea:Dynamic;
 	
@@ -127,6 +128,13 @@ extern class DisplayObject {
 	 * To remove filters simply set this property to 'null'
 	 */
 	var filters:Array<Dynamic>;
+	
+	/**
+	 * Set weather or not a the display objects is cached as a bitmap.
+	 * This basically takes a snap shot of the display object as it is at that moment. It can provide a performance benefit for complex static displayObjects
+	 * To remove filters simply set this property to 'null'
+	 */
+	var cacheAsBitmap:Bool;
 	
 	/**
 	 * The position of the displayObject on the x axis relative to the local coordinates of the parent.

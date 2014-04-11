@@ -174,9 +174,10 @@ extern class Sound {
 	function soundHasUnlocked (key:String):Void;
 	
 	/**
-	 * Description.
+	 * Adds a marker into the current Sound. A marker is represented by a unique key and a start time and duration.
+	 * This allows you to bundle multiple sounds together into a single audio file and use markers to jump between them for playback.
 	 */
-	function addMarker (name:String, start:Dynamic, stop:Dynamic, volume:Dynamic, loop:Dynamic):Void;
+	function addMarker (name:String, start:Float, duration:Float, ?volume:Float = 1, ?loop:Bool = false):Void;
 	
 	/**
 	 * Removes a marker from the sound.
@@ -212,6 +213,11 @@ extern class Sound {
 	 * Stop playing this sound.
 	 */
 	function stop ():Void;
+	
+	/**
+	 * Destroys this sound and all associated events and removes it from the SoundManager.
+	 */
+	function destroy (?remove:Bool = true):Void;
 	
 	/**
 	 * @name Phaser.Sound#isDecoding

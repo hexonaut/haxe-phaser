@@ -123,4 +123,9 @@ extern class Point {
 	 */
 	function toString ():String;
 	
+	/**
+	 * Calculates centroid (or midpoint) from an array of points. If only one point is provided, that point is returned.
+	 */
+	function centroid (points:Dynamic, ?out:phaser.geom.Point):phaser.geom.Point;
+	
 }

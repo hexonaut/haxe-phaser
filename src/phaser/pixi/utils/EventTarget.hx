@@ -6,7 +6,7 @@ extern class EventTarget {
 	/**
 	 * Holds all the listeners
 	 */
-	var listeneners:Dynamic;
+	var listeners:Dynamic;
 	
 	/**
 	 * Adds a listener for a specific event

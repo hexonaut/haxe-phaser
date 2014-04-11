@@ -4,11 +4,7 @@ package phaser.core;
 extern class SignalBinding {
 	
 	/**
-	 * Phaser.SignalBinding
-	 * 
-	 * Object that represents a binding between a Signal and a listener function.
-	 * This is an internal constructor and shouldn't be called by regular users.
-	 * Inspired by Joa Ebert AS3 SignalBinding and Robert Penner's Slot classes.
+	 * @class Phaser.SignalBinding
 	 */
 	function new (signal:phaser.core.Signal, listener:Dynamic, isOnce:Bool, ?listenerContext:Dynamic, ?priority:Float);
 	

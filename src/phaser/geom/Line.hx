@@ -27,7 +27,7 @@ extern class Line {
 	 * Sets the line to match the x/y coordinates of the two given sprites.
 	 * Can optionally be calculated from their center coordinates.
 	 */
-	function fromSprite (startSprite:phaser.gameobjects.Sprite, endSprite:phaser.gameobjects.Sprite, ?useCenter:Bool = true):phaser.geom.Line;
+	function fromSprite (startSprite:phaser.gameobjects.Sprite, endSprite:phaser.gameobjects.Sprite, ?useCenter:Bool = false):phaser.geom.Line;
 	
 	/**
 	 * Checks for intersection between this line and another Line.
