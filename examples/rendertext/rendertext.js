@@ -1,6 +1,6 @@
 (function () { "use strict";
 var RenderText = function() {
-	this.game = new Phaser.Game(800,600,1,"phaser-example",{ create : $bind(this,this.create)});
+	this.game = new Phaser.Game(800,600,Phaser.CANVAS,"phaser-example",{ create : $bind(this,this.create)});
 };
 RenderText.main = function() {
 	new RenderText();
