@@ -192,8 +192,8 @@ extern class Loader {
 	/**
 	 * Add a new audio file to the loader.
 	 */
-	@:overload(function (key:String, urls:Array<Dynamic>, autoDecode:Bool):phaser.loader.Loader {})
-	function audio (key:String, urls:String, autoDecode:Bool):phaser.loader.Loader;
+	@:overload(function (key:String, urls:Array<Dynamic>, ?autoDecode:Bool = true):phaser.loader.Loader {})
+	function audio (key:String, urls:String, ?autoDecode:Bool = true):phaser.loader.Loader;
 	
 	/**
 	 * Add a new tilemap loading request.
