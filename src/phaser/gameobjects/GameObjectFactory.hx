@@ -28,9 +28,11 @@ extern class GameObjectFactory {
 	 * It can still rotate, scale, crop and receive input events. This makes it perfect for logos, backgrounds, simple buttons and other non-Sprite graphics.
 	 */
 	@:overload(function (x:Float, y:Float, key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.BitmapData, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	@:overload(function (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	@:overload(function (x:Float, y:Float, key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.BitmapData, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	function image (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite;
 	
