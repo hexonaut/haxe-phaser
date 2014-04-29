@@ -1,7 +1,6 @@
-Haxe externs for Phaser - the popular JavaScript game engine.
+Haxe externs for Phaser (https://github.com/photonstorm/phaser) - the popular JavaScript game engine.
 
 Automatically built with: https://github.com/Blank101/js2hx
-Phaser: https://github.com/photonstorm/phaser
 
 Branches
 ========
