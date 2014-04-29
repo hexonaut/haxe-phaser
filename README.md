@@ -6,8 +6,12 @@ Phaser: https://github.com/photonstorm/phaser
 Branches
 ========
 
-master - Push manual changes here.
-auto_builds - Automated builds of the Phaser library will be pushed to here. For example when Phaser updates from 2.0.2 to 2.0.3 an automated build will be made with js2hx and pushed to this branch. Master will then rebase to the latest commit of auto_builds.
+<dl>
+	<dt>master</dt>
+	<dd>Push manual changes here.</dd>
+	<dt>auto_builds</dt>
+	<dd>Automated builds of the Phaser library will be pushed to here. For example when Phaser updates from 2.0.2 to 2.0.3 an automated build will be made with js2hx and pushed to this branch. Master will then rebase to the latest commit of auto_builds.</dd>
+</dl>
 
 Examples
 ========
