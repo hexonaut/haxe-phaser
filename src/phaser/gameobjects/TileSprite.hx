@@ -64,7 +64,7 @@ extern class TileSprite {
 	/**
 	 * Internal cache var.
 	 */
-	var _scroll:phaser.geom.Point;
+	var _scroll:Dynamic;
 	
 	/**
 	 * The Input Handler for this object. Needs to be enabled with image.inputEnabled = true before you can use it.
@@ -74,7 +74,7 @@ extern class TileSprite {
 	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
-	var world:phaser.geom.Point;
+	var world:Dynamic;
 	
 	/**
 	 * Should this Sprite be automatically culled if out of range of the camera?
@@ -93,7 +93,7 @@ extern class TileSprite {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:phaser.geom.Point;
+	var cameraOffset:Dynamic;
 	
 	/**
 	 * By default Sprites won't add themselves to any physics system and their physics body will be null.
@@ -115,6 +115,7 @@ extern class TileSprite {
 	 * 5 = outOfBoundsFired (0 = no, 1 = yes)
 	 * 6 = exists (0 = no, 1 = yes)
 	 * 7 = fixed to camera (0 = no, 1 = yes)
+	 * 8 = destroy phase? (0 = no, 1 = yes)
 	 */
 	var cache:Array<Dynamic>;
 	
@@ -224,5 +225,10 @@ extern class TileSprite {
 	 * The position of the TileSprite on the y axis relative to the local coordinates of the parent.
 	 */
 	var y:Float;
+	
+	/**
+	 * @name Phaser.TileSprite#destroyPhase
+	 */
+	var destroyPhase:Bool;
 	
 }

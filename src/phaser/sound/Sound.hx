@@ -24,14 +24,14 @@ extern class Sound {
 	var key:String;
 	
 	/**
-	 * Whether or not the sound will loop.
+	 * Whether or not the sound or current sound marker will loop.
 	 */
 	var loop:Bool;
 	
 	/**
-	 * The global audio volume. A value between 0 (silence) and 1 (full volume).
+	 * The sound or sound marker volume. A value between 0 (silence) and 1 (full volume).
 	 */
-	var _volume:Float;
+	var volume:Float;
 	
 	/**
 	 * The sound markers.
@@ -44,22 +44,12 @@ extern class Sound {
 	var context:Dynamic;
 	
 	/**
-	 * Decoded data buffer / Audio tag.
-	 */
-	var _buffer:Dynamic;
-	
-	/**
-	 * Boolean indicating whether the sound is muted or not.
-	 */
-	var _muted:Bool;
-	
-	/**
 	 * Boolean indicating whether the sound should start automatically.
 	 */
 	var autoplay:Bool;
 	
 	/**
-	 * The total duration of the sound, in milliseconds
+	 * The total duration of the sound in seconds.
 	 */
 	var totalDuration:Float;
 	
@@ -74,9 +64,19 @@ extern class Sound {
 	var currentTime:Float;
 	
 	/**
-	 * The duration of the sound.
+	 * The duration of the current sound marker in seconds.
 	 */
 	var duration:Float;
+	
+	/**
+	 * The duration of the current sound marker in ms.
+	 */
+	var durationMS:Float;
+	
+	/**
+	 * The position of the current sound marker.
+	 */
+	var position:Float;
 	
 	/**
 	 * The time the sound stopped.
@@ -129,6 +129,16 @@ extern class Sound {
 	var externalNode:Dynamic;
 	
 	/**
+	 * The master gain node in a Web Audio system.
+	 */
+	var masterGainNode:Dynamic;
+	
+	/**
+	 * The gain node in a Web Audio system.
+	 */
+	var gainNode:Dynamic;
+	
+	/**
 	 * The onDecoded event is dispatched when the sound has finished decoding (typically for mp3 files)
 	 */
 	var onDecoded:phaser.core.Signal;
@@ -169,6 +179,46 @@ extern class Sound {
 	var onMarkerComplete:phaser.core.Signal;
 	
 	/**
+	 * The global audio volume. A value between 0 (silence) and 1 (full volume).
+	 */
+	var _volume:Float;
+	
+	/**
+	 * Decoded data buffer / Audio tag.
+	 */
+	var _buffer:Dynamic;
+	
+	/**
+	 * Boolean indicating whether the sound is muted or not.
+	 */
+	var _muted:Bool;
+	
+	/**
+	 * Internal marker var.
+	 */
+	var _tempMarker:Float;
+	
+	/**
+	 * Internal marker var.
+	 */
+	var _tempPosition:Float;
+	
+	/**
+	 * Internal marker var.
+	 */
+	var _tempVolume:Float;
+	
+	/**
+	 * Internal marker var.
+	 */
+	var _tempLoop:Bool;
+	
+	/**
+	 * Was this sound paused via code or a game event?
+	 */
+	var _paused:Bool;
+	
+	/**
 	 * Called automatically when this sound is unlocked.
 	 */
 	function soundHasUnlocked (key:String):Void;
@@ -200,12 +250,12 @@ extern class Sound {
 	function restart (?marker:String = '', ?position:Float = 0, ?volume:Float = 1, ?loop:Bool = false):Void;
 	
 	/**
-	 * Pauses the sound
+	 * Pauses the sound.
 	 */
 	function pause ():Void;
 	
 	/**
-	 * Resumes the sound
+	 * Resumes the sound.
 	 */
 	function resume ():Void;
 	
@@ -233,10 +283,5 @@ extern class Sound {
 	 * @name Phaser.Sound#mute
 	 */
 	var mute:Bool;
-	
-	/**
-	 * @name Phaser.Sound#volume
-	 */
-	var volume(default, null):Float;
 	
 }

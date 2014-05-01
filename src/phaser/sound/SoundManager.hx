@@ -101,7 +101,7 @@ extern class SoundManager {
 	function pauseAll ():Void;
 	
 	/**
-	 * resumes every sound in the game.
+	 * Resumes every sound in the game.
 	 */
 	function resumeAll ():Void;
 	

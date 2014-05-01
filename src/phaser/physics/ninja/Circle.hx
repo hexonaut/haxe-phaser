@@ -22,12 +22,12 @@ extern class Circle {
 	/**
 	 * The position of this object.
 	 */
-	var pos:phaser.geom.Point;
+	var pos:Dynamic;
 	
 	/**
 	 * The position of this object in the previous update.
 	 */
-	var oldpos:phaser.geom.Point;
+	var oldpos:Dynamic;
 	
 	/**
 	 * The radius of this circle shape.
@@ -67,7 +67,7 @@ extern class Circle {
 	/**
 	 * The velocity of this object.
 	 */
-	var velocity:phaser.geom.Point;
+	var velocity:Dynamic;
 	
 	/**
 	 * All of the collision response handlers.

@@ -108,7 +108,7 @@ extern class Key {
 	 * Resets the state of this Key. This sets isDown to false, isUp to true, resets the time to be the current time and clears any callbacks
 	 * associated with the onDown and onUp events and nulls the onHoldCallback if set.
 	 */
-	function reset ():Void;
+	function reset (?hard:Bool = true):Void;
 	
 	/**
 	 * Returns the "just pressed" state of the Key. Just pressed is considered true if the key was pressed down within the duration given (default 250ms)

@@ -26,7 +26,7 @@ extern class RenderTexture {
 	/**
 	 * Internal var.
 	 */
-	var _temp:phaser.geom.Point;
+	var _temp:Dynamic;
 	
 	/**
 	 * This function will draw the display object to the texture.
@@ -40,11 +40,11 @@ extern class RenderTexture {
 	/**
 	 * This function will draw the display object to the texture.
 	 */
-	@:overload(function (displayObject:phaser.gameobjects.Sprite, position:phaser.geom.Point, clear:Bool):Void {})
-	@:overload(function (displayObject:phaser.gameobjects.Image, position:phaser.geom.Point, clear:Bool):Void {})
-	@:overload(function (displayObject:phaser.gameobjects.Text, position:phaser.geom.Point, clear:Bool):Void {})
-	@:overload(function (displayObject:phaser.gameobjects.BitmapText, position:phaser.geom.Point, clear:Bool):Void {})
-	function render (displayObject:phaser.core.Group, position:phaser.geom.Point, clear:Bool):Void;
+	@:overload(function (displayObject:phaser.gameobjects.Sprite, position:Dynamic, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.Image, position:Dynamic, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.Text, position:Dynamic, clear:Bool):Void {})
+	@:overload(function (displayObject:phaser.gameobjects.BitmapText, position:Dynamic, clear:Bool):Void {})
+	function render (displayObject:phaser.core.Group, position:Dynamic, clear:Bool):Void;
 	
 	/**
 	 * Resize this RenderTexture to the given width and height.

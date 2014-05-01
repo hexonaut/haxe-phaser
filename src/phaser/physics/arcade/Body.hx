@@ -27,17 +27,17 @@ extern class Body {
 	/**
 	 * The offset of the Physics Body from the Sprite x/y position.
 	 */
-	var offset:phaser.geom.Point;
+	var offset:Dynamic;
 	
 	/**
 	 * The position of the physics body.
 	 */
-	var position(default, null):phaser.geom.Point;
+	var position(default, null):Dynamic;
 	
 	/**
 	 * The previous position of the physics body.
 	 */
-	var prev(default, null):phaser.geom.Point;
+	var prev(default, null):Dynamic;
 	
 	/**
 	 * Allow this Body to be rotated? (via angularVelocity, etc)
@@ -87,32 +87,32 @@ extern class Body {
 	/**
 	 * The center coordinate of the Physics Body.
 	 */
-	var center:phaser.geom.Point;
+	var center:Dynamic;
 	
 	/**
 	 * The velocity in pixels per second sq. of the Body.
 	 */
-	var velocity:phaser.geom.Point;
+	var velocity:Dynamic;
 	
 	/**
 	 * New velocity.
 	 */
-	var newVelocity(default, null):phaser.geom.Point;
+	var newVelocity(default, null):Dynamic;
 	
 	/**
 	 * The Sprite position is updated based on the delta x/y values. You can set a cap on those (both +-) using deltaMax.
 	 */
-	var deltaMax:phaser.geom.Point;
+	var deltaMax:Dynamic;
 	
 	/**
 	 * The velocity in pixels per second sq. of the Body.
 	 */
-	var acceleration:phaser.geom.Point;
+	var acceleration:Dynamic;
 	
 	/**
 	 * The drag applied to the motion of the Body.
 	 */
-	var drag:phaser.geom.Point;
+	var drag:Dynamic;
 	
 	/**
 	 * Allow this Body to be influenced by gravity? Either world or local.
@@ -122,17 +122,17 @@ extern class Body {
 	/**
 	 * A local gravity applied to this Body. If non-zero this over rides any world gravity, unless Body.allowGravity is set to false.
 	 */
-	var gravity:phaser.geom.Point;
+	var gravity:Dynamic;
 	
 	/**
 	 * The elasticitiy of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
 	 */
-	var bounce:phaser.geom.Point;
+	var bounce:Dynamic;
 	
 	/**
 	 * The maximum velocity in pixels per second sq. that the Body can reach.
 	 */
-	var maxVelocity:phaser.geom.Point;
+	var maxVelocity:Dynamic;
 	
 	/**
 	 * The angular velocity in pixels per second sq. of the Body.
@@ -245,10 +245,10 @@ extern class Body {
 	 * If this is an especially small or fast moving object then it can sometimes skip over tilemap collisions if it moves through a tile in a step.
 	 * Set this padding value to add extra padding to its bounds. tilePadding.x applied to its width, y to its height.
 	 */
-	var tilePadding:phaser.geom.Point;
+	var tilePadding:Dynamic;
 	
 	/**
-	 * Is this Body in a preUpdate or postUpdate state?
+	 * Is this Body in a preUpdate (1) or postUpdate (2) state?
 	 */
 	var phase:Float;
 	

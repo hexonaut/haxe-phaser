@@ -136,17 +136,17 @@ extern class Pointer {
 	/**
 	 * A Phaser.Point object containing the current x/y values of the pointer on the display.
 	 */
-	var position:phaser.geom.Point;
+	var position:Dynamic;
 	
 	/**
 	 * A Phaser.Point object containing the x/y values of the pointer when it was last in a down state on the display.
 	 */
-	var positionDown:phaser.geom.Point;
+	var positionDown:Dynamic;
 	
 	/**
 	 * A Phaser.Point object containing the x/y values of the pointer when it was last released.
 	 */
-	var positionUp:phaser.geom.Point;
+	var positionUp:Dynamic;
 	
 	/**
 	 * A Phaser.Circle that is centered on the x/y coordinates of this pointer, useful for hit detection.

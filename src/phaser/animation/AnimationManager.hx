@@ -25,6 +25,11 @@ extern class AnimationManager {
 	var currentFrame:phaser.animation.Frame;
 	
 	/**
+	 * The currently displayed animation, if any.
+	 */
+	var currentAnim:phaser.animation.Animation;
+	
+	/**
 	 * Should the animation data continue to update even if the Sprite.visible is set to false.
 	 */
 	var updateIfVisible:Bool;
@@ -94,7 +99,8 @@ extern class AnimationManager {
 	function refreshFrame ():Void;
 	
 	/**
-	 * Destroys all references this AnimationManager contains. Sets the _anims to a new object and nulls the current animation.
+	 * Destroys all references this AnimationManager contains.
+	 * Iterates through the list of animations stored in this manager and calls destroy on each of them.
 	 */
 	function destroy ():Void;
 	

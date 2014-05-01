@@ -14,7 +14,7 @@ extern class Tile {
 	var layer:Dynamic;
 	
 	/**
-	 * The index of this tile within the map data corresponding to the tileset.
+	 * The index of this tile within the map data corresponding to the tileset, or -1 if this represents a blank/null tile.
 	 */
 	var index:Float;
 	
@@ -163,6 +163,11 @@ extern class Tile {
 	 * Copies the tile data and properties from the given tile to this tile.
 	 */
 	function copy (tile:phaser.tilemap.Tile):Void;
+	
+	/**
+	 * @name Phaser.Tile#collides
+	 */
+	var collides(default, null):Bool;
 	
 	/**
 	 * @name Phaser.Tile#canCollide

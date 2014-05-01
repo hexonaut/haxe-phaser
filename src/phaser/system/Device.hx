@@ -34,6 +34,11 @@ extern class Device {
 	var ejecta:Bool;
 	
 	/**
+	 * Is the game running under the Intel Crosswalk XDK?
+	 */
+	var crosswalk:Bool;
+	
+	/**
 	 * Is running on android?
 	 */
 	var android:Bool;
@@ -269,6 +274,11 @@ extern class Device {
 	var littleEndian:Bool;
 	
 	/**
+	 * Does the device context support 32bit pixel manipulation using array buffer views?
+	 */
+	var support32bit:Bool;
+	
+	/**
 	 * Does the browser support the Full Screen API?
 	 */
 	var fullscreen:Bool;
@@ -314,9 +324,19 @@ extern class Device {
 	function _checkAudio ():Void;
 	
 	/**
-	 * Check PixelRatio of devices.
+	 * Check PixelRatio, iOS device, Vibration API, ArrayBuffers and endianess.
 	 */
 	function _checkDevice ():Void;
+	
+	/**
+	 * Check Little or Big Endian system.
+	 */
+	function _checkIsLittleEndian ():Void;
+	
+	/**
+	 * Test to see if ImageData uses CanvasPixelArray or Uint8ClampedArray.
+	 */
+	function _checkIsUint8ClampedImageData ():Void;
 	
 	/**
 	 * Check whether the host environment support 3D CSS.

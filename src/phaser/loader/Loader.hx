@@ -36,6 +36,11 @@ extern class Loader {
 	var _xhr:Dynamic;
 	
 	/**
+	 * An ajax request used specifically by IE9 for CORs loading issues.
+	 */
+	var _ajax:Dynamic;
+	
+	/**
 	 * True if the Loader is in the process of loading the queue.
 	 */
 	var isLoading:Bool;
@@ -74,22 +79,27 @@ extern class Loader {
 	var baseURL:String;
 	
 	/**
-	 * Event signal.
-	 */
-	var onFileComplete:phaser.core.Signal;
-	
-	/**
-	 * Event signal.
-	 */
-	var onFileError:phaser.core.Signal;
-	
-	/**
-	 * Event signal.
+	 * This event is dispatched when the loading process starts, before the first file has been requested.
 	 */
 	var onLoadStart:phaser.core.Signal;
 	
 	/**
-	 * Event signal.
+	 * This event is dispatched immediately before a file starts loading. It's possible the file may still error (404, etc) after this event is sent.
+	 */
+	var onFileStart:phaser.core.Signal;
+	
+	/**
+	 * This event is dispatched when a file completes loading successfully.
+	 */
+	var onFileComplete:phaser.core.Signal;
+	
+	/**
+	 * This event is dispatched when a file errors as a result of the load request.
+	 */
+	var onFileError:phaser.core.Signal;
+	
+	/**
+	 * This event is dispatched when the final file in the load queue has either loaded or failed.
 	 */
 	var onLoadComplete:phaser.core.Signal;
 	

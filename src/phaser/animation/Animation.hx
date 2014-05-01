@@ -121,6 +121,12 @@ extern class Animation {
 	function restart ():Void;
 	
 	/**
+	 * Sets this animations playback to a given frame with the given ID.
+	 */
+	@:overload(function (?frameId:String, ?useLocalFrameIndex:Bool = false):Void {})
+	function setFrame (?frameId:Float, ?useLocalFrameIndex:Bool = false):Void;
+	
+	/**
 	 * Stops playback of this animation and set it to a finished state. If a resetFrame is provided it will stop playback and set frame to the first in the animation.
 	 * If dispatchComplete is true it will dispatch the complete events, otherwise they'll be ignored.
 	 */

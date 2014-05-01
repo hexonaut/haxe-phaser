@@ -132,17 +132,17 @@ extern class ScaleManager {
 	/**
 	 * The scale factor based on the game dimensions vs. the scaled dimensions.
 	 */
-	var scaleFactor(default, null):phaser.geom.Point;
+	var scaleFactor(default, null):Dynamic;
 	
 	/**
 	 * The inversed scale factor. The displayed dimensions divided by the game dimensions.
 	 */
-	var scaleFactorInversed(default, null):phaser.geom.Point;
+	var scaleFactorInversed(default, null):Dynamic;
 	
 	/**
-	 * If the game canvas is seto to align by adjusting the margin, the margin calculation values are stored in this Point.
+	 * If the game canvas is set to align by adjusting the margin, the margin calculation values are stored in this Point.
 	 */
-	var margin(default, null):phaser.geom.Point;
+	var margin(default, null):Dynamic;
 	
 	/**
 	 * The aspect ratio of the scaled game.
@@ -183,6 +183,11 @@ extern class ScaleManager {
 	 * Cached stage height for full screen mode.
 	 */
 	var _height:Float;
+	
+	/**
+	 * Cached size interval var.
+	 */
+	var _check:Float;
 	
 	/**
 	 * @constant

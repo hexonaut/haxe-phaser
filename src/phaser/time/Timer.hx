@@ -31,6 +31,11 @@ extern class Timer {
 	var expired(default, null):Bool;
 	
 	/**
+	 * Elapsed time since the last frame (in ms).
+	 */
+	var elapsed:Float;
+	
+	/**
 	 * An array holding all of this timers Phaser.TimerEvent objects. Use the methods add, repeat and loop to populate it.
 	 */
 	var events:Dynamic;
@@ -44,6 +49,11 @@ extern class Timer {
 	 * The time the next tick will occur.
 	 */
 	var nextTick(default, null):Float;
+	
+	/**
+	 * If the difference in time between two frame updates exceeds this value, the event times are reset to avoid catch-up situations.
+	 */
+	var timeCap:Float;
 	
 	/**
 	 * The paused state of the Timer. You can pause the timer by calling Timer.pause() and Timer.resume() or by the game pausing.
@@ -81,9 +91,24 @@ extern class Timer {
 	var _len:Float;
 	
 	/**
+	 * Temp. counter variable.
+	 */
+	var _marked:Float;
+	
+	/**
 	 * Temp. array counter variable.
 	 */
 	var _i:Float;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _diff:Float;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _newTick:Float;
 	
 	/**
 	 * @constant
@@ -118,7 +143,7 @@ extern class Timer {
 	function add (delay:Float, callback:Dynamic, callbackContext:Dynamic, arguments:Dynamic):phaser.time.TimerEvent;
 	
 	/**
-	 * Adds a new Event to this Timer that will repeat for the given number of iterations.
+	 * Adds a new TimerEvent that will always play through once and then repeat for the given number of iterations.
 	 * The event will fire after the given amount of 'delay' milliseconds has passed once the Timer has started running.
 	 * Call Timer.start() once you have added all of the Events you require for this Timer. The delay is in relation to when the Timer starts, not the time it was added.
 	 * If the Timer is already running the delay will be calculated based on the timers current time.
@@ -159,7 +184,12 @@ extern class Timer {
 	function sortHandler ():Void;
 	
 	/**
-	 * The main Timer update event, called automatically by the Game clock.
+	 * Clears any events from the Timer which have pendingDelete set to true and then resets the private _len and _i values.
+	 */
+	function clearPendingEvents ():Void;
+	
+	/**
+	 * The main Timer update event, called automatically by Phaser.Time.update.
 	 */
 	function update (time:Float):Bool;
 	
@@ -172,6 +202,11 @@ extern class Timer {
 	 * This is called by the core Game loop. Do not call it directly, instead use Timer.pause.
 	 */
 	function _pause ():Void;
+	
+	/**
+	 * Adjusts the time of all pending events and the nextTick by the given baseTime.
+	 */
+	function adjustEvents ():Void;
 	
 	/**
 	 * Resumes the Timer and updates all pending events.

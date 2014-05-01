@@ -36,7 +36,7 @@ extern class Rectangle {
 	/**
 	 * Adjusts the location of the Rectangle object using a Point object as a parameter. This method is similar to the Rectangle.offset() method, except that it takes a Point object as a parameter.
 	 */
-	function offsetPoint (point:phaser.geom.Point):phaser.geom.Rectangle;
+	function offsetPoint (point:Dynamic):phaser.geom.Rectangle;
 	
 	/**
 	 * Sets the members of Rectangle to the specified values.
@@ -71,7 +71,7 @@ extern class Rectangle {
 	/**
 	 * The size of the Rectangle object, expressed as a Point object with the values of the width and height properties.
 	 */
-	function size (?output:phaser.geom.Point):phaser.geom.Point;
+	function size (?output:Dynamic):Dynamic;
 	
 	/**
 	 * Returns a new Rectangle object with the same values for the x, y, width, and height properties as the original Rectangle object.
@@ -139,7 +139,7 @@ extern class Rectangle {
 	/**
 	 * The location of the Rectangles bottom right corner as a Point object.
 	 */
-	var bottomRight:phaser.geom.Point;
+	var bottomRight:Dynamic;
 	
 	/**
 	 * The x coordinate of the left of the Rectangle. Changing the left property of a Rectangle object has no effect on the y and height properties. However it does affect the width property, whereas changing the x value does not affect the width property.
@@ -180,7 +180,7 @@ extern class Rectangle {
 	/**
 	 * The location of the Rectangles top left corner as a Point object.
 	 */
-	var topLeft:phaser.geom.Point;
+	var topLeft:Dynamic;
 	
 	/**
 	 * Determines whether or not this Rectangle object is empty. A Rectangle object is empty if its width or height is less than or equal to 0.
@@ -191,7 +191,7 @@ extern class Rectangle {
 	/**
 	 * Increases the size of the Rectangle object. This method is similar to the Rectangle.inflate() method except it takes a Point object as a parameter.
 	 */
-	function inflatePoint (a:phaser.geom.Rectangle, point:phaser.geom.Point):phaser.geom.Rectangle;
+	function inflatePoint (a:phaser.geom.Rectangle, point:Dynamic):phaser.geom.Rectangle;
 	
 	/**
 	 * Determines whether the specified coordinates are contained within the region defined by the given raw values.
@@ -201,6 +201,6 @@ extern class Rectangle {
 	/**
 	 * Determines whether the specified point is contained within the rectangular region defined by this Rectangle object. This method is similar to the Rectangle.contains() method, except that it takes a Point object as a parameter.
 	 */
-	function containsPoint (a:phaser.geom.Rectangle, point:phaser.geom.Point):Bool;
+	function containsPoint (a:phaser.geom.Rectangle, point:Dynamic):Bool;
 	
 }

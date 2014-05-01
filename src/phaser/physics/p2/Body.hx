@@ -35,7 +35,7 @@ extern class Body {
 	/**
 	 * The offset of the Physics Body from the Sprite x/y position.
 	 */
-	var offset:phaser.geom.Point;
+	var offset:Dynamic;
 	
 	/**
 	 * The p2 Body data.
@@ -55,7 +55,7 @@ extern class Body {
 	/**
 	 * A locally applied gravity force to the Body. Applied directly before the world step. NOTE: Not currently implemented.
 	 */
-	var gravity:phaser.geom.Point;
+	var gravity:Dynamic;
 	
 	/**
 	 * Dispatched when a first contact is created between shapes in two bodies. This event is fired during the step, so collision has already taken place.
@@ -391,15 +391,21 @@ extern class Body {
 	function addPhaserPolygon (key:String, object:String):Void;
 	
 	/**
-	 * Add a polygon fixture. This is used during #loadPhaserPolygon.
+	 * Add a polygon fixture. This is used during #loadPolygon.
 	 */
 	function addFixture (fixtureData:String):Array<Dynamic>;
 	
 	/**
 	 * Reads the shape data from a physics data file stored in the Game.Cache and adds it as a polygon to this Body.
 	 */
-	@:overload(function (key:String, object:String, options:Dynamic, options:Bool, options:Bool, options:Bool):Bool {})
-	function loadPolygon (key:String, object:String, options:Dynamic, options:Bool, options:Bool, options:Float):Bool;
+	function loadPolygon (key:String, object:String):Bool;
+	
+	/**
+	 * DEPRECATED: This method will soon be removed from the API. Please avoid using.
+	 * Reads the physics data from a physics data file stored in the Game.Cache.
+	 * It will add the shape data to this Body, as well as set the density (mass).
+	 */
+	function loadData (key:String, object:String):Bool;
 	
 	/**
 	 * Dynamic body.

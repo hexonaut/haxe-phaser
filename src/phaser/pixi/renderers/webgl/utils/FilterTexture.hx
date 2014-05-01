@@ -6,7 +6,7 @@ extern class FilterTexture {
 	/**
 	 * @class FilterTexture
 	 */
-	function new (WebGLContext:Dynamic, Number:Dynamic, Number:Dynamic);
+	function new (WebGLContext:Dynamic, Number:Dynamic, Number:Dynamic, Number:Dynamic);
 	
 	/**
 	 * @property gl

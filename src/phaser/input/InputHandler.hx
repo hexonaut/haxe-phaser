@@ -24,7 +24,9 @@ extern class InputHandler {
 	var enabled:Bool;
 	
 	/**
-	 * The PriorityID controls which Sprite receives an Input event first if they should overlap.
+	 * The priorityID is used to determine which game objects should get priority when input events occur. For example if you have
+	 * several Sprites that overlap, by default the one at the top of the display list is given priority for input events. You can
+	 * stop this from happening by controlling the priorityID value. The higher the value, the more important they are considered to the Input events.
 	 */
 	var priorityID:Float;
 	
@@ -61,7 +63,7 @@ extern class InputHandler {
 	/**
 	 * A Point object that contains by how far the Sprite snap is offset.
 	 */
-	var snapOffset:phaser.geom.Point;
+	var snapOffset:Dynamic;
 	
 	/**
 	 * When the Sprite is dragged this controls if the center of the Sprite will snap to the pointer on drag or not.
@@ -141,7 +143,7 @@ extern class InputHandler {
 	/**
 	 * Internal cache var.
 	 */
-	var _tempPoint:phaser.geom.Point;
+	var _tempPoint:Dynamic;
 	
 	/**
 	 * Internal cache var.
