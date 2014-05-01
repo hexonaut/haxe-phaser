@@ -1,7 +1,7 @@
 package phaser.gameobjects;
 
 @:native("Phaser.BitmapText")
-extern class BitmapText {
+extern class BitmapText extends phaser.pixi.text.BitmapText {
 	
 	/**
 	 * Creates a new BitmapText object.
