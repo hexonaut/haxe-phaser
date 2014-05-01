@@ -209,23 +209,32 @@ extern class BitmapData {
 	
 	/**
 	 * Get the color of a specific pixel in the context into a color object.
+<<<<<<< HEAD
 	 * If you have drawn anything to the BitmapData since it was created you must call BitmapData.update to refresh the array buffer,
 	 * otherwise this may return out of date color values, or worse - throw a run-time error as it tries to access an array element that doesn't exist.
+=======
+>>>>>>> phaser 2.0.4
 	 */
 	function getPixel (x:Float, y:Float, ?out:Dynamic):Dynamic;
 	
 	/**
 	 * Get the color of a specific pixel including its alpha value.
+<<<<<<< HEAD
 	 * If you have drawn anything to the BitmapData since it was created you must call BitmapData.update to refresh the array buffer,
 	 * otherwise this may return out of date color values, or worse - throw a run-time error as it tries to access an array element that doesn't exist.
+=======
+>>>>>>> phaser 2.0.4
 	 * Note that on little-endian systems the format is 0xAABBGGRR and on big-endian the format is 0xRRGGBBAA.
 	 */
 	function getPixel32 (x:Float, y:Float):Float;
 	
 	/**
 	 * Get the color of a specific pixel including its alpha value as a color object containing r,g,b,a and rgba properties.
+<<<<<<< HEAD
 	 * If you have drawn anything to the BitmapData since it was created you must call BitmapData.update to refresh the array buffer,
 	 * otherwise this may return out of date color values, or worse - throw a run-time error as it tries to access an array element that doesn't exist.
+=======
+>>>>>>> phaser 2.0.4
 	 */
 	function getPixelRGB (x:Float, y:Float, ?out:Dynamic, ?hsl:Bool = false, ?hsv:Bool = false):Dynamic;
 	
@@ -235,6 +244,7 @@ extern class BitmapData {
 	function getPixels (rect:phaser.geom.Rectangle):Dynamic;
 	
 	/**
+<<<<<<< HEAD
 	 * Creates a new Phaser.Image object, assigns this BitmapData to be its texture, adds it to the world then returns it.
 	 */
 	function addToWorld (?x:Float = 0, ?y:Float = 0):phaser.gameobjects.Image;
@@ -263,6 +273,21 @@ extern class BitmapData {
 	 * 
 	 * Draws the given image to this BitmapData at the coordinates specified.
 	 * If you need to only draw a part of the image use BitmapData.copyPixels instead.
+=======
+	 * Copies the pixels from the source image to this BitmapData based on the given area and destination.
+	 */
+	@:overload(function (source:Dynamic, area:phaser.geom.Rectangle, destX:Float, destY:Float):Void {})
+	function copyPixels (source:String, area:phaser.geom.Rectangle, destX:Float, destY:Float):Void;
+	
+	/**
+	 * Draws the given image to this BitmapData at the coordinates specified. If you need to only draw a part of the image use BitmapData.copyPixels instead.
+	 */
+	@:overload(function (source:Dynamic, ?x:Float = 0, ?y:Float = 0):Void {})
+	function draw (source:String, ?x:Float = 0, ?y:Float = 0):Void;
+	
+	/**
+	 * Draws the given image to this BitmapData at the coordinates specified. If you need to only draw a part of the image use BitmapData.copyPixels instead.
+>>>>>>> phaser 2.0.4
 	 */
 	@:overload(function (sprite:phaser.gameobjects.Sprite, ?x:Float = 0, ?y:Float = 0):Void {})
 	function drawSprite (sprite:phaser.gameobjects.Image, ?x:Float = 0, ?y:Float = 0):Void;
@@ -270,6 +295,7 @@ extern class BitmapData {
 	/**
 	 * Draws the given image onto this BitmapData using an image as an alpha mask.
 	 */
+<<<<<<< HEAD
 	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
 	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
 	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
@@ -317,6 +343,20 @@ extern class BitmapData {
 	 * Draws a filled Rectangle to the BitmapData at the given x, y coordinates and width / height in size.
 	 */
 	function rect (x:Float, y:Float, width:Float, height:Float, ?fillStyle:String):Void;
+=======
+	@:overload(function (source:Dynamic, mask:Dynamic):Void {})
+	@:overload(function (source:String, mask:Dynamic):Void {})
+	@:overload(function (source:Dynamic, mask:String):Void {})
+	function alphaMask (source:String, mask:String):Void;
+	
+	/**
+	 * Scans this BitmapData for all pixels matching the given r,g,b values and then draws them into the given destination BitmapData.
+	 * The destination BitmapData must be large enough to receive all of the pixels that are scanned.
+	 * Although the destination BitmapData is returned from this method, it's actually modified directly in place, meaning this call is perfectly valid:
+	 * picture.extract(mask, r, g, b)
+	 */
+	function extract (destination:phaser.gameobjects.BitmapData, r:Float, g:Float, b:Float, ?a:Float = 255):phaser.gameobjects.BitmapData;
+>>>>>>> phaser 2.0.4
 	
 	/**
 	 * Draws a filled Circle to the BitmapData at the given x, y coordinates and radius in size.

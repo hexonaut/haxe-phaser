@@ -66,12 +66,12 @@ extern class Loader {
 	/**
 	 * This event is dispatched when a file completes loading successfully.
 	 */
-	var onFileComplete:phaser.core.Signal;
+	var onLoadStart:phaser.core.Signal;
 	
 	/**
 	 * This event is dispatched when a file errors as a result of the load request.
 	 */
-	var onFileError:phaser.core.Signal;
+	var onFileStart:phaser.core.Signal;
 	
 	/**
 	 * This event is dispatched when the final file in the load queue has either loaded or failed.
