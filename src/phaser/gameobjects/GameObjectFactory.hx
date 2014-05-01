@@ -40,9 +40,11 @@ extern class GameObjectFactory {
 	 * Create a new Sprite with specific position and sprite sheet key.
 	 */
 	@:overload(function (x:Float, y:Float, key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.BitmapData, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	@:overload(function (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	@:overload(function (x:Float, y:Float, key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.BitmapData, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
 	function sprite (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite;
 	
