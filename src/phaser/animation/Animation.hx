@@ -183,6 +183,6 @@ extern class Animation {
 	 * For example imagine you've got 30 frames named: 'explosion_0001-large' to 'explosion_0030-large'
 	 * You could use this function to generate those by doing: Phaser.Animation.generateFrameNames('explosion_', 1, 30, '-large', 4);
 	 */
-	function generateFrameNames (prefix:String, start:Float, stop:Float, ?suffix:String = '', ?zeroPad:Float = 0):Array<String>;
+	static function generateFrameNames (prefix:String, start:Float, stop:Float, ?suffix:String = '', ?zeroPad:Float = 0):Array<String>;
 	
 }
