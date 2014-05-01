@@ -257,41 +257,6 @@ extern class BitmapData {
 	function circle (x:Float, y:Float, radius:Float, ?fillStyle:String):Void;
 	
 	/**
-	 * Get the color of a specific pixel.
-	 */
-	function getPixel (x:Float, y:Float):Float;
-	
-	/**
-	 * Get the color of a specific pixel including its alpha value.
-	 */
-	function getPixel32 (x:Float, y:Float):Float;
-	
-	/**
-	 * Gets all the pixels from the region specified by the given Rectangle object.
-	 */
-	function getPixels (rect:phaser.geom.Rectangle):Array<Dynamic>;
-	
-	/**
-	 * Copies the pixels from the source image to this BitmapData based on the given area and destination.
-	 */
-	@:overload(function (source:Dynamic, area:phaser.geom.Rectangle, destX:Float, destY:Float):Void {})
-	function copyPixels (source:String, area:phaser.geom.Rectangle, destX:Float, destY:Float):Void;
-	
-	/**
-	 * Draws the given image to this BitmapData at the coordinates specified. If you need to only draw a part of the image use BitmapData.copyPixels instead.
-	 */
-	@:overload(function (source:Dynamic, destX:Float, destY:Float):Void {})
-	function draw (source:String, destX:Float, destY:Float):Void;
-	
-	/**
-	 * Draws the given image onto this BitmapData using an image as an alpha mask.
-	 */
-	@:overload(function (source:Dynamic, mask:Dynamic):Void {})
-	@:overload(function (source:Dynamic, mask:String):Void {})
-	@:overload(function (source:String, mask:Dynamic):Void {})
-	function alphaMask (source:String, mask:String):Void;
-	
-	/**
 	 * If the game is running in WebGL this will push the texture up to the GPU if it's dirty.
 	 * This is called automatically if the BitmapData is being used by a Sprite, otherwise you need to remember to call it in your render function.
 	 * If you wish to suppress this functionality set BitmapData.disableTextureUpload to true.
