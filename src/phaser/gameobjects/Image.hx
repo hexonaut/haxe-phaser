@@ -1,7 +1,7 @@
 package phaser.gameobjects;
 
 @:native("Phaser.Image")
-extern class Image {
+extern class Image extends phaser.pixi.display.Sprite {
 	
 	/**
 	 * @class Phaser.Image
