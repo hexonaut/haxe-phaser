@@ -36,12 +36,12 @@ extern class Tile {
 	/**
 	 * The position of this object.
 	 */
-	var pos:phaser.geom.Point;
+	var pos:Dynamic;
 	
 	/**
 	 * The position of this object in the previous update.
 	 */
-	var oldpos:phaser.geom.Point;
+	var oldpos:Dynamic;
 	
 	/**
 	 * Half the width.
@@ -66,7 +66,7 @@ extern class Tile {
 	/**
 	 * The velocity of this object.
 	 */
-	var velocity:phaser.geom.Point;
+	var velocity:Dynamic;
 	
 	/**
 	 * Internal var.

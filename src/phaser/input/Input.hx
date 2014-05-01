@@ -53,12 +53,12 @@ extern class Input {
 	/**
 	 * A point object representing the current position of the Pointer.
 	 */
-	var position:phaser.geom.Point;
+	var position:Dynamic;
 	
 	/**
 	 * A point object representing the speed of the Pointer. Only really useful in single Pointer games; otherwise see the Pointer objects directly.
 	 */
-	var speed:phaser.geom.Point;
+	var speed:Dynamic;
 	
 	/**
 	 * A Circle object centered on the x/y screen coordinates of the Input.
@@ -69,7 +69,7 @@ extern class Input {
 	/**
 	 * The scale by which all input coordinates are multiplied; calculated by the ScaleManager. In an un-scaled game the values will be x = 1 and y = 1.
 	 */
-	var scale:phaser.geom.Point;
+	var scale:Dynamic;
 	
 	/**
 	 * The maximum number of Pointers allowed to be active at any one time. For lots of games it's useful to set this to 1.
@@ -211,6 +211,11 @@ extern class Input {
 	var gamepad:phaser.input.Gamepad;
 	
 	/**
+	 * If the Input Manager has been reset locked then all calls made to InputManager.reset, such as from a State change, are ignored.
+	 */
+	var resetLocked:Bool;
+	
+	/**
 	 * A Signal that is dispatched each time a pointer is pressed down.
 	 */
 	var onDown:phaser.core.Signal;
@@ -231,14 +236,14 @@ extern class Input {
 	var onHold:phaser.core.Signal;
 	
 	/**
-	 * A linked list of interactive objects; the InputHandler components (belonging to Sprites) register themselves with this.
+	 * A list of interactive objects. Te InputHandler components add and remove themselves from this.
 	 */
-	var interactiveItems:phaser.core.LinkedList;
+	var interactiveItems:phaser.core.ArrayList;
 	
 	/**
 	 * Internal cache var.
 	 */
-	var _localPoint:phaser.geom.Point;
+	var _localPoint:Dynamic;
 	
 	/**
 	 * Internal var holding the current poll counter.
@@ -248,7 +253,7 @@ extern class Input {
 	/**
 	 * A point object representing the previous position of the Pointer.
 	 */
-	var _oldPosition:phaser.geom.Point;
+	var _oldPosition:Dynamic;
 	
 	/**
 	 * x coordinate of the most recent Pointer event
@@ -304,9 +309,11 @@ extern class Input {
 	function update ():Void;
 	
 	/**
-	 * Reset all of the Pointers and Input states
+	 * Reset all of the Pointers and Input states. The optional hard parameter will reset any events or callbacks that may be bound.
+	 * Input.reset is called automatically during a State change or if a game loses focus / visibility. If you wish to control the reset
+	 * directly yourself then set InputManager.resetLocked to true.
 	 */
-	function reset (hard:Bool):Void;
+	function reset (?hard:Bool = false):Void;
 	
 	/**
 	 * Resets the speed and old position properties.
@@ -341,13 +348,13 @@ extern class Input {
 	/**
 	 * This will return the local coordinates of the specified displayObject based on the given Pointer.
 	 */
-	@:overload(function (displayObject:phaser.gameobjects.Sprite, pointer:phaser.input.Pointer):phaser.geom.Point {})
-	function getLocalPosition (displayObject:phaser.gameobjects.Image, pointer:phaser.input.Pointer):phaser.geom.Point;
+	@:overload(function (displayObject:phaser.gameobjects.Sprite, pointer:phaser.input.Pointer):Dynamic {})
+	function getLocalPosition (displayObject:phaser.gameobjects.Image, pointer:phaser.input.Pointer):Dynamic;
 	
 	/**
 	 * Tests if the pointer hits the given object.
 	 */
-	function hitTest (displayObject:Dynamic, pointer:phaser.input.Pointer, localPoint:phaser.geom.Point):Void;
+	function hitTest (displayObject:Dynamic, pointer:phaser.input.Pointer, localPoint:Dynamic):Void;
 	
 	/**
 	 * The X coordinate of the most recently active pointer. This value takes game scaling into account automatically. See Pointer.screenX/clientX for source values.

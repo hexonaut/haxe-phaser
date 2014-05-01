@@ -141,12 +141,12 @@ extern class p2 {
 	/**
 	 * List of bodies currently in the broadphase.
 	 */
-	var axisListX:Array<Dynamic>;
+	var axisList:Array<Dynamic>;
 	
 	/**
-	 * List of bodies currently in the broadphase.
+	 * The axis to sort along.
 	 */
-	var axisListY:Array<Dynamic>;
+	var axisIndex:Float;
 	
 	/**
 	 * Equations to be solved in this constraint
@@ -174,6 +174,16 @@ extern class p2 {
 	var distance:Float;
 	
 	/**
+	 * Local anchor in body A.
+	 */
+	var localAnchorA:Array<Dynamic>;
+	
+	/**
+	 * Local anchor in body B.
+	 */
+	var localAnchorB:Array<Dynamic>;
+	
+	/**
 	 * The relative angle
 	 */
 	var angle:Float;
@@ -192,16 +202,6 @@ extern class p2 {
 	 * The offset angle of bodyB in bodyA's frame.
 	 */
 	var localAngleB:Float;
-	
-	/**
-	 * @property localAnchorA
-	 */
-	var localAnchorA:Dynamic;
-	
-	/**
-	 * @property localAnchorB
-	 */
-	var localAnchorB:Dynamic;
 	
 	/**
 	 * @property localAxisA
@@ -636,6 +636,11 @@ extern class p2 {
 	var maxValue:Float;
 	
 	/**
+	 * Max value of the data
+	 */
+	var minValue:Float;
+	
+	/**
 	 * The width of each element
 	 */
 	var elementWidth:Float;
@@ -761,6 +766,11 @@ extern class p2 {
 	 * Function that is used to sort all equations before each solve.
 	 */
 	var equationSortFunction:Dynamic;
+	
+	/**
+	 * Keys that are currently used.
+	 */
+	var keys:Dynamic;
 	
 	/**
 	 * The array type to use for internal numeric computations.

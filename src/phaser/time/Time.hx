@@ -74,6 +74,11 @@ extern class Time {
 	var deltaCap:Float;
 	
 	/**
+	 * If the difference in time between two frame updates exceeds this value, the frame time is reset to avoid huge elapsed counts.
+	 */
+	var timeCap:Float;
+	
+	/**
 	 * The number of frames record in the last second. Only calculated if Time.advancedTiming is true.
 	 */
 	var frames:Float;

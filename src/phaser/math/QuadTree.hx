@@ -39,6 +39,11 @@ extern class QuadTree {
 	var nodes:Array<Dynamic>;
 	
 	/**
+	 * Internal empty array.
+	 */
+	var _empty:Array<Dynamic>;
+	
+	/**
 	 * Resets the QuadTree.
 	 */
 	function reset (x:Float, y:Float, width:Float, height:Float, ?maxObjects:Float = 10, ?maxLevels:Float = 4, ?level:Float = 0):Void;

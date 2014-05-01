@@ -41,9 +41,15 @@ extern class Group {
 	var exists:Bool;
 	
 	/**
+	 * The type of objects that will be created when you use Group.create or Group.createMultiple. Defaults to Phaser.Sprite.
+	 * When a new object is created it is passed the following parameters to its constructor: game, x, y, key, frame.
+	 */
+	var classType:Dynamic;
+	
+	/**
 	 * The scale of the Group container.
 	 */
-	var scale:phaser.geom.Point;
+	var scale:Dynamic;
 	
 	/**
 	 * The cursor is a simple way to iterate through the objects in a Group using the Group.next and Group.previous functions.
@@ -54,7 +60,7 @@ extern class Group {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:phaser.geom.Point;
+	var cameraOffset:Dynamic;
 	
 	/**
 	 * If true all Sprites created by, or added to this Group, will have a physics body enabled on them. Change the body type with Group.physicsBodyType.
@@ -136,15 +142,16 @@ extern class Group {
 	
 	/**
 	 * Automatically creates a new Phaser.Sprite object and adds it to the top of this Group.
-	 * Useful if you don't need to create the Sprite instances before-hand.
+	 * You can change Group.classType to any object and this call will create an object of that type instead, but it should extend either Sprite or Image.
 	 */
-	@:overload(function (x:Float, y:Float, key:String, ?frame:Float, ?exists:Bool = true):phaser.gameobjects.Sprite {})
-	function create (x:Float, y:Float, key:String, ?frame:String, ?exists:Bool = true):phaser.gameobjects.Sprite;
+	@:overload(function (x:Float, y:Float, key:String, ?frame:Float, ?exists:Bool = true):Dynamic {})
+	function create (x:Float, y:Float, key:String, ?frame:String, ?exists:Bool = true):Dynamic;
 	
 	/**
 	 * Automatically creates multiple Phaser.Sprite objects and adds them to the top of this Group.
 	 * Useful if you need to quickly generate a pool of identical sprites, such as bullets. By default the sprites will be set to not exist
 	 * and will be positioned at 0, 0 (relative to the Group.x/y)
+	 * You can change Group.classType to any object and this call will create an object of that type instead, but it should extend either Sprite or Image.
 	 */
 	@:overload(function (quantity:Float, key:String, ?frame:Float, ?exists:Bool = false):Void {})
 	function createMultiple (quantity:Float, key:String, ?frame:String, ?exists:Bool = false):Void;
@@ -153,6 +160,11 @@ extern class Group {
 	 * Internal method that re-applies all of the childrens Z values.
 	 */
 	function updateZ ():Void;
+	
+	/**
+	 * Sets the Group cursor to the first object in the Group. If the optional index parameter is given it sets the cursor to the object at that index instead.
+	 */
+	function resetCursor (?index:Float = 0):Dynamic;
 	
 	/**
 	 * Advances the Group cursor to the next object in the Group. If it's at the end of the Group it wraps around to the first object.
@@ -397,7 +409,8 @@ extern class Group {
 	function getRandom (startIndex:Float, length:Float):Dynamic;
 	
 	/**
-	 * Removes the given child from this Group and sets its group property to null.
+	 * Removes the given child from this Group. This will dispatch an onRemovedFromGroup event from the child (if it has one),
+	 * reset the Group cursor and optionally destroy the child.
 	 */
 	function remove (child:Dynamic, ?destroy:Bool = false):Bool;
 	

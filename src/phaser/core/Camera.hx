@@ -77,7 +77,7 @@ extern class Camera {
 	/**
 	 * The scale of the display object to which all game objects are added. Set by World.boot
 	 */
-	var scale:phaser.geom.Point;
+	var scale:Dynamic;
 	
 	/**
 	 * @constant
@@ -105,6 +105,11 @@ extern class Camera {
 	@:overload(function (target:phaser.gameobjects.Sprite, ?style:Float):Void {})
 	@:overload(function (target:phaser.gameobjects.Image, ?style:Float):Void {})
 	function follow (target:phaser.gameobjects.Text, ?style:Float):Void;
+	
+	/**
+	 * Sets the Camera follow target to null, stopping it from following an object if it's doing so.
+	 */
+	function unfollow ():Void;
 	
 	/**
 	 * Move the camera focus on a display object instantly.

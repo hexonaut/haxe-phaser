@@ -10,129 +10,140 @@ extern class State {
 	function new ();
 	
 	/**
-	 * A reference to the currently running Game.
+	 * This is a reference to the currently running Game.
 	 */
 	var game:phaser.core.Game;
 	
 	/**
-	 * Reference to the GameObjectFactory.
+	 * A reference to the GameObjectFactory which can be used to add new objects to the World.
 	 */
 	var add:phaser.gameobjects.GameObjectFactory;
 	
 	/**
-	 * Reference to the GameObjectCreator.
+	 * A reference to the GameObjectCreator which can be used to make new objects.
 	 */
 	var make:phaser.gameobjects.GameObjectCreator;
 	
 	/**
-	 * A handy reference to world.camera.
+	 * A handy reference to World.camera.
 	 */
 	var camera:phaser.core.Camera;
 	
 	/**
-	 * Reference to the assets cache.
+	 * A reference to the game cache which contains any loaded or generated assets, such as images, sound and more.
 	 */
 	var cache:phaser.loader.Cache;
 	
 	/**
-	 * Reference to the input manager
+	 * A reference to the Input Manager.
 	 */
 	var input:phaser.input.Input;
 	
 	/**
-	 * Reference to the assets loader.
+	 * A reference to the Loader, which you mostly use in the preload method of your state to load external assets.
 	 */
 	var load:phaser.loader.Loader;
 	
 	/**
-	 * Reference to the math helper.
+	 * A reference to Math class with lots of helpful functions.
 	 */
 	var math:phaser.math.Math;
 	
 	/**
-	 * Reference to the sound manager.
+	 * A reference to the Sound Manager which can create, play and stop sounds, as well as adjust global volume.
 	 */
 	var sound:phaser.sound.SoundManager;
 	
 	/**
-	 * Reference to the game scale manager.
+	 * A reference to the Scale Manager which controls the way the game scales on different displays.
 	 */
 	var scale:phaser.core.ScaleManager;
 	
 	/**
-	 * Reference to the stage.
+	 * A reference to the Stage.
 	 */
 	var stage:phaser.core.Stage;
 	
 	/**
-	 * Reference to the core game clock.
+	 * A reference to the game clock and timed events system.
 	 */
 	var time:phaser.time.Time;
 	
 	/**
-	 * Reference to the tween manager.
+	 * A reference to the tween manager.
 	 */
 	var tweens:phaser.tween.TweenManager;
 	
 	/**
-	 * Reference to the world.
+	 * A reference to the game world. All objects live in the Game World and its size is not bound by the display resolution.
 	 */
 	var world:phaser.core.World;
 	
 	/**
-	 * The Particle Manager for the game. It is called during the game update loop and in turn updates any Emitters attached to it.
+	 * The Particle Manager. It is called during the core gameloop and updates any Particle Emitters it has created.
 	 */
 	var particles:phaser.particles.Particles;
 	
 	/**
-	 * Reference to the physics manager.
+	 * A reference to the physics manager which looks after the different physics systems available within Phaser.
 	 */
 	var physics:phaser.physics.Physics;
 	
 	/**
-	 * Reference to the random data generator.
+	 * A reference to the seeded and repeatable random data generator.
 	 */
 	var rnd:phaser.math.RandomDataGenerator;
 	
 	/**
-	 * Override this method to add some load operations.
-	 * If you need to use the loader, you may need to use them here.
+	 * preload is called first. Normally you'd use this to load your game assets (or those needed for the current State)
+	 * You shouldn't create any objects in this method that require assets that you're also loading in this method, as
+	 * they won't yet be available.
 	 */
 	function preload ():Void;
 	
 	/**
-	 * Put update logic here.
+	 * loadUpdate is called during the Loader process. This only happens if you've set one or more assets to load in the preload method.
 	 */
 	function loadUpdate ():Void;
 	
 	/**
-	 * Put render operations here.
+	 * loadRender is called during the Loader process. This only happens if you've set one or more assets to load in the preload method.
+	 * The difference between loadRender and render is that any objects you render in this method you must be sure their assets exist.
 	 */
 	function loadRender ():Void;
 	
 	/**
-	 * This method is called after the game engine successfully switches states.
-	 * Feel free to add any setup code here (do not load anything here, override preload() instead).
+	 * create is called once preload has completed, this includes the loading of any assets from the Loader.
+	 * If you don't have a preload method then create is the first method called in your State.
 	 */
 	function create ():Void;
 	
 	/**
-	 * Put update logic here.
+	 * The update method is left empty for your own use.
+	 * It is called during the core game loop AFTER debug, physics, plugins and the Stage have had their preUpdate methods called.
+	 * If is called BEFORE Stage, Tweens, Sounds, Input, Physics, Particles and Plugins have had their postUpdate methods called.
 	 */
 	function update ():Void;
 	
 	/**
-	 * Put render operations here.
+	 * Nearly all display objects in Phaser render automatically, you don't need to tell them to render.
+	 * However the render method is called AFTER the game renderer and plugins have rendered, so you're able to do any
+	 * final post-processing style effects here. Note that this happens before plugins postRender takes place.
 	 */
 	function render ():Void;
 	
 	/**
-	 * This method will be called when game paused.
+	 * This method will be called if the core game loop is paused.
 	 */
 	function paused ():Void;
 	
 	/**
-	 * This method will be called when the state is shut down (i.e. you switch to another state from this one).
+	 * pauseUpdate is called while the game is paused instead of preUpdate, update and postUpdate.
+	 */
+	function pauseUpdate ():Void;
+	
+	/**
+	 * This method will be called when the State is shutdown (i.e. you switch to another state from this one).
 	 */
 	function shutdown ():Void;
 	

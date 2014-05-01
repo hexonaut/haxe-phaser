@@ -11,7 +11,7 @@ extern class Canvas {
 	/**
 	 * Get the DOM offset values of any given element
 	 */
-	function getOffset (element:Dynamic, ?point:phaser.geom.Point):phaser.geom.Point;
+	function getOffset (element:Dynamic, ?point:Dynamic):Dynamic;
 	
 	/**
 	 * Returns the aspect ratio of the given canvas.

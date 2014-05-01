@@ -99,7 +99,7 @@ extern class Math {
 	/**
 	 * Find the angle of a segment from (point1.x, point1.y) -> (point2.x, point2.y).
 	 */
-	function angleBetweenPoints (point1:phaser.geom.Point, point2:phaser.geom.Point):Float;
+	function angleBetweenPoints (point1:Dynamic, point2:Dynamic):Float;
 	
 	/**
 	 * Reverses an angle.
@@ -169,6 +169,11 @@ extern class Math {
 	function wrapValue (value:Float, amount:Float, max:Float):Float;
 	
 	/**
+	 * Ensures the given value is between min and max inclusive.
+	 */
+	function limitValue (value:Float, min:Float, max:Float):Float;
+	
+	/**
 	 * Randomly returns either a 1 or -1.
 	 */
 	function randomSign ():Float;
@@ -207,8 +212,7 @@ extern class Math {
 	function maxProperty ():Float;
 	
 	/**
-	 * Keeps an angle value between -180 and +180<br>
-	 * Should be called whenever the angle is updated on the Sprite to stop it from going insane.
+	 * Keeps an angle value between -180 and +180.
 	 */
 	function wrapAngle (angle:Float, radians:Bool):Float;
 	

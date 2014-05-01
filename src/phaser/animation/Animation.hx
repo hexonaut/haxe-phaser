@@ -121,6 +121,12 @@ extern class Animation {
 	function restart ():Void;
 	
 	/**
+	 * Sets this animations playback to a given frame with the given ID.
+	 */
+	@:overload(function (?frameId:String, ?useLocalFrameIndex:Bool = false):Void {})
+	function setFrame (?frameId:Float, ?useLocalFrameIndex:Bool = false):Void;
+	
+	/**
 	 * Stops playback of this animation and set it to a finished state. If a resetFrame is provided it will stop playback and set frame to the first in the animation.
 	 * If dispatchComplete is true it will dispatch the complete events, otherwise they'll be ignored.
 	 */
@@ -177,6 +183,6 @@ extern class Animation {
 	 * For example imagine you've got 30 frames named: 'explosion_0001-large' to 'explosion_0030-large'
 	 * You could use this function to generate those by doing: Phaser.Animation.generateFrameNames('explosion_', 1, 30, '-large', 4);
 	 */
-	function generateFrameNames (prefix:String, start:Float, stop:Float, ?suffix:String = '', ?zeroPad:Float = 0):Void;
+	function generateFrameNames (prefix:String, start:Float, stop:Float, ?suffix:String = '', ?zeroPad:Float = 0):Array<Dynamic>;
 	
 }

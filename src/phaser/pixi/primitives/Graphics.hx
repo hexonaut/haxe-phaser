@@ -48,4 +48,9 @@ extern class Graphics extends phaser.pixi.display.DisplayObjectContainer {
 	 */
 	var isMask:Dynamic;
 	
+	/**
+	 * the bounds' padding used for bounds calculation
+	 */
+	var boundsPadding:Float;
+	
 }

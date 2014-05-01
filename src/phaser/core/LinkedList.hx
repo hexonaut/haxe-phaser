@@ -31,12 +31,17 @@ extern class LinkedList {
 	/**
 	 * Number of elements in the list.
 	 */
-	var total:Dynamic;
+	var total:Float;
 	
 	/**
 	 * Adds a new element to this linked list.
 	 */
 	function add (child:Dynamic):Dynamic;
+	
+	/**
+	 * Resets the first, last, next and previous node pointers in this list.
+	 */
+	function reset ():Void;
 	
 	/**
 	 * Removes the given element from this linked list if it exists.

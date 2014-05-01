@@ -90,14 +90,19 @@ extern class StateManager {
 	var onLoadRenderCallback:Dynamic;
 	
 	/**
-	 * This will be called when the state is paused.
+	 * This will be called once each time the game is paused.
 	 */
 	var onPausedCallback:Dynamic;
 	
 	/**
-	 * This will be called when the state is resumed from a paused state.
+	 * This will be called once each time the game is resumed from a paused state.
 	 */
 	var onResumedCallback:Dynamic;
+	
+	/**
+	 * This will be called every frame while the game is paused.
+	 */
+	var onPauseUpdateCallback:Dynamic;
 	
 	/**
 	 * This will be called when the state is shut down (i.e. swapped to another state).

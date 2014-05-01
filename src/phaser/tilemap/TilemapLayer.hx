@@ -71,7 +71,7 @@ extern class TilemapLayer {
 	/**
 	 * If this object is fixed to the camera then use this Point to specify how far away from the Camera x/y it's rendered.
 	 */
-	var cameraOffset:phaser.geom.Point;
+	var cameraOffset:Dynamic;
 	
 	/**
 	 * If no tileset is given the tiles will be rendered as rectangles in this color. Provide in hex or rgb/rgba string format.
@@ -189,7 +189,7 @@ extern class TilemapLayer {
 	/**
 	 * Convert a pixel value to a tile coordinate.
 	 */
-	@:overload(function (x:Float, y:Float, point:phaser.geom.Point):Dynamic {})
+	@:overload(function (x:Float, y:Float, point:Dynamic):Dynamic {})
 	function getTileXY (x:Float, y:Float, point:Dynamic):Dynamic;
 	
 	/**

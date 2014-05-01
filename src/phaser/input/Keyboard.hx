@@ -4,7 +4,10 @@ package phaser.input;
 extern class Keyboard {
 	
 	/**
-	 * The Keyboard class handles looking after keyboard input for your game. It will recognise and respond to key presses and dispatch the required events.
+	 * The Keyboard class handles looking after keyboard input for your game.
+	 * It will recognise and respond to key presses and dispatch the required events.
+	 * Please be aware that lots of keyboards are unable to process certain combinations of keys due to hardware
+	 * limitations known as ghosting. Full details here: <a href='http://www.html5gamedevs.com/topic/4876-impossible-to-use-more-than-2-keyboard-input-buttons-at-the-same-time/'>http://www.html5gamedevs.com/topic/4876-impossible-to-use-more-than-2-keyboard-input-buttons-at-the-same-time/</a>
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -137,7 +140,7 @@ extern class Keyboard {
 	/**
 	 * Resets all Keys.
 	 */
-	function reset ():Void;
+	function reset (?hard:Bool = true):Void;
 	
 	/**
 	 * Returns the "just pressed" state of the key. Just pressed is considered true if the key was pressed down within the duration given (default 250ms)

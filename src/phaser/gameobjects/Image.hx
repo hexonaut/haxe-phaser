@@ -63,7 +63,7 @@ extern class Image {
 	/**
 	 * The world coordinates of this Image. This differs from the x/y coordinates which are relative to the Images container.
 	 */
-	var world:phaser.geom.Point;
+	var world:Dynamic;
 	
 	/**
 	 * Should this Image be automatically culled if out of range of the camera?
@@ -80,7 +80,7 @@ extern class Image {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:phaser.geom.Point;
+	var cameraOffset:Dynamic;
 	
 	/**
 	 * A small internal cache:
@@ -92,6 +92,7 @@ extern class Image {
 	 * 5 = outOfBoundsFired (0 = no, 1 = yes)
 	 * 6 = exists (0 = no, 1 = yes)
 	 * 7 = fixed to camera (0 = no, 1 = yes)
+	 * 8 = destroy phase? (0 = no, 1 = yes)
 	 */
 	var cache:Array<Dynamic>;
 	
@@ -225,5 +226,10 @@ extern class Image {
 	 * Enable or disable texture smoothing for this Image. Only works for bitmap/image textures. Smoothing is enabled by default.
 	 */
 	var smoothed:Bool;
+	
+	/**
+	 * @name Phaser.Image#destroyPhase
+	 */
+	var destroyPhase:Bool;
 	
 }

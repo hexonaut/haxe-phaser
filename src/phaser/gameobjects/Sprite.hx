@@ -51,7 +51,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
-	var world:phaser.geom.Point;
+	var world:Dynamic;
 	
 	/**
 	 * Should this Sprite be automatically culled if out of range of the camera?
@@ -106,7 +106,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:phaser.geom.Point;
+	var cameraOffset:Dynamic;
 	
 	/**
 	 * A small internal cache:
@@ -118,6 +118,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	 * 5 = outOfBoundsFired (0 = no, 1 = yes)
 	 * 6 = exists (0 = no, 1 = yes)
 	 * 7 = fixed to camera (0 = no, 1 = yes)
+	 * 8 = destroy phase? (0 = no, 1 = yes)
 	 */
 	var cache:Array<Dynamic>;
 	
@@ -290,5 +291,10 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	 * Enable or disable texture smoothing for this Sprite. Only works for bitmap/image textures. Smoothing is enabled by default.
 	 */
 	var smoothed:Bool;
+	
+	/**
+	 * @name Phaser.Sprite#destroyPhase
+	 */
+	var destroyPhase:Bool;
 	
 }

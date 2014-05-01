@@ -50,6 +50,11 @@ extern class Tilemap {
 	var orientation:String;
 	
 	/**
+	 * The format of the map data, either Phaser.Tilemap.CSV or Phaser.Tilemap.TILED_JSON.
+	 */
+	var format:Float;
+	
+	/**
 	 * The version of the map data (as specified in Tiled, usually 1).
 	 */
 	var version:Float;
@@ -427,7 +432,8 @@ extern class Tilemap {
 	function dump ():Void;
 	
 	/**
-	 * Removes all layers from this tile map and nulls the game reference.
+	 * Removes all layer data from this tile map and nulls the game reference.
+	 * Note: You are responsible for destroying any TilemapLayer objects you generated yourself, as Tilemap doesn't keep a reference to them.
 	 */
 	function destroy ():Void;
 	

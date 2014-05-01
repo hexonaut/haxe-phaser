@@ -11,7 +11,7 @@ extern class Stage extends phaser.pixi.display.Stage {
 	/**
 	 * Holds the offset coordinates of the Game.canvas from the top-left of the browser window (used by Input and other classes)
 	 */
-	var offset:phaser.geom.Point;
+	var offset:Dynamic;
 	
 	/**
 	 * The name of this object.

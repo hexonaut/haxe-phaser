@@ -122,6 +122,11 @@ extern class Debug {
 	function cameraInfo (camera:phaser.core.Camera, x:Float, y:Float, ?color:String = 'rgb(255,255,255)'):Void;
 	
 	/**
+	 * Render Timer information.
+	 */
+	function timer (timer:phaser.time.Timer, x:Float, y:Float, ?color:String = 'rgb(255,255,255)'):Void;
+	
+	/**
 	 * Renders the Pointer.circle object onto the stage in green if down or red if up along with debug text.
 	 */
 	function pointer (pointer:phaser.input.Pointer, ?hideIfUp:Bool = false, ?downColor:String = 'rgba(0,255,0,0.5)', ?upColor:String = 'rgba(255,0,0,0.5)', ?color:String = 'rgb(255,255,255)'):Void;
@@ -174,7 +179,7 @@ extern class Debug {
 	 */
 	@:overload(function (object:phaser.geom.Rectangle, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void {})
 	@:overload(function (object:phaser.geom.Circle, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void {})
-	@:overload(function (object:phaser.geom.Point, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void {})
+	@:overload(function (object:Dynamic, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void {})
 	function geom (object:phaser.geom.Line, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void;
 	
 	/**

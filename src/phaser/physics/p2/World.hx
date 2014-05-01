@@ -29,6 +29,11 @@ extern class World {
 	var useElapsedTime:Bool;
 	
 	/**
+	 * The paused state of the P2 World.
+	 */
+	var paused:Bool;
+	
+	/**
 	 * A local array of all created Materials.
 	 */
 	var materials:Dynamic;
@@ -221,6 +226,21 @@ extern class World {
 	function setBounds (x:Float, y:Float, width:Float, height:Float, ?left:Bool = true, ?right:Bool = true, ?top:Bool = true, ?bottom:Bool = true, ?setCollisionGroup:Bool = true):Void;
 	
 	/**
+	 * Pauses the P2 World independent of the game pause state.
+	 */
+	function pause ():Void;
+	
+	/**
+	 * Resumes a paused P2 World.
+	 */
+	function resume ():Void;
+	
+	/**
+	 * Internal P2 update loop.
+	 */
+	function update ():Void;
+	
+	/**
 	 * Clears all bodies from the simulation, resets callbacks and resets the collision bitmask.
 	 */
 	function clear ():Void;
@@ -383,9 +403,9 @@ extern class World {
 	 * Test if a world point overlaps bodies. You will get an array of actual P2 bodies back. You can find out which Sprite a Body belongs to
 	 * (if any) by checking the Body.parent.sprite property. Body.parent is a Phaser.Physics.P2.Body property.
 	 */
-	@:overload(function (worldPoint:phaser.geom.Point, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
-	@:overload(function (worldPoint:phaser.geom.Point, ?bodies:phaser.gameobjects.Sprite, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
-	function hitTest (worldPoint:phaser.geom.Point, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic>;
+	@:overload(function (worldPoint:Dynamic, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
+	@:overload(function (worldPoint:Dynamic, ?bodies:phaser.gameobjects.Sprite, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
+	function hitTest (worldPoint:Dynamic, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic>;
 	
 	/**
 	 * Converts the current world into a JSON object.

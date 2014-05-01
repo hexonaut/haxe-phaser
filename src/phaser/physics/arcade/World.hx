@@ -16,7 +16,7 @@ extern class World {
 	/**
 	 * The World gravity setting. Defaults to x: 0, y: 0, or no gravity.
 	 */
-	var gravity:phaser.geom.Point;
+	var gravity:Dynamic;
 	
 	/**
 	 * The bounds inside of which the physics world exists. Defaults to match the world bounds.
@@ -335,22 +335,22 @@ extern class World {
 	 * Given the angle (in degrees) and speed calculate the velocity and return it as a Point object, or set it to the given point object.
 	 * One way to use this is: velocityFromAngle(angle, 200, sprite.velocity) which will set the values directly to the sprites velocity and not create a new Point object.
 	 */
-	@:overload(function (angle:Float, ?speed:Float = 60, ?point:phaser.geom.Point):phaser.geom.Point {})
-	function velocityFromAngle (angle:Float, ?speed:Float = 60, ?point:Dynamic):phaser.geom.Point;
+	@:overload(function (angle:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic {})
+	function velocityFromAngle (angle:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic;
 	
 	/**
 	 * Given the rotation (in radians) and speed calculate the velocity and return it as a Point object, or set it to the given point object.
 	 * One way to use this is: velocityFromRotation(rotation, 200, sprite.velocity) which will set the values directly to the sprites velocity and not create a new Point object.
 	 */
-	@:overload(function (rotation:Float, ?speed:Float = 60, ?point:phaser.geom.Point):phaser.geom.Point {})
-	function velocityFromRotation (rotation:Float, ?speed:Float = 60, ?point:Dynamic):phaser.geom.Point;
+	@:overload(function (rotation:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic {})
+	function velocityFromRotation (rotation:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic;
 	
 	/**
 	 * Given the rotation (in radians) and speed calculate the acceleration and return it as a Point object, or set it to the given point object.
 	 * One way to use this is: accelerationFromRotation(rotation, 200, sprite.acceleration) which will set the values directly to the sprites acceleration and not create a new Point object.
 	 */
-	@:overload(function (rotation:Float, ?speed:Float = 60, ?point:phaser.geom.Point):phaser.geom.Point {})
-	function accelerationFromRotation (rotation:Float, ?speed:Float = 60, ?point:Dynamic):phaser.geom.Point;
+	@:overload(function (rotation:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic {})
+	function accelerationFromRotation (rotation:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic;
 	
 	/**
 	 * Sets the acceleration.x/y property on the display object so it will move towards the target at the given speed (in pixels per second sq.)

@@ -36,7 +36,7 @@ extern class BitmapText {
 	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
-	var world:phaser.geom.Point;
+	var world:Dynamic;
 	
 	/**
 	 * Internal cache var.
@@ -76,7 +76,7 @@ extern class BitmapText {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:phaser.geom.Point;
+	var cameraOffset:Dynamic;
 	
 	/**
 	 * A small internal cache:
@@ -88,6 +88,7 @@ extern class BitmapText {
 	 * 5 = outOfBoundsFired (0 = no, 1 = yes)
 	 * 6 = exists (0 = no, 1 = yes)
 	 * 7 = fixed to camera (0 = no, 1 = yes)
+	 * 8 = destroy phase? (0 = no, 1 = yes)
 	 */
 	var cache:Array<Dynamic>;
 	
@@ -155,5 +156,10 @@ extern class BitmapText {
 	 * So if this BitmapText was in a Group that has x: 200, then this will be added to the cameraOffset.x
 	 */
 	var fixedToCamera:Bool;
+	
+	/**
+	 * @name Phaser.BitmapText#destroyPhase
+	 */
+	var destroyPhase:Bool;
 	
 }
