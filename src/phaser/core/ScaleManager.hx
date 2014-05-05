@@ -267,6 +267,11 @@ extern class ScaleManager {
 	function setExactFit ():Void;
 	
 	/**
+	* Set screen size automatically based on the scaleMode.
+	*/
+	function setScreenSize(force:Bool):Void;
+	
+	/**
 	 * @name Phaser.ScaleManager#isFullScreen
 	 */
 	var isFullScreen(default, null):Bool;
