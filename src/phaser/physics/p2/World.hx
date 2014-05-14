@@ -442,18 +442,18 @@ extern class World {
 	/**
 	 * Creates a new Body and adds it to the World.
 	 */
-	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):phaser.physics.p2.Body {})
-	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, options:Dynamic, options:Bool, options:Bool, options:Float, points:Dynamic):phaser.physics.p2.Body {})
-	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):phaser.physics.p2.Body {})
-	function createBody (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, options:Dynamic, options:Bool, options:Bool, options:Float, points:Dynamic):phaser.physics.p2.Body;
+	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, ?options:Dynamic, ?options:Bool, ?options:Bool, ?options:Bool, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):phaser.physics.p2.Body {})
+	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, ?options:Dynamic, ?options:Bool, ?options:Bool, ?options:Float, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):phaser.physics.p2.Body {})
+	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, ?options:Dynamic, ?options:Bool, ?options:Bool, ?options:Bool, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):phaser.physics.p2.Body {})
+	function createBody (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, ?options:Dynamic, ?options:Bool, ?options:Bool, ?options:Float, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):phaser.physics.p2.Body;
 	
 	/**
 	 * Creates a new Particle and adds it to the World.
 	 */
-	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):Void {})
-	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, options:Dynamic, options:Bool, options:Bool, options:Float, points:Dynamic):Void {})
-	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):Void {})
-	function createParticle (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, options:Dynamic, options:Bool, options:Bool, options:Float, points:Dynamic):Void;
+	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, ?options:Dynamic, ?options:Bool, ?options:Bool, ?options:Bool, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):Void {})
+	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, ?options:Dynamic, ?options:Bool, ?options:Bool, ?options:Float, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):Void {})
+	@:overload(function (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, ?options:Dynamic, ?options:Bool, ?options:Bool, ?options:Bool, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):Void {})
+	function createParticle (x:Float, y:Float, mass:Float, ?addToWorld:Bool = false, ?options:Dynamic, ?options:Bool, ?options:Bool, ?options:Float, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):Void;
 	
 	/**
 	 * Converts all of the polylines objects inside a Tiled ObjectGroup into physics bodies that are added to the world.

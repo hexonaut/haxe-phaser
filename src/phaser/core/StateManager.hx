@@ -131,12 +131,12 @@ extern class StateManager {
 	/**
 	 * Start the given State. If a State is already running then State.shutDown will be called (if it exists) before switching to the new State.
 	 */
-	function start (key:String, ?clearWorld:Bool = true, ?clearCache:Bool = false, parameter:Dynamic):Void;
+	function start (key:String, ?clearWorld:Bool = true, ?clearCache:Bool = false, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):Void;
 	
 	/**
 	 * Restarts the current State. State.shutDown will be called (if it exists) before the State is restarted.
 	 */
-	function restart (?clearWorld:Bool = true, ?clearCache:Bool = false, parameter:Dynamic):Void;
+	function restart (?clearWorld:Bool = true, ?clearCache:Bool = false, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):Void;
 	
 	/**
 	 * Used by onInit and onShutdown when those functions don't exist on the state

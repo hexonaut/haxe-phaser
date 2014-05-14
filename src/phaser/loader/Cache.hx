@@ -236,7 +236,7 @@ extern class Cache {
 	/**
 	 * Get a physics data object from the cache by its key. You can get either the entire data set, a single object or a single fixture of an object from it.
 	 */
-	function getPhysicsData (key:String, ?object:String, fixtureKey:String):Dynamic;
+	function getPhysicsData (key:String, ?object:String, ?fixtureKey:String):Dynamic;
 	
 	/**
 	 * Checks if an image key exists.
