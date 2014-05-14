@@ -340,10 +340,10 @@ extern class Body {
 	 * Reads a polygon shape path, and assembles convex shapes from that and puts them at proper offset points. The shape must be simple and without holes.
 	 * This function expects the x.y values to be given in pixels. If you want to provide them at p2 world scales then call Body.data.fromPolygon directly.
 	 */
-	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):Bool {})
-	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Float, points:Dynamic):Bool {})
-	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Bool, points:Dynamic):Bool {})
-	function addPolygon (options:Dynamic, options:Bool, options:Bool, options:Float, points:Dynamic):Bool;
+	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Bool, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):Bool {})
+	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Float, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):Bool {})
+	@:overload(function (options:Dynamic, options:Bool, options:Bool, options:Bool, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):Bool {})
+	function addPolygon (options:Dynamic, options:Bool, options:Bool, options:Float, ?points0:Dynamic, ?points1:Dynamic, ?points2:Dynamic, ?points3:Dynamic, ?points4:Dynamic):Bool;
 	
 	/**
 	 * Remove a shape from the body. Will automatically update the mass properties and bounding radius.

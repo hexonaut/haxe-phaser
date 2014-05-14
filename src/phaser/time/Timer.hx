@@ -140,7 +140,7 @@ extern class Timer {
 	 * Call Timer.start() once you have added all of the Events you require for this Timer. The delay is in relation to when the Timer starts, not the time it was added.
 	 * If the Timer is already running the delay will be calculated based on the timers current time.
 	 */
-	function add (delay:Float, callback:Dynamic, callbackContext:Dynamic, arguments:Dynamic):phaser.time.TimerEvent;
+	function add (delay:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Adds a new TimerEvent that will always play through once and then repeat for the given number of iterations.
@@ -148,7 +148,7 @@ extern class Timer {
 	 * Call Timer.start() once you have added all of the Events you require for this Timer. The delay is in relation to when the Timer starts, not the time it was added.
 	 * If the Timer is already running the delay will be calculated based on the timers current time.
 	 */
-	function repeat (delay:Float, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, arguments:Dynamic):phaser.time.TimerEvent;
+	function repeat (delay:Float, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Adds a new looped Event to this Timer that will repeat forever or until the Timer is stopped.
@@ -156,7 +156,7 @@ extern class Timer {
 	 * Call Timer.start() once you have added all of the Events you require for this Timer. The delay is in relation to when the Timer starts, not the time it was added.
 	 * If the Timer is already running the delay will be calculated based on the timers current time.
 	 */
-	function loop (delay:Float, callback:Dynamic, callbackContext:Dynamic, arguments:Dynamic):phaser.time.TimerEvent;
+	function loop (delay:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Starts this Timer running.

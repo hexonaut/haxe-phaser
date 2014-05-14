@@ -280,7 +280,7 @@ extern class Group {
 	 * Calls a function on all of the children that have exists=true in this Group.
 	 * After the existsValue parameter you can add as many parameters as you like, which will all be passed to the child callback.
 	 */
-	function callAllExists (callback:Dynamic, existsValue:Bool, ?p1:Dynamic, ?p2:Dynamic, ?p3:Dynamic, ?p4:Dynamic, ?p5:Dynamic):Void;
+	function callAllExists (callback:Dynamic, existsValue:Bool, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):Void;
 	
 	/**
 	 * Returns a reference to a function that exists on a child of the Group based on the given callback array.
@@ -291,7 +291,7 @@ extern class Group {
 	 * Calls a function on all of the children regardless if they are dead or alive (see callAllExists if you need control over that)
 	 * After the method parameter and context you can add as many extra parameters as you like, which will all be passed to the child.
 	 */
-	function callAll (method:String, ?context:String, ?p1:Dynamic, ?p2:Dynamic, ?p3:Dynamic, ?p4:Dynamic, ?p5:Dynamic):Void;
+	function callAll (method:String, ?context:String, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):Void;
 	
 	/**
 	 * The core preUpdate - as called by World.

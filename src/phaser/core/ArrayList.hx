@@ -52,7 +52,7 @@ extern class ArrayList {
 	 * Calls a function on all members of this list, using the member as the context for the callback.
 	 * The function must exist on the member.
 	 */
-	function callAll (callback:Dynamic, parameter:Dynamic):Void;
+	function callAll (callback:Dynamic, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):Void;
 	
 	/**
 	 * Resets the cursor to the first item in the list and returns it.

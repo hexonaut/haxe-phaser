@@ -260,7 +260,7 @@ extern class World {
 	/**
 	 * The core separation function to separate two physics bodies.
 	 */
-	function separate (body1:phaser.physics.arcade.Body, body2:phaser.physics.arcade.Body, ?processCallback:Dynamic, ?callbackContext:Dynamic, overlapOnly:Bool):Bool;
+	function separate (body1:phaser.physics.arcade.Body, body2:phaser.physics.arcade.Body, ?processCallback:Dynamic, ?callbackContext:Dynamic, ?overlapOnly:Bool):Bool;
 	
 	/**
 	 * Check for intersection against two bodies.
