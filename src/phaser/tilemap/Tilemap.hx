@@ -295,7 +295,7 @@ extern class Tilemap {
 	 * setPreventRecalculate(true) puts recalculation on hold while
 	 * setPreventRecalculate(false) recalculates all the changed layers.
 	 */
-	function setPreventRecalculate (if:Bool):Void;
+	function setPreventRecalculate (recalc:Bool):Void;
 	
 	/**
 	 * Internal function.
