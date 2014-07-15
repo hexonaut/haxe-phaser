@@ -67,7 +67,7 @@ extern class Circle {
 	/**
 	 * Returns a Point object containing the coordinates of a point on the circumference of the Circle based on the given angle.
 	 */
-	function circumferencePoint (angle:Float, asDegrees:Bool, ?out:Dynamic):Dynamic;
+	function circumferencePoint (angle:Float, ?asDegrees:Bool = false, ?out:Dynamic):Dynamic;
 	
 	/**
 	 * Adjusts the location of the Circle object, as determined by its center coordinate, by the specified amounts.

@@ -34,6 +34,21 @@ extern class Mouse {
 	var mouseUpCallback:Dynamic;
 	
 	/**
+	 * A callback that can be fired when the mouse is no longer over the game canvas.
+	 */
+	var mouseOutCallback:Dynamic;
+	
+	/**
+	 * A callback that can be fired when the mouse enters the game canvas (usually after a mouseout).
+	 */
+	var mouseOverCallback:Dynamic;
+	
+	/**
+	 * A callback that can be fired when the mousewheel is used.
+	 */
+	var mouseWheelCallback:Dynamic;
+	
+	/**
 	 * If true the DOM mouse events will have event.preventDefault applied to them, if false they will propogate fully.
 	 */
 	var capture:Bool;
@@ -44,6 +59,11 @@ extern class Mouse {
 	var button:Float;
 	
 	/**
+	 * The direction of the mousewheel usage 1 for up -1 for down
+	 */
+	var wheelDelta:Float;
+	
+	/**
 	 * You can disable all Input by setting disabled = true. While set all new input related events will be ignored.
 	 */
 	var disabled:Bool;
@@ -52,6 +72,11 @@ extern class Mouse {
 	 * If the mouse has been Pointer Locked successfully this will be set to true.
 	 */
 	var locked:Bool;
+	
+	/**
+	 * If true Pointer.stop will be called if the mouse leaves the game canvas.
+	 */
+	var stopOnGameOut:Bool;
 	
 	/**
 	 * This event is dispatched when the browser enters or leaves pointer lock state.
@@ -79,6 +104,21 @@ extern class Mouse {
 	var _onMouseUp:Dynamic;
 	
 	/**
+	 * Internal event handler reference.
+	 */
+	var _onMouseOut:Dynamic;
+	
+	/**
+	 * Internal event handler reference.
+	 */
+	var _onMouseOver:Dynamic;
+	
+	/**
+	 * Internal event handler reference.
+	 */
+	var _onMouseWheel:Dynamic;
+	
+	/**
 	 * @constant
 	 */
 	static var NO_BUTTON:Float;
@@ -99,6 +139,16 @@ extern class Mouse {
 	static var RIGHT_BUTTON:Float;
 	
 	/**
+	 * @constant
+	 */
+	static var WHEEL_UP:Float;
+	
+	/**
+	 * @constant
+	 */
+	static var WHEEL_DOWN:Float;
+	
+	/**
 	 * Starts the event listeners running.
 	 */
 	function start ():Void;
@@ -117,6 +167,21 @@ extern class Mouse {
 	 * The internal method that handles the mouse up event from the browser.
 	 */
 	function onMouseUp (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse out event from the browser.
+	 */
+	function onMouseOut (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse wheel event from the browser.
+	 */
+	function onMouseWheel (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse over event from the browser.
+	 */
+	function onMouseOver (event:Dynamic):Void;
 	
 	/**
 	 * If the browser supports it you can request that the pointer be locked to the browser window.

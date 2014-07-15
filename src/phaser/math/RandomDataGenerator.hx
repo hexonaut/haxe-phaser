@@ -64,6 +64,12 @@ extern class RandomDataGenerator {
 	function integerInRange (min:Float, max:Float):Float;
 	
 	/**
+	 * Returns a random integer between and including min and max.
+	 * This method is an alias for RandomDataGenerator.integerInRange.
+	 */
+	function between (min:Float, max:Float):Float;
+	
+	/**
 	 * Returns a random real number between min and max.
 	 */
 	function realInRange (min:Float, max:Float):Float;

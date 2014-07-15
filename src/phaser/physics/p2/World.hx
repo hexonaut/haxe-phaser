@@ -156,6 +156,7 @@ extern class World {
 	/**
 	 * This will create a P2 Physics body on the given game object or array of game objects.
 	 * A game object can only have 1 physics body active at any one time, and it can't be changed until the object is destroyed.
+	 * Note: When the game object is enabled for P2 physics it has its anchor x/y set to 0.5 so it becomes centered.
 	 */
 	@:overload(function (object:Dynamic, ?debug:Bool = false, ?children:Bool = true):Void {})
 	@:overload(function (object:Array<Dynamic>, ?debug:Bool = false, ?children:Bool = true):Void {})

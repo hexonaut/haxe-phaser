@@ -164,6 +164,7 @@ extern class World {
 	 * You can perform Sprite vs. Sprite, Sprite vs. Group and Group vs. Group overlap checks.
 	 * Unlike collide the objects are NOT automatically separated or have any physics applied, they merely test for overlap results.
 	 * The second parameter can be an array of objects, of differing types.
+	 * NOTE: This function is not recursive, and will not test against children of objects passed (i.e. Groups within Groups).
 	 */
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.gameobjects.Sprite, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.gameobjects.Sprite, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
@@ -185,6 +186,7 @@ extern class World {
 	 * An optional processCallback can be provided. If given this function will be called when two sprites are found to be colliding. It is called before any separation takes place,
 	 * giving you the chance to perform additional checks. If the function returns true then the collision and separation is carried out. If it returns false it is skipped.
 	 * The collideCallback is an optional function that is only called if two sprites collide. If a processCallback has been set then it needs to return true for collideCallback to be called.
+	 * NOTE: This function is not recursive, and will not test against children of objects passed (i.e. Groups or Tilemaps within other Groups).
 	 */
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
@@ -301,6 +303,13 @@ extern class World {
 	 * Internal function to process the separation of a physics body from a tile.
 	 */
 	function processTileSeparationY (body:phaser.physics.arcade.Body, y:Float):Void;
+	
+	/**
+	 * Given a Group and a Pointer this will check to see which Group children overlap with the Pointer coordinates.
+	 * Each child will be sent to the given callback for further processing.
+	 * Note that the children are not checked for depth order, but simply if they overlap the Pointer or not.
+	 */
+	function getObjectsUnderPointer (pointer:phaser.input.Pointer, group:phaser.core.Group, ?callback:Dynamic, ?callbackContext:Dynamic):Array<Dynamic>;
 	
 	/**
 	 * Move the given display object towards the destination object at a steady velocity.

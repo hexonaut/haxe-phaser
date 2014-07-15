@@ -6,7 +6,7 @@ extern class RenderTexture {
 	/**
 	 * A RenderTexture is a special texture that allows any displayObject to be rendered to it.
 	 */
-	function new (game:phaser.core.Game, key:String, ?width:Float = 100, ?height:Float = 100);
+	function new (game:phaser.core.Game, key:String, ?width:Float = 100, ?height:Float = 100, ?key:String = '', ?scaleMode:Float);
 	
 	/**
 	 * A reference to the currently running game.

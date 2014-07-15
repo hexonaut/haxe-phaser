@@ -14,12 +14,17 @@ extern class WebGLRenderer {
 	 * So no need for Sprite Batch's or Sprite Cloud's
 	 * Dont forget to add the view to your DOM or you will not see anything :)
 	 */
-	function new (Number:Dynamic, Number:Dynamic, HTMLCanvasElement:Dynamic, Boolean:Dynamic, Boolean:Dynamic);
+	function new (Number:Dynamic, Number:Dynamic, HTMLCanvasElement:Dynamic, Boolean:Dynamic, Boolean:Dynamic, Boolean:Dynamic);
 	
 	/**
 	 * Whether the render view is transparent
 	 */
 	var transparent:Bool;
+	
+	/**
+	 * The value of the preserveDrawingBuffer flag affects whether or not the contents of the stencil buffer is retained after rendering.
+	 */
+	var preserveDrawingBuffer:Bool;
 	
 	/**
 	 * The width of the canvas view

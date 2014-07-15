@@ -53,4 +53,9 @@ extern class Graphics extends phaser.pixi.display.DisplayObjectContainer {
 	 */
 	var boundsPadding:Float;
 	
+	/**
+	 * Used to detect if the graphics object has changed if this is set to true then the graphics object will be recalculated
+	 */
+	var dirty:Dynamic;
+	
 }

@@ -25,6 +25,11 @@ extern class Body {
 	var type:Float;
 	
 	/**
+	 * A disabled body won't be checked for any form of collision or overlap or have its pre/post updates run.
+	 */
+	var enable:Bool;
+	
+	/**
 	 * The offset of the Physics Body from the Sprite x/y position.
 	 */
 	var offset:Dynamic;
@@ -307,7 +312,7 @@ extern class Body {
 	 * So it could be smaller or larger than the parent Sprite. You can also control the x and y offset, which
 	 * is the position of the Body relative to the top-left of the Sprite.
 	 */
-	function setSize (width:Float, height:Float, offsetX:Float, offsetY:Float):Void;
+	function setSize (width:Float, height:Float, ?offsetX:Float, ?offsetY:Float):Void;
 	
 	/**
 	 * Resets all Body values (velocity, acceleration, rotation, etc)
@@ -377,7 +382,7 @@ extern class Body {
 	/**
 	 * Render Sprite Body.
 	 */
-	function renderDebug (context:Dynamic, body:phaser.physics.arcade.Body, ?color:String = 'rgb(255,255,255)', ?filled:Bool = true):Void;
+	function render (context:Dynamic, body:phaser.physics.arcade.Body, ?color:String = 'rgba(0,255,0,0.4)', ?filled:Bool = true):Void;
 	
 	/**
 	 * Render Sprite Body Physics Data as text.

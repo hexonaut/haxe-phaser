@@ -124,7 +124,7 @@ extern class Sound {
 	var usingAudioTag:Bool;
 	
 	/**
-	 * If defined this Sound won't connect to the SoundManager master gain node, but will instead connect to externalNode.input.
+	 * If defined this Sound won't connect to the SoundManager master gain node, but will instead connect to externalNode.
 	 */
 	var externalNode:Dynamic;
 	
@@ -217,6 +217,11 @@ extern class Sound {
 	 * Was this sound paused via code or a game event?
 	 */
 	var _paused:Bool;
+	
+	/**
+	 * Was the onDecoded event dispatched?
+	 */
+	var _onDecodedEventDispatched:Bool;
 	
 	/**
 	 * Called automatically when this sound is unlocked.

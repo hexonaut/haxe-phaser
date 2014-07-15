@@ -52,6 +52,11 @@ extern class Game {
 	var antialias:Bool;
 	
 	/**
+	 * The value of the preserveDrawingBuffer flag affects whether or not the contents of the stencil buffer is retained after rendering.
+	 */
+	var preserveDrawingBuffer:Bool;
+	
+	/**
 	 * The Pixi Renderer.
 	 */
 	var renderer:Dynamic;
@@ -252,7 +257,7 @@ extern class Game {
 	function setUpRenderer ():Void;
 	
 	/**
-	 * The core game loop when in a paused state.
+	 * The core game loop.
 	 */
 	function update (time:Float):Void;
 	

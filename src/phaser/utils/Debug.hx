@@ -193,10 +193,11 @@ extern class Debug {
 	function quadTree (quadtree:phaser.math.QuadTree, color:String):Void;
 	
 	/**
-	 * Render a Sprites Physics body if it has one set. Note this only works for Arcade Physics.
+	 * Render a Sprites Physics body if it has one set. Note this only works for Arcade and
+	 * Ninja (AABB, circle only) Physics.
 	 * To display a P2 body you should enable debug mode on the body when creating it.
 	 */
-	function body (sprite:phaser.gameobjects.Sprite, ?color:String = 'rgb(255,255,255)', ?filled:Bool = true):Void;
+	function body (sprite:phaser.gameobjects.Sprite, ?color:String = 'rgba(0,255,0,0.4)', ?filled:Bool = true):Void;
 	
 	/**
 	 * Render a Sprites Physic Body information.

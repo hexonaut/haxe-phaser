@@ -4,19 +4,14 @@ package phaser.particles.arcade;
 extern class Emitter extends phaser.core.Group {
 	
 	/**
-	 * The total number of particles in this emitter..
+	 * The total number of particles in this emitter.
 	 */
 	var maxParticles:Float;
 	
 	/**
-	 * The width of the emitter.  Particles can be randomly generated from anywhere within this box.
+	 * The area of the emitter. Particles can be randomly generated from anywhere within this rectangle.
 	 */
-	var width:Float;
-	
-	/**
-	 * The height of the emitter.  Particles can be randomly generated from anywhere within this box.
-	 */
-	var height:Float;
+	var area:phaser.geom.Rectangle;
 	
 	/**
 	 * The minimum possible velocity of a particle.
@@ -207,9 +202,19 @@ extern class Emitter extends phaser.core.Group {
 	function revive ():Void;
 	
 	/**
+	 * Call this function to emit the given quantity of particles at all once (an explosion)
+	 */
+	function explode (?lifespan:Float = 0, ?quantity:Float = 0):Void;
+	
+	/**
+	 * Call this function to start emitting a flow of particles at the given frequency.
+	 */
+	function flow (?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 0):Void;
+	
+	/**
 	 * Call this function to start emitting particles.
 	 */
-	function start (?explode:Bool = true, ?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 0):Void;
+	function start (?explode:Bool = true, ?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 0, ?forceQuantity:Float = false):Void;
 	
 	/**
 	 * This function can be used both internally and externally to emit the next particle in the queue.
@@ -260,6 +265,16 @@ extern class Emitter extends phaser.core.Group {
 	@:overload(function (object:phaser.gameobjects.TileSprite):Void {})
 	@:overload(function (object:phaser.gameobjects.Text):Void {})
 	function at (object:phaser.pixi.display.DisplayObject):Void;
+	
+	/**
+	 * @name Phaser.Particles.Arcade.Emitter#width
+	 */
+	var width:Float;
+	
+	/**
+	 * @name Phaser.Particles.Arcade.Emitter#height
+	 */
+	var height:Float;
 	
 	/**
 	 * @name Phaser.Particles.Arcade.Emitter#left

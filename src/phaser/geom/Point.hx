@@ -101,8 +101,8 @@ extern class Point {
 	/**
 	 * Returns the angle between this Point object and another object with public x and y properties.
 	 */
-	@:overload(function (a:Dynamic):Float {})
-	function angle (a:Dynamic):Float;
+	@:overload(function (a:Dynamic, ?asDegrees:Bool = false):Float {})
+	function angle (a:Dynamic, ?asDegrees:Bool = false):Float;
 	
 	/**
 	 * Returns the angle squared between this Point object and another object with public x and y properties.

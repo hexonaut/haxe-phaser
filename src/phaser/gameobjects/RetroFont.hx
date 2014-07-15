@@ -31,12 +31,12 @@ extern class RetroFont extends phaser.gameobjects.RenderTexture {
 	/**
 	 * If the font set doesn't start at the top left of the given image, specify the X coordinate offset here.
 	 */
-	var offsetX:Float;
+	var offsetX(default, null):Float;
 	
 	/**
 	 * If the font set doesn't start at the top left of the given image, specify the Y coordinate offset here.
 	 */
-	var offsetY:Float;
+	var offsetY(default, null):Float;
 	
 	/**
 	 * Alignment of the text when multiLine = true or a fixedWidth is set. Set to RetroFont.ALIGN_LEFT (default), RetroFont.ALIGN_RIGHT or RetroFont.ALIGN_CENTER.
@@ -85,7 +85,12 @@ extern class RetroFont extends phaser.gameobjects.RenderTexture {
 	var grabData:Array<Dynamic>;
 	
 	/**
-	 * If you need this FlxSprite to have a fixed width and custom alignment you can set the width here.<br>
+	 * The image that is stamped to the RenderTexture for each character in the font.
+	 */
+	var stamp(default, null):phaser.gameobjects.Image;
+	
+	/**
+	 * If you need this RetroFont to have a fixed width and custom alignment you can set the width here.
 	 * If text is wider than the width specified it will be cropped off.
 	 */
 	function setFixedWidth (width:Float, ?lineAlignment:String = 'left'):Void;
@@ -96,9 +101,15 @@ extern class RetroFont extends phaser.gameobjects.RenderTexture {
 	function setText (content:String, ?multiLine:Bool = false, ?characterSpacing:Float = 0, ?lineSpacing:Float = 0, ?lineAlignment:String = 'left', ?allowLowerCase:Bool = false):Void;
 	
 	/**
-	 * Updates the BitmapData of the Sprite with the text
+	 * Updates the texture with the new text.
 	 */
 	function buildRetroFontText ():Void;
+	
+	/**
+	 * Internal function that takes a single line of text (2nd parameter) and pastes it into the BitmapData at the given coordinates.
+	 * Used by getLine and getMultiLine
+	 */
+	function pasteLine (line:String, x:Float, y:Float, customSpacingX:Float):Void;
 	
 	/**
 	 * Works out the longest line of text in _text and returns its length
@@ -109,6 +120,13 @@ extern class RetroFont extends phaser.gameobjects.RenderTexture {
 	 * Internal helper function that removes all unsupported characters from the _text String, leaving only characters contained in the font set.
 	 */
 	function removeUnsupportedCharacters (?stripCR:Bool = true):String;
+	
+	/**
+	 * Updates the x and/or y offset that the font is rendered from. This updates all of the texture frames, so be careful how often it is called.
+	 * Note that the values given for the x and y properties are either ADDED to or SUBTRACTED from (if negative) the existing offsetX/Y values of the characters.
+	 * So if the current offsetY is 8 and you want it to start rendering from y16 you would call updateOffset(0, 8) to add 8 to the current y offset.
+	 */
+	function updateOffset (?xOffset:Float = 0, ?yOffset:Float = 0):Void;
 	
 	/**
 	 * @name Phaser.BitmapText#text

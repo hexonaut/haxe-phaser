@@ -35,10 +35,10 @@ extern class World extends phaser.core.Group {
 	 * This will take the given game object and check if its x/y coordinates fall outside of the world bounds.
 	 * If they do it will reposition the object to the opposite side of the world, creating a wrap-around effect.
 	 */
-	@:overload(function (sprite:phaser.gameobjects.Sprite, ?padding:Float = 0, ?useBounds:Bool = false):Void {})
-	@:overload(function (sprite:phaser.gameobjects.Image, ?padding:Float = 0, ?useBounds:Bool = false):Void {})
-	@:overload(function (sprite:phaser.gameobjects.TileSprite, ?padding:Float = 0, ?useBounds:Bool = false):Void {})
-	function wrap (sprite:phaser.gameobjects.Text, ?padding:Float = 0, ?useBounds:Bool = false):Void;
+	@:overload(function (sprite:phaser.gameobjects.Sprite, ?padding:Float = 0, ?useBounds:Bool = false, ?horizontal:Bool = true, ?vertical:Bool = true):Void {})
+	@:overload(function (sprite:phaser.gameobjects.Image, ?padding:Float = 0, ?useBounds:Bool = false, ?horizontal:Bool = true, ?vertical:Bool = true):Void {})
+	@:overload(function (sprite:phaser.gameobjects.TileSprite, ?padding:Float = 0, ?useBounds:Bool = false, ?horizontal:Bool = true, ?vertical:Bool = true):Void {})
+	function wrap (sprite:phaser.gameobjects.Text, ?padding:Float = 0, ?useBounds:Bool = false, ?horizontal:Bool = true, ?vertical:Bool = true):Void;
 	
 	/**
 	 * @name Phaser.World#width

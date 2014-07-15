@@ -148,6 +148,16 @@ extern class Animation {
 	function update ():Void;
 	
 	/**
+	 * Advances by the given number of frames in the Animation, taking the loop value into consideration.
+	 */
+	function next (?quantity:Float = 1):Void;
+	
+	/**
+	 * Moves backwards the given number of frames in the Animation, taking the loop value into consideration.
+	 */
+	function previous (?quantity:Float = 1):Void;
+	
+	/**
 	 * Cleans up this animation ready for deletion. Nulls all values and references.
 	 */
 	function destroy ():Void;

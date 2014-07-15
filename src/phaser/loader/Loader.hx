@@ -16,31 +16,6 @@ extern class Loader {
 	var game:phaser.core.Game;
 	
 	/**
-	 * Contains all the assets file infos.
-	 */
-	var _fileList:Array<Dynamic>;
-	
-	/**
-	 * The index of the current file being loaded.
-	 */
-	var _fileIndex:Float;
-	
-	/**
-	 * Indicates the size of 1 file in terms of a percentage out of 100.
-	 */
-	var _progressChunk:Float;
-	
-	/**
-	 * An XMLHttpRequest object used for loading text and audio data.
-	 */
-	var _xhr:Dynamic;
-	
-	/**
-	 * An ajax request used specifically by IE9 for CORs loading issues.
-	 */
-	var _ajax:Dynamic;
-	
-	/**
 	 * True if the Loader is in the process of loading the queue.
 	 */
 	var isLoading:Bool;
@@ -104,6 +79,41 @@ extern class Loader {
 	var onLoadComplete:phaser.core.Signal;
 	
 	/**
+	 * Contains all the assets packs.
+	 */
+	var _packList:Array<Dynamic>;
+	
+	/**
+	 * The index of the current asset pack.
+	 */
+	var _packIndex:Float;
+	
+	/**
+	 * Contains all the assets file infos.
+	 */
+	var _fileList:Array<Dynamic>;
+	
+	/**
+	 * The index of the current file being loaded.
+	 */
+	var _fileIndex:Float;
+	
+	/**
+	 * Indicates the size of 1 file in terms of a percentage out of 100.
+	 */
+	var _progressChunk:Float;
+	
+	/**
+	 * An XMLHttpRequest object used for loading text and audio data.
+	 */
+	var _xhr:Dynamic;
+	
+	/**
+	 * An ajax request used specifically by IE9 for CORs loading issues.
+	 */
+	var _ajax:Dynamic;
+	
+	/**
 	 * @constant
 	 */
 	static var TEXTURE_ATLAS_JSON_ARRAY:Float;
@@ -132,12 +142,14 @@ extern class Loader {
 	 * You can set a Sprite to be a "preload" sprite by passing it to this method.
 	 * A "preload" sprite will have its width or height crop adjusted based on the percentage of the loader in real-time.
 	 * This allows you to easily make loading bars for games. Note that Sprite.visible = true will be set when calling this.
+	 * Note: The Sprite should use a single image and not use a texture that is part of a Texture Atlas or Sprite Sheet.
 	 */
 	@:overload(function (sprite:phaser.gameobjects.Sprite, ?direction:Float = 0):Void {})
 	function setPreloadSprite (sprite:phaser.gameobjects.Image, ?direction:Float = 0):Void;
 	
 	/**
 	 * Check whether asset exists with a specific key.
+	 * Use Phaser.Cache to access loaded assets, e.g. Phaser.Cache#checkImageKey
 	 */
 	function checkKeyExists (type:String, key:String):Bool;
 	
@@ -165,6 +177,11 @@ extern class Loader {
 	 * Internal function that replaces an existing entry in the file list with a new one. Do not call directly.
 	 */
 	function replaceInFileList (type:String, key:String, url:String, properties:Dynamic):Void;
+	
+	/**
+	 * Add an image to the Loader.
+	 */
+	function pack (key:String, ?url:String, ?data:Dynamic, ?callbackContext:Dynamic):phaser.loader.Loader;
 	
 	/**
 	 * Add an image to the Loader.
@@ -208,13 +225,13 @@ extern class Loader {
 	/**
 	 * Add a new tilemap loading request.
 	 */
-	function tilemap (key:String, ?mapDataURL:String, ?mapData:Dynamic, ?format:Float):phaser.loader.Loader;
+	function tilemap (key:String, ?url:String, ?data:Dynamic, ?format:Float):phaser.loader.Loader;
 	
 	/**
 	 * Add a new physics data object loading request.
 	 * The data must be in Lime + Corona JSON format. Physics Editor by code'n'web exports in this format natively.
 	 */
-	function physics (key:String, ?dataURL:String, ?jsonData:Dynamic, ?format:String):phaser.loader.Loader;
+	function physics (key:String, ?url:String, ?data:Dynamic, ?format:String):phaser.loader.Loader;
 	
 	/**
 	 * Add a new bitmap font loading request.
@@ -257,9 +274,39 @@ extern class Loader {
 	function start ():Void;
 	
 	/**
+	 * Starts off the actual loading process after the asset packs have been sorted out.
+	 */
+	function beginLoad ():Void;
+	
+	/**
+	 * Loads the current asset pack in the queue.
+	 */
+	function loadPack ():Void;
+	
+	/**
+	 * Handle the successful loading of a JSON asset pack.
+	 */
+	function packLoadComplete (index:Float, ?parse:Bool = true):Void;
+	
+	/**
+	 * Error occured when loading an asset pack.
+	 */
+	function packError (index:Float):Void;
+	
+	/**
+	 * Handle loading the next asset pack.
+	 */
+	function nextPack ():Void;
+	
+	/**
 	 * Load files. Private method ONLY used by loader.
 	 */
 	function loadFile ():Void;
+	
+	/**
+	 * Starts the xhr loader.
+	 */
+	function xhrLoad (index:Float, url:String, type:String, onload:String, onerror:String):Void;
 	
 	/**
 	 * Private method ONLY used by loader.
@@ -296,5 +343,30 @@ extern class Loader {
 	 * Successfully loaded an XML file.
 	 */
 	function xmlLoadComplete (index:Float):Void;
+	
+	/**
+	 * Handle loading next file.
+	 */
+	function nextFile (previousIndex:Float, success:Bool):Void;
+	
+	/**
+	 * Returns the number of files that have already been loaded, even if they errored.
+	 */
+	function totalLoadedFiles ():Float;
+	
+	/**
+	 * Returns the number of files still waiting to be processed in the load queue. This value decreases as each file in the queue is loaded.
+	 */
+	function totalQueuedFiles ():Float;
+	
+	/**
+	 * Returns the number of asset packs that have already been loaded, even if they errored.
+	 */
+	function totalLoadedPacks ():Float;
+	
+	/**
+	 * Returns the number of asset packs still waiting to be processed in the load queue. This value decreases as each pack in the queue is loaded.
+	 */
+	function totalQueuedPacks ():Float;
 	
 }

@@ -224,17 +224,17 @@ extern class Math {
 	/**
 	 * A Linear Interpolation Method, mostly used by Phaser.Tween.
 	 */
-	function linearInterpolation (v:Float, k:Float):Float;
+	function linearInterpolation (v:Array<Dynamic>, k:Float):Float;
 	
 	/**
 	 * A Bezier Interpolation Method, mostly used by Phaser.Tween.
 	 */
-	function bezierInterpolation (v:Float, k:Float):Float;
+	function bezierInterpolation (v:Array<Dynamic>, k:Float):Float;
 	
 	/**
 	 * A Catmull Rom Interpolation Method, mostly used by Phaser.Tween.
 	 */
-	function catmullRomInterpolation (v:Float, k:Float):Float;
+	function catmullRomInterpolation (v:Array<Dynamic>, k:Float):Float;
 	
 	/**
 	 * Description.
@@ -340,6 +340,11 @@ extern class Math {
 	 * -1 for negative, +1 for positive, 0 if value is 0
 	 */
 	function sign (x:Float):Float;
+	
+	/**
+	 * Work out what percentage value a is of value b using the given base.
+	 */
+	function percent (a:Float, b:Float, ?base:Float = 0):Float;
 	
 	/**
 	 * Convert degrees to radians.

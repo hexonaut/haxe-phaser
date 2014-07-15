@@ -75,7 +75,7 @@ extern class Stage extends phaser.pixi.display.Stage {
 	/**
 	 * Parses a Game configuration object.
 	 */
-	function parseConfig ():Void;
+	function parseConfig (config:Dynamic):Void;
 	
 	/**
 	 * Initialises the stage and adds the event listeners.

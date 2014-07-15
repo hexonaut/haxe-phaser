@@ -18,21 +18,4 @@ extern class TilingSprite extends phaser.pixi.display.Sprite {
 	 */
 	var tilePosition:Dynamic;
 	
-	/**
-	 * // stop current texture;
-	 *     if(this.texture.baseTexture !== texture.baseTexture)
-	 *     {
-	 *         this.textureChange = true;
-	 *         this.texture = texture;
-	 *     }
-	 *     else
-	 *     {
-	 *         this.texture = texture;
-	 *     }
-	 * 
-	 * <pre>this.updateFrame = true;
-	 * </pre>
-	 */
-	var cachedTint:Dynamic;
-	
 }

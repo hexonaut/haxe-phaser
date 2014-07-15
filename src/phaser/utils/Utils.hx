@@ -9,6 +9,18 @@ extern class Utils {
 	static var Utils:Dynamic;
 	
 	/**
+	 * Transposes the elements of the given Array.
+	 */
+	function transposeArray (array:Array<Dynamic>):Array<Dynamic>;
+	
+	/**
+	 * Rotates the given array.
+	 * Based on the routine from <a href='http://jsfiddle.net/MrPolywhirl/NH42z/'>http://jsfiddle.net/MrPolywhirl/NH42z/</a>
+	 */
+	@:overload(function (matrix:Array<Dynamic>, direction:Float):Array<Dynamic> {})
+	function rotateArray (matrix:Array<Dynamic>, direction:String):Array<Dynamic>;
+	
+	/**
 	 * Get a unit dimension from a string.
 	 */
 	@:overload(function (size:String, dimension:Float):Float {})
@@ -35,6 +47,12 @@ extern class Utils {
 	 * This is a slightly modified version of <a href='http://api.jquery.com/jQuery.extend/'>http://api.jquery.com/jQuery.extend/</a>
 	 */
 	function extend (deep:Bool, target:Dynamic):Dynamic;
+	
+	/**
+	 * Mixes the source object into the destination object, returning the newly modified destination object.
+	 * Based on original code by @mudcube
+	 */
+	function mixin (from:Dynamic, to:Dynamic):Dynamic;
 	
 	/**
 	 * jshint freeze: false

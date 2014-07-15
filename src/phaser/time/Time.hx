@@ -144,6 +144,11 @@ extern class Time {
 	function boot ():Void;
 	
 	/**
+	 * Adds an existing Phaser.Timer object to the Timer pool.
+	 */
+	function add (timer:phaser.time.Timer):phaser.time.Timer;
+	
+	/**
 	 * Creates a new stand-alone Phaser.Timer object.
 	 */
 	function create (?autoDestroy:Bool = true):phaser.time.Timer;

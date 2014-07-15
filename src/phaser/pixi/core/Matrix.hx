@@ -4,10 +4,12 @@ package phaser.pixi.core;
 extern class Matrix {
 	
 	/**
-	 * @class Matrix2
-	 * The Matrix2 class will choose the best type of array to use between
-	 * a regular javascript Array and a Float32Array if the latter is available
+	 * The Matrix class is now an object, which makes it a lot faster, 
+	 * here is a representation of it : 
+	 * | a | b | tx|
+	 * | c | d | ty|
+	 * | 0 | 0 | 1 |
 	 */
-	var Matrix2:Dynamic;
+	function new ();
 	
 }

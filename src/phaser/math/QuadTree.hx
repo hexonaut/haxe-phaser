@@ -77,9 +77,10 @@ extern class QuadTree {
 	function getIndex (rect:Dynamic):Float;
 	
 	/**
-	 * Return all objects that could collide with the given Sprite.
+	 * Return all objects that could collide with the given Sprite or Rectangle.
 	 */
-	function retrieve (sprite:phaser.gameobjects.Sprite):Array<Dynamic>;
+	@:overload(function (source:phaser.gameobjects.Sprite):Array<Dynamic> {})
+	function retrieve (source:phaser.geom.Rectangle):Array<Dynamic>;
 	
 	/**
 	 * Clear the quadtree.

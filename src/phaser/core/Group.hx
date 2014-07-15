@@ -127,13 +127,13 @@ extern class Group {
 	 * The child is automatically added to the top of the Group, so renders on-top of everything else within the Group. If you need to control
 	 * that then see the addAt method.
 	 */
-	function add (child:Dynamic):Dynamic;
+	function add (child:Dynamic, ?silent:Bool = false):Dynamic;
 	
 	/**
 	 * Adds an existing object to this Group. The object can be an instance of Phaser.Sprite, Phaser.Button or any other display object.
 	 * The child is added to the Group at the location specified by the index value, this allows you to control child ordering.
 	 */
-	function addAt (child:Dynamic, index:Float):Dynamic;
+	function addAt (child:Dynamic, index:Float, ?silent:Bool = false):Dynamic;
 	
 	/**
 	 * Returns the child found at the given index within this Group.
@@ -223,15 +223,25 @@ extern class Group {
 	function replace (oldChild:Dynamic, newChild:Dynamic):Dynamic;
 	
 	/**
-	 * Sets the given property to the given value on the child. The operation controls the assignment of the value.
+	 * Checks if the child has the given property. Will scan up to 4 levels deep only.
 	 */
-	function setProperty (child:Dynamic, key:Array<Dynamic>, value:Dynamic, ?operation:Float = 0):Void;
+	function hasProperty (child:Dynamic, key:Array<Dynamic>):Bool;
+	
+	/**
+	 * Sets a property to the given value on the child. The operation parameter controls how the value is set.
+	 * Operation 0 means set the existing value to the given value, or if force is false create a new property with the given value.
+	 * 1 will add the given value to the value already present.
+	 * 2 will subtract the given value from the value already present.
+	 * 3 will multiply the value already present by the given value.
+	 * 4 will divide the value already present by the given value.
+	 */
+	function setProperty (child:Dynamic, key:Array<Dynamic>, value:Dynamic, ?operation:Float = 0, ?force:Bool = false):Bool;
 	
 	/**
 	 * This function allows you to quickly set a property on a single child of this Group to a new value.
 	 * The operation parameter controls how the new value is assigned to the property, from simple replacement to addition and multiplication.
 	 */
-	function set (child:phaser.gameobjects.Sprite, key:String, value:Dynamic, ?checkAlive:Bool = false, ?checkVisible:Bool = false, ?operation:Float = 0):Void;
+	function set (child:phaser.gameobjects.Sprite, key:String, value:Dynamic, ?checkAlive:Bool = false, ?checkVisible:Bool = false, ?operation:Float = 0, ?force:Bool = false):Bool;
 	
 	/**
 	 * This function allows you to quickly set the same property across all children of this Group to a new value.
@@ -240,7 +250,7 @@ extern class Group {
 	 * 
 	 * The operation parameter controls how the new value is assigned to the property, from simple replacement to addition and multiplication.
 	 */
-	function setAll (key:String, value:Dynamic, ?checkAlive:Bool = false, ?checkVisible:Bool = false, ?operation:Float = 0):Void;
+	function setAll (key:String, value:Dynamic, ?checkAlive:Bool = false, ?checkVisible:Bool = false, ?operation:Float = 0, ?force:Bool = false):Void;
 	
 	/**
 	 * This function allows you to quickly set the same property across all children of this Group, and any child Groups, to a new value.
@@ -250,7 +260,7 @@ extern class Group {
 	 * 
 	 * The operation parameter controls how the new value is assigned to the property, from simple replacement to addition and multiplication.
 	 */
-	function setAllChildren (key:String, value:Dynamic, ?checkAlive:Bool = false, ?checkVisible:Bool = false, ?operation:Float = 0):Void;
+	function setAllChildren (key:String, value:Dynamic, ?checkAlive:Bool = false, ?checkVisible:Bool = false, ?operation:Float = 0, ?force:Bool = false):Void;
 	
 	/**
 	 * Adds the amount to the given property on all children in this Group.
@@ -412,18 +422,18 @@ extern class Group {
 	 * Removes the given child from this Group. This will dispatch an onRemovedFromGroup event from the child (if it has one),
 	 * reset the Group cursor and optionally destroy the child.
 	 */
-	function remove (child:Dynamic, ?destroy:Bool = false):Bool;
+	function remove (child:Dynamic, ?destroy:Bool = false, ?silent:Bool = false):Bool;
 	
 	/**
-	 * Removes all children from this Group, setting all group properties to null.
+	 * Removes all children from this Group, setting the group properties of the children to null.
 	 * The Group container remains on the display list.
 	 */
-	function removeAll (?destroy:Bool = false):Void;
+	function removeAll (?destroy:Bool = false, ?silent:Bool = false):Void;
 	
 	/**
 	 * Removes all children from this Group whos index falls beteen the given startIndex and endIndex values.
 	 */
-	function removeBetween (startIndex:Float, ?endIndex:Float, ?destroy:Bool = false):Void;
+	function removeBetween (startIndex:Float, ?endIndex:Float, ?destroy:Bool = false, ?silent:Bool = false):Void;
 	
 	/**
 	 * Destroys this Group. Removes all children, then removes the container from the display list and nulls references.

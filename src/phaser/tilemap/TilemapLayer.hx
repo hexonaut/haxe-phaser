@@ -133,6 +133,11 @@ extern class TilemapLayer {
 	var rayStepRate:Float;
 	
 	/**
+	 * Flag controlling if the layer tiles wrap at the edges. Only works if the World size matches the Map size.
+	 */
+	var wrap:Bool;
+	
+	/**
 	 * Local map data and calculation cache.
 	 */
 	var _mc:Dynamic;

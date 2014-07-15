@@ -113,11 +113,11 @@ extern class Key {
 	/**
 	 * Returns the "just pressed" state of the Key. Just pressed is considered true if the key was pressed down within the duration given (default 250ms)
 	 */
-	function justPressed (?duration:Float = 250):Bool;
+	function justPressed (?duration:Float = 50):Bool;
 	
 	/**
 	 * Returns the "just released" state of the Key. Just released is considered as being true if the key was released within the duration given (default 250ms)
 	 */
-	function justReleased (?duration:Float = 250):Bool;
+	function justReleased (?duration:Float = 50):Bool;
 	
 }

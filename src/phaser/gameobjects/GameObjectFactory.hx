@@ -45,7 +45,7 @@ extern class GameObjectFactory {
 	function sprite (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite;
 	
 	/**
-	 * Create a tween object for a specific object. The object can be any JavaScript object or Phaser object such as Sprite.
+	 * Create a tween on a specific object. The object can be any JavaScript object or Phaser object such as Sprite.
 	 */
 	function tween (obj:Dynamic):phaser.tween.Tween;
 	
@@ -156,5 +156,12 @@ extern class GameObjectFactory {
 	 * A WebGL shader/filter that can be applied to Sprites.
 	 */
 	function filter (filter:String, a1:Dynamic):phaser.core.Filter;
+	
+	/**
+	 * Add a new Plugin into the PluginManager.
+	 * The Plugin must have 2 properties: game and parent. Plugin.game is set to the game reference the PluginManager uses, and parent is set to the PluginManager.
+	 */
+	@:overload(function (plugin:Dynamic, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):phaser.core.Plugin {})
+	function plugin (plugin:phaser.core.Plugin, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):phaser.core.Plugin;
 	
 }
