@@ -19,12 +19,12 @@ extern class Rectangle {
 	var y:Float;
 	
 	/**
-	 * The width of the Rectangle.
+	 * The width of the Rectangle. This value should never be set to a negative.
 	 */
 	var width:Float;
 	
 	/**
-	 * The height of the Rectangle.
+	 * The height of the Rectangle. This value should never be set to a negative.
 	 */
 	var height:Float;
 	
@@ -107,9 +107,9 @@ extern class Rectangle {
 	function intersects (b:phaser.geom.Rectangle, tolerance:Float):Bool;
 	
 	/**
-	 * Determines whether the object specified intersects (overlaps) with the given values.
+	 * Determines whether the coordinates given intersects (overlaps) with this Rectangle.
 	 */
-	function intersectsRaw (left:Float, right:Float, top:Float, bottomt:Float, tolerance:Float):Bool;
+	function intersectsRaw (left:Float, right:Float, top:Float, bottom:Float, tolerance:Float):Bool;
 	
 	/**
 	 * Adds two Rectangles together to create a new Rectangle object, by filling in the horizontal and vertical space between the two Rectangles.
@@ -170,6 +170,16 @@ extern class Rectangle {
 	 * The y coordinate of the center of the Rectangle.
 	 */
 	var centerY:Float;
+	
+	/**
+	 * A random value between the left and right values (inclusive) of the Rectangle.
+	 */
+	var randomX:Float;
+	
+	/**
+	 * A random value between the top and bottom values (inclusive) of the Rectangle.
+	 */
+	var randomY:Float;
 	
 	/**
 	 * The y coordinate of the top of the Rectangle. Changing the top property of a Rectangle object has no effect on the x and width properties.

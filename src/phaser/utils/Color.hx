@@ -11,7 +11,7 @@ extern class Color {
 	
 	/**
 	 * Unpacks the r, g, b, a components into the specified color object, or a new
-	 * object, for use with Int32Array. If little endian, then ABGR order is used when 
+	 * object, for use with Int32Array. If little endian, then ABGR order is used when
 	 * unpacking, otherwise, RGBA order is used. The resulting color object has the
 	 * r, g, b, a properties which are unrelated to endianness.
 	 * 
@@ -147,7 +147,7 @@ extern class Color {
 	static function getRandomColor (min:Float, max:Float, alpha:Float):Float;
 	
 	/**
-	 * Return the component parts of a color as an Object with the properties alpha, red, green, blue
+	 * Return the component parts of a color as an Object with the properties alpha, red, green, blue.
 	 * 
 	 * Alpha will only be set if it exist in the given color (0xAARRGGBB)
 	 */
@@ -156,7 +156,8 @@ extern class Color {
 	/**
 	 * Returns a CSS friendly string value from the given color.
 	 */
-	static function getWebRGB (color:Float):String;
+	@:overload(function (color:Float):String {})
+	static function getWebRGB (color:Dynamic):String;
 	
 	/**
 	 * Given a native color value (in the format 0xAARRGGBB) this will return the Alpha component, as a value between 0 and 255.

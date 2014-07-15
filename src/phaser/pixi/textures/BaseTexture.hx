@@ -38,4 +38,9 @@ extern class BaseTexture {
 	 */
 	var source:Dynamic;
 	
+	/**
+	 * Controls if RGB channels should be premultiplied by Alpha  (WebGL only)
+	 */
+	var a0:Bool;
+	
 }

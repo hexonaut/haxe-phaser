@@ -140,9 +140,16 @@ extern class Tween {
 	var isRunning:Bool;
 	
 	/**
-	 * Configure the Tween
+	 * Sets this tween to be a to tween on the properties given. A to tween starts at the current value and tweens to the destination value given.
+	 * For example a Sprite with an x coordinate of 100 could be tweened to x 200 by giving a properties object of { x: 200 }.
 	 */
 	function to (properties:Dynamic, ?duration:Float = 1000, ?ease:Dynamic, ?autoStart:Bool = false, ?delay:Float = 0, ?repeat:Float = 0, ?yoyo:Bool = false):phaser.tween.Tween;
+	
+	/**
+	 * Sets this tween to be a from tween on the properties given. A from tween starts at the given value and tweens to the current values.
+	 * For example a Sprite with an x coordinate of 100 could be tweened from x: 200 by giving a properties object of { x: 200 }.
+	 */
+	function from (properties:Dynamic, ?duration:Float = 1000, ?ease:Dynamic, ?autoStart:Bool = false, ?delay:Float = 0, ?repeat:Float = 0, ?yoyo:Bool = false):phaser.tween.Tween;
 	
 	/**
 	 * Starts the tween running. Can also be called by the autoStart parameter of Tween.to.
@@ -207,9 +214,9 @@ extern class Tween {
 	function loop ():phaser.tween.Tween;
 	
 	/**
-	 * Sets a callback to be fired each time this tween updates. Note: callback will be called in the context of the global scope.
+	 * Sets a callback to be fired each time this tween updates.
 	 */
-	function onUpdateCallback (callback:Dynamic):phaser.tween.Tween;
+	function onUpdateCallback (callback:Dynamic, callbackContext:Dynamic):phaser.tween.Tween;
 	
 	/**
 	 * Pauses the tween.

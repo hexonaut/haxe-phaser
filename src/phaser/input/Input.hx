@@ -25,6 +25,11 @@ extern class Input {
 	var hitContext:Dynamic;
 	
 	/**
+	 * An array of callbacks that will be fired every time the activePointer receives a move event from the DOM.
+	 */
+	var moveCallbacks:Array<Dynamic>;
+	
+	/**
 	 * An optional callback that will be fired every time the activePointer receives a move event from the DOM. Set to null to disable.
 	 */
 	var moveCallback:Dynamic;
@@ -236,6 +241,11 @@ extern class Input {
 	var onHold:phaser.core.Signal;
 	
 	/**
+	 * You can tell all Pointers to ignore any object with a priorityID lower than the minPriorityID. Useful when stacking UI layers. Set to zero to disable.
+	 */
+	var minPriorityID:Float;
+	
+	/**
 	 * A list of interactive objects. Te InputHandler components add and remove themselves from this.
 	 */
 	var interactiveItems:phaser.core.ArrayList;
@@ -291,11 +301,26 @@ extern class Input {
 	function destroy ():Void;
 	
 	/**
+	 * DEPRECATED: This method will be removed in a future major point release. Please use Input.addMoveCallback instead.
+	 * 
 	 * Sets a callback that is fired every time the activePointer receives a DOM move event such as a mousemove or touchmove.
 	 * It will be called every time the activePointer moves, which in a multi-touch game can be a lot of times, so this is best
 	 * to only use if you've limited input to a single pointer (i.e. mouse or touch)
 	 */
 	function setMoveCallback (callback:Dynamic, callbackContext:Dynamic):Void;
+	
+	/**
+	 * Adds a callback that is fired every time the activePointer receives a DOM move event such as a mousemove or touchmove.
+	 * It will be called every time the activePointer moves, which in a multi-touch game can be a lot of times, so this is best
+	 * to only use if you've limited input to a single pointer (i.e. mouse or touch).
+	 * The callback is added to the Phaser.Input.moveCallbacks array and should be removed with Phaser.Input.deleteMoveCallback.
+	 */
+	function addMoveCallback (callback:Dynamic, callbackContext:Dynamic):Float;
+	
+	/**
+	 * Removes the callback at the defined index from the Phaser.Input.moveCallbacks array
+	 */
+	function deleteMoveCallback (index:Float):Void;
 	
 	/**
 	 * Add a new Pointer object to the Input Manager. By default Input creates 3 pointer objects: mousePointer, pointer1 and pointer2.
@@ -341,9 +366,19 @@ extern class Input {
 	function getPointer (state:Bool):phaser.input.Pointer;
 	
 	/**
-	 * Get the Pointer object whos identified property matches the given identifier value.
+	 * Get the Pointer object whos identifier property matches the given identifier value.
+	 * The identifier property is not set until the Pointer has been used at least once, as its populated by the DOM event.
+	 * Also it can change every time you press the pointer down, and is not fixed once set.
+	 * Note: Not all browsers set the identifier property and it's not part of the W3C spec, so you may need getPointerFromId instead.
 	 */
 	function getPointerFromIdentifier (identifier:Float):phaser.input.Pointer;
+	
+	/**
+	 * Get the Pointer object whos pointerId property matches the given value.
+	 * The pointerId property is not set until the Pointer has been used at least once, as its populated by the DOM event.
+	 * Also it can change every time you press the pointer down if the browser recycles it.
+	 */
+	function getPointerFromId (pointerId:Float):phaser.input.Pointer;
 	
 	/**
 	 * This will return the local coordinates of the specified displayObject based on the given Pointer.

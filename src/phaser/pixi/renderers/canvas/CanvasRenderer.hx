@@ -18,12 +18,6 @@ extern class CanvasRenderer {
 	var clearBeforeRender:Bool;
 	
 	/**
-	 * If true Pixi will Math.floor() x/y values when rendering, stopping pixel interpolation.
-	 * Handy for crisp pixel art and speed on legacy devices.
-	 */
-	var roundPixels:Bool;
-	
-	/**
 	 * Whether the render view is transparent
 	 */
 	var transparent:Bool;

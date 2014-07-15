@@ -27,8 +27,7 @@ extern class Signal {
 	
 	/**
 	 * If Signal is active and should broadcast events.
-	 * 
-	 * <strong>IMPORTANT:</strong> Setting this property during a dispatch will only affect the next dispatch, if you want to stop the propagation of a signal use `halt()` instead.
+	 * IMPORTANT: Setting this property during a dispatch will only affect the next dispatch, if you want to stop the propagation of a signal use halt() instead.
 	 */
 	var active:Bool;
 	
@@ -55,7 +54,7 @@ extern class Signal {
 	/**
 	 * Remove all listeners from the Signal.
 	 */
-	function removeAll ():Void;
+	function removeAll (?context:Dynamic):Void;
 	
 	/**
 	 * Gets the total number of listeneres attached to ths Signal.

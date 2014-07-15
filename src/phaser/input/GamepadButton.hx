@@ -6,7 +6,12 @@ extern class GamepadButton {
 	/**
 	 * @class Phaser.GamepadButton
 	 */
-	function new (game:phaser.core.Game, buttoncode:Float);
+	function new (pad:phaser.input.SinglePad, buttonCode:Float);
+	
+	/**
+	 * A reference to the gamepad that owns this button.
+	 */
+	var pad:phaser.input.SinglePad;
 	
 	/**
 	 * A reference to the currently running game.
@@ -72,21 +77,31 @@ extern class GamepadButton {
 	/**
 	 * Called automatically by Phaser.SinglePad.
 	 */
-	function processButtonDown (value:Dynamic):Void;
+	function processButtonDown (value:Float):Void;
 	
 	/**
 	 * Called automatically by Phaser.SinglePad.
 	 */
-	function processButtonUp (value:Dynamic):Void;
+	function processButtonUp (value:Float):Void;
 	
 	/**
-	 * Called automatically by Phaser.Gamepad.
+	 * Called automatically by Phaser.SinglePad.
 	 */
-	function processButtonFloat (value:Dynamic):Void;
+	function processButtonFloat (value:Float):Void;
 	
 	/**
 	 * Returns the "just pressed" state of this button. Just pressed is considered true if the button was pressed down within the duration given (default 250ms).
 	 */
 	function justPressed (?duration:Float = 250):Bool;
+	
+	/**
+	 * Resets this GamepadButton, changing it to an isUp state and resetting the duration and repeats counters.
+	 */
+	function reset ():Void;
+	
+	/**
+	 * Destroys this GamepadButton, this disposes of the onDown, onUp and onFloat signals and clears the pad and game references.
+	 */
+	function destroy ():Void;
 	
 }

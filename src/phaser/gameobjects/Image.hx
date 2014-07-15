@@ -51,16 +51,6 @@ extern class Image extends phaser.pixi.display.Sprite {
 	var key:Dynamic;
 	
 	/**
-	 * Internal cache var.
-	 */
-	var _frame:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _frameName:String;
-	
-	/**
 	 * The world coordinates of this Image. This differs from the x/y coordinates which are relative to the Images container.
 	 */
 	var world:Dynamic;
@@ -83,7 +73,13 @@ extern class Image extends phaser.pixi.display.Sprite {
 	var cameraOffset:Dynamic;
 	
 	/**
+	 * The Rectangle used to crop the texture. Set this via Sprite.crop. Any time you modify this property directly you must call Sprite.updateCrop.
+	 */
+	var cropRect:phaser.geom.Rectangle;
+	
+	/**
 	 * A small internal cache:
+	 * 
 	 * 0 = previous position.x
 	 * 1 = previous position.y
 	 * 2 = previous rotation
@@ -93,8 +89,29 @@ extern class Image extends phaser.pixi.display.Sprite {
 	 * 6 = exists (0 = no, 1 = yes)
 	 * 7 = fixed to camera (0 = no, 1 = yes)
 	 * 8 = destroy phase? (0 = no, 1 = yes)
+	 * 9 = frame index
 	 */
 	var cache:Array<Dynamic>;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _crop:phaser.geom.Rectangle;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _frame:phaser.geom.Rectangle;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _bounds:phaser.geom.Rectangle;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _frameName:String;
 	
 	/**
 	 * Automatically called by World.preUpdate.
@@ -125,10 +142,33 @@ extern class Image extends phaser.pixi.display.Sprite {
 	function loadTexture (key:phaser.pixi.textures.Texture, frame:Float):Void;
 	
 	/**
-	 * Crop allows you to crop the texture used to display this Image.
-	 * Cropping takes place from the top-left of the Image and can be modified in real-time by providing an updated rectangle object.
+	 * Resets the Texture frame dimensions that the Image uses for rendering.
 	 */
-	function crop (rect:phaser.geom.Rectangle):Void;
+	function resetFrame ():Void;
+	
+	/**
+	 * Sets the Texture frame the Image uses for rendering.
+	 * This is primarily an internal method used by Image.loadTexture, although you may call it directly.
+	 */
+	function setFrame (frame:phaser.animation.Frame):Void;
+	
+	/**
+	 * If you have set a crop rectangle on this Image via Image.crop and since modified the Image.cropRect property (or the rectangle it references)
+	 * then you need to update the crop frame by calling this method.
+	 */
+	function updateCrop ():Void;
+	
+	/**
+	 * Crop allows you to crop the texture used to display this Image.
+	 * This modifies the core Image texture frame, so the Image width/height properties will adjust accordingly.
+	 * 
+	 * Cropping takes place from the top-left of the Image and can be modified in real-time by either providing an updated rectangle object to Image.crop,
+	 * or by modifying Image.cropRect (or a reference to it) and then calling Image.updateCrop.
+	 * 
+	 * The rectangle object given to this method can be either a Phaser.Rectangle or any object so long as it has public x, y, width and height properties.
+	 * A reference to the rectangle is stored in Image.cropRect unless the copy parameter is true in which case the values are duplicated to a local object.
+	 */
+	function crop (rect:phaser.geom.Rectangle, ?copy:Bool = false):Void;
 	
 	/**
 	 * Brings a 'dead' Image back to life, optionally giving it the health value specified.

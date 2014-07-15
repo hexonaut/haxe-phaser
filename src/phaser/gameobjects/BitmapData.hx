@@ -112,6 +112,17 @@ extern class BitmapData {
 	function add (object:Dynamic):Void;
 	
 	/**
+	 * Takes the given Game Object, resizes this BitmapData to match it and then draws it into this BitmapDatas canvas, ready for further processing.
+	 * The source game object is not modified by this operation.
+	 * If the source object uses a texture as part of a Texture Atlas or Sprite Sheet, only the current frame will be used for sizing and draw.
+	 * If a string is given it will assume it's a cache key and look in Phaser.Cache for an image key matching the string.
+	 */
+	@:overload(function (source:phaser.gameobjects.Sprite):Void {})
+	@:overload(function (source:phaser.gameobjects.Image):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData):Void {})
+	function load (source:String):Void;
+	
+	/**
 	 * Clears the BitmapData context using a clearRect.
 	 */
 	function cls ():Void;
@@ -198,17 +209,23 @@ extern class BitmapData {
 	
 	/**
 	 * Get the color of a specific pixel in the context into a color object.
+	 * If you have drawn anything to the BitmapData since it was created you must call BitmapData.update to refresh the array buffer,
+	 * otherwise this may return out of date color values, or worse - throw a run-time error as it tries to access an array element that doesn't exist.
 	 */
 	function getPixel (x:Float, y:Float, ?out:Dynamic):Dynamic;
 	
 	/**
 	 * Get the color of a specific pixel including its alpha value.
+	 * If you have drawn anything to the BitmapData since it was created you must call BitmapData.update to refresh the array buffer,
+	 * otherwise this may return out of date color values, or worse - throw a run-time error as it tries to access an array element that doesn't exist.
 	 * Note that on little-endian systems the format is 0xAABBGGRR and on big-endian the format is 0xRRGGBBAA.
 	 */
 	function getPixel32 (x:Float, y:Float):Float;
 	
 	/**
 	 * Get the color of a specific pixel including its alpha value as a color object containing r,g,b,a and rgba properties.
+	 * If you have drawn anything to the BitmapData since it was created you must call BitmapData.update to refresh the array buffer,
+	 * otherwise this may return out of date color values, or worse - throw a run-time error as it tries to access an array element that doesn't exist.
 	 */
 	function getPixelRGB (x:Float, y:Float, ?out:Dynamic, ?hsl:Bool = false, ?hsv:Bool = false):Dynamic;
 	
@@ -218,19 +235,34 @@ extern class BitmapData {
 	function getPixels (rect:phaser.geom.Rectangle):Dynamic;
 	
 	/**
+	 * Creates a new Phaser.Image object, assigns this BitmapData to be its texture, adds it to the world then returns it.
+	 */
+	function addToWorld (?x:Float = 0, ?y:Float = 0):phaser.gameobjects.Image;
+	
+	/**
 	 * Copies the pixels from the source image to this BitmapData based on the given area and destination.
 	 */
-	@:overload(function (source:Dynamic, area:phaser.geom.Rectangle, destX:Float, destY:Float):Void {})
-	function copyPixels (source:String, area:phaser.geom.Rectangle, destX:Float, destY:Float):Void;
+	@:overload(function (source:phaser.gameobjects.Sprite, area:phaser.geom.Rectangle, x:Float, y:Float):Void {})
+	@:overload(function (source:phaser.gameobjects.Image, area:phaser.geom.Rectangle, x:Float, y:Float):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, area:phaser.geom.Rectangle, x:Float, y:Float):Void {})
+	@:overload(function (source:Dynamic, area:phaser.geom.Rectangle, x:Float, y:Float):Void {})
+	function copyPixels (source:String, area:phaser.geom.Rectangle, x:Float, y:Float):Void;
 	
 	/**
-	 * Draws the given image to this BitmapData at the coordinates specified. If you need to only draw a part of the image use BitmapData.copyPixels instead.
+	 * Draws the given image or Game Object to this BitmapData at the coordinates specified.
+	 * You can use the optional width and height values to 'stretch' the image as it's drawn.
 	 */
-	@:overload(function (source:Dynamic, ?x:Float = 0, ?y:Float = 0):Void {})
-	function draw (source:String, ?x:Float = 0, ?y:Float = 0):Void;
+	@:overload(function (source:phaser.gameobjects.Sprite, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):Void {})
+	@:overload(function (source:phaser.gameobjects.Image, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):Void {})
+	@:overload(function (source:Dynamic, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):Void {})
+	function draw (source:String, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):Void;
 	
 	/**
-	 * Draws the given image to this BitmapData at the coordinates specified. If you need to only draw a part of the image use BitmapData.copyPixels instead.
+	 * DEPRECATED: Use BitmapData.draw instead.
+	 * 
+	 * Draws the given image to this BitmapData at the coordinates specified.
+	 * If you need to only draw a part of the image use BitmapData.copyPixels instead.
 	 */
 	@:overload(function (sprite:phaser.gameobjects.Sprite, ?x:Float = 0, ?y:Float = 0):Void {})
 	function drawSprite (sprite:phaser.gameobjects.Image, ?x:Float = 0, ?y:Float = 0):Void;
@@ -238,18 +270,53 @@ extern class BitmapData {
 	/**
 	 * Draws the given image onto this BitmapData using an image as an alpha mask.
 	 */
-	@:overload(function (source:Dynamic, mask:Dynamic):Void {})
-	@:overload(function (source:String, mask:Dynamic):Void {})
-	@:overload(function (source:Dynamic, mask:String):Void {})
-	function alphaMask (source:String, mask:String):Void;
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:String, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:String, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:String, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:Dynamic, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:String, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:Dynamic, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:String, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	@:overload(function (source:Dynamic, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void {})
+	function alphaMask (source:String, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):Void;
 	
 	/**
 	 * Scans this BitmapData for all pixels matching the given r,g,b values and then draws them into the given destination BitmapData.
-	 * The destination BitmapData must be large enough to receive all of the pixels that are scanned.
+	 * The original BitmapData remains unchanged.
+	 * The destination BitmapData must be large enough to receive all of the pixels that are scanned unless the 'resize' parameter is true.
 	 * Although the destination BitmapData is returned from this method, it's actually modified directly in place, meaning this call is perfectly valid:
 	 * picture.extract(mask, r, g, b)
+	 * You can specify optional r2, g2, b2 color values. If given the pixel written to the destination bitmap will be of the r2, g2, b2 color.
+	 * If not given it will be written as the same color it was extracted. You can provide one or more alternative colors, allowing you to tint
+	 * the color during extraction.
 	 */
-	function extract (destination:phaser.gameobjects.BitmapData, r:Float, g:Float, b:Float, ?a:Float = 255):phaser.gameobjects.BitmapData;
+	function extract (destination:phaser.gameobjects.BitmapData, r:Float, g:Float, b:Float, ?a:Float = 255, ?resize:Bool = false, ?r2:Float, ?g2:Float, ?b2:Float):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Draws a filled Rectangle to the BitmapData at the given x, y coordinates and width / height in size.
+	 */
+	function rect (x:Float, y:Float, width:Float, height:Float, ?fillStyle:String):Void;
 	
 	/**
 	 * Draws a filled Circle to the BitmapData at the given x, y coordinates and radius in size.

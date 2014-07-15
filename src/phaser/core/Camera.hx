@@ -45,7 +45,7 @@ extern class Camera {
 	var bounds:phaser.geom.Rectangle;
 	
 	/**
-	 * Moving inside this Rectangle will not cause camera moving.
+	 * Moving inside this Rectangle will not cause the camera to move.
 	 */
 	var deadzone:phaser.geom.Rectangle;
 	

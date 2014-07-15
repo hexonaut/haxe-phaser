@@ -44,6 +44,11 @@ extern class Button extends phaser.gameobjects.Image {
 	var _onUpFrameID:Float;
 	
 	/**
+	 * If true then onOver events (such as onOverSound) will only be triggered if the Pointer object causing them was the Mouse Pointer.
+	 */
+	var onOverMouseOnly:Bool;
+	
+	/**
 	 * The Sound to be played when this Buttons Over state is activated.
 	 */
 	var onOverSound:phaser.sound.Sound;

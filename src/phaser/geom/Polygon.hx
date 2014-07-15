@@ -18,9 +18,9 @@ extern class Polygon {
 	var type:Float;
 	
 	/**
-	 * The array of Points.
+	 * The array of vertex Points.
 	 */
-	var points:Dynamic;
+	var _points:Dynamic;
 	
 	/**
 	 * Creates a clone of this polygon.
@@ -31,5 +31,10 @@ extern class Polygon {
 	 * Checks whether the x and y coordinates are contained within this polygon.
 	 */
 	function contains (x:Float, y:Float):Bool;
+	
+	/**
+	 * Sets and modifies the points of this polygon.
+	 */
+	var points:Dynamic;
 	
 }

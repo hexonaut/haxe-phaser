@@ -232,4 +232,9 @@ extern class Body {
 	 */
 	var angle(default, null):Float;
 	
+	/**
+	 * Render Sprite's Body.
+	 */
+	function render (context:Dynamic, body:phaser.physics.ninja.Body, ?color:String = 'rgba(0,255,0,0.4)', ?filled:Bool = true):Void;
+	
 }

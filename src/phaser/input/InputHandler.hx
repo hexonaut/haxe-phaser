@@ -138,6 +138,11 @@ extern class InputHandler {
 	/**
 	 * Internal cache var.
 	 */
+	var _dragPhase:Bool;
+	
+	/**
+	 * Internal cache var.
+	 */
 	var _wasEnabled:Bool;
 	
 	/**
@@ -244,7 +249,7 @@ extern class InputHandler {
 	function pointerDragged (pointer:phaser.input.Pointer):Bool;
 	
 	/**
-	 * Checks if the given pointer is over this Sprite and can click it.
+	 * Checks if the given pointer is both down and over this Sprite.
 	 */
 	function checkPointerDown (pointer:phaser.input.Pointer):Bool;
 	

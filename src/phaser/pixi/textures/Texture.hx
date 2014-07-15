@@ -15,7 +15,12 @@ extern class Texture {
 	function new (BaseTexture:Dynamic, Rectangle:Dynamic);
 	
 	/**
-	 * The base texture of that this texture uses
+	 * Does this Texture have any frame data assigned to it?
+	 */
+	var noFrame:Bool;
+	
+	/**
+	 * The base texture that this texture uses.
 	 */
 	var baseTexture:Dynamic;
 	
@@ -28,5 +33,36 @@ extern class Texture {
 	 * The trim point
 	 */
 	var trim:Dynamic;
+	
+	/**
+	 * This will let the renderer know if the texture is valid. If its not then it cannot be rendered.
+	 */
+	var valid:Bool;
+	
+	/**
+	 * The context scope under which events are run.
+	 */
+	var scope:Dynamic;
+	
+	/**
+	 * The WebGL UV data cache.
+	 */
+	var uvs:Dynamic;
+	
+	/**
+	 * The width of the Texture in pixels.
+	 */
+	var width:Float;
+	
+	/**
+	 * The height of the Texture in pixels.
+	 */
+	var height:Float;
+	
+	/**
+	 * This is the area of the BaseTexture image to actually copy to the Canvas / WebGL when rendering,
+	 * irrespective of the actual frame size or placement (which can be influenced by trimmed texture atlases)
+	 */
+	var crop:Dynamic;
 	
 }

@@ -55,4 +55,9 @@ extern class SignalBinding {
 	 */
 	function detach ():Dynamic;
 	
+	/**
+	 * Delete instance properties
+	 */
+	function _destroy ():Void;
+	
 }

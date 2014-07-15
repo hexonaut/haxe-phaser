@@ -154,4 +154,9 @@ extern class AABB {
 	 */
 	function destroy ():Void;
 	
+	/**
+	 * Render this AABB for debugging purposes.
+	 */
+	function render (context:Dynamic, xOffset:Float, yOffset:Float, color:String, filled:Bool):Void;
+	
 }

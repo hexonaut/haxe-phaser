@@ -10,8 +10,7 @@ extern class Gamepad {
 	 * HTML5 GAMEPAD API SUPPORT IS AT AN EXPERIMENTAL STAGE!
 	 * At moment of writing this (end of 2013) only Chrome supports parts of it out of the box. Firefox supports it
 	 * via prefs flags (about:config, search gamepad). The browsers map the same controllers differently.
-	 * This class has constans for Windows 7 Chrome mapping of
-	 * XBOX 360 controller.
+	 * This class has constants for Windows 7 Chrome mapping of XBOX 360 controller.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -122,8 +121,7 @@ extern class Gamepad {
 	function update ():Void;
 	
 	/**
-	 * Updating connected gamepads (for Google Chrome).
-	 * Should not be called manually.
+	 * Updating connected gamepads (for Google Chrome). Should not be called manually.
 	 */
 	function _pollGamepads ():Void;
 	

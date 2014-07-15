@@ -161,6 +161,12 @@ extern class TileSprite {
 	function loadTexture (key:phaser.pixi.textures.Texture, frame:Float):Void;
 	
 	/**
+	 * Sets the Texture frame the TileSprite uses for rendering.
+	 * This is primarily an internal method used by TileSprite.loadTexture, although you may call it directly.
+	 */
+	function setFrame (frame:phaser.animation.Frame):Void;
+	
+	/**
 	 * Destroys the TileSprite. This removes it from its parent group, destroys the event and animation handlers if present
 	 * and nulls its reference to game, freeing it up for garbage collection.
 	 */

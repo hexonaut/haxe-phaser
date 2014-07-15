@@ -149,4 +149,9 @@ extern class Circle {
 	 */
 	function destroy ():Void;
 	
+	/**
+	 * Render this circle for debugging purposes.
+	 */
+	function render (context:Dynamic, xOffset:Float, yOffset:Float, color:String, filled:Bool):Void;
+	
 }

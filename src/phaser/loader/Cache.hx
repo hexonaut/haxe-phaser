@@ -74,6 +74,11 @@ extern class Cache {
 	var onSoundUnlock:phaser.core.Signal;
 	
 	/**
+	 * Const to cache object look-up array.
+	 */
+	var _cacheMap:Array<Dynamic>;
+	
+	/**
 	 * @constant
 	 */
 	static var CANVAS:Float;
@@ -189,17 +194,17 @@ extern class Cache {
 	function addJSON (key:String, url:String, data:Dynamic):Void;
 	
 	/**
-	 * Add a new image.
+	 * Adds an Image file into the Cache. The file must have already been loaded, typically via Phaser.Loader.
 	 */
 	function addImage (key:String, url:String, data:Dynamic):Void;
 	
 	/**
-	 * Add a new sound.
+	 * Adds a Sound file into the Cache. The file must have already been loaded, typically via Phaser.Loader.
 	 */
 	function addSound (key:String, url:String, data:Dynamic, webAudio:Bool, audioTag:Bool):Void;
 	
 	/**
-	 * Reload a sound.
+	 * Reload a Sound file from the server.
 	 */
 	function reloadSound (key:String):Void;
 	
@@ -239,9 +244,64 @@ extern class Cache {
 	function getPhysicsData (key:String, ?object:String, ?fixtureKey:String):Dynamic;
 	
 	/**
-	 * Checks if an image key exists.
+	 * Checks if a key for the given cache object type exists.
+	 */
+	function checkKey (type:Float, key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the Canvas Cache.
+	 */
+	function checkCanvasKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the Image Cache. Note that this also includes Texture Atlases, Sprite Sheets and Retro Fonts.
 	 */
 	function checkImageKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the Texture Cache.
+	 */
+	function checkTextureKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the Sound Cache.
+	 */
+	function checkSoundKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the Text Cache.
+	 */
+	function checkTextKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the Physics Cache.
+	 */
+	function checkPhysicsKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the Tilemap Cache.
+	 */
+	function checkTilemapKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the Binary Cache.
+	 */
+	function checkBinaryKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the BitmapData Cache.
+	 */
+	function checkBitmapDataKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the BitmapFont Cache.
+	 */
+	function checkBitmapFontKey (key:String):Bool;
+	
+	/**
+	 * Checks if the given key exists in the JSON Cache.
+	 */
+	function checkJSONKey (key:String):Bool;
 	
 	/**
 	 * Get image data by key.
@@ -251,7 +311,7 @@ extern class Cache {
 	/**
 	 * Get tilemap data by key.
 	 */
-	function getTilemap (key:String):Dynamic;
+	function getTilemapData (key:String):Dynamic;
 	
 	/**
 	 * Get frame data by key.

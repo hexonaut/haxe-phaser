@@ -145,6 +145,11 @@ extern class ScaleManager {
 	var margin(default, null):Dynamic;
 	
 	/**
+	 * The bounds of the scaled game. The x/y will match the offset of the canvas element and the width/height the scaled width and height.
+	 */
+	var bounds(default, null):phaser.geom.Rectangle;
+	
+	/**
 	 * The aspect ratio of the scaled game.
 	 */
 	var aspectRatio(default, null):Float;
