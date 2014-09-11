@@ -314,19 +314,6 @@ extern class Input {
 	function deleteMoveCallback (index:Float):Void;
 	
 	/**
-	 * Adds a callback that is fired every time the activePointer receives a DOM move event such as a mousemove or touchmove.
-	 * It will be called every time the activePointer moves, which in a multi-touch game can be a lot of times, so this is best
-	 * to only use if you've limited input to a single pointer (i.e. mouse or touch).
-	 * The callback is added to the Phaser.Input.moveCallbacks array and should be removed with Phaser.Input.deleteMoveCallback.
-	 */
-	function addMoveCallback (callback:Dynamic, callbackContext:Dynamic):Float;
-	
-	/**
-	 * Removes the callback at the defined index from the Phaser.Input.moveCallbacks array
-	 */
-	function deleteMoveCallback (index:Float):Void;
-	
-	/**
 	 * Add a new Pointer object to the Input Manager. By default Input creates 3 pointer objects: mousePointer, pointer1 and pointer2.
 	 * If you need more then use this to create a new one, up to a maximum of 10.
 	 */
