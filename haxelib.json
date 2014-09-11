@@ -4,8 +4,8 @@
   "tags": ["js"],
   "description": "Haxe externs for Phaser - the popular JavaScript game engine.",
   "contributors": ["Blank101"],
-  "releasenote": "Updated to Phaser 2.0.6",
-  "version": "0.2.6",
+  "releasenote": "Updated to Phaser 2.1.1",
+  "version": "0.3.0",
   "url": "https://github.com/Blank101/haxe-phaser",
   "dependencies": {
     

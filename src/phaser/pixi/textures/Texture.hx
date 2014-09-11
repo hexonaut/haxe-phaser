@@ -40,11 +40,6 @@ extern class Texture {
 	var valid:Bool;
 	
 	/**
-	 * The context scope under which events are run.
-	 */
-	var scope:Dynamic;
-	
-	/**
 	 * The WebGL UV data cache.
 	 */
 	var uvs:Dynamic;

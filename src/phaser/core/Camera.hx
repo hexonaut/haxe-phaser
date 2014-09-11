@@ -55,6 +55,11 @@ extern class Camera {
 	var visible:Bool;
 	
 	/**
+	 * If a Camera has roundPx set to true it will call view.floor as part of its update loop, keeping its boundary to integer values. Set this to false to disable this from happening.
+	 */
+	var roundPx:Bool;
+	
+	/**
 	 * Whether this camera is flush with the World Bounds or not.
 	 */
 	var atLimit:Bool;
@@ -68,6 +73,11 @@ extern class Camera {
 	 * Edge property.
 	 */
 	var _edge:Float;
+	
+	/**
+	 * Current position of the camera in world.
+	 */
+	var _position:Dynamic;
 	
 	/**
 	 * The display object to which all game objects are added. Set by World.boot
@@ -166,6 +176,11 @@ extern class Camera {
 	 * The Cameras y coordinate. This value is automatically clamped if it falls outside of the World bounds.
 	 */
 	var y:Float;
+	
+	/**
+	 * The Cameras position. This value is automatically clamped if it falls outside of the World bounds.
+	 */
+	var position:Dynamic;
 	
 	/**
 	 * The Cameras width. By default this is the same as the Game size and should not be adjusted for now.

@@ -149,6 +149,11 @@ extern class SoundManager {
 	function unsetMute ():Void;
 	
 	/**
+	 * Stops all the sounds in the game, then destroys them and finally clears up any callbacks.
+	 */
+	function destroy ():Void;
+	
+	/**
 	 * @name Phaser.SoundManager#mute
 	 */
 	var mute:Bool;

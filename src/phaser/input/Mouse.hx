@@ -4,7 +4,9 @@ package phaser.input;
 extern class Mouse {
 	
 	/**
-	 * Phaser.Mouse is responsible for handling all aspects of mouse interaction with the browser. It captures and processes mouse events.
+	 * Phaser.Mouse is responsible for handling all aspects of mouse interaction with the browser.
+	 * It captures and processes mouse events that happen on the game canvas object. It also adds a single mouseup listener to window which
+	 * is used to capture the mouse being released when not over the game.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -167,6 +169,11 @@ extern class Mouse {
 	 * The internal method that handles the mouse up event from the browser.
 	 */
 	function onMouseUp (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse up event from the window.
+	 */
+	function onMouseUpGlobal (event:Dynamic):Void;
 	
 	/**
 	 * The internal method that handles the mouse out event from the browser.

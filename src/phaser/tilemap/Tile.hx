@@ -145,7 +145,7 @@ extern class Tile {
 	function destroy ():Void;
 	
 	/**
-	 * Set collision settings on this tile.
+	 * Sets the collision flags for each side of this tile and updates the interesting faces list.
 	 */
 	function setCollision (left:Bool, right:Bool, up:Bool, down:Bool):Void;
 	

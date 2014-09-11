@@ -106,6 +106,11 @@ extern class TileSprite {
 	var body:Dynamic;
 	
 	/**
+	 * A useful boolean to control if the TileSprite is alive or dead (in terms of your gameplay, it doesn't effect rendering).
+	 */
+	var alive:Bool;
+	
+	/**
 	 * A small internal cache:
 	 * 0 = previous position.x
 	 * 1 = previous position.y
@@ -140,7 +145,7 @@ extern class TileSprite {
 	 * A negative x value will scroll to the left. A positive x value will scroll to the right.
 	 * A negative y value will scroll up. A positive y value will scroll down.
 	 */
-	function autoScroll ():Void;
+	function autoScroll (x:Float, y:Float):Void;
 	
 	/**
 	 * Stops an automatically scrolling TileSprite.

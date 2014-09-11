@@ -97,6 +97,11 @@ extern class Debug {
 	function preUpdate ():Void;
 	
 	/**
+	 * Clears the Debug canvas.
+	 */
+	function reset ():Void;
+	
+	/**
 	 * Internal method that resets and starts the debug output values.
 	 */
 	function start (?x:Float = 0, ?y:Float = 0, ?color:String = 'rgb(255,255,255)', ?columnWidth:Float = 0):Void;
@@ -152,6 +157,11 @@ extern class Debug {
 	 */
 	@:overload(function (sprite:phaser.gameobjects.Sprite, ?color:String, ?filled:Bool = true):Void {})
 	function spriteBounds (sprite:phaser.gameobjects.Image, ?color:String, ?filled:Bool = true):Void;
+	
+	/**
+	 * Renders the Rope's segments. Note: This is really expensive as it has to calculate new segments everytime you call it
+	 */
+	function ropeSegments (rope:phaser.gameobjects.Rope, ?color:String, ?filled:Bool = true):Void;
 	
 	/**
 	 * Render debug infos (including name, bounds info, position and some other properties) about the Sprite.

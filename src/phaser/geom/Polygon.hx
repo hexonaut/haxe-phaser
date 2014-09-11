@@ -18,19 +18,20 @@ extern class Polygon {
 	var type:Float;
 	
 	/**
-	 * The array of vertex Points.
+	 * Creates a copy of the given Polygon.
+	 * This is a deep clone, the resulting copy contains new Phaser.Point objects
 	 */
-	var _points:Dynamic;
-	
-	/**
-	 * Creates a clone of this polygon.
-	 */
-	function clone ():phaser.geom.Polygon;
+	function clone (?output:phaser.geom.Polygon):phaser.geom.Polygon;
 	
 	/**
 	 * Checks whether the x and y coordinates are contained within this polygon.
 	 */
 	function contains (x:Float, y:Float):Bool;
+	
+	/**
+	 * Sets and modifies the points of this polygon.
+	 */
+	var points:Dynamic;
 	
 	/**
 	 * Sets and modifies the points of this polygon.

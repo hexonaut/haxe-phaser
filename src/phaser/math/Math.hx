@@ -97,9 +97,21 @@ extern class Math {
 	function angleBetween (x1:Float, y1:Float, x2:Float, y2:Float):Float;
 	
 	/**
+	 * Find the angle of a segment from (x1, y1) -> (x2, y2).
+	 * Note that the difference between this method and Math.angleBetween is that this assumes the y coordinate travels
+	 * down the screen.
+	 */
+	function angleBetweenY (x1:Float, y1:Float, x2:Float, y2:Float):Float;
+	
+	/**
 	 * Find the angle of a segment from (point1.x, point1.y) -> (point2.x, point2.y).
 	 */
 	function angleBetweenPoints (point1:Dynamic, point2:Dynamic):Float;
+	
+	/**
+	 * Find the angle of a segment from (point1.x, point1.y) -> (point2.x, point2.y).
+	 */
+	function angleBetweenPointsY (point1:Dynamic, point2:Dynamic):Float;
 	
 	/**
 	 * Reverses an angle.
@@ -142,9 +154,17 @@ extern class Math {
 	function chanceRoll (chance:Float):Bool;
 	
 	/**
-	 * Returns an Array containing the numbers from min to max (inclusive).
+	 * Returns an Array containing the numbers from min to max and inclusive of both values.
+	 * If you need exclusive of max then see Phaser.Math.numberArrayEx.
 	 */
 	function numberArray (min:Float, max:Float):Array<Dynamic>;
+	
+	/**
+	 * Creates an array of numbers (positive and/or negative) progressing from
+	 * start up to but not including end. If start is less than stop a
+	 * zero-length range is created unless a negative step is specified.
+	 */
+	static function numberArrayStep (?start:Float = 0, ?end:Float, ?step:Float = 1):Array<Dynamic>;
 	
 	/**
 	 * Adds the given amount to the value, but never lets the value go over the specified maximum.

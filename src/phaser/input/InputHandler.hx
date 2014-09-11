@@ -24,6 +24,11 @@ extern class InputHandler {
 	var enabled:Bool;
 	
 	/**
+	 * A disposable flag used by the Pointer class when performing priority checks.
+	 */
+	var checked:Bool;
+	
+	/**
 	 * The priorityID is used to determine which game objects should get priority when input events occur. For example if you have
 	 * several Sprites that overlap, by default the one at the top of the display list is given priority for input events. You can
 	 * stop this from happening by controlling the priorityID value. The higher the value, the more important they are considered to the Input events.
@@ -189,34 +194,39 @@ extern class InputHandler {
 	 * Checks if the object this InputHandler is bound to is valid for consideration in the Pointer move event.
 	 * This is called by Phaser.Pointer and shouldn't typically be called directly.
 	 */
-	function validForInput (highestID:Float, highestRenderID:Float):Bool;
+	function validForInput (highestID:Float, highestRenderID:Float, ?includePixelPerfect:Bool = true):Bool;
+	
+	/**
+	 * Is this object using pixel perfect checking?
+	 */
+	function isPixelPerfect ():Bool;
 	
 	/**
 	 * The x coordinate of the Input pointer, relative to the top-left of the parent Sprite.
 	 * This value is only set when the pointer is over this Sprite.
 	 */
-	function pointerX (pointer:phaser.input.Pointer):Float;
+	function pointerX (pointer:Float):Float;
 	
 	/**
 	 * The y coordinate of the Input pointer, relative to the top-left of the parent Sprite
 	 * This value is only set when the pointer is over this Sprite.
 	 */
-	function pointerY (pointer:phaser.input.Pointer):Float;
+	function pointerY (pointer:Float):Float;
 	
 	/**
-	 * If the Pointer is touching the touchscreen, or the mouse button is held down, isDown is set to true.
+	 * If the Pointer is down this returns true. Please note that it only checks if the Pointer is down, not if it's down over any specific Sprite.
 	 */
-	function pointerDown (pointer:phaser.input.Pointer):Bool;
+	function pointerDown (pointer:Float):Bool;
 	
 	/**
-	 * If the Pointer is not touching the touchscreen, or the mouse button is up, isUp is set to true
+	 * If the Pointer is up this returns true. Please note that it only checks if the Pointer is up, not if it's up over any specific Sprite.
 	 */
-	function pointerUp (pointer:phaser.input.Pointer):Bool;
+	function pointerUp (pointer:Float):Bool;
 	
 	/**
 	 * A timestamp representing when the Pointer first touched the touchscreen.
 	 */
-	function pointerTimeDown (pointer:phaser.input.Pointer):Float;
+	function pointerTimeDown (pointer:Float):Float;
 	
 	/**
 	 * A timestamp representing when the Pointer left the touchscreen.
@@ -249,14 +259,16 @@ extern class InputHandler {
 	function pointerDragged (pointer:phaser.input.Pointer):Bool;
 	
 	/**
-	 * Checks if the given pointer is both down and over this Sprite.
+	 * Checks if the given pointer is both down and over the Sprite this InputHandler belongs to.
+	 * Use the fastTest flag is to quickly check just the bounding hit area even if InputHandler.pixelPerfectOver is true.
 	 */
-	function checkPointerDown (pointer:phaser.input.Pointer):Bool;
+	function checkPointerDown (pointer:phaser.input.Pointer, ?fastTest:Bool = false):Bool;
 	
 	/**
-	 * Checks if the given pointer is over this Sprite.
+	 * Checks if the given pointer is over the Sprite this InputHandler belongs to.
+	 * Use the fastTest flag is to quickly check just the bounding hit area even if InputHandler.pixelPerfectOver is true.
 	 */
-	function checkPointerOver (pointer:phaser.input.Pointer):Bool;
+	function checkPointerOver (pointer:phaser.input.Pointer, ?fastTest:Bool = false):Bool;
 	
 	/**
 	 * Runs a pixel perfect check against the given x/y coordinates of the Sprite this InputHandler is bound to.

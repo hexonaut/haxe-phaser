@@ -78,6 +78,11 @@ extern class Group {
 	var physicsBodyType:Float;
 	
 	/**
+	 * This signal is dispatched when the parent is destoyed.
+	 */
+	var onDestroy:phaser.core.Signal;
+	
+	/**
 	 * The property on which children are sorted.
 	 */
 	var _sortProperty:String;
@@ -130,6 +135,13 @@ extern class Group {
 	function add (child:Dynamic, ?silent:Bool = false):Dynamic;
 	
 	/**
+	 * Adds an array existing objects to this Group. The objects can be instances of Phaser.Sprite, Phaser.Button or any other display object.
+	 * The children are automatically added to the top of the Group, so render on-top of everything else within the Group.
+	 * TODO: Add ability to pass the children as parameters rather than having to be an array.
+	 */
+	function addMultiple (children:Array<Dynamic>, ?silent:Bool = false):Dynamic;
+	
+	/**
 	 * Adds an existing object to this Group. The object can be an instance of Phaser.Sprite, Phaser.Button or any other display object.
 	 * The child is added to the Group at the location specified by the index value, this allows you to control child ordering.
 	 */
@@ -178,7 +190,7 @@ extern class Group {
 	
 	/**
 	 * Swaps the position of two children in this Group. Both children must be in this Group.
-	 * You cannot swap a child with itself, or swap un-parented children, doing so will return false.
+	 * You cannot swap a child with itself, or swap un-parented children.
 	 */
 	function swap (child1:Dynamic, child2:Dynamic):Void;
 	
@@ -238,6 +250,11 @@ extern class Group {
 	function setProperty (child:Dynamic, key:Array<Dynamic>, value:Dynamic, ?operation:Float = 0, ?force:Bool = false):Bool;
 	
 	/**
+	 * Checks a property for the given value on the child.
+	 */
+	function checkProperty (child:Dynamic, key:Array<Dynamic>, value:Dynamic, ?force:Bool = false):Bool;
+	
+	/**
 	 * This function allows you to quickly set a property on a single child of this Group to a new value.
 	 * The operation parameter controls how the new value is assigned to the property, from simple replacement to addition and multiplication.
 	 */
@@ -261,6 +278,12 @@ extern class Group {
 	 * The operation parameter controls how the new value is assigned to the property, from simple replacement to addition and multiplication.
 	 */
 	function setAllChildren (key:String, value:Dynamic, ?checkAlive:Bool = false, ?checkVisible:Bool = false, ?operation:Float = 0, ?force:Bool = false):Void;
+	
+	/**
+	 * This function allows you to quickly check that the same property across all children of this Group is equal to the given value.
+	 * This call doesn't descend down children, so if you have a Group inside of this Group, the property will be checked on the Group but not its children.
+	 */
+	function checkAll (key:String, value:Dynamic, ?checkAlive:Bool = false, ?checkVisible:Bool = false, ?force:Bool = false):Void;
 	
 	/**
 	 * Adds the amount to the given property on all children in this Group.

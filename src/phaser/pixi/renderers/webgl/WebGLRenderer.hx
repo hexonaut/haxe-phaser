@@ -42,7 +42,7 @@ extern class WebGLRenderer {
 	var view:Dynamic;
 	
 	/**
-	 * Whether the context was lost 
+	 * Whether the context was lost
 	 */
 	var contextLost:Bool;
 	

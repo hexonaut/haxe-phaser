@@ -50,62 +50,67 @@ extern class StateManager {
 	var current:String;
 	
 	/**
-	 * This will be called when the state is started (i.e. set as the current active state).
+	 * This is called when the state is set as the active state.
 	 */
 	var onInitCallback:Dynamic;
 	
 	/**
-	 * This will be called when init states (loading assets...).
+	 * This is called when the state starts to load assets.
 	 */
 	var onPreloadCallback:Dynamic;
 	
 	/**
-	 * This will be called when create states (setup states...).
+	 * This is called when the state preload has finished and creation begins.
 	 */
 	var onCreateCallback:Dynamic;
 	
 	/**
-	 * This will be called when State is updated, this doesn't happen during load (@see onLoadUpdateCallback).
+	 * This is called when the state is updated, every game loop. It doesn't happen during preload (@see onLoadUpdateCallback).
 	 */
 	var onUpdateCallback:Dynamic;
 	
 	/**
-	 * This will be called when the State is rendered, this doesn't happen during load (see onLoadRenderCallback).
+	 * This is called post-render. It doesn't happen during preload (see onLoadRenderCallback).
 	 */
 	var onRenderCallback:Dynamic;
 	
 	/**
-	 * This will be called before the State is rendered and before the stage is cleared.
+	 * This is called if ScaleManager.scalemode is RESIZE and a resize event occurs. It's passed the new width and height.
+	 */
+	var onResizeCallback:Dynamic;
+	
+	/**
+	 * This is called before the state is rendered and before the stage is cleared.
 	 */
 	var onPreRenderCallback:Dynamic;
 	
 	/**
-	 * This will be called when the State is updated but only during the load process.
+	 * This is called when the State is updated during the preload phase.
 	 */
 	var onLoadUpdateCallback:Dynamic;
 	
 	/**
-	 * This will be called when the State is rendered but only during the load process.
+	 * This is called when the State is rendered during the preload phase.
 	 */
 	var onLoadRenderCallback:Dynamic;
 	
 	/**
-	 * This will be called once each time the game is paused.
+	 * This is called when the game is paused.
 	 */
 	var onPausedCallback:Dynamic;
 	
 	/**
-	 * This will be called once each time the game is resumed from a paused state.
+	 * This is called when the game is resumed from a paused state.
 	 */
 	var onResumedCallback:Dynamic;
 	
 	/**
-	 * This will be called every frame while the game is paused.
+	 * This is called every frame while the game is paused.
 	 */
 	var onPauseUpdateCallback:Dynamic;
 	
 	/**
-	 * This will be called when the state is shut down (i.e. swapped to another state).
+	 * This is called when the state is shut down (i.e. swapped to another state).
 	 */
 	var onShutDownCallback:Dynamic;
 	
@@ -147,6 +152,12 @@ extern class StateManager {
 	 * preUpdate is called right at the start of the game loop. It is responsible for changing to a new state that was requested previously.
 	 */
 	function preUpdate ():Void;
+	
+	/**
+	 * This method clears the current State, calling its shutdown callback. The process also removes any active tweens,
+	 * resets the camera, resets input, clears physics, removes timers and if set clears the world and cache too.
+	 */
+	function clearCurrentState ():Void;
 	
 	/**
 	 * Checks if a given phaser state is valid. A State is considered valid if it has at least one of the core functions: preload, create, update or render.

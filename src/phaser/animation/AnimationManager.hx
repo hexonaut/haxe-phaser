@@ -62,6 +62,13 @@ extern class AnimationManager {
 	function loadFrameData (frameData:phaser.animation.FrameData, frame:Float):Bool;
 	
 	/**
+	 * Loads FrameData into the internal temporary vars and resets the frame index to zero.
+	 * This is called automatically when a new Sprite is created.
+	 */
+	@:overload(function (frameData:phaser.animation.FrameData, frame:String):Bool {})
+	function copyFrameData (frameData:phaser.animation.FrameData, frame:Float):Bool;
+	
+	/**
 	 * Adds a new animation under the given key. Optionally set the frames, frame rate and loop.
 	 * Animations added in this way are played back with the play function.
 	 */

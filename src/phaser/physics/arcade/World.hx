@@ -55,6 +55,11 @@ extern class World {
 	var forceX:Bool;
 	
 	/**
+	 * If true a QuadTree will never be used for any collision. Handy for tightly packed games. See also Body.skipQuadTree.
+	 */
+	var skipQuadTree:Bool;
+	
+	/**
 	 * The world QuadTree.
 	 */
 	var quadTree:phaser.math.QuadTree;
@@ -163,25 +168,31 @@ extern class World {
 	 * Checks for overlaps between two game objects. The objects can be Sprites, Groups or Emitters.
 	 * You can perform Sprite vs. Sprite, Sprite vs. Group and Group vs. Group overlap checks.
 	 * Unlike collide the objects are NOT automatically separated or have any physics applied, they merely test for overlap results.
-	 * The second parameter can be an array of objects, of differing types.
+	 * Both the first and second parameter can be arrays of objects, of differing types.
+	 * If two arrays are passed, the contents of the first parameter will be tested against all contents of the 2nd parameter.
 	 * NOTE: This function is not recursive, and will not test against children of objects passed (i.e. Groups within Groups).
 	 */
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.gameobjects.Sprite, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.gameobjects.Sprite, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:phaser.gameobjects.Sprite, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Array<Dynamic>, object2:phaser.gameobjects.Sprite, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.core.Group, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.core.Group, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:phaser.core.Group, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Array<Dynamic>, object2:phaser.core.Group, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:Dynamic, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:Dynamic, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:Dynamic, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Array<Dynamic>, object2:Dynamic, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:Array<Dynamic>, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:Array<Dynamic>, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	function overlap (object1:Dynamic, object2:Array<Dynamic>, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool;
+	@:overload(function (object1:Dynamic, object2:Array<Dynamic>, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	function overlap (object1:Array<Dynamic>, object2:Array<Dynamic>, ?overlapCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool;
 	
 	/**
 	 * Checks for collision between two game objects. You can perform Sprite vs. Sprite, Sprite vs. Group, Group vs. Group, Sprite vs. Tilemap Layer or Group vs. Tilemap Layer collisions.
-	 * The second parameter can be an array of objects, of differing types.
+	 * Both the first and second parameter can be arrays of objects, of differing types.
+	 * If two arrays are passed, the contents of the first parameter will be tested against all contents of the 2nd parameter.
 	 * The objects are also automatically separated. If you don't require separation then use ArcadePhysics.overlap instead.
 	 * An optional processCallback can be provided. If given this function will be called when two sprites are found to be colliding. It is called before any separation takes place,
 	 * giving you the chance to perform additional checks. If the function returns true then the collision and separation is carried out. If it returns false it is skipped.
@@ -192,22 +203,27 @@ extern class World {
 	@:overload(function (object1:phaser.core.Group, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.tilemap.Tilemap, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Array<Dynamic>, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.tilemap.Tilemap, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Array<Dynamic>, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.tilemap.Tilemap, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Array<Dynamic>, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.tilemap.Tilemap, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Array<Dynamic>, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	function collide (object1:phaser.tilemap.Tilemap, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool;
+	@:overload(function (object1:phaser.tilemap.Tilemap, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	function collide (object1:Array<Dynamic>, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool;
 	
 	/**
 	 * Internal collision handler.

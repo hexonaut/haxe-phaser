@@ -369,9 +369,9 @@ extern class Cache {
 	function isSoundReady (key:String):Bool;
 	
 	/**
-	 * Check whether an image asset is sprite sheet or not.
+	 * Get the number of frames in this image.
 	 */
-	function isSpriteSheet (key:String):Bool;
+	function getFrameCount (key:String):Int;
 	
 	/**
 	 * Get text data by key.

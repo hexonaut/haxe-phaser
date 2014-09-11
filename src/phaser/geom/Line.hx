@@ -53,6 +53,11 @@ extern class Line {
 	function coordinatesOnLine (?stepRate:Float = 1, ?results:Array<Dynamic>):Array<Dynamic>;
 	
 	/**
+	 * Returns a new Line object with the same values for the start and end properties as this Line object.
+	 */
+	function clone (output:phaser.geom.Line):phaser.geom.Line;
+	
+	/**
 	 * @name Phaser.Line#length
 	 */
 	var length(default, null):Float;

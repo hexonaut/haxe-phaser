@@ -49,6 +49,11 @@ extern class ArrayList {
 	function remove (child:Dynamic):Dynamic;
 	
 	/**
+	 * Sets the property key to the given value on all members of this list.
+	 */
+	function setAll (key:Dynamic, value:Dynamic):Void;
+	
+	/**
 	 * Calls a function on all members of this list, using the member as the context for the callback.
 	 * The function must exist on the member.
 	 */

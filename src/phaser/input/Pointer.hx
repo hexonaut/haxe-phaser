@@ -184,6 +184,11 @@ extern class Pointer {
 	var active:Bool;
 	
 	/**
+	 * A dirty pointer needs to re-poll any interactive objects it may have been over, regardless if it has moved or not.
+	 */
+	var dirty:Bool;
+	
+	/**
 	 * A Phaser.Point object containing the current x/y values of the pointer on the display.
 	 */
 	var position:Dynamic;
@@ -220,6 +225,11 @@ extern class Pointer {
 	@:overload(function (event:Dynamic, ?fromClick:Bool = false):Void {})
 	@:overload(function (event:Dynamic, ?fromClick:Bool = false):Void {})
 	function move (event:Dynamic, ?fromClick:Bool = false):Void;
+	
+	/**
+	 * Process all interactive objects to find out which ones were updated in the recent Pointer move.
+	 */
+	function processInteractiveObjects (?fromClick:Bool = false):Bool;
 	
 	/**
 	 * Called when the Pointer leaves the target area.

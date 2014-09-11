@@ -38,6 +38,7 @@ extern class Loader {
 	/**
 	 * You can optionally link a sprite to the preloader.
 	 * If you do so the Sprites width or height will be cropped based on the percentage loaded.
+	 * This property is an object containing: sprite, rect, direction, width and height
 	 */
 	var preloadSprite:Dynamic;
 	
@@ -64,9 +65,29 @@ extern class Loader {
 	var onFileStart:phaser.core.Signal;
 	
 	/**
+	 * This event is dispatched when a file completes loading successfully.
+	 */
+	var onLoadStart:phaser.core.Signal;
+	
+	/**
+	 * This event is dispatched when a file errors as a result of the load request.
+	 */
+	var onFileStart:phaser.core.Signal;
+	
+	/**
 	 * This event is dispatched when the final file in the load queue has either loaded or failed.
 	 */
 	var onLoadComplete:phaser.core.Signal;
+	
+	/**
+	 * This event is dispatched when an asset pack has either loaded or failed.
+	 */
+	var onPackComplete:phaser.core.Signal;
+	
+	/**
+	 * If true and if the browser supports XDomainRequest, it will be used in preference for xhr when loading json files. It is enabled automatically if the browser is IE9, but you can disable it as required.
+	 */
+	var useXDomainRequest:Bool;
 	
 	/**
 	 * Contains all the assets packs.

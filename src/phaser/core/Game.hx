@@ -9,7 +9,13 @@ extern class Game {
 	 * Instantiate a new Phaser.Game object.
 	 */
 	@:overload(function (?width:Float = 800, ?height:Float = 600, ?renderer:Float, ?parent:String = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
-	function new (?width:Float = 800, ?height:Float = 600, ?renderer:Float, ?parent:Dynamic = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic);
+	@:overload(function (?width:String = 800, ?height:Float = 600, ?renderer:Float, ?parent:String = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
+	@:overload(function (?width:Float = 800, ?height:String = 600, ?renderer:Float, ?parent:String = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
+	@:overload(function (?width:String = 800, ?height:String = 600, ?renderer:Float, ?parent:String = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
+	@:overload(function (?width:Float = 800, ?height:Float = 600, ?renderer:Float, ?parent:Dynamic = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
+	@:overload(function (?width:String = 800, ?height:Float = 600, ?renderer:Float, ?parent:Dynamic = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
+	@:overload(function (?width:Float = 800, ?height:String = 600, ?renderer:Float, ?parent:Dynamic = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
+	function new (?width:String = 800, ?height:String = 600, ?renderer:Float, ?parent:Dynamic = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic);
 	
 	/**
 	 * Phaser Game ID (for when Pixi supports multiple instances).
@@ -32,12 +38,12 @@ extern class Game {
 	var parent:Dynamic;
 	
 	/**
-	 * The Game width (in pixels).
+	 * The calculated game width in pixels.
 	 */
 	var width:Float;
 	
 	/**
-	 * The Game height (in pixels).
+	 * The calculated game height in pixels.
 	 */
 	var height:Float;
 	
@@ -279,7 +285,7 @@ extern class Game {
 	function step ():Void;
 	
 	/**
-	 * Nuke the entire game from orbit
+	 * Nukes the entire game from orbit.
 	 */
 	function destroy ():Void;
 	

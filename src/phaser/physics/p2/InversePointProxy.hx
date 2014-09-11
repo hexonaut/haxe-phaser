@@ -18,4 +18,14 @@ extern class InversePointProxy {
 	 */
 	var y:Float;
 	
+	/**
+	 * @name Phaser.Physics.P2.InversePointProxy#mx
+	 */
+	var mx:Float;
+	
+	/**
+	 * @name Phaser.Physics.P2.InversePointProxy#my
+	 */
+	var my:Float;
+	
 }

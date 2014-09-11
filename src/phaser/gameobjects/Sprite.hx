@@ -158,14 +158,14 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	 * Changes the Texture the Sprite is using entirely. The old texture is removed and the new one is referenced or fetched from the Cache.
 	 * This causes a WebGL texture update, so use sparingly or in low-intensity portions of your game.
 	 */
-	@:overload(function (key:String, ?frame:String):Void {})
-	@:overload(function (key:phaser.gameobjects.RenderTexture, ?frame:String):Void {})
-	@:overload(function (key:phaser.gameobjects.BitmapData, ?frame:String):Void {})
-	@:overload(function (key:phaser.pixi.textures.Texture, ?frame:String):Void {})
-	@:overload(function (key:String, ?frame:Float):Void {})
-	@:overload(function (key:phaser.gameobjects.RenderTexture, ?frame:Float):Void {})
-	@:overload(function (key:phaser.gameobjects.BitmapData, ?frame:Float):Void {})
-	function loadTexture (key:phaser.pixi.textures.Texture, ?frame:Float):Void;
+	@:overload(function (key:String, ?frame:String, ?stopAnimation:Bool = true):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, ?frame:String, ?stopAnimation:Bool = true):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, ?frame:String, ?stopAnimation:Bool = true):Void {})
+	@:overload(function (key:phaser.pixi.textures.Texture, ?frame:String, ?stopAnimation:Bool = true):Void {})
+	@:overload(function (key:String, ?frame:Float, ?stopAnimation:Bool = true):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, ?frame:Float, ?stopAnimation:Bool = true):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, ?frame:Float, ?stopAnimation:Bool = true):Void {})
+	function loadTexture (key:phaser.pixi.textures.Texture, ?frame:Float, ?stopAnimation:Bool = true):Void;
 	
 	/**
 	 * Sets the Texture frame the Sprite uses for rendering.
