@@ -246,7 +246,7 @@ extern class Input {
 	var minPriorityID:Float;
 	
 	/**
-	 * A list of interactive objects. Te InputHandler components add and remove themselves from this.
+	 * A list of interactive objects. The InputHandler components add and remove themselves from this list.
 	 */
 	var interactiveItems:phaser.core.ArrayList;
 	
@@ -301,21 +301,12 @@ extern class Input {
 	function destroy ():Void;
 	
 	/**
-	 * DEPRECATED: This method will be removed in a future major point release. Please use Input.addMoveCallback instead.
-	 * 
-	 * Sets a callback that is fired every time the activePointer receives a DOM move event such as a mousemove or touchmove.
-	 * It will be called every time the activePointer moves, which in a multi-touch game can be a lot of times, so this is best
-	 * to only use if you've limited input to a single pointer (i.e. mouse or touch)
-	 */
-	function setMoveCallback (callback:Dynamic, callbackContext:Dynamic):Void;
-	
-	/**
 	 * Adds a callback that is fired every time the activePointer receives a DOM move event such as a mousemove or touchmove.
 	 * It will be called every time the activePointer moves, which in a multi-touch game can be a lot of times, so this is best
 	 * to only use if you've limited input to a single pointer (i.e. mouse or touch).
 	 * The callback is added to the Phaser.Input.moveCallbacks array and should be removed with Phaser.Input.deleteMoveCallback.
 	 */
-	function addMoveCallback (callback:Dynamic, callbackContext:Dynamic):Float;
+	function addMoveCallback (callback:Dynamic, context:Dynamic):Float;
 	
 	/**
 	 * Removes the callback at the defined index from the Phaser.Input.moveCallbacks array

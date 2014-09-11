@@ -403,24 +403,17 @@ extern class Body {
 	function loadPolygon (key:String, object:String):Bool;
 	
 	/**
-	 * DEPRECATED: This method will soon be removed from the API. Please avoid using.
-	 * Reads the physics data from a physics data file stored in the Game.Cache.
-	 * It will add the shape data to this Body, as well as set the density (mass).
-	 */
-	function loadData (key:String, object:String):Bool;
-	
-	/**
-	 * Dynamic body.
+	 * Dynamic body. Dynamic bodies body can move and respond to collisions and forces.
 	 */
 	static var DYNAMIC:Float;
 	
 	/**
-	 * Static body.
+	 * Static body. Static bodies do not move, and they do not respond to forces or collision.
 	 */
 	static var STATIC:Float;
 	
 	/**
-	 * Kinematic body.
+	 * Kinematic body. Kinematic bodies only moves according to its .velocity, and does not respond to collisions or force.
 	 */
 	static var KINEMATIC:Float;
 	
@@ -520,6 +513,8 @@ extern class Body {
 	/**
 	 * A Body can be set to collide against the World bounds automatically if this is set to true. Otherwise it will leave the World.
 	 * Note that this only applies if your World has bounds! The response to the collision should be managed via CollisionMaterials.
+	 * Also note that when you set this it will only effect Body shapes that already exist. If you then add further shapes to your Body
+	 * after setting this it will <em>not</em> proactively set them to collide with the bounds.
 	 */
 	var collideWorldBounds:Bool;
 	

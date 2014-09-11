@@ -184,29 +184,4 @@ extern class Color {
 	 */
 	static function getBlue (color:Float):Float;
 	
-	/**
-	 * DEPRECATED: This method will be removed in Phaser 2.1.
-	 * Returns a string containing handy information about the given color including string hex value,
-	 * RGB format information. Each section starts on a newline, 3 lines in total.
-	 */
-	static function getColorInfo (color:Float):String;
-	
-	/**
-	 * DEPRECATED: This method will be removed in Phaser 2.1. Please use Phaser.Color.RGBtoString instead.
-	 * Return a string representation of the color in the format 0xAARRGGBB.
-	 */
-	static function RGBtoHexstring (color:Float):String;
-	
-	/**
-	 * DEPRECATED: This method will be removed in Phaser 2.1. Please use Phaser.Color.RGBtoString instead.
-	 * Return a string representation of the color in the format #RRGGBB.
-	 */
-	static function RGBtoWebstring (color:Float):String;
-	
-	/**
-	 * DEPRECATED: This method will be removed in Phaser 2.1. Please use Phaser.Color.componentToHex instead.
-	 * Return a string containing a hex representation of the given color.
-	 */
-	static function colorToHexstring (color:Float):String;
-	
 }

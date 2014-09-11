@@ -29,6 +29,26 @@ extern class Device {
 	var cocoonJS:Bool;
 	
 	/**
+	 * Is this game running with CocoonJS.App?
+	 */
+	var cocoonJSApp:Bool;
+	
+	/**
+	 * Is the game running under Apache Cordova?
+	 */
+	var cordova:Bool;
+	
+	/**
+	 * Is the game running under Node.js?
+	 */
+	var node:Bool;
+	
+	/**
+	 * Is the game running under Node-Webkit?
+	 */
+	var nodeWebkit:Bool;
+	
+	/**
 	 * Is the game running under Ejecta?
 	 */
 	var ejecta:Bool;
@@ -307,6 +327,11 @@ extern class Device {
 	 * Check HTML5 features of the host environment.
 	 */
 	function _checkFeatures ():Void;
+	
+	/**
+	 * orce screencanvas to false
+	 */
+	var screencanvas:Dynamic;
 	
 	/**
 	 * Checks for support of the Full Screen API.

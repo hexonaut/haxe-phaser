@@ -44,6 +44,11 @@ extern class Rectangle {
 	function setTo (x:Float, y:Float, width:Float, height:Float):phaser.geom.Rectangle;
 	
 	/**
+	 * Centers this Rectangle so that the center coordinates match the given x and y values.
+	 */
+	function centerOn (x:Float, y:Float):phaser.geom.Rectangle;
+	
+	/**
 	 * Runs Math.floor() on both the x and y values of this Rectangle.
 	 */
 	function floor ():Void;
@@ -191,6 +196,11 @@ extern class Rectangle {
 	 * The location of the Rectangles top left corner as a Point object.
 	 */
 	var topLeft:Dynamic;
+	
+	/**
+	 * The location of the Rectangles top right corner as a Point object.
+	 */
+	var topRight:Dynamic;
 	
 	/**
 	 * Determines whether or not this Rectangle object is empty. A Rectangle object is empty if its width or height is less than or equal to 0.

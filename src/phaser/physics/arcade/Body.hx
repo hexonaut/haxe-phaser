@@ -258,6 +258,11 @@ extern class Body {
 	var phase:Float;
 	
 	/**
+	 * If true and you collide this Sprite against a Group, it will disable the collision check from using a QuadTree.
+	 */
+	var skipQuadTree:Bool;
+	
+	/**
 	 * Internal cache var.
 	 */
 	var _reset:Bool;

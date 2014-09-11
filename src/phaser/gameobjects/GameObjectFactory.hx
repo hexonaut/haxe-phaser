@@ -56,7 +56,17 @@ extern class GameObjectFactory {
 	
 	/**
 	 * A Group is a container for display objects that allows for fast pooling, recycling and collision checks.
+	 * A Physics Group is the same as an ordinary Group except that is has enableBody turned on by default, so any Sprites it creates
+	 * are automatically given a physics body.
 	 */
+	function physicsGroup (?physicsBodyType:Float, ?parent:Dynamic, ?name:String = 'group', ?addToStage:Bool = false):phaser.core.Group;
+	
+	/**
+	 * A SpriteBatch is a really fast version of a Phaser Group built solely for speed.
+	 * Use when you need a lot of sprites or particles all sharing the same texture.
+	 * The speed gains are specifically for WebGL. In Canvas mode you won't see any real difference.
+	 */
+	@:overload(function (parent:phaser.core.Group, ?name:String = 'group', ?addToStage:Bool = false):phaser.core.Group {})
 	function spriteBatch (parent:Dynamic, ?name:String = 'group', ?addToStage:Bool = false):phaser.core.Group;
 	
 	/**
@@ -80,6 +90,18 @@ extern class GameObjectFactory {
 	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
 	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
 	function tileSprite (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
+	
+	/**
+	 * Creates a new Rope object.
+	 */
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	function rope (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
 	
 	/**
 	 * Creates a new Text object.
@@ -150,7 +172,7 @@ extern class GameObjectFactory {
 	/**
 	 * A BitmapData object which can be manipulated and drawn to like a traditional Canvas object and used to texture Sprites.
 	 */
-	function bitmapData (?width:Float = 100, ?height:Float = 100, ?key:String = '', ?addToCache:Bool = false):phaser.gameobjects.BitmapData;
+	function bitmapData (?width:Float = 256, ?height:Float = 256, ?key:String = '', ?addToCache:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * A WebGL shader/filter that can be applied to Sprites.

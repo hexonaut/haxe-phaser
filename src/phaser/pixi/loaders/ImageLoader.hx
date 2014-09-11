@@ -5,7 +5,7 @@ extern class ImageLoader {
 	
 	/**
 	 * The image loader class is responsible for loading images file formats ('jpeg', 'jpg', 'png' and 'gif')
-	 * Once the image has been loaded it is stored in the PIXI texture cache and can be accessed though PIXI.Texture.fromFrameId() and PIXI.Sprite.fromFrameId()
+	 * Once the image has been loaded it is stored in the PIXI texture cache and can be accessed though PIXI.Texture.fromFrame() and PIXI.Sprite.fromFrame()
 	 * When loaded this class will dispatch a 'loaded' event
 	 */
 	function new (String:Dynamic, Boolean:Dynamic);

@@ -9,6 +9,16 @@ extern class Utils {
 	static var Utils:Dynamic;
 	
 	/**
+	 * Gets an objects property by string.
+	 */
+	function getProperty (obj:Dynamic, prop:String):Dynamic;
+	
+	/**
+	 * Sets an objects property by string.
+	 */
+	function setProperty (obj:Dynamic, prop:String):Dynamic;
+	
+	/**
 	 * Transposes the elements of the given Array.
 	 */
 	function transposeArray (array:Array<Dynamic>):Array<Dynamic>;

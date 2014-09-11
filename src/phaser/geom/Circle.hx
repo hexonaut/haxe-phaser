@@ -57,7 +57,7 @@ extern class Circle {
 	/**
 	 * Returns a new Circle object with the same values for the x, y, width, and height properties as this Circle object.
 	 */
-	function clone (out:phaser.geom.Circle):phaser.geom.Circle;
+	function clone (output:phaser.geom.Circle):phaser.geom.Circle;
 	
 	/**
 	 * Return true if the given x/y coordinates are within this Circle object.

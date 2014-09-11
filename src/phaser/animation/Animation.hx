@@ -101,6 +101,11 @@ extern class Animation {
 	var onStart:phaser.core.Signal;
 	
 	/**
+	 * This event is dispatched when the Animation changes frame. By default this event is disabled due to its intensive nature. Enable it with: Animation.enableUpdate = true.
+	 */
+	var onUpdate:Dynamic;
+	
+	/**
 	 * This event is dispatched when this Animation completes playback. If the animation is set to loop this is never fired, listen for onAnimationLoop instead.
 	 */
 	var onComplete:phaser.core.Signal;
@@ -158,6 +163,11 @@ extern class Animation {
 	function previous (?quantity:Float = 1):Void;
 	
 	/**
+	 * Changes the FrameData object this Animation is using.
+	 */
+	function updateFrameData (frameData:phaser.animation.FrameData):Void;
+	
+	/**
 	 * Cleans up this animation ready for deletion. Nulls all values and references.
 	 */
 	function destroy ():Void;
@@ -187,6 +197,11 @@ extern class Animation {
 	 * @name Phaser.Animation#speed
 	 */
 	var speed:Float;
+	
+	/**
+	 * @name Phaser.Animation#enableUpdate
+	 */
+	var enableUpdate:Bool;
 	
 	/**
 	 * Really handy function for when you are creating arrays of animation data but it's using frame names and not numbers.

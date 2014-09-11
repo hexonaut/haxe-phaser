@@ -39,14 +39,14 @@ extern class Ellipse {
 	function copyFrom (source:Dynamic):phaser.geom.Ellipse;
 	
 	/**
-	 * Copies the x, y and diameter properties from this Circle to any given object.
+	 * Copies the x, y, width and height properties from this Ellipse to any given object.
 	 */
 	function copyTo (dest:Dynamic):Dynamic;
 	
 	/**
 	 * Returns a new Ellipse object with the same values for the x, y, width, and height properties as this Ellipse object.
 	 */
-	function clone (out:phaser.geom.Ellipse):phaser.geom.Ellipse;
+	function clone (output:phaser.geom.Ellipse):phaser.geom.Ellipse;
 	
 	/**
 	 * Return true if the given x/y coordinates are within this Ellipse object.

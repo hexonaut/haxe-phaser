@@ -426,7 +426,7 @@ extern class Tilemap {
 	/**
 	 * Internal function that handles the swapping of tiles.
 	 */
-	function swapHandler (value:Float, index:Float):Void;
+	function swapHandler (value:Float):Void;
 	
 	/**
 	 * For each tile in the given area defined by x/y and width/height run the given callback.

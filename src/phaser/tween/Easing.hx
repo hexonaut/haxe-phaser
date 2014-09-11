@@ -4,6 +4,11 @@ package phaser.tween;
 extern class Easing {
 	
 	/**
+	 * Linear Easing (no variation).
+	 */
+	function None (k:Float):Float;
+	
+	/**
 	 * Ease-in.
 	 */
 	function In (k:Float):Float;

@@ -38,6 +38,7 @@ extern class Loader {
 	/**
 	 * You can optionally link a sprite to the preloader.
 	 * If you do so the Sprites width or height will be cropped based on the percentage loaded.
+	 * This property is an object containing: sprite, rect, direction, width and height
 	 */
 	var preloadSprite:Dynamic;
 	
@@ -77,6 +78,16 @@ extern class Loader {
 	 * This event is dispatched when the final file in the load queue has either loaded or failed.
 	 */
 	var onLoadComplete:phaser.core.Signal;
+	
+	/**
+	 * This event is dispatched when an asset pack has either loaded or failed.
+	 */
+	var onPackComplete:phaser.core.Signal;
+	
+	/**
+	 * If true and if the browser supports XDomainRequest, it will be used in preference for xhr when loading json files. It is enabled automatically if the browser is IE9, but you can disable it as required.
+	 */
+	var useXDomainRequest:Bool;
 	
 	/**
 	 * Contains all the assets packs.
@@ -142,7 +153,6 @@ extern class Loader {
 	 * You can set a Sprite to be a "preload" sprite by passing it to this method.
 	 * A "preload" sprite will have its width or height crop adjusted based on the percentage of the loader in real-time.
 	 * This allows you to easily make loading bars for games. Note that Sprite.visible = true will be set when calling this.
-	 * Note: The Sprite should use a single image and not use a texture that is part of a Texture Atlas or Sprite Sheet.
 	 */
 	@:overload(function (sprite:phaser.gameobjects.Sprite, ?direction:Float = 0):Void {})
 	function setPreloadSprite (sprite:phaser.gameobjects.Image, ?direction:Float = 0):Void;

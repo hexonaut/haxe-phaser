@@ -7,7 +7,7 @@ extern class RevoluteConstraint {
 	 * Connects two bodies at given offset points, letting them rotate relative to each other around this point.
 	 * The pivot points are given in world (pixel) coordinates.
 	 */
-	function new (world:phaser.physics.p2.World, bodyA:Dynamic, pivotA:Dynamic, bodyB:Dynamic, pivotB:Dynamic, ?maxForce:Float = 0);
+	function new (world:phaser.physics.p2.World, bodyA:Dynamic, pivotA:Dynamic, bodyB:Dynamic, pivotB:Dynamic, ?maxForce:Float = 0, ?worldPivot:Dynamic);
 	
 	/**
 	 * Local reference to game.

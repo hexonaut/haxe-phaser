@@ -20,11 +20,6 @@ extern class Gamepad {
 	var game:phaser.core.Game;
 	
 	/**
-	 * The four Phaser Gamepads.
-	 */
-	var _gamepads:Dynamic;
-	
-	/**
 	 * Maps the browsers gamepad indices to our Phaser Gamepads
 	 */
 	var _gamepadIndexMap:Dynamic;
@@ -105,6 +100,11 @@ extern class Gamepad {
 	var _gamepaddisconnected:Dynamic;
 	
 	/**
+	 * The four Phaser Gamepads.
+	 */
+	var _gamepads:Dynamic;
+	
+	/**
 	 * Add callbacks to the main Gamepad handler to handle connect/disconnect/button down/button up/axis change/float value buttons
 	 */
 	function addCallbacks (context:Dynamic, callbacks:Dynamic):Void;
@@ -163,26 +163,26 @@ extern class Gamepad {
 	/**
 	 * How many live gamepads are currently connected.
 	 */
-	var padsConnected(default, null):Bool;
+	var padsConnected(default, null):Float;
 	
 	/**
 	 * Gamepad #1
 	 */
-	var pad1(default, null):Bool;
+	var pad1(default, null):phaser.input.SinglePad;
 	
 	/**
 	 * Gamepad #2
 	 */
-	var pad2(default, null):Bool;
+	var pad2(default, null):phaser.input.SinglePad;
 	
 	/**
 	 * Gamepad #3
 	 */
-	var pad3(default, null):Bool;
+	var pad3(default, null):phaser.input.SinglePad;
 	
 	/**
 	 * Gamepad #4
 	 */
-	var pad4(default, null):Bool;
+	var pad4(default, null):phaser.input.SinglePad;
 	
 }

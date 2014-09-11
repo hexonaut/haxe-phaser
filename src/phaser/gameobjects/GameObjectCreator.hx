@@ -48,7 +48,7 @@ extern class GameObjectCreator {
 	/**
 	 * A Group is a container for display objects that allows for fast pooling, recycling and collision checks.
 	 */
-	function group (?name:String = 'group', ?addToStage:Bool = false, ?enableBody:Bool = false, ?physicsBodyType:Float = 0):phaser.core.Group;
+	function group (parent:Dynamic, ?name:String = 'group', ?addToStage:Bool = false, ?enableBody:Bool = false, ?physicsBodyType:Float = 0):phaser.core.Group;
 	
 	/**
 	 * A Group is a container for display objects that allows for fast pooling, recycling and collision checks.
@@ -76,6 +76,18 @@ extern class GameObjectCreator {
 	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float):phaser.gameobjects.TileSprite {})
 	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float):phaser.gameobjects.TileSprite {})
 	function tileSprite (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float):phaser.gameobjects.TileSprite;
+	
+	/**
+	 * Creates a new Rope object.
+	 */
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:String):phaser.gameobjects.Rope {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String):phaser.gameobjects.Rope {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String):phaser.gameobjects.Rope {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String):phaser.gameobjects.Rope {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:Float):phaser.gameobjects.Rope {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float):phaser.gameobjects.Rope {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float):phaser.gameobjects.Rope {})
+	function rope (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float):phaser.gameobjects.Rope;
 	
 	/**
 	 * Creates a new Text object.
@@ -146,7 +158,7 @@ extern class GameObjectCreator {
 	/**
 	 * A BitmapData object which can be manipulated and drawn to like a traditional Canvas object and used to texture Sprites.
 	 */
-	function bitmapData (?width:Float = 100, ?height:Float = 100, ?key:String = '', ?addToCache:Bool = false):phaser.gameobjects.BitmapData;
+	function bitmapData (?width:Float = 256, ?height:Float = 256, ?key:String = '', ?addToCache:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * A WebGL shader/filter that can be applied to Sprites.

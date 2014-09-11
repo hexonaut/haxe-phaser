@@ -4,7 +4,7 @@ package phaser.pixi.display;
 extern class DisplayObject {
 	
 	/**
-	 * The base class for all objects that are rendered on the screen. 
+	 * The base class for all objects that are rendered on the screen.
 	 * This is an abstract class and should not be used on its own rather it should be extended.
 	 */
 	function new ();

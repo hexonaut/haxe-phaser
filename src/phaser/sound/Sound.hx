@@ -209,7 +209,12 @@ extern class Sound {
 	var _tempVolume:Float;
 	
 	/**
-	 * Internal marker var.
+	 * Internal cache var.
+	 */
+	var _muteVolume:Float;
+	
+	/**
+	 * Internal cache var.
 	 */
 	var _tempLoop:Bool;
 	

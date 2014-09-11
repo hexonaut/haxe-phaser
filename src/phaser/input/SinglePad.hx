@@ -104,21 +104,13 @@ extern class SinglePad {
 	function addCallbacks (context:Dynamic, callbacks:Dynamic):Void;
 	
 	/**
-	 * DEPRECATED: Please see SinglePad.getButton for the same functionality.
-	 * 
-	 * If you need more fine-grained control over a gamepad button you can create a new Phaser.GamepadButton object via this method.
-	 * The GamepadButton object can then be polled, have events attached to it, etc.
-	 */
-	function addButton (buttonCode:Float):phaser.input.GamepadButton;
-	
-	/**
 	 * Gets a GamepadButton object from this controller to be stored and referenced locally.
 	 * The GamepadButton object can then be polled, have events attached to it, etc.
 	 */
 	function getButton (buttonCode:Float):phaser.input.GamepadButton;
 	
 	/**
-	 * Main update function, should be called by Phaser.Gamepad.
+	 * Main update function called by Phaser.Gamepad.
 	 */
 	function pollStatus ():Void;
 	

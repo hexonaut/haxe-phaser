@@ -18,4 +18,14 @@ extern class PointProxy {
 	 */
 	var y:Float;
 	
+	/**
+	 * @name Phaser.Physics.P2.PointProxy#mx
+	 */
+	var mx:Float;
+	
+	/**
+	 * @name Phaser.Physics.P2.PointProxy#my
+	 */
+	var my:Float;
+	
 }

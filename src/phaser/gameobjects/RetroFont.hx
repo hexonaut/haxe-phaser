@@ -85,6 +85,11 @@ extern class RetroFont extends phaser.gameobjects.RenderTexture {
 	var grabData:Array<Dynamic>;
 	
 	/**
+	 * The FrameData representing this Retro Font.
+	 */
+	var frameData:phaser.animation.FrameData;
+	
+	/**
 	 * The image that is stamped to the RenderTexture for each character in the font.
 	 */
 	var stamp(default, null):phaser.gameobjects.Image;

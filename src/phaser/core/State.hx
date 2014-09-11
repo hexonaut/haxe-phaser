@@ -133,6 +133,11 @@ extern class State {
 	function render ():Void;
 	
 	/**
+	 * If your game is set to Scalemode RESIZE then each time the browser resizes it will call this function, passing in the new width and height.
+	 */
+	function resize ():Void;
+	
+	/**
 	 * This method will be called if the core game loop is paused.
 	 */
 	function paused ():Void;
