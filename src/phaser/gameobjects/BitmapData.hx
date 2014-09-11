@@ -227,13 +227,6 @@ extern class BitmapData {
 	function shiftHSL (?h:Float, ?s:Float, ?l:Float, ?region:phaser.geom.Rectangle):phaser.gameobjects.BitmapData;
 	
 	/**
-	 * This re-creates the BitmapData.imageData from the current context.
-	 * It then re-builds the ArrayBuffer, the data Uint8ClampedArray reference and the pixels Int32Array.
-	 * If not given the dimensions defaults to the full size of the context.
-	 */
-	function update (?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):Void;
-	
-	/**
 	 * Sets the color of the given pixel to the specified red, green, blue and alpha values.
 	 */
 	function setPixel32 (x:Float, y:Float, red:Float, green:Float, blue:Float, alpha:Float, ?immediate:Bool = true):phaser.gameobjects.BitmapData;
