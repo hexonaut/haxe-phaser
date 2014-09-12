@@ -328,6 +328,11 @@ extern class ScaleManager {
 	function setExactFit ():Void;
 	
 	/**
+-	* Set screen size automatically based on the scaleMode.
+-	*/
+-	function setScreenSize(force:Bool):Void;
+	
+	/**
 	 * Tries to enter the browser into full screen mode.
 	 * Please note that this needs to be supported by the web browser and isn't the same thing as setting your game to fill the browser.
 	 */
