@@ -328,9 +328,9 @@ extern class ScaleManager {
 	function setExactFit ():Void;
 	
 	/**
--	* Set screen size automatically based on the scaleMode.
--	*/
--	function setScreenSize(force:Bool):Void;
+	* Set screen size automatically based on the scaleMode.
+	*/
+	function setScreenSize(force:Bool):Void;
 	
 	/**
 	 * Tries to enter the browser into full screen mode.
