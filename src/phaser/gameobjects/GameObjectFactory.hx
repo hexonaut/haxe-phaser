@@ -110,7 +110,7 @@ extern class GameObjectFactory {
 	/**
 	 * Creates a new Text object.
 	 */
-	function text (x:Float, y:Float, text:String, style:Dynamic, ?group:phaser.core.Group):phaser.gameobjects.Text;
+	function text (x:Float, y:Float, ?text:String, ?style:Dynamic, ?group:phaser.core.Group):phaser.gameobjects.Text;
 	
 	/**
 	 * Creates a new Button object.
@@ -181,13 +181,13 @@ extern class GameObjectFactory {
 	/**
 	 * A WebGL shader/filter that can be applied to Sprites.
 	 */
-	function filter (filter:String, a1:Dynamic):phaser.core.Filter;
+	function filter (filter:String):phaser.core.Filter;
 	
 	/**
 	 * Add a new Plugin into the PluginManager.
 	 * The Plugin must have 2 properties: game and parent. Plugin.game is set to the game reference the PluginManager uses, and parent is set to the PluginManager.
 	 */
-	@:overload(function (plugin:Dynamic, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):phaser.core.Plugin {})
-	function plugin (plugin:phaser.core.Plugin, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):phaser.core.Plugin;
+	@:overload(function (plugin:Dynamic):phaser.core.Plugin {})
+	function plugin (plugin:phaser.core.Plugin):phaser.core.Plugin;
 	
 }
