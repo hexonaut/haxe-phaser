@@ -1,7 +1,7 @@
 package phaser.gameobjects;
 
 @:native("Phaser.Graphics")
-extern class Graphics {
+extern class Graphics extends phaser.pixi.primitives.Graphics {
 	
 	/**
 	 * Creates a new Graphics object.
@@ -111,5 +111,4 @@ extern class Graphics {
 	 * @name Phaser.Graphics#destroyPhase
 	 */
 	var destroyPhase:Bool;
-	
 }
