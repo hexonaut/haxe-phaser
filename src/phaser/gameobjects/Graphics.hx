@@ -111,4 +111,5 @@ extern class Graphics extends phaser.pixi.primitives.Graphics {
 	 * @name Phaser.Graphics#destroyPhase
 	 */
 	var destroyPhase:Bool;
+	
 }

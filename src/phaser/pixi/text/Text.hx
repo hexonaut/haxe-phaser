@@ -19,6 +19,6 @@ extern class Text extends phaser.pixi.display.Sprite {
 	 * @method destroy
 	 * @param destroyBaseTexture {Boolean} whether to destroy the base texture as well
 	*/
-	public function destroy(?destroyBaseTexture:Bool):Void;
+	function destroy (?destroyBaseTexture:Bool):Void;
 	
 }
