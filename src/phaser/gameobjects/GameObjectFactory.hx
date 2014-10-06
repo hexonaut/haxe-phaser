@@ -86,26 +86,26 @@ extern class GameObjectFactory {
 	/**
 	 * Creates a new TileSprite object.
 	 */
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	function tileSprite (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	function tileSprite (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
 	
 	/**
 	 * Creates a new Rope object.
 	 */
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	function rope (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	function rope (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
 	
 	/**
 	 * Creates a new Text object.
