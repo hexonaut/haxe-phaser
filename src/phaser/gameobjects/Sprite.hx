@@ -2,6 +2,16 @@ package phaser.gameobjects;
 
 @:native("Phaser.Sprite")
 extern class Sprite extends phaser.pixi.display.Sprite {
+
+	/**
+	* Sprites are the lifeblood of your game, used for nearly everything visual.
+	*
+	* At its most basic a Sprite consists of a set of coordinates and a texture that is rendered to the canvas.
+	* They also contain additional properties allowing for physics motion (via Sprite.body), input handling (via Sprite.input),
+	* events (via Sprite.events), animation (via Sprite.animations), camera culling and more. Please see the Examples for use cases.
+	*
+	*/
+	function new (game:phaser.core.Game, x:Float, y:Float, key:Dynamic, frame:Float);
 	
 	/**
 	 * A reference to the currently running Game.
