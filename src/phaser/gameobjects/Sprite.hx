@@ -2,7 +2,7 @@ package phaser.gameobjects;
 
 @:native("Phaser.Sprite")
 extern class Sprite extends phaser.pixi.display.Sprite {
-
+	
 	/**
 	* Sprites are the lifeblood of your game, used for nearly everything visual.
 	*
@@ -11,7 +11,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	* events (via Sprite.events), animation (via Sprite.animations), camera culling and more. Please see the Examples for use cases.
 	*
 	*/
-	function new (game:phaser.core.Game, x:Float, y:Float, key:Dynamic, frame:Float);
+	function new (game:phaser.core.Game, ?x:Float=0, ?y:Float=0, ?key:Dynamic, ?frame:Float);
 	
 	/**
 	 * A reference to the currently running Game.
@@ -49,6 +49,16 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	var key:Dynamic;
 	
 	/**
+	 * Internal cache var.
+	 */
+	var _frame:Float;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _frameName:String;
+	
+	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
 	var world:Dynamic;
@@ -74,11 +84,6 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	 * If you need a different result then adjust or re-create the Body shape offsets manually, and/or reset the anchor after enabling physics.
 	 */
 	var body:Dynamic;
-	
-	/**
-	 * A useful boolean to control if the Sprite is alive or dead (in terms of your gameplay, it doesn't effect rendering). Also linked to Sprite.health and Sprite.damage.
-	 */
-	var alive:Bool;
 	
 	/**
 	 * Health value. Used in combination with damage() to allow for quick killing of Sprites.
@@ -114,13 +119,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	var cameraOffset:Dynamic;
 	
 	/**
-	 * The Rectangle used to crop the texture. Set this via Sprite.crop. Any time you modify this property directly you must call Sprite.updateCrop.
-	 */
-	var cropRect:phaser.geom.Rectangle;
-	
-	/**
 	 * A small internal cache:
-	 * 
 	 * 0 = previous position.x
 	 * 1 = previous position.y
 	 * 2 = previous rotation
@@ -132,16 +131,6 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	 * 8 = destroy phase? (0 = no, 1 = yes)
 	 */
 	var cache:Array<Dynamic>;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _crop:phaser.geom.Rectangle;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _frame:phaser.geom.Rectangle;
 	
 	/**
 	 * Internal cache var.
@@ -168,43 +157,21 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	 * Changes the Texture the Sprite is using entirely. The old texture is removed and the new one is referenced or fetched from the Cache.
 	 * This causes a WebGL texture update, so use sparingly or in low-intensity portions of your game.
 	 */
-	@:overload(function (key:String, ?frame:String, ?stopAnimation:Bool = true):Void {})
-	@:overload(function (key:phaser.gameobjects.RenderTexture, ?frame:String, ?stopAnimation:Bool = true):Void {})
-	@:overload(function (key:phaser.gameobjects.BitmapData, ?frame:String, ?stopAnimation:Bool = true):Void {})
-	@:overload(function (key:phaser.pixi.textures.Texture, ?frame:String, ?stopAnimation:Bool = true):Void {})
-	@:overload(function (key:String, ?frame:Float, ?stopAnimation:Bool = true):Void {})
-	@:overload(function (key:phaser.gameobjects.RenderTexture, ?frame:Float, ?stopAnimation:Bool = true):Void {})
-	@:overload(function (key:phaser.gameobjects.BitmapData, ?frame:Float, ?stopAnimation:Bool = true):Void {})
-	function loadTexture (key:phaser.pixi.textures.Texture, ?frame:Float, ?stopAnimation:Bool = true):Void;
-	
-	/**
-	 * Sets the Texture frame the Sprite uses for rendering.
-	 * This is primarily an internal method used by Sprite.loadTexture, although you may call it directly.
-	 */
-	function setFrame (frame:phaser.animation.Frame):Void;
-	
-	/**
-	 * Resets the Texture frame dimensions that the Sprite uses for rendering.
-	 */
-	function resetFrame ():Void;
+	@:overload(function (key:String, frame:String):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:String):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, frame:String):Void {})
+	@:overload(function (key:phaser.pixi.textures.Texture, frame:String):Void {})
+	@:overload(function (key:String, frame:Float):Void {})
+	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
+	@:overload(function (key:phaser.gameobjects.BitmapData, frame:Float):Void {})
+	function loadTexture (key:phaser.pixi.textures.Texture, frame:Float):Void;
 	
 	/**
 	 * Crop allows you to crop the texture used to display this Sprite.
-	 * This modifies the core Sprite texture frame, so the Sprite width/height properties will adjust accordingly.
-	 * 
-	 * Cropping takes place from the top-left of the Sprite and can be modified in real-time by either providing an updated rectangle object to Sprite.crop,
-	 * or by modifying Sprite.cropRect (or a reference to it) and then calling Sprite.updateCrop.
-	 * 
-	 * The rectangle object given to this method can be either a Phaser.Rectangle or any object so long as it has public x, y, width and height properties.
-	 * A reference to the rectangle is stored in Sprite.cropRect unless the copy parameter is true in which case the values are duplicated to a local object.
+	 * Cropping takes place from the top-left of the Sprite and can be modified in real-time by providing an updated rectangle object.
+	 * Note that cropping a Sprite will reset its animation to the first frame. You cannot currently crop an animated Sprite.
 	 */
-	function crop (rect:phaser.geom.Rectangle, ?copy:Bool = false):Void;
-	
-	/**
-	 * If you have set a crop rectangle on this Sprite via Sprite.crop and since modified the Sprite.cropRect property (or the rectangle it references)
-	 * then you need to update the crop frame by calling this method.
-	 */
-	function updateCrop ():Void;
+	function crop (rect:phaser.geom.Rectangle):Void;
 	
 	/**
 	 * Brings a 'dead' Sprite back to life, optionally giving it the health value specified.
