@@ -1,6 +1,6 @@
 package phaser.geom;
 
-@:native("can also use them as 2D Vectors and you'll find different vector related methods in this class.")
+@:native("Phaser.Point")
 extern class Point {
 	
 	/**
