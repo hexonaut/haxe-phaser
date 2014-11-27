@@ -11,7 +11,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	* events (via Sprite.events), animation (via Sprite.animations), camera culling and more. Please see the Examples for use cases.
 	*
 	*/
-	function new (game:Game, ?x:Float=0, ?y:Float=0, ?key:Dynamic, ?frame:Float);
+	function new (game:phaser.core.Game, ?x:Float=0, ?y:Float=0, ?key:Dynamic, ?frame:Float);
 	
 	/**
 	 * A reference to the currently running Game.
