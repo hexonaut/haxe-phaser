@@ -7,6 +7,7 @@
   "releasenote": "Many fixes.",
   "version": "0.3.1",
   "url": "https://github.com/Blank101/haxe-phaser",
+  "classPath": "src",
   "dependencies": {
     
   }
