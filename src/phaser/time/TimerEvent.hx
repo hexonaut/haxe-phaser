@@ -4,15 +4,19 @@ package phaser.time;
 extern class TimerEvent {
 	
 	/**
-	 * A TimerEvent is a single event that is processed by a Phaser.Timer. It consists of a delay, which is a value in milliseconds after which the event will fire.
-	 * It can call a specific callback, passing in optional parameters.
+	 * A TimerEvent is a single event that is processed by a Phaser.Timer.
+	 * 
+	 * It consists of a delay, which is a value in milliseconds after which the event will fire.
+	 * When the event fires it calls a specific callback with the specified arguments.
+	 * 
+	 * Use {@link Phaser.Timer#add}, {@link Phaser.Timer#add}, or {@link Phaser.Timer#add} methods to create a new event.
 	 */
-	function new (timer:phaser.time.Timer, delay:Float, tick:Float, repeatCount:Float, loop:Bool, callback:Dynamic, callbackContext:Dynamic, arguments:Array<Dynamic>);
+	function new (timer:phaser.time.Timer, delay:Float, tick:Float, repeatCount:Float, loop:Bool, callback:Dynamic, callbackContext:Dynamic, arguments:Dynamic);
 	
 	/**
 	 * The Timer object that this TimerEvent belongs to.
 	 */
-	var timer:phaser.time.Timer;
+	var timer(default, null):phaser.time.Timer;
 	
 	/**
 	 * The delay in ms at which this TimerEvent fires.
@@ -45,9 +49,9 @@ extern class TimerEvent {
 	var callbackContext:Dynamic;
 	
 	/**
-	 * The values to be passed to the callback.
+	 * Additional arguments to be passed to the callback.
 	 */
-	var args:Array<Dynamic>;
+	var args:Dynamic;
 	
 	/**
 	 * A flag that controls if the TimerEvent is pending deletion.

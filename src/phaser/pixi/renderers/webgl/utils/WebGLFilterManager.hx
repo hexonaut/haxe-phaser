@@ -6,6 +6,21 @@ extern class WebGLFilterManager {
 	/**
 	 * @class WebGLFilterManager
 	 */
-	function new (WebGLContext:Dynamic, Boolean:Dynamic);
+	function new ();
+	
+	/**
+	 * @property filterStack
+	 */
+	var filterStack:Dynamic;
+	
+	/**
+	 * @property offsetX
+	 */
+	var offsetX:Dynamic;
+	
+	/**
+	 * @property offsetY
+	 */
+	var offsetY:Dynamic;
 	
 }

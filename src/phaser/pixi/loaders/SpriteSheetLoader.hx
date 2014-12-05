@@ -15,7 +15,7 @@ extern class SpriteSheetLoader {
 	function new (String:Dynamic, Boolean:Dynamic);
 	
 	/**
-	 * The url of the bitmap font data
+	 * The url of the atlas data
 	 */
 	var url:String;
 	

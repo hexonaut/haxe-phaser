@@ -4,8 +4,13 @@ package phaser.pixi.renderers.webgl.utils;
 extern class WebGLBlendModeManager {
 	
 	/**
-	 * @class WebGLMaskManager
+	 * @class WebGLBlendModeManager
 	 */
 	function new (WebGLContext:Dynamic);
+	
+	/**
+	 * @property currentBlendMode
+	 */
+	var currentBlendMode:Dynamic;
 	
 }

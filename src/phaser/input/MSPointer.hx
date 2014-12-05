@@ -4,7 +4,10 @@ package phaser.input;
 extern class MSPointer {
 	
 	/**
-	 * Phaser - MSPointer constructor.
+	 * The MSPointer class handles Microsoft touch interactions with the game and the resulting Pointer objects.
+	 * 
+	 * It will work only in Internet Explorer 10 and Windows Store or Windows Phone 8 apps using JavaScript.
+	 * <a href='http://msdn.microsoft.com/en-us/library/ie/hh673557(v=vs.85).aspx'>http://msdn.microsoft.com/en-us/library/ie/hh673557(v=vs.85).aspx</a>
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -19,9 +22,9 @@ extern class MSPointer {
 	var callbackContext:Dynamic;
 	
 	/**
-	 * You can disable all Input by setting disabled = true. While set all new input related events will be ignored.
+	 * MSPointer input will only be processed if enabled.
 	 */
-	var disabled:Bool;
+	var enabled:Bool;
 	
 	/**
 	 * Internal function to handle MSPointer events.
@@ -51,7 +54,7 @@ extern class MSPointer {
 	/**
 	 * The function that handles the PointerMove event.
 	 */
-	function onPointerMove (a0:Dynamic):Void;
+	function onPointerMove (event:Dynamic):Void;
 	
 	/**
 	 * The function that handles the PointerUp event.
@@ -62,5 +65,10 @@ extern class MSPointer {
 	 * Stop the event listeners.
 	 */
 	function stop ():Void;
+	
+	/**
+	 * If disabled all MSPointer input will be ignored.
+	 */
+	var disabled:Bool;
 	
 }

@@ -68,7 +68,7 @@ extern class InputHandler {
 	/**
 	 * A Point object that contains by how far the Sprite snap is offset.
 	 */
-	var snapOffset:Dynamic;
+	var snapOffset:phaser.geom.Point;
 	
 	/**
 	 * When the Sprite is dragged this controls if the center of the Sprite will snap to the pointer on drag or not.
@@ -141,6 +141,11 @@ extern class InputHandler {
 	var consumePointerEvent:Bool;
 	
 	/**
+	 * EXPERIMENTAL: Please do not use this property unless you know what it does. Likely to change in the future.
+	 */
+	var scaleLayer:Bool;
+	
+	/**
 	 * Internal cache var.
 	 */
 	var _dragPhase:Bool;
@@ -153,7 +158,7 @@ extern class InputHandler {
 	/**
 	 * Internal cache var.
 	 */
-	var _tempPoint:Dynamic;
+	var _tempPoint:phaser.geom.Point;
 	
 	/**
 	 * Internal cache var.
@@ -350,6 +355,16 @@ extern class InputHandler {
 	 * Called by Pointer when drag starts on this Sprite. Should not usually be called directly.
 	 */
 	function startDrag (pointer:phaser.input.Pointer):Void;
+	
+	/**
+	 * Warning: EXPERIMENTAL
+	 */
+	function globalToLocalX (x:Float):Void;
+	
+	/**
+	 * Warning: EXPERIMENTAL
+	 */
+	function globalToLocalY (y:Float):Void;
 	
 	/**
 	 * Called by Pointer when drag is stopped on this Sprite. Should not usually be called directly.

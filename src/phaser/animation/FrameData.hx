@@ -39,6 +39,11 @@ extern class FrameData {
 	function checkFrameName (name:String):Bool;
 	
 	/**
+	 * Makes a copy of this FrameData including copies (not references) to all of the Frames it contains.
+	 */
+	function clone ():phaser.animation.FrameData;
+	
+	/**
 	 * Returns a range of frames based on the given start and end frame indexes and returns them in an Array.
 	 */
 	function getFrameRange (start:Float, end:Float, ?output:Array<Dynamic>):Array<Dynamic>;

@@ -34,6 +34,11 @@ extern class Ellipse {
 	function setTo (x:Float, y:Float, width:Float, height:Float):phaser.geom.Ellipse;
 	
 	/**
+	 * Returns the framing rectangle of the ellipse as a Phaser.Rectangle object.
+	 */
+	function getBounds ():phaser.geom.Rectangle;
+	
+	/**
 	 * Copies the x, y, width and height properties from any given object to this Ellipse.
 	 */
 	function copyFrom (source:Dynamic):phaser.geom.Ellipse;
@@ -78,10 +83,5 @@ extern class Ellipse {
 	 * If set to true it will reset all of the Ellipse objects properties to 0. An Ellipse object is empty if its width or height is less than or equal to 0.
 	 */
 	var empty:Bool;
-	
-	/**
-	 * Returns the framing rectangle of the ellipse as a Phaser.Rectangle object.
-	 */
-	function getBounds ():phaser.geom.Rectangle;
 	
 }

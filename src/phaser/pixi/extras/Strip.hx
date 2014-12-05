@@ -14,8 +14,18 @@ extern class Strip extends phaser.pixi.display.DisplayObjectContainer {
 	var dirty:Bool;
 	
 	/**
-	 * if you need a padding, not yet implemented
+	 * The blend mode to be applied to the sprite. Set to PIXI.blendModes.NORMAL to remove any blend mode.
 	 */
-	var padding:Float;
+	var blendMode:Float;
+	
+	/**
+	 * Triangles in canvas mode are automatically antialiased, use this value to force triangles to overlap a bit with each other.
+	 */
+	var canvasPadding:Float;
+	
+	/**
+	 * Different drawing buffer modes supported
+	 */
+	static var a0:Dynamic;
 	
 }

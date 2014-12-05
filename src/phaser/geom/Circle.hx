@@ -4,7 +4,8 @@ package phaser.geom;
 extern class Circle {
 	
 	/**
-	 * Creates a new Circle object with the center coordinate specified by the x and y parameters and the diameter specified by the diameter parameter. If you call this function without parameters, a circle with x, y, diameter and radius properties set to 0 is created.
+	 * Creates a new Circle object with the center coordinate specified by the x and y parameters and the diameter specified by the diameter parameter.
+	 * If you call this function without parameters, a circle with x, y, diameter and radius properties set to 0 is created.
 	 */
 	function new (?x:Float = 0, ?y:Float = 0, ?diameter:Float = 0);
 	
@@ -34,6 +35,11 @@ extern class Circle {
 	function circumference ():Float;
 	
 	/**
+	 * Returns the framing rectangle of the circle as a Phaser.Rectangle object
+	 */
+	function getBounds ():phaser.geom.Rectangle;
+	
+	/**
 	 * Sets the members of Circle to the specified values.
 	 */
 	function setTo (x:Float, y:Float, diameter:Float):Dynamic;
@@ -52,7 +58,7 @@ extern class Circle {
 	 * Returns the distance from the center of the Circle object to the given object
 	 * (can be Circle, Point or anything with x/y properties)
 	 */
-	function distance (dest:Dynamic, ?round:Bool):Float;
+	function distance (dest:Dynamic, ?round:Bool = false):Float;
 	
 	/**
 	 * Returns a new Circle object with the same values for the x, y, width, and height properties as this Circle object.
@@ -67,7 +73,7 @@ extern class Circle {
 	/**
 	 * Returns a Point object containing the coordinates of a point on the circumference of the Circle based on the given angle.
 	 */
-	function circumferencePoint (angle:Float, ?asDegrees:Bool = false, ?out:Dynamic):Dynamic;
+	function circumferencePoint (angle:Float, ?asDegrees:Bool = false, ?out:phaser.geom.Point):phaser.geom.Point;
 	
 	/**
 	 * Adjusts the location of the Circle object, as determined by its center coordinate, by the specified amounts.

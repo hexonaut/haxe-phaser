@@ -16,12 +16,12 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * The minimum possible velocity of a particle.
 	 */
-	var minParticleSpeed:Dynamic;
+	var minParticleSpeed:phaser.geom.Point;
 	
 	/**
 	 * The maximum possible velocity of a particle.
 	 */
-	var maxParticleSpeed:Dynamic;
+	var maxParticleSpeed:phaser.geom.Point;
 	
 	/**
 	 * The minimum possible scale of a particle. This is applied to the X and Y axis. If you need to control each axis see minParticleScaleX.
@@ -76,7 +76,7 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * The X and Y drag component of particles launched from the emitter.
 	 */
-	var particleDrag:Dynamic;
+	var particleDrag:phaser.geom.Point;
 	
 	/**
 	 * The angular drag component of particles launched from the emitter if they are rotating.
@@ -96,7 +96,7 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * How much each particle should bounce on each axis. 1 = full bounce, 0 = no bounce.
 	 */
-	var bounce:Dynamic;
+	var bounce:phaser.geom.Point;
 	
 	/**
 	 * Determines whether the emitter is currently emitting particles. It is totally safe to directly toggle this.
@@ -106,7 +106,7 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * When a particle is created its anchor will be set to match this Point object (defaults to x/y: 0.5 to aid in rotation)
 	 */
-	var particleAnchor:Dynamic;
+	var particleAnchor:phaser.geom.Point;
 	
 	/**
 	 * The blendMode as set on the particle when emitted from the Emitter. Defaults to NORMAL. Needs browser capable of supporting canvas blend-modes (most not available in WebGL)
@@ -150,12 +150,12 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * Internal particle scale var.
 	 */
-	var _minParticleScale:Dynamic;
+	var _minParticleScale:phaser.geom.Point;
 	
 	/**
 	 * Internal particle scale var.
 	 */
-	var _maxParticleScale:Dynamic;
+	var _maxParticleScale:phaser.geom.Point;
 	
 	/**
 	 * Internal helper for deciding how many particles to launch.
@@ -265,16 +265,6 @@ extern class Emitter extends phaser.core.Group {
 	@:overload(function (object:phaser.gameobjects.TileSprite):Void {})
 	@:overload(function (object:phaser.gameobjects.Text):Void {})
 	function at (object:phaser.pixi.display.DisplayObject):Void;
-	
-	/**
-	 * @name Phaser.Particles.Arcade.Emitter#width
-	 */
-	var width:Float;
-	
-	/**
-	 * @name Phaser.Particles.Arcade.Emitter#height
-	 */
-	var height:Float;
 	
 	/**
 	 * @name Phaser.Particles.Arcade.Emitter#left

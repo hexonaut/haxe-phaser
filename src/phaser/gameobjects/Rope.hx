@@ -1,20 +1,7 @@
 package phaser.gameobjects;
 
 @:native("Phaser.Rope")
-extern class Rope {
-	
-	/**
-	 * A Rope is a Sprite that has a repeating texture. The texture can be scrolled and scaled and will automatically wrap on the edges as it does so.
-	 * Please note that Ropes, as with normal Sprites, have no input handler or physics bodies by default. Both need enabling.
-	 */
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:String, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:String, frame:Float):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float):Void {})
-	function new (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float);
+extern class Rope extends phaser.pixi.extras.Rope {
 	
 	/**
 	 * A reference to the currently running Game.
@@ -64,7 +51,7 @@ extern class Rope {
 	/**
 	 * Internal cache var.
 	 */
-	var _scroll:Dynamic;
+	var _scroll:phaser.geom.Point;
 	
 	/**
 	 * The Input Handler for this object. Needs to be enabled with image.inputEnabled = true before you can use it.
@@ -74,7 +61,7 @@ extern class Rope {
 	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
-	var world:Dynamic;
+	var world:phaser.geom.Point;
 	
 	/**
 	 * Should this Sprite be automatically culled if out of range of the camera?
@@ -93,7 +80,7 @@ extern class Rope {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:Dynamic;
+	var cameraOffset:phaser.geom.Point;
 	
 	/**
 	 * By default Sprites won't add themselves to any physics system and their physics body will be null.
@@ -208,16 +195,6 @@ extern class Rope {
 	 * activated for this object and it will then start to process click/touch events and more.
 	 */
 	var inputEnabled:Bool;
-	
-	/**
-	 * The position of the Rope on the x axis relative to the local coordinates of the parent.
-	 */
-	var x:Float;
-	
-	/**
-	 * The position of the Rope on the y axis relative to the local coordinates of the parent.
-	 */
-	var y:Float;
 	
 	/**
 	 * A Rope will call it's updateAnimation function on each update loop if it has one

@@ -19,6 +19,6 @@ extern class ImageLoader {
 	 * if the image is loaded with loadFramedSpriteSheet
 	 * frames will contain the sprite sheet frames
 	 */
-	var frames:Dynamic;
+	var frames:Array<Dynamic>;
 	
 }

@@ -10,7 +10,7 @@ extern class AssetLoader {
 	 * When all items have been loaded this class will dispatch a 'onLoaded' event
 	 * As each individual item is loaded this class will dispatch a 'onProgress' event
 	 */
-	function new (assetURLs:Dynamic, Boolean:Dynamic);
+	function new (Array:Dynamic, Boolean:Dynamic);
 	
 	/**
 	 * The array of asset URLs that are going to be loaded

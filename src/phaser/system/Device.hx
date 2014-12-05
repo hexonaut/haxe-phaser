@@ -4,17 +4,17 @@ package phaser.system;
 extern class Device {
 	
 	/**
-	 * Detects device support capabilities. Using some elements from System.js by MrDoob and Modernizr
+	 * The time the device became ready.
 	 */
-	function new ();
+	var deviceReadyAt:Int;
 	
 	/**
-	 * A reference to the currently running game.
+	 * The time as which initialization has completed.
 	 */
-	var game:phaser.core.Game;
+	var initialized:Bool;
 	
 	/**
-	 * Is running desktop?
+	 * Is running on a desktop?
 	 */
 	var desktop:Bool;
 	
@@ -119,16 +119,6 @@ extern class Device {
 	var worker:Bool;
 	
 	/**
-	 * Is touch available?
-	 */
-	var touch:Bool;
-	
-	/**
-	 * Is mspointer available?
-	 */
-	var mspointer:Bool;
-	
-	/**
 	 * Is css3D available?
 	 */
 	var css3D:Bool;
@@ -157,6 +147,21 @@ extern class Device {
 	 * Is the browser running in strict mode (false) or quirks mode? (true)
 	 */
 	var quirksMode:Bool;
+	
+	/**
+	 * Is touch available?
+	 */
+	var touch:Bool;
+	
+	/**
+	 * Is mspointer available?
+	 */
+	var mspointer:Bool;
+	
+	/**
+	 * The newest type of Wheel/Scroll event supported: 'wheel', 'mousewheel', 'DOMMouseScroll'
+	 */
+	var wheelEvent:Dynamic;
 	
 	/**
 	 * Set to true if running in Arora.
@@ -194,7 +199,7 @@ extern class Device {
 	var trident:Bool;
 	
 	/**
-	 * If running in Internet Explorer 11 this will contain the major version number. See <a href='http://msdn.microsoft.com/en-us/library/ie/ms537503(v=vs.85).aspx'>http://msdn.microsoft.com/en-us/library/ie/ms537503(v=vs.85).aspx</a>
+	 * If running in Internet Explorer 11 this will contain the major version number. See {@link <a href='http://msdn.microsoft.com/en-us/library/ie/ms537503(v=vs.85).aspx}'>http://msdn.microsoft.com/en-us/library/ie/ms537503(v=vs.85).aspx}</a>
 	 */
 	var tridentVersion:Float;
 	
@@ -294,6 +299,11 @@ extern class Device {
 	var littleEndian:Bool;
 	
 	/**
+	 * Same value as littleEndian.
+	 */
+	var LITTLE_ENDIAN:Bool;
+	
+	/**
 	 * Does the device context support 32bit pixel manipulation using array buffer views?
 	 */
 	var support32bit:Bool;
@@ -319,65 +329,8 @@ extern class Device {
 	var fullscreenKeyboard:Bool;
 	
 	/**
-	 * Check which OS is game running on.
-	 */
-	function _checkOS ():Void;
-	
-	/**
-	 * Check HTML5 features of the host environment.
-	 */
-	function _checkFeatures ():Void;
-	
-	/**
 	 * orce screencanvas to false
 	 */
 	var screencanvas:Dynamic;
-	
-	/**
-	 * Checks for support of the Full Screen API.
-	 */
-	function checkFullScreenSupport ():Void;
-	
-	/**
-	 * Check what browser is game running in.
-	 */
-	function _checkBrowser ():Void;
-	
-	/**
-	 * Check audio support.
-	 */
-	function _checkAudio ():Void;
-	
-	/**
-	 * Check PixelRatio, iOS device, Vibration API, ArrayBuffers and endianess.
-	 */
-	function _checkDevice ():Void;
-	
-	/**
-	 * Check Little or Big Endian system.
-	 */
-	function _checkIsLittleEndian ():Void;
-	
-	/**
-	 * Test to see if ImageData uses CanvasPixelArray or Uint8ClampedArray.
-	 */
-	function _checkIsUint8ClampedImageData ():Void;
-	
-	/**
-	 * Check whether the host environment support 3D CSS.
-	 */
-	function _checkCSS3D ():Void;
-	
-	/**
-	 * Check whether the host environment can play audio.
-	 */
-	function canPlayAudio (type:String):Bool;
-	
-	/**
-	 * Check whether the console is open.
-	 * Note that this only works in Firefox with Firebug and earlier versions of Chrome.
-	 * It used to work in Chrome, but then they removed the ability: <a href='http://src.chromium.org/viewvc/blink?view=revision&amp;revision=151136'>http://src.chromium.org/viewvc/blink?view=revision&amp;revision=151136</a>
-	 */
-	function isConsoleOpen ():Bool;
 	
 }

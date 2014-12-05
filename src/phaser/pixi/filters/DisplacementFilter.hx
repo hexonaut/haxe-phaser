@@ -1,10 +1,10 @@
 package phaser.pixi.filters;
 
 @:native("PIXI.DisplacementFilter")
-extern class DisplacementFilter {
+extern class DisplacementFilter extends phaser.pixi.filters.AbstractFilter {
 	
 	/**
-	 * The texture used for the displacemtent map * must be power of 2 texture at the moment
+	 * The texture used for the displacement map. Must be power of 2 texture.
 	 */
 	var map:Dynamic;
 	

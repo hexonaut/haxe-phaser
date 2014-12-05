@@ -21,4 +21,9 @@ extern class Text extends phaser.pixi.display.Sprite {
 	*/
 	function destroy (?destroyBaseTexture:Bool):Void;
 	
+	/**
+	 * The resolution of the canvas.
+	 */
+	var resolution:Float;
+	
 }

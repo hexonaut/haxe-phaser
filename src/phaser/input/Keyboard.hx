@@ -4,9 +4,9 @@ package phaser.input;
 extern class Keyboard {
 	
 	/**
-	 * The Keyboard class handles looking after keyboard input for your game.
-	 * It will recognise and respond to key presses and dispatch the required events.
-	 * Please be aware that lots of keyboards are unable to process certain combinations of keys due to hardware
+	 * The Keyboard class monitors keyboard input and dispatches keyboard events.
+	 * 
+	 * <em>Be aware</em> that many keyboards are unable to process certain combinations of keys due to hardware
 	 * limitations known as ghosting. Full details here: <a href='http://www.html5gamedevs.com/topic/4876-impossible-to-use-more-than-2-keyboard-input-buttons-at-the-same-time/'>http://www.html5gamedevs.com/topic/4876-impossible-to-use-more-than-2-keyboard-input-buttons-at-the-same-time/</a>
 	 */
 	function new (game:phaser.core.Game);
@@ -17,9 +17,9 @@ extern class Keyboard {
 	var game:phaser.core.Game;
 	
 	/**
-	 * You can disable all Keyboard Input by setting disabled to true. While true all new input related events will be ignored.
+	 * Keyboard input will only be processed if enabled.
 	 */
-	var disabled:Bool;
+	var enabled:Bool;
 	
 	/**
 	 * The most recent DOM event from keydown or keyup. This is updated every time a new key is pressed or released.
@@ -170,19 +170,26 @@ extern class Keyboard {
 	function reset (?hard:Bool = true):Void;
 	
 	/**
-	 * Returns the "just pressed" state of the key. Just pressed is considered true if the key was pressed down within the duration given (default 250ms)
+	 * Returns true if the Key was pressed down within the duration value given, or false if it either isn't down,
+	 * or was pressed down longer ago than then given duration.
 	 */
-	function justPressed (keycode:Float, ?duration:Float = 50):Bool;
+	function downDuration (keycode:Float, ?duration:Float = 50):Bool;
 	
 	/**
-	 * Returns the "just released" state of the Key. Just released is considered as being true if the key was released within the duration given (default 250ms)
+	 * Returns true if the Key was pressed down within the duration value given, or false if it either isn't down,
+	 * or was pressed down longer ago than then given duration.
 	 */
-	function justReleased (keycode:Float, ?duration:Float = 50):Bool;
+	function upDuration (keycode:Float, ?duration:Float = 50):Bool;
 	
 	/**
 	 * Returns true of the key is currently pressed down. Note that it can only detect key presses on the web browser.
 	 */
 	function isDown (keycode:Float):Bool;
+	
+	/**
+	 * If disabled all Keyboard input will be ignored.
+	 */
+	var disabled:Bool;
 	
 	/**
 	 * Returns the string value of the most recently pressed key.

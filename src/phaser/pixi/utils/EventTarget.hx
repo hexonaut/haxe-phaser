@@ -1,26 +1,58 @@
 package phaser.pixi.utils;
 
-@:native("PIXI.EventTarget")
+@:native("PIXI.Event")
 extern class EventTarget {
 	
 	/**
-	 * Holds all the listeners
+	 * Emit an event to all registered event listeners.
 	 */
-	var listeners:Dynamic;
+	var emit:Dynamic;
 	
 	/**
-	 * Adds a listener for a specific event
+	 * Register a new EventListener for the given event.
 	 */
-	var addEventListener:Dynamic;
+	var on:Dynamic;
 	
 	/**
-	 * Fires the event, ie pretends that the event has happened
+	 * Remove event listeners.
 	 */
-	var dispatchEvent:Dynamic;
+	var off:Dynamic;
 	
 	/**
-	 * Removes the specified listener that was assigned to the specified event type
+	 * Creates an homogenous object for tracking events so users can know what to expect.
 	 */
-	var removeEventListener:Dynamic;
+	function new (Object:Dynamic, String:Dynamic, Object:Dynamic);
+	
+	/**
+	 * Tracks the state of bubbling propagation. Do not
+	 * set this directly, instead use event.stopPropagation()
+	 */
+	var stopped:Bool;
+	
+	/**
+	 * Tracks the state of sibling listener propagation. Do not
+	 * set this directly, instead use event.stopImmediatePropagation()
+	 */
+	var stoppedImmediate:Bool;
+	
+	/**
+	 * The original target the event triggered on.
+	 */
+	var target:Dynamic;
+	
+	/**
+	 * The string name of the event that this represents.
+	 */
+	var type:String;
+	
+	/**
+	 * The data that was passed in with this event.
+	 */
+	var data:Dynamic;
+	
+	/**
+	 * The timestamp when the event occurred.
+	 */
+	var timeStamp:Float;
 	
 }
