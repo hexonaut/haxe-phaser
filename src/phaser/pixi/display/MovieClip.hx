@@ -6,7 +6,7 @@ extern class MovieClip extends phaser.pixi.display.Sprite {
 	/**
 	 * The array of textures that make up the animation
 	 */
-	var textures:Array<Dynamic>;
+	var textures:Dynamic;
 	
 	/**
 	 * The speed that the MovieClip will play at. Higher is faster, lower is slower

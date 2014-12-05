@@ -4,10 +4,20 @@ package phaser.pixi.renderers.canvas;
 extern class CanvasRenderer {
 	
 	/**
-	 * the CanvasRenderer draws the stage and all its content onto a 2d canvas. This renderer should be used for browsers that do not support webGL.
-	 * Dont forget to add the view to your DOM or you will not see anything :)
+	 * The CanvasRenderer draws the Stage and all its content onto a 2d canvas. This renderer should be used for browsers that do not support webGL.
+	 * Don't forget to add the CanvasRenderer.view to your DOM or you will not see anything :)
 	 */
-	function new (Number:Dynamic, Number:Dynamic, HTMLCanvasElement:Dynamic, Boolean:Dynamic);
+	function new (Number:Dynamic, Number:Dynamic, Object:Dynamic, HTMLCanvasElement:Dynamic, Boolean:Dynamic, Boolean:Dynamic, Number:Dynamic, Boolean:Dynamic);
+	
+	/**
+	 * The renderer type.
+	 */
+	var type:Float;
+	
+	/**
+	 * The resolution of the canvas.
+	 */
+	var resolution:Float;
 	
 	/**
 	 * This sets if the CanvasRenderer will clear the canvas or not before the new render pass.
@@ -23,6 +33,11 @@ extern class CanvasRenderer {
 	var transparent:Bool;
 	
 	/**
+	 * Whether the render view should be resized automatically
+	 */
+	var autoResize:Bool;
+	
+	/**
 	 * The width of the canvas view
 	 */
 	var width:Float;
@@ -33,7 +48,7 @@ extern class CanvasRenderer {
 	var height:Float;
 	
 	/**
-	 * The canvas element that everything is drawn to
+	 * The canvas element that everything is drawn to.
 	 */
 	var view:Dynamic;
 	
@@ -41,6 +56,16 @@ extern class CanvasRenderer {
 	 * The canvas 2d context that everything is drawn with
 	 */
 	var context:Dynamic;
+	
+	/**
+	 * Boolean flag controlling canvas refresh.
+	 */
+	var refresh:Bool;
+	
+	/**
+	 * Internal var.
+	 */
+	var count:Float;
 	
 	/**
 	 * Instance of a PIXI.CanvasMaskManager, handles masking when using the canvas renderer

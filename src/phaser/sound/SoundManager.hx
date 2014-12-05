@@ -4,11 +4,14 @@ package phaser.sound;
 extern class SoundManager {
 	
 	/**
-	 * Sound Manager constructor.
 	 * The Sound Manager is responsible for playing back audio via either the Legacy HTML Audio tag or via Web Audio if the browser supports it.
 	 * Note: On Firefox 25+ on Linux if you have media.gstreamer disabled in about:config then it cannot play back mp3 or m4a files.
 	 * The audio file type and the encoding of those files are extremely important. Not all browsers can play all audio formats.
 	 * There is a good guide to what's supported here: <a href='http://hpr.dogphilosophy.net/test/'>http://hpr.dogphilosophy.net/test/</a>
+	 * 
+	 * If you are reloading a Phaser Game on a page that never properly refreshes (such as in an AngularJS project) then you will quickly run out
+	 * of AudioContext nodes. If this is the case create a global var called PhaserGlobal on the window object before creating the game. The active
+	 * AudioContext will then be saved to window.PhaserGlobal.audioContext when the Phaser game is destroyed, and re-used when it starts again.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -121,6 +124,11 @@ extern class SoundManager {
 	 * Adds a new Sound into the SoundManager.
 	 */
 	function add (key:String, ?volume:Float = 1, ?loop:Bool = false, ?connect:Bool = true):phaser.sound.Sound;
+	
+	/**
+	 * Adds a new AudioSprite into the SoundManager.
+	 */
+	function addSprite (key:String):phaser.sound.AudioSprite;
 	
 	/**
 	 * Removes a Sound from the SoundManager. The removed Sound is destroyed before removal.

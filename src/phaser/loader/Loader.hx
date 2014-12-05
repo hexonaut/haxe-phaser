@@ -4,7 +4,6 @@ package phaser.loader;
 extern class Loader {
 	
 	/**
-	 * Phaser loader constructor.
 	 * The Loader handles loading all external content such as Images, Sounds, Texture Atlases and data files.
 	 * It uses a combination of Image() loading and xhr and provides progress and completion callbacks.
 	 */
@@ -85,7 +84,7 @@ extern class Loader {
 	var onPackComplete:phaser.core.Signal;
 	
 	/**
-	 * If true and if the browser supports XDomainRequest, it will be used in preference for xhr when loading json files. It is enabled automatically if the browser is IE9, but you can disable it as required.
+	 * If true and if the browser supports XDomainRequest, it will be used in preference for xhr when loading json files. This is only relevant for IE9 when you know your server/CDN requires it.
 	 */
 	var useXDomainRequest:Bool;
 	
@@ -158,6 +157,12 @@ extern class Loader {
 	function setPreloadSprite (sprite:phaser.gameobjects.Image, ?direction:Float = 0):Void;
 	
 	/**
+	 * Called automatically by ScaleManager when the game resizes in RESIZE scalemode.
+	 * We use this to adjust the height of the preloading sprite, if set.
+	 */
+	function resize (width:Float, height:Float):Void;
+	
+	/**
 	 * Check whether asset exists with a specific key.
 	 * Use Phaser.Cache to access loaded assets, e.g. Phaser.Cache#checkImageKey
 	 */
@@ -209,6 +214,11 @@ extern class Loader {
 	function json (key:String, url:String, ?overwrite:Bool = false):phaser.loader.Loader;
 	
 	/**
+	 * Add an XML file to the Loader.
+	 */
+	function xml (key:String, url:String, ?overwrite:Bool = false):phaser.loader.Loader;
+	
+	/**
 	 * Add a JavaScript file to the Loader. Once loaded the JavaScript file will be automatically turned into a script tag (and executed), so be careful what you load!
 	 * You can also specify a callback. This will be executed as soon as the script tag has been created.
 	 */
@@ -231,6 +241,13 @@ extern class Loader {
 	 */
 	@:overload(function (key:String, urls:Array<Dynamic>, autoDecode:Bool):phaser.loader.Loader {})
 	function audio (key:String, urls:String, autoDecode:Bool):phaser.loader.Loader;
+	
+	/**
+	 * Add a new audiosprite file to the loader. Audio Sprites are a combination of audio files and a JSON configuration.
+	 * The JSON follows the format of that created by <a href='https://github.com/tonistiigi/audiosprite'>https://github.com/tonistiigi/audiosprite</a>
+	 */
+	@:overload(function (key:String, urls:Array<Dynamic>, atlasURL:String):phaser.loader.Loader {})
+	function audiosprite (key:String, urls:String, atlasURL:String):phaser.loader.Loader;
 	
 	/**
 	 * Add a new tilemap loading request.

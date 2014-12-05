@@ -16,7 +16,7 @@ extern class PluginManager {
 	/**
 	 * An array of all the plugins being managed by this PluginManager.
 	 */
-	var plugins:Array<Dynamic>;
+	var plugins:Dynamic;
 	
 	/**
 	 * Internal cache var.

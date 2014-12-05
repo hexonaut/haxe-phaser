@@ -138,6 +138,11 @@ extern class AnimationManager {
 	var paused:Bool;
 	
 	/**
+	 * @name Phaser.AnimationManager#name
+	 */
+	var name:String;
+	
+	/**
 	 * @name Phaser.AnimationManager#frame
 	 */
 	var frame:Float;

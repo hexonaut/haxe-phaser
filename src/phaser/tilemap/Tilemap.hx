@@ -190,6 +190,25 @@ extern class Tilemap {
 	function createFromObjects (name:String, gid:Float, key:String, ?frame:String, ?exists:Bool = true, ?autoCull:Bool = false, ?group:phaser.core.Group, ?CustomClass:Dynamic, ?adjustY:Bool = true):Void;
 	
 	/**
+	 * Creates a Sprite for every object matching the given tile indexes in the map data.
+	 * You can specify the group that the Sprite will be created in. If none is given it will be created in the World.
+	 * You can optional specify if the tile will be replaced with another after the Sprite is created. This is useful if you want to lay down special 
+	 * tiles in a level that are converted to Sprites, but want to replace the tile itself with a floor tile or similar once converted.
+	 */
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
+	function createFromTiles (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int;
+	
+	/**
 	 * Creates a new TilemapLayer object. By default TilemapLayers are fixed to the camera.
 	 * The layer parameter is important. If you've created your map in Tiled then you can get this by looking in Tiled and looking at the Layer name.
 	 * Or you can open the JSON file it exports and look at the layers[].name value. Either way it must match.
@@ -291,11 +310,10 @@ extern class Tilemap {
 	function getLayer (layer:phaser.tilemap.TilemapLayer):Float;
 	
 	/**
-	 * Turn off/on the recalculation of faces for tile or collission updates. 
-	 * setPreventRecalculate(true) puts recalculation on hold while
-	 * setPreventRecalculate(false) recalculates all the changed layers.
+	 * Turn off/on the recalculation of faces for tile or collision updates. 
+	 * setPreventRecalculate(true) puts recalculation on hold while setPreventRecalculate(false) recalculates all the changed layers.
 	 */
-	function setPreventRecalculate (if:Bool):Void;
+	function setPreventRecalculate (value:Bool):Void;
 	
 	/**
 	 * Internal function.
@@ -405,9 +423,9 @@ extern class Tilemap {
 	/**
 	 * Copies all of the tiles in the given rectangular block into the tilemap data buffer.
 	 */
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, ?layer:Float):Array<Dynamic> {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, ?layer:String):Array<Dynamic> {})
-	function copy (x:Float, y:Float, width:Float, height:Float, ?layer:phaser.tilemap.TilemapLayer):Array<Dynamic>;
+	@:overload(function (x:Int, y:Int, width:Int, height:Int, ?layer:Int):Array<Dynamic> {})
+	@:overload(function (x:Int, y:Int, width:Int, height:Int, ?layer:String):Array<Dynamic> {})
+	function copy (x:Int, y:Int, width:Int, height:Int, ?layer:phaser.tilemap.TilemapLayer):Array<Dynamic>;
 	
 	/**
 	 * Pastes a previously copied block of tile data into the given x/y coordinates. Data should have been prepared with Tilemap.copy.

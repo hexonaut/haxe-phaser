@@ -4,7 +4,7 @@ package phaser.physics.arcade;
 extern class World {
 	
 	/**
-	 * Arcade Physics constructor.
+	 * The Arcade Physics world. Contains Arcade Physics related collision, overlap and motion methods.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -16,7 +16,7 @@ extern class World {
 	/**
 	 * The World gravity setting. Defaults to x: 0, y: 0, or no gravity.
 	 */
-	var gravity:Dynamic;
+	var gravity:phaser.geom.Point;
 	
 	/**
 	 * The bounds inside of which the physics world exists. Defaults to match the world bounds.
@@ -55,7 +55,7 @@ extern class World {
 	var forceX:Bool;
 	
 	/**
-	 * If true a QuadTree will never be used for any collision. Handy for tightly packed games. See also Body.skipQuadTree.
+	 * If true the QuadTree will not be used for any collision. QuadTrees are great if objects are well spread out in your game, otherwise they are a performance hit. If you enable this you can disable on a per body basis via Body.skipQuadTree.
 	 */
 	var skipQuadTree:Bool;
 	
@@ -202,27 +202,27 @@ extern class World {
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:phaser.tilemap.Tilemap, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Array<Dynamic>, object2:phaser.gameobjects.Sprite, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:phaser.tilemap.Tilemap, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Array<Dynamic>, object2:phaser.core.Group, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:phaser.tilemap.Tilemap, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Array<Dynamic>, object2:Dynamic, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:phaser.core.Group, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:Dynamic, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:phaser.tilemap.Tilemap, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:Array<Dynamic>, object2:phaser.tilemap.Tilemap, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.tilemap.TilemapLayer, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:phaser.core.Group, object2:phaser.tilemap.TilemapLayer, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Dynamic, object2:phaser.tilemap.TilemapLayer, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:phaser.tilemap.TilemapLayer, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:Array<Dynamic>, object2:phaser.tilemap.TilemapLayer, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.core.Group, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:Dynamic, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
-	@:overload(function (object1:phaser.tilemap.Tilemap, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
+	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	function collide (object1:Array<Dynamic>, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool;
 	
 	/**
@@ -231,19 +231,19 @@ extern class World {
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.gameobjects.Sprite, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.gameobjects.Sprite, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
 	@:overload(function (object1:Dynamic, object2:phaser.gameobjects.Sprite, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
-	@:overload(function (object1:phaser.tilemap.Tilemap, object2:phaser.gameobjects.Sprite, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
+	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:phaser.gameobjects.Sprite, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.core.Group, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
 	@:overload(function (object1:phaser.core.Group, object2:phaser.core.Group, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
 	@:overload(function (object1:Dynamic, object2:phaser.core.Group, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
-	@:overload(function (object1:phaser.tilemap.Tilemap, object2:phaser.core.Group, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
+	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:phaser.core.Group, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
 	@:overload(function (object1:phaser.gameobjects.Sprite, object2:Dynamic, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
 	@:overload(function (object1:phaser.core.Group, object2:Dynamic, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
 	@:overload(function (object1:Dynamic, object2:Dynamic, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
-	@:overload(function (object1:phaser.tilemap.Tilemap, object2:Dynamic, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
-	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.tilemap.Tilemap, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
-	@:overload(function (object1:phaser.core.Group, object2:phaser.tilemap.Tilemap, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
-	@:overload(function (object1:Dynamic, object2:phaser.tilemap.Tilemap, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
-	function collideHandler (object1:phaser.tilemap.Tilemap, object2:phaser.tilemap.Tilemap, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void;
+	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:Dynamic, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
+	@:overload(function (object1:phaser.gameobjects.Sprite, object2:phaser.tilemap.TilemapLayer, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
+	@:overload(function (object1:phaser.core.Group, object2:phaser.tilemap.TilemapLayer, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
+	@:overload(function (object1:Dynamic, object2:phaser.tilemap.TilemapLayer, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void {})
+	function collideHandler (object1:phaser.tilemap.TilemapLayer, object2:phaser.tilemap.TilemapLayer, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void;
 	
 	/**
 	 * An internal function. Use Phaser.Physics.Arcade.collide instead.
@@ -325,7 +325,14 @@ extern class World {
 	 * Each child will be sent to the given callback for further processing.
 	 * Note that the children are not checked for depth order, but simply if they overlap the Pointer or not.
 	 */
-	function getObjectsUnderPointer (pointer:phaser.input.Pointer, group:phaser.core.Group, ?callback:Dynamic, ?callbackContext:Dynamic):Array<Dynamic>;
+	function getObjectsUnderPointer (pointer:phaser.input.Pointer, group:phaser.core.Group, ?callback:Dynamic, ?callbackContext:Dynamic):Dynamic;
+	
+	/**
+	 * Given a Group and a location this will check to see which Group children overlap with the coordinates.
+	 * Each child will be sent to the given callback for further processing.
+	 * Note that the children are not checked for depth order, but simply if they overlap the coordinate or not.
+	 */
+	function getObjectsAtLocation (pointer:phaser.input.Pointer, group:phaser.core.Group, ?callback:Dynamic, ?callbackContext:Dynamic, ?callbackArg:Dynamic):Dynamic;
 	
 	/**
 	 * Move the given display object towards the destination object at a steady velocity.
@@ -360,22 +367,22 @@ extern class World {
 	 * Given the angle (in degrees) and speed calculate the velocity and return it as a Point object, or set it to the given point object.
 	 * One way to use this is: velocityFromAngle(angle, 200, sprite.velocity) which will set the values directly to the sprites velocity and not create a new Point object.
 	 */
-	@:overload(function (angle:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic {})
-	function velocityFromAngle (angle:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic;
+	@:overload(function (angle:Float, ?speed:Float = 60, ?point:phaser.geom.Point):phaser.geom.Point {})
+	function velocityFromAngle (angle:Float, ?speed:Float = 60, ?point:Dynamic):phaser.geom.Point;
 	
 	/**
 	 * Given the rotation (in radians) and speed calculate the velocity and return it as a Point object, or set it to the given point object.
 	 * One way to use this is: velocityFromRotation(rotation, 200, sprite.velocity) which will set the values directly to the sprites velocity and not create a new Point object.
 	 */
-	@:overload(function (rotation:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic {})
-	function velocityFromRotation (rotation:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic;
+	@:overload(function (rotation:Float, ?speed:Float = 60, ?point:phaser.geom.Point):phaser.geom.Point {})
+	function velocityFromRotation (rotation:Float, ?speed:Float = 60, ?point:Dynamic):phaser.geom.Point;
 	
 	/**
 	 * Given the rotation (in radians) and speed calculate the acceleration and return it as a Point object, or set it to the given point object.
 	 * One way to use this is: accelerationFromRotation(rotation, 200, sprite.acceleration) which will set the values directly to the sprites acceleration and not create a new Point object.
 	 */
-	@:overload(function (rotation:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic {})
-	function accelerationFromRotation (rotation:Float, ?speed:Float = 60, ?point:Dynamic):Dynamic;
+	@:overload(function (rotation:Float, ?speed:Float = 60, ?point:phaser.geom.Point):phaser.geom.Point {})
+	function accelerationFromRotation (rotation:Float, ?speed:Float = 60, ?point:Dynamic):phaser.geom.Point;
 	
 	/**
 	 * Sets the acceleration.x/y property on the display object so it will move towards the target at the given speed (in pixels per second sq.)

@@ -36,12 +36,12 @@ extern class Graphics {
 	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
-	var world:Dynamic;
+	var world:phaser.geom.Point;
 	
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:Dynamic;
+	var cameraOffset:phaser.geom.Point;
 	
 	/**
 	 * A small internal cache:
@@ -76,11 +76,6 @@ extern class Graphics {
 	 * Destroy this Graphics instance.
 	 */
 	function destroy (?destroyChildren:Bool = true):Void;
-	
-	/**
-	 * Draws a {Phaser.Polygon} or a {PIXI.Polygon} filled
-	 */
-	function drawPolygon ():Void;
 	
 	/**
 	 * Draws a single {Phaser.Polygon} triangle from a {Phaser.Point} array

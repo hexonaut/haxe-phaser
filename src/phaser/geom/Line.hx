@@ -11,12 +11,12 @@ extern class Line {
 	/**
 	 * The start point of the line.
 	 */
-	var start:Dynamic;
+	var start:phaser.geom.Point;
 	
 	/**
 	 * The end point of the line.
 	 */
-	var end:Dynamic;
+	var end:phaser.geom.Point;
 	
 	/**
 	 * Sets the components of the Line to the specified values.
@@ -34,7 +34,7 @@ extern class Line {
 	 * If asSegment is true it will check for segment intersection. If asSegment is false it will check for line intersection.
 	 * Returns the intersection segment of AB and EF as a Point, or null if there is no intersection.
 	 */
-	function intersects (line:phaser.geom.Line, ?asSegment:Bool = true, ?result:Dynamic):Dynamic;
+	function intersects (line:phaser.geom.Line, ?asSegment:Bool = true, ?result:phaser.geom.Point):phaser.geom.Point;
 	
 	/**
 	 * Tests if the given coordinates fall on this line. See pointOnSegment to test against just the line segment.
@@ -123,6 +123,6 @@ extern class Line {
 	 * Returns the intersection segment of AB and EF as a Point, or null if there is no intersection.
 	 * Adapted from code by Keith Hair
 	 */
-	function intersectsPoints (a:Dynamic, b:Dynamic, e:Dynamic, f:Dynamic, ?asSegment:Bool = true, ?result:Dynamic):Dynamic;
+	function intersectsPoints (a:phaser.geom.Point, b:phaser.geom.Point, e:phaser.geom.Point, f:phaser.geom.Point, ?asSegment:Bool = true, ?result:phaser.geom.Point):phaser.geom.Point;
 	
 }

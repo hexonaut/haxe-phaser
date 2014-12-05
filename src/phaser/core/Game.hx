@@ -4,9 +4,11 @@ package phaser.core;
 extern class Game {
 	
 	/**
-	 * Game constructor
+	 * This is where the magic happens. The Game object is the heart of your game,
+	 * providing quick access to common functions and handling the boot process.
 	 * 
-	 * Instantiate a new Phaser.Game object.
+	 * "Hell, there are no rules here - we're trying to accomplish something."
+	 *                                                       Thomas A. Edison
 	 */
 	@:overload(function (?width:Float = 800, ?height:Float = 600, ?renderer:Float, ?parent:String = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
 	@:overload(function (?width:String = 800, ?height:Float = 600, ?renderer:Float, ?parent:String = '', ?state:Dynamic, ?transparent:Bool = false, ?antialias:Bool = true, ?physicsConfig:Dynamic):Void {})
@@ -20,7 +22,7 @@ extern class Game {
 	/**
 	 * Phaser Game ID (for when Pixi supports multiple instances).
 	 */
-	var id:Float;
+	var id(default, null):Float;
 	
 	/**
 	 * The Phaser.Game configuration object.
@@ -38,14 +40,28 @@ extern class Game {
 	var parent:Dynamic;
 	
 	/**
-	 * The calculated game width in pixels.
+	 * The current Game Width in pixels.
+	 * 
+	 * <em>Do not modify this property directly:</em> use {@link Phaser.ScaleManager#setGameSize} - eg. game.scale.setGameSize(width, height) - instead.
 	 */
-	var width:Float;
+	var width(default, null):Int;
 	
 	/**
-	 * The calculated game height in pixels.
+	 * The current Game Height in pixels.
+	 * 
+	 * <em>Do not modify this property directly:</em> use {@link Phaser.ScaleManager#setGameSize} - eg. game.scale.setGameSize(width, height) - instead.
 	 */
-	var height:Float;
+	var height(default, null):Int;
+	
+	/**
+	 * Private internal var.
+	 */
+	var _width:Int;
+	
+	/**
+	 * Private internal var.
+	 */
+	var _height:Int;
 	
 	/**
 	 * Use a transparent canvas background or not.
@@ -70,7 +86,7 @@ extern class Game {
 	/**
 	 * The Renderer this game will use. Either Phaser.AUTO, Phaser.CANVAS or Phaser.WEBGL.
 	 */
-	var renderType:Float;
+	var renderType(default, null):Float;
 	
 	/**
 	 * The StateManager.
@@ -80,12 +96,12 @@ extern class Game {
 	/**
 	 * Whether the game engine is booted, aka available.
 	 */
-	var isBooted:Bool;
+	var isBooted(default, null):Bool;
 	
 	/**
-	 * s game running or paused?
+	 * Is game running or paused?
 	 */
-	var isRunning:Bool;
+	var isRunning(default, null):Bool;
 	
 	/**
 	 * Automatically handles the core game loop via requestAnimationFrame or setTimeout
@@ -198,6 +214,13 @@ extern class Game {
 	var particles:phaser.particles.Particles;
 	
 	/**
+	 * If false Phaser will automatically render the display list every update. If true the render loop will be skipped.
+	 * You can toggle this value at run-time to gain exact control over when Phaser renders. This can be useful in certain types of game or application.
+	 * Please note that if you don't render the display list then none of the game object transforms will be updated, so use this value carefully.
+	 */
+	var lockRender:Bool;
+	
+	/**
 	 * Enable core loop stepping with Game.enableStep().
 	 */
 	var stepping(default, null):Bool;
@@ -243,6 +266,50 @@ extern class Game {
 	var _codePaused:Bool;
 	
 	/**
+	 * The ID of the current/last logic update applied this render frame, starting from 0.
+	 * 
+	 * The first update is currentUpdateID === 0 and the last update is currentUpdateID === updatesThisFrame.
+	 */
+	var currentUpdateID:Int;
+	
+	/**
+	 * Number of logic updates expected to occur this render frame;
+	 * will be 1 unless there are catch-ups required (and allowed).
+	 */
+	var updatesThisFrame:Int;
+	
+	/**
+	 * accumulate elapsed time until a logic update is due
+	 */
+	var _deltaTime:Float;
+	
+	/**
+	 * remember how many 'catch-up' iterations were used on the logicUpdate last frame
+	 */
+	var _lastCount:Float;
+	
+	/**
+	 * if the 'catch-up' iterations are spiralling out of control, this counter is incremented
+	 */
+	var _spiralling:Float;
+	
+	/**
+	 * If the game is struggling to maintain the desired FPS, this signal will be dispatched.
+	 * The desired/chosen FPS should probably be closer to the {@link Phaser.Time#suggestedFps} value.
+	 */
+	var fpsProblemNotifier:phaser.core.Signal;
+	
+	/**
+	 * Should the game loop force a logic update, regardless of the delta timer? Set to true if you know you need this. You can toggle it on the fly.
+	 */
+	var forceSingleUpdate:Bool;
+	
+	/**
+	 * the soonest game.time.time value that the next fpsProblemNotifier can be dispatched
+	 */
+	var _nextFpsNotification:Float;
+	
+	/**
 	 * Parses a Game configuration object.
 	 */
 	function parseConfig ():Void;
@@ -266,6 +333,24 @@ extern class Game {
 	 * The core game loop.
 	 */
 	function update (time:Float):Void;
+	
+	/**
+	 * Updates all logic subsystems in Phaser. Called automatically by Game.update.
+	 */
+	function updateLogic (timeStep:Float):Void;
+	
+	/**
+	 * Runs the Render cycle.
+	 * It starts by calling State.preRender. In here you can do any last minute adjustments of display objects as required.
+	 * It then calls the renderer, which renders the entire display list, starting from the Stage object and working down.
+	 * It then calls plugin.render on any loaded plugins, in the order in which they were enabled.
+	 * After this State.render is called. Any rendering that happens here will take place on-top of the display list.
+	 * Finally plugin.postRender is called on any loaded plugins, in the order in which they were enabled.
+	 * This method is called automatically by Game.update, you don't need to call it directly.
+	 * Should you wish to have fine-grained control over when Phaser renders then use the Game.lockRender boolean.
+	 * Phaser will only render when this boolean is false.
+	 */
+	function updateRender (elapsedTime:Float):Void;
 	
 	/**
 	 * Enable core game loop stepping. When enabled you must call game.step() directly (perhaps via a DOM button?)

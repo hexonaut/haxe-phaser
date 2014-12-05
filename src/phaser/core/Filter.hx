@@ -4,7 +4,7 @@ package phaser.core;
 extern class Filter {
 	
 	/**
-	 * This is a base Filter template to use for any Phaser filter development.
+	 * This is a base Filter class to use for any Phaser filter development.
 	 */
 	function new (game:phaser.core.Game, uniforms:Dynamic, fragmentSrc:Array<Dynamic>);
 	
@@ -40,7 +40,12 @@ extern class Filter {
 	var padding:Float;
 	
 	/**
-	 * Default uniform mappings.
+	 * The previous position of the pointer (we don't update the uniform if the same)
+	 */
+	var prevPoint:phaser.geom.Point;
+	
+	/**
+	 * Default uniform mappings. Compatible with ShaderToy and GLSLSandbox.
 	 */
 	var uniforms:Dynamic;
 	

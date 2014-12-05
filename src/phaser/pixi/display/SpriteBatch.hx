@@ -1,6 +1,6 @@
 package phaser.pixi.display;
 
-@:native("PIXI.SpriteBatch")
+@:native("SpriteBatch")
 extern class SpriteBatch {
 	
 	/**

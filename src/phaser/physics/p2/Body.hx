@@ -36,7 +36,7 @@ extern class Body {
 	/**
 	 * The offset of the Physics Body from the Sprite x/y position.
 	 */
-	var offset:Dynamic;
+	var offset:phaser.geom.Point;
 	
 	/**
 	 * The p2 Body data.
@@ -46,17 +46,17 @@ extern class Body {
 	/**
 	 * The velocity of the body. Set velocity.x to a negative value to move to the left, position to the right. velocity.y negative values move up, positive move down.
 	 */
-	var velocity:Dynamic;
+	var velocity:phaser.physics.p2.InversePointProxy;
 	
 	/**
 	 * The force applied to the body.
 	 */
-	var force:Dynamic;
+	var force:phaser.physics.p2.InversePointProxy;
 	
 	/**
 	 * A locally applied gravity force to the Body. Applied directly before the world step. NOTE: Not currently implemented.
 	 */
-	var gravity:Dynamic;
+	var gravity:phaser.geom.Point;
 	
 	/**
 	 * Dispatched when a first contact is created between shapes in two bodies. This event is fired during the step, so collision has already taken place.

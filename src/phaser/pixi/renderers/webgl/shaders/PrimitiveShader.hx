@@ -9,6 +9,11 @@ extern class PrimitiveShader {
 	function new (WebGLContext:Dynamic);
 	
 	/**
+	 * @property _UID
+	 */
+	var _UID:Dynamic;
+	
+	/**
 	 * @property gl
 	 */
 	var gl:Dynamic;
@@ -19,13 +24,13 @@ extern class PrimitiveShader {
 	var program:Dynamic;
 	
 	/**
-	 * @property fragmentSrc
+	 * The fragment shader.
 	 */
-	var fragmentSrc:Dynamic;
+	var fragmentSrc:Array<Dynamic>;
 	
 	/**
-	 * @property vertexSrc
+	 * The vertex shader.
 	 */
-	var vertexSrc:Dynamic;
+	var vertexSrc:Array<Dynamic>;
 	
 }

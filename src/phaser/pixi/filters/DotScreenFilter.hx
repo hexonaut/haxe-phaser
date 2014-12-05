@@ -1,15 +1,15 @@
 package phaser.pixi.filters;
 
 @:native("PIXI.DotScreenFilter")
-extern class DotScreenFilter {
+extern class DotScreenFilter extends phaser.pixi.filters.AbstractFilter {
 	
 	/**
-	 * This describes the the scale
+	 * The scale of the effect.
 	 */
 	var scale:Float;
 	
 	/**
-	 * This radius describes angle
+	 * The radius of the effect.
 	 */
 	var angle:Float;
 	

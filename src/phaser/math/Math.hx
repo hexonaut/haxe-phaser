@@ -4,27 +4,27 @@ package phaser.math;
 extern class Math {
 	
 	/**
-	 * = 2 &pi;
+	 * Twice PI.
 	 */
-	function PI2 ():Void;
+	var Phaser:Float;
 	
 	/**
-	 * Two number are fuzzyEqual if their difference is less than &epsilon;.
+	 * Two number are fuzzyEqual if their difference is less than epsilon.
 	 */
 	function fuzzyEqual (a:Float, b:Float, epsilon:Float):Bool;
 	
 	/**
-	 * a is fuzzyLessThan b if it is less than b + &epsilon;.
+	 * a is fuzzyLessThan b if it is less than b + epsilon.
 	 */
 	function fuzzyLessThan (a:Float, b:Float, epsilon:Float):Bool;
 	
 	/**
-	 * a is fuzzyGreaterThan b if it is more than b - &epsilon;.
+	 * a is fuzzyGreaterThan b if it is more than b - epsilon.
 	 */
 	function fuzzyGreaterThan (a:Float, b:Float, epsilon:Float):Bool;
 	
 	/**
-	 * Averages all values passed to the function and returns the result. You can pass as many parameters as you like.
+	 * Averages all values passed to the function and returns the result.
 	 */
 	function average ():Float;
 	
@@ -52,14 +52,13 @@ extern class Math {
 	/**
 	 * Snaps a value to the nearest value in an array.
 	 */
-	function snapToInArray (input:Float, arr:Array<Dynamic>, sort:Bool):Float;
+	function snapToInArray (input:Float, arr:Dynamic, sort:Bool):Float;
 	
 	/**
-	 * Round to some place comparative to a 'base', default is 10 for decimal place.
+	 * Round to some place comparative to a base, default is 10 for decimal place.
+	 * The place is represented by the power applied to base to get that place.
 	 * 
-	 * 'place' is represented by the power applied to 'base' to get that place
-	 * e.g.
-	 * 2000/7 ~= 285.714285714285714285714 ~= (bin)100011101.1011011011011011
+	 * <pre>e.g. 2000/7 ~= 285.714285714285714285714 ~= (bin)100011101.1011011011011011
 	 * 
 	 * roundTo(2000/7,3) === 0
 	 * roundTo(2000/7,2) == 300
@@ -80,6 +79,7 @@ extern class Math {
 	 * roundTo(2000/7,-3,2) == 285.75    -- 100011101.11
 	 * roundTo(2000/7,-4,2) == 285.6875  -- 100011101.1011
 	 * roundTo(2000/7,-5,2) == 285.71875 -- 100011101.10111
+	 * </pre>
 	 * 
 	 * Note what occurs when we round to the 3rd space (8ths place), 100100000, this is to be assumed
 	 * because we are rounding 100011.1011011011011011 which rounds up.
@@ -106,12 +106,12 @@ extern class Math {
 	/**
 	 * Find the angle of a segment from (point1.x, point1.y) -> (point2.x, point2.y).
 	 */
-	function angleBetweenPoints (point1:Dynamic, point2:Dynamic):Float;
+	function angleBetweenPoints (point1:phaser.geom.Point, point2:phaser.geom.Point):Float;
 	
 	/**
 	 * Find the angle of a segment from (point1.x, point1.y) -> (point2.x, point2.y).
 	 */
-	function angleBetweenPointsY (point1:Dynamic, point2:Dynamic):Float;
+	function angleBetweenPointsY (point1:phaser.geom.Point, point2:phaser.geom.Point):Float;
 	
 	/**
 	 * Reverses an angle.
@@ -134,37 +134,28 @@ extern class Math {
 	function normalizeLongitude (lng:Float):Float;
 	
 	/**
-	 * Closest angle between two angles from a1 to a2 absolute value the return for exact angle
-	 */
-	function nearestAngleBetween (a1:Float, a2:Float, radians:Bool):Float;
-	
-	/**
-	 * Interpolate across the shortest arc between two angles.
-	 */
-	function interpolateAngles (a1:Float, a2:Float, weight:Float, radians:Bool, ease:Dynamic):Float;
-	
-	/**
 	 * Generate a random bool result based on the chance value.
-	 * 
 	 * 
 	 * Returns true or false based on the chance value (default 50%). For example if you wanted a player to have a 30% chance
 	 * of getting a bonus, call chanceRoll(30) - true means the chance passed, false means it failed.
-	 * 
 	 */
 	function chanceRoll (chance:Float):Bool;
 	
 	/**
-	 * Returns an Array containing the numbers from min to max and inclusive of both values.
-	 * If you need exclusive of max then see Phaser.Math.numberArrayEx.
+	 * Create an array representing the inclusive range of numbers (usually integers) in [start, end].
 	 */
-	function numberArray (min:Float, max:Float):Array<Dynamic>;
+	function numberArray (start:Float, end:Float):Dynamic;
 	
 	/**
-	 * Creates an array of numbers (positive and/or negative) progressing from
-	 * start up to but not including end. If start is less than stop a
-	 * zero-length range is created unless a negative step is specified.
+	 * Create an array of numbers (positive and/or negative) progressing from start
+	 * up to but not including end by advancing by step.
+	 * 
+	 * If start is less than stop a zero-length range is created unless a negative step is specified.
+	 * 
+	 * Certain values for start and end (eg. NaN/undefined/null) are coerced to 0;
+	 * for forward compatibility make sure to pass in actual numbers.
 	 */
-	static function numberArrayStep (?start:Float = 0, ?end:Float, ?step:Float = 1):Array<Dynamic>;
+	function numberArrayStep (start:Float, end:Float, ?step:Float = 1):Array<Dynamic>;
 	
 	/**
 	 * Adds the given amount to the value, but never lets the value go over the specified maximum.
@@ -178,13 +169,15 @@ extern class Math {
 	
 	/**
 	 * Ensures that the value always stays between min and max, by wrapping the value around.
-	 * max should be larger than min, or the function will return 0.
+	 * 
+	 * If max is not larger than min the result is 0.
 	 */
 	function wrap (value:Float, min:Float, max:Float):Float;
 	
 	/**
 	 * Adds value to amount and ensures that the result always stays between 0 and max, by wrapping the value around.
-	 * Values must be positive integers, and are passed through Math.abs.
+	 * 
+	 * Values <em>must</em> be positive integers, and are passed through Math.abs. See {@link Phaser.Math#wrap} for an alternative.
 	 */
 	function wrapValue (value:Float, amount:Float, max:Float):Float;
 	
@@ -201,40 +194,43 @@ extern class Math {
 	/**
 	 * Returns true if the number given is odd.
 	 */
-	function isOdd (n:Float):Bool;
+	function isOdd (n:Int):Bool;
 	
 	/**
 	 * Returns true if the number given is even.
 	 */
-	function isEven (n:Float):Bool;
+	function isEven (n:Int):Bool;
 	
 	/**
-	 * Updated version of Math.min that can be passed either an array of numbers or the numbers as parameters.
-	 * See <a href='http://jsperf.com/math-s-min-max-vs-homemade/5'>http://jsperf.com/math-s-min-max-vs-homemade/5</a>
+	 * Variation of Math.min that can be passed either an array of numbers or the numbers as parameters.    
+	 * 
+	 * Prefer the standard Math.min function when appropriate.
 	 */
 	function min ():Float;
 	
 	/**
-	 * Updated version of Math.max that can be passed either an array of numbers or the numbers as parameters.
+	 * Variation of Math.max that can be passed either an array of numbers or the numbers as parameters.
+	 * 
+	 * Prefer the standard Math.max function when appropriate.
 	 */
 	function max ():Float;
 	
 	/**
-	 * Updated version of Math.min that can be passed a property and either an array of objects or the objects as parameters.
+	 * Variation of Math.min that can be passed a property and either an array of objects or the objects as parameters.
 	 * It will find the lowest matching property value from the given objects.
 	 */
 	function minProperty ():Float;
 	
 	/**
-	 * Updated version of Math.max that can be passed a property and either an array of objects or the objects as parameters.
+	 * Variation of Math.max that can be passed a property and either an array of objects or the objects as parameters.
 	 * It will find the largest matching property value from the given objects.
 	 */
 	function maxProperty ():Float;
 	
 	/**
-	 * Keeps an angle value between -180 and +180.
+	 * Keeps an angle value between -180 and +180; or -PI and PI if radians.
 	 */
-	function wrapAngle (angle:Float, radians:Bool):Float;
+	function wrapAngle (angle:Float, ?radians:Bool = false):Float;
 	
 	/**
 	 * Keeps an angle value between the given min and max values.
@@ -257,57 +253,76 @@ extern class Math {
 	function catmullRomInterpolation (v:Array<Dynamic>, k:Float):Float;
 	
 	/**
-	 * Description.
+	 * Calculates a linear (interpolation) value over t.
 	 */
-	function Linear (p0:Float, p1:Float, t:Float):Float;
+	function linear (p0:Float, p1:Float, t:Float):Float;
 	
 	/**
-	 * Description.
+	 * Calculates a callmum rom value.
 	 */
 	function catmullRom (p0:Float, p1:Float, p2:Float, p3:Float, t:Float):Float;
 	
 	/**
-	 * Fetch a random entry from the given array.
-	 * Will return null if random selection is missing, or array has no entries.
+	 * The (absolute) difference between two values.
 	 */
-	function getRandom (objects:Array<Dynamic>, startIndex:Float, length:Float):Dynamic;
+	function difference (a:Float, b:Float):Float;
+	
+	/**
+	 * Fetch a random entry from the given array.
+	 * 
+	 * Will return null if there are no array items that fall within the specified range
+	 * or if there is no item for the randomly choosen index.
+	 */
+	function getRandom (objects:Dynamic, startIndex:Int, length:Int):Dynamic;
 	
 	/**
 	 * Removes a random object from the given array and returns it.
-	 * Will return null if random selection is missing, or array has no entries.
+	 * 
+	 * Will return null if there are no array items that fall within the specified range
+	 * or if there is no item for the randomly choosen index.
 	 */
-	function removeRandom (objects:Array<Dynamic>, startIndex:Float, length:Float):Dynamic;
+	function removeRandom (objects:Dynamic, startIndex:Int, length:Int):Dynamic;
 	
 	/**
-	 * Round down to the next whole number. E.g. floor(1.7) == 1, and floor(-2.7) == -2.
+	 * <em>Do not use this function.</em>
+	 * 
+	 * Round to the next whole number <em>towards</em> zero.
+	 * 
+	 * E.g. floor(1.7) == 1, and floor(-2.7) == -2.
 	 */
-	function floor (Value:Float):Float;
+	function floor (value:Float):Int;
 	
 	/**
-	 * Round up to the next whole number.  E.g. ceil(1.3) == 2, and ceil(-2.3) == -3.
+	 * <em>Do not use this function.</em>
+	 * 
+	 * Round to the next whole number <em>away</em> from zero.
+	 * 
+	 * E.g. ceil(1.3) == 2, and ceil(-2.3) == -3.
 	 */
-	function ceil (value:Float):Float;
+	function ceil (value:Float):Int;
+	
+	/**
+	 * Round to the next whole number <em>away</em> from zero.
+	 */
+	function roundAwayFromZero (value:Float):Int;
 	
 	/**
 	 * Generate a sine and cosine table simultaneously and extremely quickly. Based on research by Franky of scene.at
 	 * 
-	 * 
 	 * The parameters allow you to specify the length, amplitude and frequency of the wave. Once you have called this function
 	 * you should get the results via getSinTable() and getCosTable(). This generator is fast enough to be used in real-time.
-	 * 
 	 */
-	function sinCosGenerator (length:Float, sinAmplitude:Float, cosAmplitude:Float, frequency:Float):Array<Dynamic>;
+	function sinCosGenerator (length:Float, sinAmplitude:Float, cosAmplitude:Float, frequency:Float):Dynamic;
 	
 	/**
-	 * Removes the top element from the stack and re-inserts it onto the bottom, then returns it.
-	 * The original stack is modified in the process. This effectively moves the position of the data from the start to the end of the table.
+	 * Moves the element from the start of the array to the end, shifting all items in the process.
 	 */
-	function shift (stack:Array<Dynamic>):Dynamic;
+	function shift (array:Dynamic):Dynamic;
 	
 	/**
-	 * Shuffles the data in the given array into a new order
+	 * Shuffles the data in the given array into a new order.
 	 */
-	function shuffleArray (array:Array<Dynamic>):Array<Dynamic>;
+	function shuffleArray (array:Dynamic):Dynamic;
 	
 	/**
 	 * Returns the distance between the two given set of coordinates.
@@ -325,13 +340,13 @@ extern class Math {
 	function distanceRounded (x1:Float, y1:Float, x2:Float, y2:Float):Float;
 	
 	/**
-	 * Force a value within the boundaries of two values.
-	 * Clamp value to range <a, b>
+	 * Force a value within the boundaries by clamping x to the range [a, b].
 	 */
 	function clamp (x:Float, a:Float, b:Float):Float;
 	
 	/**
-	 * Clamp value to range <a, inf).
+	 * Clamp x to the range [a, Infinity).
+	 * Roughly the same as Math.max(x, a), except for NaN handling.
 	 */
 	function clampBottom (x:Float, a:Float):Float;
 	
@@ -356,10 +371,11 @@ extern class Math {
 	function smootherstep (x:Float, min:Float, max:Float):Float;
 	
 	/**
-	 * A value representing the sign of the value.
-	 * -1 for negative, +1 for positive, 0 if value is 0
+	 * A value representing the sign of the value: -1 for negative, +1 for positive, 0 if value is 0.
+	 * 
+	 * This works differently from Math.sign for values of NaN and -0, etc.
 	 */
-	function sign (x:Float):Float;
+	function sign (x:Float):Int;
 	
 	/**
 	 * Work out what percentage value a is of value b using the given base.
@@ -369,11 +385,11 @@ extern class Math {
 	/**
 	 * Convert degrees to radians.
 	 */
-	function degToRad ():Dynamic;
+	function degToRad (degrees:Float):Float;
 	
 	/**
 	 * Convert degrees to radians.
 	 */
-	function radToDeg ():Dynamic;
+	function radToDeg (radians:Float):Float;
 	
 }

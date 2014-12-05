@@ -4,9 +4,13 @@ package phaser.time;
 extern class Timer {
 	
 	/**
-	 * A Timer is a way to create small re-usable or disposable objects that do nothing but wait for a specific moment in time, and then dispatch an event.
-	 * You can add as many events to a Timer as you like, each with their own delays. A Timer uses milliseconds as its unit of time. There are 1000 ms in 1 second.
-	 * So if you want to fire an event every quarter of a second you'd need to set the delay to 250.
+	 * A Timer is a way to create small re-usable (or disposable) objects that wait for a specific moment in time,
+	 * and then run the specified callbacks.
+	 * 
+	 * You can many events to a Timer, each with their own delays. A Timer uses milliseconds as its unit of time (there are 1000 ms in 1 second).
+	 * So a delay to 250 would fire the event every quarter of a second.
+	 * 
+	 * Timers are based on real-world (not physics) time, adjusted for game pause durations.
 	 */
 	function new (game:phaser.core.Game, ?autoDestroy:Bool = true);
 	
@@ -16,12 +20,14 @@ extern class Timer {
 	var game:phaser.core.Game;
 	
 	/**
-	 * True if the Timer is actively running. Do not switch this boolean, if you wish to pause the timer then use Timer.pause() instead.
+	 * True if the Timer is actively running.
+	 * 
+	 * Do not modify this boolean - use {@link Phaser.Timer#pause pause} (and {@link Phaser.Timer#resume resume}) to pause the timer.
 	 */
-	var running:Bool;
+	var running(default, null):Bool;
 	
 	/**
-	 * A Timer that is set to automatically destroy itself will do so after all of its events have been dispatched (assuming no looping events).
+	 * If true, the timer will automatically destroy itself after all the events have been dispatched (assuming no looping events).
 	 */
 	var autoDestroy:Bool;
 	
@@ -41,7 +47,9 @@ extern class Timer {
 	var events:Dynamic;
 	
 	/**
-	 * This signal will be dispatched when this Timer has completed, meaning there are no more events in the queue.
+	 * This signal will be dispatched when this Timer has completed which means that there are no more events in the queue.
+	 * 
+	 * The signal is supplied with one argument, timer, which is this Timer object.
 	 */
 	var onComplete:phaser.core.Signal;
 	
@@ -49,11 +57,6 @@ extern class Timer {
 	 * The time the next tick will occur.
 	 */
 	var nextTick(default, null):Float;
-	
-	/**
-	 * If the difference in time between two frame updates exceeds this value, the event times are reset to avoid catch-up situations.
-	 */
-	var timeCap:Float;
 	
 	/**
 	 * The paused state of the Timer. You can pause the timer by calling Timer.pause() and Timer.resume() or by the game pausing.
@@ -111,50 +114,39 @@ extern class Timer {
 	var _newTick:Float;
 	
 	/**
-	 * @constant
+	 * Creates a new TimerEvent on this Timer.
+	 * 
+	 * Use {@link Phaser.Timer#add}, {@link Phaser.Timer#add}, or {@link Phaser.Timer#add} methods to create a new event.
 	 */
-	static var MINUTE:Float;
+	function create (delay:Float, loop:Bool, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, arguments:Dynamic):phaser.time.TimerEvent;
 	
 	/**
-	 * @constant
-	 */
-	static var SECOND:Float;
-	
-	/**
-	 * @constant
-	 */
-	static var HALF:Float;
-	
-	/**
-	 * @constant
-	 */
-	static var QUARTER:Float;
-	
-	/**
-	 * Creates a new TimerEvent on this Timer. Use the methods add, repeat or loop instead of this.
-	 */
-	function create (delay:Float, loop:Bool, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, arguments:Array<Dynamic>):phaser.time.TimerEvent;
-	
-	/**
-	 * Adds a new Event to this Timer. The event will fire after the given amount of 'delay' in milliseconds has passed, once the Timer has started running.
-	 * Call Timer.start() once you have added all of the Events you require for this Timer. The delay is in relation to when the Timer starts, not the time it was added.
-	 * If the Timer is already running the delay will be calculated based on the timers current time.
+	 * Adds a new Event to this Timer.
+	 * 
+	 * The event will fire after the given amount of delay in milliseconds has passed, once the Timer has started running.
+	 * The delay is in relation to when the Timer starts, not the time it was added. If the Timer is already running the delay will be calculated based on the timers current time.
+	 * 
+	 * Make sure to call {@link Phaser.Timer#start start} after adding all of the Events you require for this Timer.
 	 */
 	function add (delay:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Adds a new TimerEvent that will always play through once and then repeat for the given number of iterations.
-	 * The event will fire after the given amount of 'delay' milliseconds has passed once the Timer has started running.
-	 * Call Timer.start() once you have added all of the Events you require for this Timer. The delay is in relation to when the Timer starts, not the time it was added.
-	 * If the Timer is already running the delay will be calculated based on the timers current time.
+	 * 
+	 * The event will fire after the given amount of delay in milliseconds has passed, once the Timer has started running.
+	 * The delay is in relation to when the Timer starts, not the time it was added. If the Timer is already running the delay will be calculated based on the timers current time.
+	 * 
+	 * Make sure to call {@link Phaser.Timer#start start} after adding all of the Events you require for this Timer.
 	 */
 	function repeat (delay:Float, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Adds a new looped Event to this Timer that will repeat forever or until the Timer is stopped.
-	 * The event will fire after the given amount of 'delay' milliseconds has passed once the Timer has started running.
-	 * Call Timer.start() once you have added all of the Events you require for this Timer. The delay is in relation to when the Timer starts, not the time it was added.
-	 * If the Timer is already running the delay will be calculated based on the timers current time.
+	 * 
+	 * The event will fire after the given amount of delay in milliseconds has passed, once the Timer has started running.
+	 * The delay is in relation to when the Timer starts, not the time it was added. If the Timer is already running the delay will be calculated based on the timers current time.
+	 * 
+	 * Make sure to call {@link Phaser.Timer#start start} after adding all of the Events you require for this Timer.
 	 */
 	function loop (delay:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
@@ -174,7 +166,8 @@ extern class Timer {
 	function remove (event:phaser.time.TimerEvent):Void;
 	
 	/**
-	 * Orders the events on this Timer so they are in tick order. This is called automatically when new events are created.
+	 * Orders the events on this Timer so they are in tick order.
+	 * This is called automatically when new events are created.
 	 */
 	function order ():Void;
 	
@@ -199,7 +192,7 @@ extern class Timer {
 	function pause ():Void;
 	
 	/**
-	 * This is called by the core Game loop. Do not call it directly, instead use Timer.pause.
+	 * Internal pause/resume control - user code should use Timer.pause instead.
 	 */
 	function _pause ():Void;
 	
@@ -214,12 +207,13 @@ extern class Timer {
 	function resume ():Void;
 	
 	/**
-	 * This is called by the core Game loop. Do not call it directly, instead use Timer.pause.
+	 * Internal pause/resume control - user code should use Timer.resume instead.
 	 */
 	function _resume ():Void;
 	
 	/**
-	 * Removes all Events from this Timer and all callbacks linked to onComplete, but leaves the Timer running.
+	 * Removes all Events from this Timer and all callbacks linked to onComplete, but leaves the Timer running. 
+	 * 
 	 * The onComplete callbacks won't be called.
 	 */
 	function removeAll ():Void;

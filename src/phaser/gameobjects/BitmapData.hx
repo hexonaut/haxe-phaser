@@ -4,7 +4,9 @@ package phaser.gameobjects;
 extern class BitmapData {
 	
 	/**
-	 * Creates a new BitmapData object.
+	 * A BitmapData object contains a Canvas element to which you can draw anything you like via normal Canvas context operations.
+	 * A single BitmapData can be used as the texture for one or many Images/Sprites. 
+	 * So if you need to dynamically create a Sprite texture then they are a good choice.
 	 */
 	function new (game:phaser.core.Game, key:String, ?width:Float = 256, ?height:Float = 256);
 	
@@ -96,17 +98,17 @@ extern class BitmapData {
 	/**
 	 * Internal cache var.
 	 */
-	var _pos:Dynamic;
+	var _pos:phaser.geom.Point;
 	
 	/**
 	 * Internal cache var.
 	 */
-	var _size:Dynamic;
+	var _size:phaser.geom.Point;
 	
 	/**
 	 * Internal cache var.
 	 */
-	var _scale:Dynamic;
+	var _scale:phaser.geom.Point;
 	
 	/**
 	 * Internal cache var.
@@ -121,7 +123,7 @@ extern class BitmapData {
 	/**
 	 * Internal cache var.
 	 */
-	var _anchor:Dynamic;
+	var _anchor:phaser.geom.Point;
 	
 	/**
 	 * Internal cache var.
@@ -137,6 +139,11 @@ extern class BitmapData {
 	 * Internal cache var.
 	 */
 	var _tempB:Float;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _circle:phaser.geom.Circle;
 	
 	/**
 	 * Updates the given objects so that they use this BitmapData as their texture. This will replace any texture they will currently have set.
@@ -264,6 +271,25 @@ extern class BitmapData {
 	function getPixels (rect:phaser.geom.Rectangle):Dynamic;
 	
 	/**
+	 * Scans the BitmapData, pixel by pixel, until it encounters a pixel that isn't transparent (i.e. has an alpha value > 0).
+	 * It then stops scanning and returns an object containing the colour of the pixel in r, g and b properties and the location in the x and y properties.
+	 * 
+	 * The direction parameter controls from which direction it should start the scan:
+	 * 
+	 * 0 = top to bottom
+	 * 1 = bottom to top
+	 * 2 = left to right
+	 * 3 = right to left
+	 */
+	function getFirstPixel (?direction:Float = 0):Dynamic;
+	
+	/**
+	 * Scans the BitmapData and calculates the bounds. This is a rectangle that defines the extent of all non-transparent pixels.
+	 * The rectangle returned will extend from the top-left of the image to the bottom-right, exluding transparent pixels.
+	 */
+	function getBounds (?rect:phaser.geom.Rectangle):phaser.geom.Rectangle;
+	
+	/**
 	 * Creates a new Phaser.Image object, assigns this BitmapData to be its texture, adds it to the world then returns it.
 	 */
 	function addToWorld (?x:Float = 0, ?y:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1):phaser.gameobjects.Image;
@@ -305,57 +331,64 @@ extern class BitmapData {
 	function draw (source:phaser.gameobjects.Text, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
+	 * Sets the shadow properties of this BitmapDatas context which will affect all draw operations made to it.
+	 * You can cancel an existing shadow by calling this method and passing no parameters.
+	 * Note: At the time of writing (October 2014) Chrome still doesn't support shadowBlur used with drawImage.
+	 */
+	function shadow (color:String, ?blur:Float = 5, ?x:Float = 10, ?y:Float = 10):phaser.gameobjects.BitmapData;
+	
+	/**
 	 * Draws the image onto this BitmapData using an image as an alpha mask.
 	 */
-	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Sprite):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Sprite):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Text, ?mask:phaser.gameobjects.Sprite):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Sprite):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Sprite):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Sprite):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:String, ?mask:phaser.gameobjects.Sprite):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Image):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Image):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Text, ?mask:phaser.gameobjects.Image):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Image):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Image):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Image):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:String, ?mask:phaser.gameobjects.Image):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Text):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Text):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Text, ?mask:phaser.gameobjects.Text):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Text):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Text):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Text):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:String, ?mask:phaser.gameobjects.Text):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.BitmapData):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.BitmapData):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Text, ?mask:phaser.gameobjects.BitmapData):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.BitmapData):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.BitmapData):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.BitmapData):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:String, ?mask:phaser.gameobjects.BitmapData):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Text, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:String, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Text, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:String, ?mask:Dynamic):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:String):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, ?mask:String):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Text, ?mask:String):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:String):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:String):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, ?mask:String):phaser.gameobjects.BitmapData {})
-	function alphaMask (source:String, ?mask:String):phaser.gameobjects.BitmapData;
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Text, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:String, ?mask:phaser.gameobjects.Sprite, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Text, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:String, ?mask:phaser.gameobjects.Image, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.Text, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.Text, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Text, ?mask:phaser.gameobjects.Text, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.Text, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Text, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.Text, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:String, ?mask:phaser.gameobjects.Text, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Text, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:String, ?mask:phaser.gameobjects.BitmapData, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Text, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:String, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Text, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:String, ?mask:Dynamic, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Sprite, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Text, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData {})
+	function alphaMask (source:String, ?mask:String, ?sourceRect:phaser.geom.Rectangle, ?maskRect:phaser.geom.Rectangle):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Scans this BitmapData for all pixels matching the given r,g,b values and then draws them into the given destination BitmapData.
@@ -378,6 +411,12 @@ extern class BitmapData {
 	 * Draws a filled Circle to the BitmapData at the given x, y coordinates and radius in size.
 	 */
 	function circle (x:Float, y:Float, radius:Float, ?fillStyle:String):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Takes the given Line object and image and renders it to this BitmapData as a repeating texture line.
+	 */
+	@:overload(function (line:phaser.geom.Line, image:String, ?repeat:String = 'repeat-x'):phaser.gameobjects.BitmapData {})
+	function textureLine (line:phaser.geom.Line, image:Dynamic, ?repeat:String = 'repeat-x'):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * If the game is running in WebGL this will push the texture up to the GPU if it's dirty.

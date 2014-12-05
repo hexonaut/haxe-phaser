@@ -6,6 +6,26 @@ extern class WebGLShaderManager {
 	/**
 	 * @class WebGLShaderManager
 	 */
-	function new (WebGLContext:Dynamic);
+	function new ();
+	
+	/**
+	 * @property maxAttibs
+	 */
+	var maxAttibs:Dynamic;
+	
+	/**
+	 * @property attribState
+	 */
+	var attribState:Dynamic;
+	
+	/**
+	 * @property tempAttribState
+	 */
+	var tempAttribState:Dynamic;
+	
+	/**
+	 * @property stack
+	 */
+	var stack:Dynamic;
 	
 }

@@ -4,7 +4,7 @@ package phaser.input;
 extern class GamepadButton {
 	
 	/**
-	 * @class Phaser.GamepadButton
+	 * If you need more fine-grained control over the handling of specific buttons you can create and use Phaser.GamepadButton objects.
 	 */
 	function new (pad:phaser.input.SinglePad, buttonCode:Float);
 	

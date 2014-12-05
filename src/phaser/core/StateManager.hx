@@ -42,7 +42,7 @@ extern class StateManager {
 	/**
 	 * Temporary container when you pass vars from one State to another.
 	 */
-	var _args:Array<Dynamic>;
+	var _args:Dynamic;
 	
 	/**
 	 * The current active State object (defaults to null).
@@ -80,7 +80,7 @@ extern class StateManager {
 	var onResizeCallback:Dynamic;
 	
 	/**
-	 * This is called before the state is rendered and before the stage is cleared.
+	 * This is called before the state is rendered and before the stage is cleared but after all game objects have had their final properties adjusted.
 	 */
 	var onPreRenderCallback:Dynamic;
 	
@@ -168,6 +168,11 @@ extern class StateManager {
 	 * Links game properties to the State given by the key.
 	 */
 	function link (key:String):Void;
+	
+	/**
+	 * Nulls all State level Phaser properties, including a reference to Game.
+	 */
+	function unlink (key:String):Void;
 	
 	/**
 	 * Sets the current State. Should not be called directly (use StateManager.start)

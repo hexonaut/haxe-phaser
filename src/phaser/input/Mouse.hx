@@ -4,7 +4,8 @@ package phaser.input;
 extern class Mouse {
 	
 	/**
-	 * Phaser.Mouse is responsible for handling all aspects of mouse interaction with the browser.
+	 * The Mouse class is responsible for handling all aspects of mouse interaction with the browser.
+	 * 
 	 * It captures and processes mouse events that happen on the game canvas object. It also adds a single mouseup listener to window which
 	 * is used to capture the mouse being released when not over the game.
 	 */
@@ -61,14 +62,14 @@ extern class Mouse {
 	var button:Float;
 	
 	/**
-	 * The direction of the mousewheel usage 1 for up -1 for down
+	 * The direction of the <em>last</em> mousewheel usage 1 for up -1 for down
 	 */
 	var wheelDelta:Float;
 	
 	/**
-	 * You can disable all Input by setting disabled = true. While set all new input related events will be ignored.
+	 * Mouse input will only be processed if enabled.
 	 */
-	var disabled:Bool;
+	var enabled:Bool;
 	
 	/**
 	 * If the mouse has been Pointer Locked successfully this will be set to true.
@@ -86,7 +87,8 @@ extern class Mouse {
 	var pointerLock:phaser.core.Signal;
 	
 	/**
-	 * The browser mouse DOM event. Will be set to null if no mouse event has ever been received.
+	 * The browser mouse DOM event. Will be null if no mouse event has ever been received.
+	 * Access this property only inside a Mouse event handler and do not keep references to it.
 	 */
 	var event:Dynamic;
 	
@@ -119,6 +121,11 @@ extern class Mouse {
 	 * Internal event handler reference.
 	 */
 	var _onMouseWheel:Dynamic;
+	
+	/**
+	 * Wheel proxy event object, if required. Shared for all wheel events for this mouse.
+	 */
+	var wheelEvent:Dynamic;
 	
 	/**
 	 * @constant
@@ -211,5 +218,33 @@ extern class Mouse {
 	 * Stop the event listeners.
 	 */
 	function stop ():Void;
+	
+	/**
+	 * If disabled all Mouse input will be ignored.
+	 */
+	var disabled:Bool;
+	
+	/**
+	 * A purely internal event support class to proxy 'wheelscroll' and 'DOMMouseWheel'
+	 * events to 'wheel'-like events.
+	 * 
+	 * See <a href='https://developer.mozilla.org/en-US/docs/Web/Events/mousewheel'>https://developer.mozilla.org/en-US/docs/Web/Events/mousewheel</a> for choosing a scale and delta mode.
+	 */
+	function WheelEventProxy (scaleFactor:Float, deltaMode:Int):Void;
+	
+	/**
+	 * Scale factor as applied to wheelDelta/wheelDeltaX or details.
+	 */
+	var _scaleFactor:Float;
+	
+	/**
+	 * The reported delta mode.
+	 */
+	var _deltaMode:Float;
+	
+	/**
+	 * The original event <em>currently</em> being proxied; the getters will follow suit.
+	 */
+	var originalEvent:Dynamic;
 	
 }

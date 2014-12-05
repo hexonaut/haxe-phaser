@@ -26,4 +26,9 @@ extern class BitmapFontLoader {
 	 */
 	var baseUrl:String;
 	
+	/**
+	 * [read-only] The texture of the bitmap font
+	 */
+	var texture:Dynamic;
+	
 }

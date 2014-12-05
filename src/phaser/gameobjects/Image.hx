@@ -1,19 +1,7 @@
 package phaser.gameobjects;
 
 @:native("Phaser.Image")
-extern class Image {
-	
-	/**
-	 * @class Phaser.Image
-	 */
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:String, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:String, frame:Float):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:Float):Void {})
-	function new (game:phaser.core.Game, x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:Float);
+extern class Image extends phaser.pixi.display.Sprite {
 	
 	/**
 	 * A reference to the currently running Game.
@@ -58,7 +46,7 @@ extern class Image {
 	/**
 	 * The world coordinates of this Image. This differs from the x/y coordinates which are relative to the Images container.
 	 */
-	var world:Dynamic;
+	var world:phaser.geom.Point;
 	
 	/**
 	 * A useful boolean to control if the Image is alive or dead (in terms of your gameplay, it doesn't effect rendering).
@@ -85,7 +73,7 @@ extern class Image {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:Dynamic;
+	var cameraOffset:phaser.geom.Point;
 	
 	/**
 	 * The Rectangle used to crop the texture. Set this via Sprite.crop. Any time you modify this property directly you must call Sprite.updateCrop.
@@ -206,6 +194,44 @@ extern class Image {
 	 * bought to the top of that Group, not the entire display list.
 	 */
 	function bringToTop ():phaser.gameobjects.Image;
+	
+	/**
+	 * Adjust scaling limits, if set, to this Image.
+	 */
+	function checkTransform (wt:phaser.pixi.geom.Matrix):Void;
+	
+	/**
+	 * Sets the scaleMin and scaleMax values in one call.
+	 * These values are used to limit how far this Image will scale (either up or down) based on its parent.
+	 * For example if this Image has a minScale value of 1 and its parent has a scale value of 0.5, the 0.5 will be ignored and the scale value of 1 will be used.
+	 * By using these values you can carefully control how Images deal with responsive scaling.
+	 * 
+	 * If only one parameter is given then that value will be used for both scaleMin and scaleMax:
+	 * setScaleMinMax(1) = scaleMin.x, scaleMin.y, scaleMax.x and scaleMax.y all = 1
+	 * 
+	 * If only two parameters are given the first is set as scaleMin.x and y and the second as scaleMax.x and y:
+	 * setScaleMinMax(0.5, 2) = scaleMin.x and y = 0.5 and scaleMax.x and y = 2
+	 * 
+	 * If you wish to set scaleMin with different values for x and y then either modify Image.scaleMin directly, or pass null for the maxX and maxY parameters.
+	 * 
+	 * Call setScaleMinMax(null) to clear both the scaleMin and scaleMax values.
+	 */
+	@:overload(function (minX:Float, minY:Float, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Dynamic, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Dynamic, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Dynamic, maxY:Dynamic):Void {})
+	function setScaleMinMax (minX:Dynamic, minY:Dynamic, maxX:Dynamic, maxY:Dynamic):Void;
 	
 	/**
 	 * Indicates the rotation of the Image, in degrees, from its original orientation. Values from 0 to 180 represent clockwise rotation; values from 0 to -180 represent counterclockwise rotation.

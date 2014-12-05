@@ -4,7 +4,7 @@ package phaser.tilemap;
 extern class Tile {
 	
 	/**
-	 * Create a new Tile object.
+	 * A Tile is a representation of a single tile within the Tilemap.
 	 */
 	function new (layer:Dynamic, index:Float, x:Float, y:Float, width:Float, height:Float);
 	
