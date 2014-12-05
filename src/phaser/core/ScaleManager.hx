@@ -4,6 +4,45 @@ package phaser.core;
 extern class ScaleManager {
 	
 	/**
+	 * @classdesc
+	 * The ScaleManager object handles the the scaling, resizing, and alignment of the
+	 * Game size and the game Display canvas.
+	 *
+	 * The Game size is the logical size of the game; the Display canvas has size as an HTML element.
+	 *
+	 * The calculations of these are heavily influenced by the bounding Parent size which is the computed
+	 * dimenstions of the Display canvas's Parent container/element - the _effective CSS rules of the
+	 * canvas's Parent element play an important role_ in the operation of the ScaleManager. 
+	 *
+	 * The Display canvas - or Game size, depending {@link Phaser.ScaleManager#scaleMode scaleMode} - is updated to best utilize the Parent size.
+	 * When in Fullscreen mode or with `parentIsWindow` the Parent size is that of the visual viewport (see {@link Phaser.ScaleManager#getParentBounds getParentBounds}).
+	 *
+	 * Parent and Display canvas containment guidelines:
+	 *
+	 * - Style the Parent element (of the game canvas) to control the Parent size and
+	 *   thus the Display canvas's size and layout.
+	 *
+	 * - The Parent element's CSS styles should _effectively_ apply maximum (and minimum) bounding behavior.
+	 *
+	 * - The Parent element should _not_ apply a padding as this is not accounted for.
+	 *   If a padding is required apply it to the Parent's parent or apply a margin to the Parent.
+	 *
+	 * - The Display canvas layout CSS styles (ie. margins, size) should not be altered/specified as
+	 *   they may be updated by the ScaleManager.
+	 *
+	 * @description
+	 * Create a new ScaleManager object - this is done automatically by {@link Phaser.Game}
+	 *
+	 * The `width` and `height` constructor parameters can either be a number which represents pixels or a string that represents a percentage: e.g. `800` (for 800 pixels) or `"80%"` for 80%.
+	 *
+	 * @class
+	 * @param {Phaser.Game} game - A reference to the currently running game.
+	 * @param {number|string} width - The width of the game. See above.
+	 * @param {number|string} height - The height of the game. See above.
+	 */
+	function new (game:phaser.core.Game, width:Dynamic, height:Dynamic);
+	
+	/**
 	 * A reference to the currently running game.
 	 */
 	var game(default, null):phaser.core.Game;
@@ -380,6 +419,31 @@ extern class ScaleManager {
 	 * The Game size at which the last onSizeChange signal was triggered.
 	 */
 	var lastReportedGameSize:phaser.geom.Rectangle;
+	
+	/**
+	 * A scale mode that stretches content to fill all available space - see {@link Phaser.ScaleManager#scaleMode scaleMode}.
+	 */
+	static var EXACT_FIT:Int;
+	
+	/**
+	 * A scale mode that prevents any scaling - see {@link Phaser.ScaleManager#scaleMode scaleMode}.
+	 */
+	static var NO_SCALE:Int;
+	
+	/**
+	 * A scale mode that shows the entire game while maintaining proportions - see {@link Phaser.ScaleManager#scaleMode scaleMode}.
+	 */
+	static var SHOW_ALL:Int;
+	
+	/**
+	 * A scale mode that causes the Game size to change - see {@link Phaser.ScaleManager#scaleMode scaleMode}.
+	 */
+	static var RESIZE:Int;
+	
+	/**
+	 * A scale mode that allows a custom scale factor - see {@link Phaser.ScaleManager#scaleMode scaleMode}.
+	 */
+	static var USER_SCALE:Int;
 	
 	/**
 	 * Start the ScaleManager.

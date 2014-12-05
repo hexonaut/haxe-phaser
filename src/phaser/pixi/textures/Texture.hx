@@ -12,7 +12,7 @@ extern class Texture {
 	 * A texture stores the information that represents an image or part of an image. It cannot be added
 	 * to the display list directly. Instead use it as the texture for a PIXI.Sprite. If no frame is provided then the whole image is used.
 	 */
-	function new (BaseTexture:Dynamic, Rectangle:Dynamic, Rectangle:Dynamic, Rectangle:Dynamic);
+	function new (baseTexture:phaser.pixi.textures.BaseTexture, frame:phaser.pixi.geom.Rectangle, ?crop:phaser.pixi.geom.Rectangle, ?trim:phaser.pixi.geom.Rectangle);
 	
 	/**
 	 * Does this Texture have any frame data assigned to it?
