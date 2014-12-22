@@ -3,6 +3,8 @@ package phaser.core;
 @:native("Phaser.Group")
 extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	
+	function new (game:phaser.core.Game, ?parent:DisplayObject=null, ?name:String, ?addToStage:Bool=false, ?enableBody:Bool=false,?physicsBodyType:Int=0);
+	
 	/**
 	 * A reference to the currently running Game.
 	 */
