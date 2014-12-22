@@ -22,12 +22,12 @@ extern class Circle {
 	/**
 	 * The position of this object.
 	 */
-	var pos:Dynamic;
+	var pos:phaser.geom.Point;
 	
 	/**
 	 * The position of this object in the previous update.
 	 */
-	var oldpos:Dynamic;
+	var oldpos:phaser.geom.Point;
 	
 	/**
 	 * The radius of this circle shape.
@@ -67,7 +67,7 @@ extern class Circle {
 	/**
 	 * The velocity of this object.
 	 */
-	var velocity:Dynamic;
+	var velocity:phaser.geom.Point;
 	
 	/**
 	 * All of the collision response handlers.
@@ -148,5 +148,10 @@ extern class Circle {
 	 * Destroys this Circle's reference to Body and System
 	 */
 	function destroy ():Void;
+	
+	/**
+	 * Render this circle for debugging purposes.
+	 */
+	function render (context:Dynamic, xOffset:Float, yOffset:Float, color:String, filled:Bool):Void;
 	
 }

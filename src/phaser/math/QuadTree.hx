@@ -4,7 +4,9 @@ package phaser.math;
 extern class QuadTree {
 	
 	/**
-	 * QuadTree Constructor
+	 * A QuadTree implementation. The original code was a conversion of the Java code posted to GameDevTuts.
+	 * However I've tweaked it massively to add node indexing, removed lots of temp. var creation and significantly increased performance as a result.
+	 * Original version at <a href='https://github.com/timohausmann/quadtree-js/'>https://github.com/timohausmann/quadtree-js/</a>
 	 */
 	function new (x:Float, y:Float, width:Float, height:Float, ?maxObjects:Float = 10, ?maxLevels:Float = 4, ?level:Float = 0);
 	
@@ -77,9 +79,10 @@ extern class QuadTree {
 	function getIndex (rect:Dynamic):Float;
 	
 	/**
-	 * Return all objects that could collide with the given Sprite.
+	 * Return all objects that could collide with the given Sprite or Rectangle.
 	 */
-	function retrieve (sprite:phaser.gameobjects.Sprite):Array<Dynamic>;
+	@:overload(function (source:phaser.gameobjects.Sprite):Array<Dynamic> {})
+	function retrieve (source:phaser.geom.Rectangle):Array<Dynamic>;
 	
 	/**
 	 * Clear the quadtree.

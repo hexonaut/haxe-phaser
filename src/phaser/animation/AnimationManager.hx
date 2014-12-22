@@ -58,7 +58,15 @@ extern class AnimationManager {
 	 * Loads FrameData into the internal temporary vars and resets the frame index to zero.
 	 * This is called automatically when a new Sprite is created.
 	 */
-	function loadFrameData (frameData:phaser.animation.FrameData):Void;
+	@:overload(function (frameData:phaser.animation.FrameData, frame:String):Bool {})
+	function loadFrameData (frameData:phaser.animation.FrameData, frame:Float):Bool;
+	
+	/**
+	 * Loads FrameData into the internal temporary vars and resets the frame index to zero.
+	 * This is called automatically when a new Sprite is created.
+	 */
+	@:overload(function (frameData:phaser.animation.FrameData, frame:String):Bool {})
+	function copyFrameData (frameData:phaser.animation.FrameData, frame:Float):Bool;
 	
 	/**
 	 * Adds a new animation under the given key. Optionally set the frames, frame rate and loop.
@@ -87,6 +95,16 @@ extern class AnimationManager {
 	 * The main update function is called by the Sprites update loop. It's responsible for updating animation frames and firing related events.
 	 */
 	function update ():Bool;
+	
+	/**
+	 * Advances by the given number of frames in the current animation, taking the loop value into consideration.
+	 */
+	function next (?quantity:Float = 1):Void;
+	
+	/**
+	 * Moves backwards the given number of frames in the current animation, taking the loop value into consideration.
+	 */
+	function previous (?quantity:Float = 1):Void;
 	
 	/**
 	 * Returns an animation that was previously added by name.
@@ -118,6 +136,11 @@ extern class AnimationManager {
 	 * @name Phaser.AnimationManager#paused
 	 */
 	var paused:Bool;
+	
+	/**
+	 * @name Phaser.AnimationManager#name
+	 */
+	var name:String;
 	
 	/**
 	 * @name Phaser.AnimationManager#frame

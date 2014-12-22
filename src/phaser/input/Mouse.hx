@@ -4,7 +4,10 @@ package phaser.input;
 extern class Mouse {
 	
 	/**
-	 * Phaser.Mouse is responsible for handling all aspects of mouse interaction with the browser. It captures and processes mouse events.
+	 * The Mouse class is responsible for handling all aspects of mouse interaction with the browser.
+	 * 
+	 * It captures and processes mouse events that happen on the game canvas object. It also adds a single mouseup listener to window which
+	 * is used to capture the mouse being released when not over the game.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -34,6 +37,21 @@ extern class Mouse {
 	var mouseUpCallback:Dynamic;
 	
 	/**
+	 * A callback that can be fired when the mouse is no longer over the game canvas.
+	 */
+	var mouseOutCallback:Dynamic;
+	
+	/**
+	 * A callback that can be fired when the mouse enters the game canvas (usually after a mouseout).
+	 */
+	var mouseOverCallback:Dynamic;
+	
+	/**
+	 * A callback that can be fired when the mousewheel is used.
+	 */
+	var mouseWheelCallback:Dynamic;
+	
+	/**
 	 * If true the DOM mouse events will have event.preventDefault applied to them, if false they will propogate fully.
 	 */
 	var capture:Bool;
@@ -44,9 +62,14 @@ extern class Mouse {
 	var button:Float;
 	
 	/**
-	 * You can disable all Input by setting disabled = true. While set all new input related events will be ignored.
+	 * The direction of the <em>last</em> mousewheel usage 1 for up -1 for down
 	 */
-	var disabled:Bool;
+	var wheelDelta:Float;
+	
+	/**
+	 * Mouse input will only be processed if enabled.
+	 */
+	var enabled:Bool;
 	
 	/**
 	 * If the mouse has been Pointer Locked successfully this will be set to true.
@@ -54,12 +77,18 @@ extern class Mouse {
 	var locked:Bool;
 	
 	/**
+	 * If true Pointer.stop will be called if the mouse leaves the game canvas.
+	 */
+	var stopOnGameOut:Bool;
+	
+	/**
 	 * This event is dispatched when the browser enters or leaves pointer lock state.
 	 */
 	var pointerLock:phaser.core.Signal;
 	
 	/**
-	 * The browser mouse DOM event. Will be set to null if no mouse event has ever been received.
+	 * The browser mouse DOM event. Will be null if no mouse event has ever been received.
+	 * Access this property only inside a Mouse event handler and do not keep references to it.
 	 */
 	var event:Dynamic;
 	
@@ -77,6 +106,26 @@ extern class Mouse {
 	 * Internal event handler reference.
 	 */
 	var _onMouseUp:Dynamic;
+	
+	/**
+	 * Internal event handler reference.
+	 */
+	var _onMouseOut:Dynamic;
+	
+	/**
+	 * Internal event handler reference.
+	 */
+	var _onMouseOver:Dynamic;
+	
+	/**
+	 * Internal event handler reference.
+	 */
+	var _onMouseWheel:Dynamic;
+	
+	/**
+	 * Wheel proxy event object, if required. Shared for all wheel events for this mouse.
+	 */
+	var wheelEvent:Dynamic;
 	
 	/**
 	 * @constant
@@ -99,6 +148,16 @@ extern class Mouse {
 	static var RIGHT_BUTTON:Float;
 	
 	/**
+	 * @constant
+	 */
+	static var WHEEL_UP:Float;
+	
+	/**
+	 * @constant
+	 */
+	static var WHEEL_DOWN:Float;
+	
+	/**
 	 * Starts the event listeners running.
 	 */
 	function start ():Void;
@@ -117,6 +176,26 @@ extern class Mouse {
 	 * The internal method that handles the mouse up event from the browser.
 	 */
 	function onMouseUp (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse up event from the window.
+	 */
+	function onMouseUpGlobal (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse out event from the browser.
+	 */
+	function onMouseOut (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse wheel event from the browser.
+	 */
+	function onMouseWheel (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse over event from the browser.
+	 */
+	function onMouseOver (event:Dynamic):Void;
 	
 	/**
 	 * If the browser supports it you can request that the pointer be locked to the browser window.
@@ -139,5 +218,33 @@ extern class Mouse {
 	 * Stop the event listeners.
 	 */
 	function stop ():Void;
+	
+	/**
+	 * If disabled all Mouse input will be ignored.
+	 */
+	var disabled:Bool;
+	
+	/**
+	 * A purely internal event support class to proxy 'wheelscroll' and 'DOMMouseWheel'
+	 * events to 'wheel'-like events.
+	 * 
+	 * See <a href='https://developer.mozilla.org/en-US/docs/Web/Events/mousewheel'>https://developer.mozilla.org/en-US/docs/Web/Events/mousewheel</a> for choosing a scale and delta mode.
+	 */
+	function WheelEventProxy (scaleFactor:Float, deltaMode:Int):Void;
+	
+	/**
+	 * Scale factor as applied to wheelDelta/wheelDeltaX or details.
+	 */
+	var _scaleFactor:Float;
+	
+	/**
+	 * The reported delta mode.
+	 */
+	var _deltaMode:Float;
+	
+	/**
+	 * The original event <em>currently</em> being proxied; the getters will follow suit.
+	 */
+	var originalEvent:Dynamic;
 	
 }

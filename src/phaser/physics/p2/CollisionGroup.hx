@@ -6,7 +6,7 @@ extern class CollisionGroup {
 	/**
 	 * Collision Group
 	 */
-	function new ();
+	function new (bitmask:Float);
 	
 	/**
 	 * The CollisionGroup bitmask.

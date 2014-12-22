@@ -11,19 +11,24 @@ extern class InteractionManager {
 	function new (Stage:Dynamic);
 	
 	/**
-	 * a reference to the stage
+	 * A reference to the stage
 	 */
 	var stage:Dynamic;
 	
 	/**
-	 * the mouse data
+	 * The mouse data
 	 */
 	var mouse:Dynamic;
 	
 	/**
-	 * an object that stores current touches (InteractionData) by id reference
+	 * An object that stores current touches (InteractionData) by id reference
 	 */
-	var touchs:Dynamic;
+	var touches:Dynamic;
+	
+	/**
+	 * @property tempPoint
+	 */
+	var tempPoint:Dynamic;
 	
 	/**
 	 * @property mouseoverEnabled
@@ -31,7 +36,7 @@ extern class InteractionManager {
 	var mouseoverEnabled:Dynamic;
 	
 	/**
-	 * tiny little interactiveData pool !
+	 * Tiny little interactiveData pool !
 	 */
 	var pool:Array<Dynamic>;
 	
@@ -46,6 +51,46 @@ extern class InteractionManager {
 	var interactionDOMElement:Dynamic;
 	
 	/**
+	 * @property onMouseMove
+	 */
+	var onMouseMove:Dynamic;
+	
+	/**
+	 * @property onMouseDown
+	 */
+	var onMouseDown:Dynamic;
+	
+	/**
+	 * @property onMouseOut
+	 */
+	var onMouseOut:Dynamic;
+	
+	/**
+	 * @property onMouseUp
+	 */
+	var onMouseUp:Dynamic;
+	
+	/**
+	 * @property onTouchStart
+	 */
+	var onTouchStart:Dynamic;
+	
+	/**
+	 * @property onTouchEnd
+	 */
+	var onTouchEnd:Dynamic;
+	
+	/**
+	 * @property onTouchMove
+	 */
+	var onTouchMove:Dynamic;
+	
+	/**
+	 * @property last
+	 */
+	var last:Dynamic;
+	
+	/**
 	 * The css style of the cursor that is being used
 	 */
 	var currentCursorStyle:String;
@@ -54,5 +99,10 @@ extern class InteractionManager {
 	 * Is set to true when the mouse is moved out of the canvas
 	 */
 	var mouseOut:Bool;
+	
+	/**
+	 * @property resolution
+	 */
+	var resolution:Dynamic;
 	
 }

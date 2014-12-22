@@ -4,7 +4,10 @@ package phaser.gameobjects;
 extern class GameObjectFactory {
 	
 	/**
-	 * The Game Object Factory is a quick way to create all of the different sorts of core objects that Phaser uses.
+	 * The GameObjectFactory is a quick way to create mamy common game objects
+	 * using {@linkcode Phaser.Game#add game.add}.
+	 * 
+	 * Created objects are <em>automtically added</em> to the appropriate Manager, World, or manually specified parent Group.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -49,7 +52,7 @@ extern class GameObjectFactory {
 	function sprite (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite;
 	
 	/**
-	 * Create a tween object for a specific object. The object can be any JavaScript object or Phaser object such as Sprite.
+	 * Create a tween on a specific object. The object can be any JavaScript object or Phaser object such as Sprite.
 	 */
 	function tween (obj:Dynamic):phaser.tween.Tween;
 	
@@ -60,7 +63,17 @@ extern class GameObjectFactory {
 	
 	/**
 	 * A Group is a container for display objects that allows for fast pooling, recycling and collision checks.
+	 * A Physics Group is the same as an ordinary Group except that is has enableBody turned on by default, so any Sprites it creates
+	 * are automatically given a physics body.
 	 */
+	function physicsGroup (?physicsBodyType:Float, ?parent:Dynamic, ?name:String = 'group', ?addToStage:Bool = false):phaser.core.Group;
+	
+	/**
+	 * A SpriteBatch is a really fast version of a Phaser Group built solely for speed.
+	 * Use when you need a lot of sprites or particles all sharing the same texture.
+	 * The speed gains are specifically for WebGL. In Canvas mode you won't see any real difference.
+	 */
+	@:overload(function (parent:phaser.core.Group, ?name:String = 'group', ?addToStage:Bool = false):phaser.core.Group {})
 	function spriteBatch (parent:Dynamic, ?name:String = 'group', ?addToStage:Bool = false):phaser.core.Group;
 	
 	/**
@@ -74,21 +87,38 @@ extern class GameObjectFactory {
 	function sound (key:String, ?volume:Float = 1, ?loop:Bool = false, ?connect:Bool = true):phaser.sound.Sound;
 	
 	/**
+	 * Creates a new AudioSprite object.
+	 */
+	function audioSprite (key:String):phaser.sound.AudioSprite;
+	
+	/**
 	 * Creates a new TileSprite object.
 	 */
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	function tileSprite (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	function tileSprite (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
+	
+	/**
+	 * Creates a new Rope object.
+	 */
+	@:overload(function (x:Float, y:Float, key:String, frame:String, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:String, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:String, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:String, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, key:String, frame:Float, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:Float, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:Float, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	function rope (x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:Float, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
 	
 	/**
 	 * Creates a new Text object.
 	 */
-	function text (x:Float, y:Float, text:String, style:Dynamic, ?group:phaser.core.Group):phaser.gameobjects.Text;
+	function text (x:Float, y:Float, ?text:String, ?style:Dynamic, ?group:phaser.core.Group):phaser.gameobjects.Text;
 	
 	/**
 	 * Creates a new Button object.
@@ -116,14 +146,18 @@ extern class GameObjectFactory {
 	function graphics (x:Float, y:Float, ?group:phaser.core.Group):phaser.gameobjects.Graphics;
 	
 	/**
-	 * Emitter is a lightweight particle emitter. It can be used for one-time explosions or for
+	 * Create a new Emitter.
+	 * 
+	 * A particle emitter can be used for one-time explosions or for
 	 * continuous effects like rain and fire. All it really does is launch Particle objects out
 	 * at set intervals, and fixes their positions and velocities accorindgly.
 	 */
 	function emitter (?x:Float = 0, ?y:Float = 0, ?maxParticles:Float = 50):Dynamic;
 	
 	/**
-	 * Create a new RetroFont object to be used as a texture for an Image or Sprite and optionally add it to the Cache.
+	 * Create a new RetroFont object.
+	 * 
+	 * A RetroFont can be used as a texture for an Image or Sprite and optionally add it to the Cache.
 	 * A RetroFont uses a bitmap which contains fixed with characters for the font set. You use character spacing to define the set.
 	 * If you need variable width character support then use a BitmapText object instead. The main difference between a RetroFont and a BitmapText
 	 * is that a RetroFont creates a single texture that you can apply to a game object, where-as a BitmapText creates one Sprite object per letter of text.
@@ -138,7 +172,9 @@ extern class GameObjectFactory {
 	function bitmapText (x:Float, y:Float, font:String, ?text:String, ?size:Float, ?group:phaser.core.Group):phaser.gameobjects.BitmapText;
 	
 	/**
-	 * Creates a new Phaser.Tilemap object. The map can either be populated with data from a Tiled JSON file or from a CSV file.
+	 * Creates a new Phaser.Tilemap object.
+	 * 
+	 * The map can either be populated with data from a Tiled JSON file or from a CSV file.
 	 * To do this pass the Cache key as the first parameter. When using Tiled data you need only provide the key.
 	 * When using CSV data you must provide the key and the tileWidth and tileHeight parameters.
 	 * If creating a blank tilemap to be populated later, you can either specify no parameters at all and then use Tilemap.create or pass the map and tile dimensions here.
@@ -152,13 +188,23 @@ extern class GameObjectFactory {
 	function renderTexture (?width:Float = 100, ?height:Float = 100, ?key:String = '', ?addToCache:Bool = false):phaser.gameobjects.RenderTexture;
 	
 	/**
-	 * A BitmapData object which can be manipulated and drawn to like a traditional Canvas object and used to texture Sprites.
+	 * Create a BitmapData object.
+	 * 
+	 * A BitmapData object can be manipulated and drawn to like a traditional Canvas object and used to texture Sprites.
 	 */
-	function bitmapData (?width:Float = 100, ?height:Float = 100, ?key:String = '', ?addToCache:Bool = false):phaser.gameobjects.BitmapData;
+	function bitmapData (?width:Float = 256, ?height:Float = 256, ?key:String = '', ?addToCache:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * A WebGL shader/filter that can be applied to Sprites.
 	 */
-	function filter (filter:String, a1:Dynamic):phaser.core.Filter;
+	function filter (filter:String):phaser.core.Filter;
+	
+	/**
+	 * Add a new Plugin into the PluginManager.
+	 * 
+	 * The Plugin must have 2 properties: game and parent. Plugin.game is set to the game reference the PluginManager uses, and parent is set to the PluginManager.
+	 */
+	@:overload(function (plugin:Dynamic):phaser.core.Plugin {})
+	function plugin (plugin:phaser.core.Plugin):phaser.core.Plugin;
 	
 }

@@ -4,7 +4,7 @@ package phaser.pixi.display;
 extern class DisplayObject {
 	
 	/**
-	 * The base class for all objects that are rendered on the screen. 
+	 * The base class for all objects that are rendered on the screen.
 	 * This is an abstract class and should not be used on its own rather it should be extended.
 	 */
 	function new ();
@@ -18,6 +18,19 @@ extern class DisplayObject {
 	 * The scale factor of the object.
 	 */
 	var scale:Dynamic;
+	
+	/**
+	 * The transform callback is an optional callback that if set will be called at the end of the updateTransform method and sent two parameters:
+	 * This Display Objects worldTransform matrix and its parents transform matrix. Both are PIXI.Matrix object types.
+	 * The matrix are passed by reference and can be modified directly without needing to return them.
+	 * This ability allows you to check any of the matrix values and perform actions such as clamping scale or limiting rotation, regardless of the parent transforms.
+	 */
+	var transformCallback:Dynamic;
+	
+	/**
+	 * The context under which the transformCallback is invoked.
+	 */
+	var transformCallbackContext:Dynamic;
 	
 	/**
 	 * The pivot point of the displayObject that it rotates around
@@ -86,14 +99,14 @@ extern class DisplayObject {
 	var worldTransform:Dynamic;
 	
 	/**
-	 * [NYI] Unknown
+	 * cached sin rotation and cos rotation
 	 */
-	var color:Dynamic;
+	var sr:Float;
 	
 	/**
-	 * [NYI] Holds whether or not this object is dynamic, for rendering optimization
+	 * cached sin rotation and cos rotation
 	 */
-	var a0:Bool;
+	var cr:Float;
 	
 	/**
 	 * The area the filter is applied to like the hitArea this is used as more of an optimisation
@@ -112,7 +125,17 @@ extern class DisplayObject {
 	var currentBounds:Dynamic;
 	
 	/**
-	 * [read-only] Indicates if the sprite is globaly visible.
+	 * Cached internal flag.
+	 */
+	var cacheAsBitmap:Bool;
+	
+	/**
+	 * Cached internal flag.
+	 */
+	var cacheIsDirty:Bool;
+	
+	/**
+	 * [read-only] Indicates if the sprite is globally visible.
 	 */
 	var worldVisible:Bool;
 	
@@ -128,14 +151,7 @@ extern class DisplayObject {
 	 * * IMPORTANT: This is a webGL only feature and will be ignored by the canvas renderer.
 	 * To remove filters simply set this property to 'null'
 	 */
-	var filters:Array<Dynamic>;
-	
-	/**
-	 * Set weather or not a the display objects is cached as a bitmap.
-	 * This basically takes a snap shot of the display object as it is at that moment. It can provide a performance benefit for complex static displayObjects
-	 * To remove filters simply set this property to 'null'
-	 */
-	var cacheAsBitmap:Bool;
+	var filters:Dynamic;
 	
 	/**
 	 * The position of the displayObject on the x axis relative to the local coordinates of the parent.

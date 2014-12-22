@@ -46,24 +46,24 @@ extern class Image extends phaser.pixi.display.Sprite {
 	var events:phaser.gameobjects.Events;
 	
 	/**
+	 * This manages animations of the sprite. You can modify animations through it (see Phaser.AnimationManager)
+	 */
+	var animations:phaser.animation.AnimationManager;
+	
+	/**
 	 * This is the image or texture used by the Image during rendering. It can be a string which is a reference to the Cache entry, or an instance of a RenderTexture, BitmapData or PIXI.Texture.
 	 */
 	var key:Dynamic;
 	
 	/**
-	 * Internal cache var.
-	 */
-	var _frame:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _frameName:String;
-	
-	/**
 	 * The world coordinates of this Image. This differs from the x/y coordinates which are relative to the Images container.
 	 */
-	var world:Dynamic;
+	var world:phaser.geom.Point;
+	
+	/**
+	 * A useful boolean to control if the Image is alive or dead (in terms of your gameplay, it doesn't effect rendering).
+	 */
+	var alive:Bool;
 	
 	/**
 	 * Should this Image be automatically culled if out of range of the camera?
@@ -78,12 +78,23 @@ extern class Image extends phaser.pixi.display.Sprite {
 	var input:Dynamic;
 	
 	/**
+	 * Handy flag to use with Game.enableStep
+	 */
+	var debug:Bool;
+	
+	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:Dynamic;
+	var cameraOffset:phaser.geom.Point;
+	
+	/**
+	 * The Rectangle used to crop the texture. Set this via Sprite.crop. Any time you modify this property directly you must call Sprite.updateCrop.
+	 */
+	var cropRect:phaser.geom.Rectangle;
 	
 	/**
 	 * A small internal cache:
+	 * 
 	 * 0 = previous position.x
 	 * 1 = previous position.y
 	 * 2 = previous rotation
@@ -95,6 +106,21 @@ extern class Image extends phaser.pixi.display.Sprite {
 	 * 8 = destroy phase? (0 = no, 1 = yes)
 	 */
 	var cache:Array<Dynamic>;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _crop:phaser.geom.Rectangle;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _frame:phaser.geom.Rectangle;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _bounds:phaser.geom.Rectangle;
 	
 	/**
 	 * Automatically called by World.preUpdate.
@@ -125,10 +151,30 @@ extern class Image extends phaser.pixi.display.Sprite {
 	function loadTexture (key:phaser.pixi.textures.Texture, frame:Float):Void;
 	
 	/**
+	 * Sets the Texture frame the Image uses for rendering.
+	 * This is primarily an internal method used by Image.loadTexture, although you may call it directly.
+	 */
+	function setFrame (frame:phaser.animation.Frame):Void;
+	
+	/**
+	 * Resets the Texture frame dimensions that the Image uses for rendering.
+	 */
+	function resetFrame ():Void;
+	
+	/**
 	 * Crop allows you to crop the texture used to display this Image.
 	 * Cropping takes place from the top-left of the Image and can be modified in real-time by providing an updated rectangle object.
+	 * The rectangle object given to this method can be either a Phaser.Rectangle or any object so long as it has public x, y, width and height properties.
+	 * Please note that the rectangle object given is not duplicated by this method, but rather the Image uses a reference to the rectangle.
+	 * Keep this in mind if assigning a rectangle in a for-loop, or when cleaning up for garbage collection.
 	 */
-	function crop (rect:phaser.geom.Rectangle):Void;
+	function crop (rect:phaser.geom.Rectangle, ?copy:Bool = false):Void;
+	
+	/**
+	 * If you have set a crop rectangle on this Image via Image.crop and since modified the Image.cropRect property (or the rectangle it references)
+	 * then you need to update the crop frame by calling this method.
+	 */
+	function updateCrop ():Void;
 	
 	/**
 	 * Brings a 'dead' Image back to life, optionally giving it the health value specified.
@@ -161,6 +207,44 @@ extern class Image extends phaser.pixi.display.Sprite {
 	 * bought to the top of that Group, not the entire display list.
 	 */
 	function bringToTop ():phaser.gameobjects.Image;
+	
+	/**
+	 * Adjust scaling limits, if set, to this Image.
+	 */
+	function checkTransform (wt:phaser.pixi.geom.Matrix):Void;
+	
+	/**
+	 * Sets the scaleMin and scaleMax values in one call.
+	 * These values are used to limit how far this Image will scale (either up or down) based on its parent.
+	 * For example if this Image has a minScale value of 1 and its parent has a scale value of 0.5, the 0.5 will be ignored and the scale value of 1 will be used.
+	 * By using these values you can carefully control how Images deal with responsive scaling.
+	 * 
+	 * If only one parameter is given then that value will be used for both scaleMin and scaleMax:
+	 * setScaleMinMax(1) = scaleMin.x, scaleMin.y, scaleMax.x and scaleMax.y all = 1
+	 * 
+	 * If only two parameters are given the first is set as scaleMin.x and y and the second as scaleMax.x and y:
+	 * setScaleMinMax(0.5, 2) = scaleMin.x and y = 0.5 and scaleMax.x and y = 2
+	 * 
+	 * If you wish to set scaleMin with different values for x and y then either modify Image.scaleMin directly, or pass null for the maxX and maxY parameters.
+	 * 
+	 * Call setScaleMinMax(null) to clear both the scaleMin and scaleMax values.
+	 */
+	@:overload(function (minX:Float, minY:Float, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Dynamic, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Dynamic, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Dynamic, maxY:Dynamic):Void {})
+	function setScaleMinMax (minX:Dynamic, minY:Dynamic, maxX:Dynamic, maxY:Dynamic):Void;
 	
 	/**
 	 * Indicates the rotation of the Image, in degrees, from its original orientation. Values from 0 to 180 represent clockwise rotation; values from 0 to -180 represent counterclockwise rotation.

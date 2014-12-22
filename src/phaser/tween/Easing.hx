@@ -14,6 +14,11 @@ extern class Linear {
 extern class Quadratic {
 	
 	/**
+	 * Linear Easing (no variation).
+	 */
+	function None (k:Float):Float;
+	
+	/**
 	 * Ease-in.
 	 */
 	static function In (k:Float):Float;

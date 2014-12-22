@@ -11,7 +11,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	* events (via Sprite.events), animation (via Sprite.animations), camera culling and more. Please see the Examples for use cases.
 	*
 	*/
-	function new (game:Game, ?x:Float=0, ?y:Float=0, ?key:Dynamic, ?frame:Float);
+	function new (game:phaser.core.Game, ?x:Float=0, ?y:Float=0, ?key:Dynamic, ?frame:Float);
 	
 	/**
 	 * A reference to the currently running Game.
@@ -51,7 +51,7 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
-	var world:Dynamic;
+	var world:phaser.geom.Point;
 	
 	/**
 	 * Should this Sprite be automatically culled if out of range of the camera?
@@ -86,8 +86,10 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	var health:Float;
 	
 	/**
-	 * If you would like the Sprite to have a lifespan once 'born' you can set this to a positive value. Handy for particles, bullets, etc.
-	 * The lifespan is decremented by game.time.elapsed each update, once it reaches zero the kill() function is called.
+	 * To given a Sprite a lifespan, in milliseconds, once 'born' you can set this to a positive value. Handy for particles, bullets, etc.
+	 * 
+	 * The lifespan is decremented by game.time.physicsElapsed (converted to milliseconds) each logic update,
+	 * and {@link Phaser.Sprite.kill kill} is called once the lifespan reaches 0.
 	 */
 	var lifespan:Float;
 	
@@ -111,12 +113,22 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:Dynamic;
+	var cameraOffset:phaser.geom.Point;
 	
 	/**
 	 * The Rectangle used to crop the texture. Set this via Sprite.crop. Any time you modify this property directly you must call Sprite.updateCrop.
 	 */
 	var cropRect:phaser.geom.Rectangle;
+	
+	/**
+	 * Set the minimum scale this Sprite will scale down to. Prevents a parent from scaling this Sprite lower than the given value. Set to null to remove.
+	 */
+	var scaleMin:phaser.geom.Point;
+	
+	/**
+	 * Set the maximum scale this Sprite will scale up to. Prevents a parent from scaling this Sprite higher than the given value. Set to null to remove.
+	 */
+	var scaleMax:phaser.geom.Point;
 	
 	/**
 	 * A small internal cache:
@@ -262,6 +274,43 @@ extern class Sprite extends phaser.pixi.display.Sprite {
 	@:overload(function (displayObject:phaser.gameobjects.TileSprite):Bool {})
 	@:overload(function (displayObject:phaser.gameobjects.Button):Bool {})
 	function overlap (displayObject:phaser.pixi.display.DisplayObject):Bool;
+	
+	/**
+	 * Adjust scaling limits, if set, to this Sprite.
+	 */
+	function checkTransform (wt:phaser.pixi.geom.Matrix):Void;
+	
+	/**
+	 * Sets the scaleMin and scaleMax values. These values are used to limit how far this Sprite will scale based on its parent.
+	 * For example if this Sprite has a minScale value of 1 and its parent has a scale value of 0.5, the 0.5 will be ignored and the scale value of 1 will be used.
+	 * By using these values you can carefully control how Sprites deal with responsive scaling.
+	 * 
+	 * If only one parameter is given then that value will be used for both scaleMin and scaleMax:
+	 * setScaleMinMax(1) = scaleMin.x, scaleMin.y, scaleMax.x and scaleMax.y all = 1
+	 * 
+	 * If only two parameters are given the first is set as scaleMin.x and y and the second as scaleMax.x and y:
+	 * setScaleMinMax(0.5, 2) = scaleMin.x and y = 0.5 and scaleMax.x and y = 2
+	 * 
+	 * If you wish to set scaleMin with different values for x and y then either modify Sprite.scaleMin directly, or pass null for the maxX and maxY parameters.
+	 * 
+	 * Call setScaleMinMax(null) to clear both the scaleMin and scaleMax values.
+	 */
+	@:overload(function (minX:Float, minY:Float, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Float, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Dynamic, maxY:Float):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Dynamic, maxX:Float, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Float, maxX:Dynamic, maxY:Dynamic):Void {})
+	@:overload(function (minX:Dynamic, minY:Float, maxX:Dynamic, maxY:Dynamic):Void {})
+	@:overload(function (minX:Float, minY:Dynamic, maxX:Dynamic, maxY:Dynamic):Void {})
+	function setScaleMinMax (minX:Dynamic, minY:Dynamic, maxX:Dynamic, maxY:Dynamic):Void;
 	
 	/**
 	 * Indicates the rotation of the Sprite, in degrees, from its original orientation. Values from 0 to 180 represent clockwise rotation; values from 0 to -180 represent counterclockwise rotation.

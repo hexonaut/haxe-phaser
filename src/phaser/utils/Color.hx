@@ -11,7 +11,7 @@ extern class Color {
 	
 	/**
 	 * Unpacks the r, g, b, a components into the specified color object, or a new
-	 * object, for use with Int32Array. If little endian, then ABGR order is used when 
+	 * object, for use with Int32Array. If little endian, then ABGR order is used when
 	 * unpacking, otherwise, RGBA order is used. The resulting color object has the
 	 * r, g, b, a properties which are unrelated to endianness.
 	 * 
@@ -106,8 +106,29 @@ extern class Color {
 	
 	/**
 	 * Converts a hex string into a Phaser Color object.
+	 * 
+	 * The hex string can supplied as '#0033ff' or the short-hand format of '#03f'; it can begin with an optional "#" or "0x", or be unprefixed.    
+	 * 
+	 * An alpha channel is <em>not</em> supported.
 	 */
 	static function hexToColor (hex:String, ?out:Dynamic):Dynamic;
+	
+	/**
+	 * Converts a CSS 'web' string into a Phaser Color object.
+	 * 
+	 * The web string can be in the format 'rgb(r,g,b)' or 'rgba(r,g,b,a)' where r/g/b are in the range [0..255] and a is in the range [0..1].
+	 */
+	static function webToColor (web:String, ?out:Dynamic):Dynamic;
+	
+	/**
+	 * Converts a value - a "hex" string, a "CSS 'web' string", or a number - into red, green, blue, and alpha components.
+	 * 
+	 * The value can be a string (see hexToColor and webToColor for the supported formats) or a packed integer (see getRGB).
+	 * 
+	 * An alpha channel is <em>not</em> supported when specifying a hex string.
+	 */
+	@:overload(function (value:String, ?out:Dynamic):Dynamic {})
+	static function valueToColor (value:Float, ?out:Dynamic):Dynamic;
 	
 	/**
 	 * Return a string containing a hex representation of the given color component.
@@ -147,7 +168,7 @@ extern class Color {
 	static function getRandomColor (min:Float, max:Float, alpha:Float):Float;
 	
 	/**
-	 * Return the component parts of a color as an Object with the properties alpha, red, green, blue
+	 * Return the component parts of a color as an Object with the properties alpha, red, green, blue.
 	 * 
 	 * Alpha will only be set if it exist in the given color (0xAARRGGBB)
 	 */
@@ -156,7 +177,8 @@ extern class Color {
 	/**
 	 * Returns a CSS friendly string value from the given color.
 	 */
-	static function getWebRGB (color:Float):String;
+	@:overload(function (color:Float):String {})
+	static function getWebRGB (color:Dynamic):String;
 	
 	/**
 	 * Given a native color value (in the format 0xAARRGGBB) this will return the Alpha component, as a value between 0 and 255.

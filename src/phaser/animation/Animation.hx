@@ -7,8 +7,8 @@ extern class Animation {
 	 * An Animation instance contains a single animation and the controls to play it.
 	 * It is created by the AnimationManager, consists of Animation.Frame objects and belongs to a single Game Object such as a Sprite.
 	 */
-	@:overload(function (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, delay:Float, loop:Bool):Void {})
-	function new (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, delay:Float, loop:Bool);
+	@:overload(function (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, ?frameRate:Float = 60, ?loop:Bool = false, ?loop:Bool):Void {})
+	function new (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, ?frameRate:Float = 60, ?loop:Bool = false, ?loop:Bool);
 	
 	/**
 	 * A reference to the currently running Game.
@@ -36,7 +36,7 @@ extern class Animation {
 	var _frames:Array<Dynamic>;
 	
 	/**
-	 * The delay in ms between each frame of the Animation.
+	 * The delay in ms between each frame of the Animation, based on the given frameRate.
 	 */
 	var delay:Float;
 	
@@ -101,6 +101,11 @@ extern class Animation {
 	var onStart:phaser.core.Signal;
 	
 	/**
+	 * This event is dispatched when the Animation changes frame. By default this event is disabled due to its intensive nature. Enable it with: Animation.enableUpdate = true.
+	 */
+	var onUpdate:Dynamic;
+	
+	/**
 	 * This event is dispatched when this Animation completes playback. If the animation is set to loop this is never fired, listen for onAnimationLoop instead.
 	 */
 	var onComplete:phaser.core.Signal;
@@ -148,6 +153,21 @@ extern class Animation {
 	function update ():Void;
 	
 	/**
+	 * Advances by the given number of frames in the Animation, taking the loop value into consideration.
+	 */
+	function next (?quantity:Float = 1):Void;
+	
+	/**
+	 * Moves backwards the given number of frames in the Animation, taking the loop value into consideration.
+	 */
+	function previous (?quantity:Float = 1):Void;
+	
+	/**
+	 * Changes the FrameData object this Animation is using.
+	 */
+	function updateFrameData (frameData:phaser.animation.FrameData):Void;
+	
+	/**
 	 * Cleans up this animation ready for deletion. Nulls all values and references.
 	 */
 	function destroy ():Void;
@@ -177,6 +197,11 @@ extern class Animation {
 	 * @name Phaser.Animation#speed
 	 */
 	var speed:Float;
+	
+	/**
+	 * @name Phaser.Animation#enableUpdate
+	 */
+	var enableUpdate:Bool;
 	
 	/**
 	 * Really handy function for when you are creating arrays of animation data but it's using frame names and not numbers.

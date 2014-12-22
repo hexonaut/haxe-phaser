@@ -39,7 +39,7 @@ extern class Frame {
 	var name:String;
 	
 	/**
-	 * A link to the PIXI.TextureCache entry.
+	 * DEPRECATED: A link to the PIXI.TextureCache entry.
 	 */
 	var uuid:String;
 	
@@ -104,9 +104,25 @@ extern class Frame {
 	var spriteSourceSizeH:Float;
 	
 	/**
+	 * The right of the Frame (x + width).
+	 */
+	var right:Float;
+	
+	/**
+	 * The bottom of the frame (y + height).
+	 */
+	var bottom:Float;
+	
+	/**
 	 * If the frame was trimmed when added to the Texture Atlas this records the trim and source data.
 	 */
 	function setTrim (trimmed:Bool, actualWidth:Float, actualHeight:Float, destX:Float, destY:Float, destWidth:Float, destHeight:Float):Void;
+	
+	/**
+	 * Clones this Frame into a new Phaser.Frame object and returns it.
+	 * Note that all properties are cloned, including the name, index and UUID.
+	 */
+	function clone ():phaser.animation.Frame;
 	
 	/**
 	 * Returns a Rectangle set to the dimensions of this Frame.

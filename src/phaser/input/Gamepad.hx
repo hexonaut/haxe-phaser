@@ -4,14 +4,14 @@ package phaser.input;
 extern class Gamepad {
 	
 	/**
-	 * The Gamepad class handles looking after gamepad input for your game.
-	 * Remember to call gamepad.start(); expecting input!
+	 * The Gamepad class handles gamepad input and dispatches gamepad events.
+	 * 
+	 * Remember to call gamepad.start().
 	 * 
 	 * HTML5 GAMEPAD API SUPPORT IS AT AN EXPERIMENTAL STAGE!
 	 * At moment of writing this (end of 2013) only Chrome supports parts of it out of the box. Firefox supports it
 	 * via prefs flags (about:config, search gamepad). The browsers map the same controllers differently.
-	 * This class has constans for Windows 7 Chrome mapping of
-	 * XBOX 360 controller.
+	 * This class has constants for Windows 7 Chrome mapping of XBOX 360 controller.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -19,11 +19,6 @@ extern class Gamepad {
 	 * Local reference to game.
 	 */
 	var game:phaser.core.Game;
-	
-	/**
-	 * The four Phaser Gamepads.
-	 */
-	var _gamepads:Dynamic;
 	
 	/**
 	 * Maps the browsers gamepad indices to our Phaser Gamepads
@@ -41,9 +36,9 @@ extern class Gamepad {
 	var _active:Bool;
 	
 	/**
-	 * You can disable all Gamepad Input by setting disabled to true. While true all new input related events will be ignored.
+	 * Gamepad input will only be processed if enabled.
 	 */
-	var disabled:Bool;
+	var enabled:Bool;
 	
 	/**
 	 * Whether or not gamepads are supported in the current browser. Note that as of Dec. 2013 this check is actually not accurate at all due to poor implementation.
@@ -106,7 +101,12 @@ extern class Gamepad {
 	var _gamepaddisconnected:Dynamic;
 	
 	/**
-	 * Add callbacks to the main Gamepad handler to handle connect/disconnect/button down/button up/axis change/float value buttons
+	 * The four Phaser Gamepads.
+	 */
+	var _gamepads:Dynamic;
+	
+	/**
+	 * Add callbacks to the main Gamepad handler to handle connect/disconnect/button down/button up/axis change/float value buttons.
 	 */
 	function addCallbacks (context:Dynamic, callbacks:Dynamic):Void;
 	
@@ -122,8 +122,7 @@ extern class Gamepad {
 	function update ():Void;
 	
 	/**
-	 * Updating connected gamepads (for Google Chrome).
-	 * Should not be called manually.
+	 * Updating connected gamepads (for Google Chrome). Should not be called manually.
 	 */
 	function _pollGamepads ():Void;
 	
@@ -153,6 +152,16 @@ extern class Gamepad {
 	function isDown (buttonCode:Float):Bool;
 	
 	/**
+	 * Destroys this object and the associated event listeners.
+	 */
+	function destroy ():Void;
+	
+	/**
+	 * If disabled all Gamepad input will be ignored.
+	 */
+	var disabled:Bool;
+	
+	/**
 	 * If the gamepad input is active or not - if not active it should not be updated from Input.js
 	 */
 	var active(default, null):Bool;
@@ -165,26 +174,26 @@ extern class Gamepad {
 	/**
 	 * How many live gamepads are currently connected.
 	 */
-	var padsConnected(default, null):Bool;
+	var padsConnected(default, null):Float;
 	
 	/**
 	 * Gamepad #1
 	 */
-	var pad1(default, null):Bool;
+	var pad1(default, null):phaser.input.SinglePad;
 	
 	/**
 	 * Gamepad #2
 	 */
-	var pad2(default, null):Bool;
+	var pad2(default, null):phaser.input.SinglePad;
 	
 	/**
 	 * Gamepad #3
 	 */
-	var pad3(default, null):Bool;
+	var pad3(default, null):phaser.input.SinglePad;
 	
 	/**
 	 * Gamepad #4
 	 */
-	var pad4(default, null):Bool;
+	var pad4(default, null):phaser.input.SinglePad;
 	
 }

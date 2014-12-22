@@ -6,7 +6,8 @@ extern class Debug {
 	/**
 	 * A collection of methods for displaying debug information about game objects.
 	 * If your game is running in WebGL then Debug will create a Sprite that is placed at the top of the Stage display list and bind a canvas texture
-	 * to it, which must be uploaded every frame. Be advised: this is expenive.
+	 * to it, which must be uploaded every frame. Be advised: this is very expensive, especially in browsers like Firefox. So please only enable Debug
+	 * in WebGL mode if you really need it (or your desktop can cope with it well) and disable it for production!
 	 * If your game is using a Canvas renderer then the debug information is literally drawn on the top of the active game canvas and no Sprite is used.
 	 */
 	function new (game:phaser.core.Game);
@@ -19,27 +20,17 @@ extern class Debug {
 	/**
 	 * If debugging in WebGL mode we need this.
 	 */
-	var sprite:phaser.pixi.display.Sprite;
+	var sprite:phaser.gameobjects.Image;
 	
 	/**
-	 * The canvas to which this BitmapData draws.
+	 * In WebGL mode this BitmapData contains a copy of the debug canvas.
+	 */
+	var bmd:phaser.gameobjects.BitmapData;
+	
+	/**
+	 * The canvas to which Debug calls draws.
 	 */
 	var canvas:Dynamic;
-	
-	/**
-	 * Required Pixi var.
-	 */
-	var baseTexture:phaser.pixi.textures.BaseTexture;
-	
-	/**
-	 * Required Pixi var.
-	 */
-	var texture:phaser.pixi.textures.Texture;
-	
-	/**
-	 * Dimensions of the renderable area.
-	 */
-	var textureFrame:phaser.animation.Frame;
 	
 	/**
 	 * The 2d context of the canvas.
@@ -69,7 +60,7 @@ extern class Debug {
 	/**
 	 * The current X position the debug information will be rendered at.
 	 */
-	var currentX:Dynamic;
+	var currentX:Float;
 	
 	/**
 	 * The current Y position the debug information will be rendered at.
@@ -95,6 +86,11 @@ extern class Debug {
 	 * Internal method that clears the canvas (if a Sprite) ready for a new debug session.
 	 */
 	function preUpdate ():Void;
+	
+	/**
+	 * Clears the Debug canvas.
+	 */
+	function reset ():Void;
 	
 	/**
 	 * Internal method that resets and starts the debug output values.
@@ -154,6 +150,11 @@ extern class Debug {
 	function spriteBounds (sprite:phaser.gameobjects.Image, ?color:String, ?filled:Bool = true):Void;
 	
 	/**
+	 * Renders the Rope's segments. Note: This is really expensive as it has to calculate new segments everytime you call it
+	 */
+	function ropeSegments (rope:phaser.gameobjects.Rope, ?color:String, ?filled:Bool = true):Void;
+	
+	/**
 	 * Render debug infos (including name, bounds info, position and some other properties) about the Sprite.
 	 */
 	function spriteInfo (sprite:phaser.gameobjects.Sprite, x:Float, y:Float, ?color:String = 'rgb(255,255,255)'):Void;
@@ -179,7 +180,7 @@ extern class Debug {
 	 */
 	@:overload(function (object:phaser.geom.Rectangle, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void {})
 	@:overload(function (object:phaser.geom.Circle, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void {})
-	@:overload(function (object:Dynamic, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void {})
+	@:overload(function (object:phaser.geom.Point, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void {})
 	function geom (object:phaser.geom.Line, ?color:String, ?filled:Bool = true, ?forceType:Float = 0):Void;
 	
 	/**
@@ -193,14 +194,28 @@ extern class Debug {
 	function quadTree (quadtree:phaser.math.QuadTree, color:String):Void;
 	
 	/**
-	 * Render a Sprites Physics body if it has one set. Note this only works for Arcade Physics.
+	 * Render a Sprites Physics body if it has one set. Note this only works for Arcade and
+	 * Ninja (AABB, circle only) Physics.
 	 * To display a P2 body you should enable debug mode on the body when creating it.
 	 */
-	function body (sprite:phaser.gameobjects.Sprite, ?color:String = 'rgb(255,255,255)', ?filled:Bool = true):Void;
+	function body (sprite:phaser.gameobjects.Sprite, ?color:String = 'rgba(0,255,0,0.4)', ?filled:Bool = true):Void;
 	
 	/**
 	 * Render a Sprites Physic Body information.
 	 */
 	function bodyInfo (sprite:phaser.gameobjects.Sprite, x:Float, y:Float, ?color:String = 'rgb(255,255,255)'):Void;
+	
+	/**
+	 * Renders 'debug draw' data for the Box2D world if it exists.
+	 * This uses the standard debug drawing feature of Box2D, so colors will be decided by
+	 * the Box2D engine.
+	 */
+	function box2dWorld ():Void;
+	
+	/**
+	 * Renders 'debug draw' data for the given Box2D body.
+	 * This uses the standard debug drawing feature of Box2D, so colors will be decided by the Box2D engine.
+	 */
+	function box2dBody (sprite:phaser.gameobjects.Sprite, ?color:String = 'rgb(0,255,0)'):Void;
 	
 }

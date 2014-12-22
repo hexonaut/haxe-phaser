@@ -6,7 +6,7 @@ extern class DistanceConstraint {
 	/**
 	 * A constraint that tries to keep the distance between two bodies constant.
 	 */
-	function new (world:phaser.physics.p2.World, bodyA:Dynamic, bodyB:Dynamic, distance:Float, ?maxForce:Float);
+	function new (world:phaser.physics.p2.World, bodyA:Dynamic, bodyB:Dynamic, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Dynamic);
 	
 	/**
 	 * Local reference to game.

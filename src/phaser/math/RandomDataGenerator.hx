@@ -4,9 +4,11 @@ package phaser.math;
 extern class RandomDataGenerator {
 	
 	/**
-	 * Phaser.RandomDataGenerator constructor.
+	 * An extremely useful repeatable random data generator.
+	 * Based on Nonsense by Josh Faul <a href='https://github.com/jocafa/Nonsense'>https://github.com/jocafa/Nonsense</a>.
+	 * Random number generator from <a href='http://baagoe.org/en/wiki/Better_random_numbers_for_javascript'>http://baagoe.org/en/wiki/Better_random_numbers_for_javascript</a>
 	 */
-	function new (seeds:Array<Dynamic>);
+	function new (?seeds:Dynamic);
 	
 	/**
 	 * Internal var.
@@ -36,7 +38,7 @@ extern class RandomDataGenerator {
 	/**
 	 * Reset the seed of the random data generator.
 	 */
-	function sow (seeds:Array<Dynamic>):Void;
+	function sow (seeds:Dynamic):Void;
 	
 	/**
 	 * Internal method that creates a seed hash.
@@ -62,6 +64,12 @@ extern class RandomDataGenerator {
 	 * Returns a random integer between and including min and max.
 	 */
 	function integerInRange (min:Float, max:Float):Float;
+	
+	/**
+	 * Returns a random integer between and including min and max.
+	 * This method is an alias for RandomDataGenerator.integerInRange.
+	 */
+	function between (min:Float, max:Float):Float;
 	
 	/**
 	 * Returns a random real number between min and max.

@@ -4,26 +4,27 @@ package phaser.gameobjects;
 extern class Events {
 	
 	/**
-	 * @class Phaser.Events
+	 * The Events component is a collection of events fired by the parent game object.
+	 * 
+	 * For example to tell when a Sprite has been added to a new group:
+	 * 
+	 * sprite.events.onAddedToGroup.add(yourFunction, this);
+	 * 
+	 * Where yourFunction is the function you want called when this event occurs.
+	 * 
+	 * The Input-related events will only be dispatched if the Sprite has had inputEnabled set to true
+	 * and the Animation-related events only apply to game objects with animations like {@link Phaser.Sprite}.
 	 */
 	function new (sprite:phaser.gameobjects.Sprite);
 	
-	var onAddedToGroup:phaser.core.Signal;
-	var onRemovedFromGroup:phaser.core.Signal;
-	var onKilled:phaser.core.Signal;
-	var onRevived:phaser.core.Signal;
-	var onOutOfBounds:phaser.core.Signal;
-	var onEnterBounds:phaser.core.Signal;
+	/**
+	 * The Sprite that owns these events.
+	 */
+	var parent:phaser.gameobjects.Sprite;
 	
-	var onInputOver:phaser.core.Signal;
-	var onInputOut:phaser.core.Signal;
-	var onInputDown:phaser.core.Signal;
-	var onInputUp:phaser.core.Signal;
-	var onDragStart:phaser.core.Signal;
-	var onDragStop:phaser.core.Signal;
-	
-	var onAnimationStart:phaser.core.Signal;
-	var onAnimationComplete:phaser.core.Signal;
-	var onAnimationLoop:phaser.core.Signal;
+	/**
+	 * Removes all events.
+	 */
+	function destroy ():Void;
 	
 }

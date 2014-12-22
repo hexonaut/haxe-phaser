@@ -4,7 +4,9 @@ package phaser.core;
 extern class SignalBinding {
 	
 	/**
-	 * @class Phaser.SignalBinding
+	 * Object that represents a binding between a Signal and a listener function.
+	 * This is an internal constructor and shouldn't be created directly.
+	 * Inspired by Joa Ebert AS3 SignalBinding and Robert Penner's Slot classes.
 	 */
 	function new (signal:phaser.core.Signal, listener:Dynamic, isOnce:Bool, ?listenerContext:Dynamic, ?priority:Float);
 	
@@ -14,24 +16,9 @@ extern class SignalBinding {
 	var _listener:phaser.core.Game;
 	
 	/**
-	 * If binding should be executed just once.
-	 */
-	var _isOnce:Bool;
-	
-	/**
-	 * Context on which listener will be executed (object that should represent the this variable inside listener function).
-	 */
-	var context:Dynamic;
-	
-	/**
 	 * Reference to Signal object that listener is currently bound to.
 	 */
 	var _signal:phaser.core.Signal;
-	
-	/**
-	 * Listener priority.
-	 */
-	var _priority:Float;
 	
 	/**
 	 * If binding is active and should be executed.
@@ -47,12 +34,17 @@ extern class SignalBinding {
 	 * Call listener passing arbitrary parameters.
 	 * If binding was added using Signal.addOnce() it will be automatically removed from signal dispatch queue, this method is used internally for the signal dispatch.
 	 */
-	function execute (?paramsArr:Array<Dynamic>):Dynamic;
+	function execute (?paramsArr:Dynamic):Dynamic;
 	
 	/**
 	 * Detach binding from signal.
 	 * alias to: @see mySignal.remove(myBinding.getListener());
 	 */
 	function detach ():Dynamic;
+	
+	/**
+	 * Delete instance properties
+	 */
+	function _destroy ():Void;
 	
 }

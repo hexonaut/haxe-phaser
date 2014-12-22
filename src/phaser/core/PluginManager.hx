@@ -16,7 +16,7 @@ extern class PluginManager {
 	/**
 	 * An array of all the plugins being managed by this PluginManager.
 	 */
-	var plugins:Array<Dynamic>;
+	var plugins:Dynamic;
 	
 	/**
 	 * Internal cache var.
@@ -30,10 +30,10 @@ extern class PluginManager {
 	
 	/**
 	 * Add a new Plugin into the PluginManager.
-	 * The Plugin must have 2 properties: game and parent. Plugin.game is set to ths game reference the PluginManager uses, and parent is set to the PluginManager.
+	 * The Plugin must have 2 properties: game and parent. Plugin.game is set to the game reference the PluginManager uses, and parent is set to the PluginManager.
 	 */
-	@:overload(function (plugin:Dynamic):phaser.core.Plugin {})
-	function add (plugin:phaser.core.Plugin):phaser.core.Plugin;
+	@:overload(function (plugin:Dynamic, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):phaser.core.Plugin {})
+	function add (plugin:phaser.core.Plugin, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):phaser.core.Plugin;
 	
 	/**
 	 * Remove a Plugin from the PluginManager. It calls Plugin.destroy on the plugin before removing it from the manager.

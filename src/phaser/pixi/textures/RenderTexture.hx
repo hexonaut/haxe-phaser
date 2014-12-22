@@ -4,13 +4,13 @@ package phaser.pixi.textures;
 extern class RenderTexture extends phaser.pixi.textures.Texture {
 	
 	/**
-	 * The with of the render texture
+	 * The Resolution of the texture.
 	 */
-	var width:Float;
+	var resolution:Float;
 	
 	/**
-	 * The height of the render texture
+	 * The renderer this RenderTexture uses. A RenderTexture can only belong to one renderer at the moment if its webGL.
 	 */
-	var height:Float;
+	var renderer:Dynamic;
 	
 }

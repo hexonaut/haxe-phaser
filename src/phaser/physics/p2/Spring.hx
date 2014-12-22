@@ -4,7 +4,7 @@ package phaser.physics.p2;
 extern class Spring {
 	
 	/**
-	 * Creates a spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
+	 * Creates a linear spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
 	 */
 	function new (world:phaser.physics.p2.World, bodyA:Dynamic, bodyB:Dynamic, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>);
 	
@@ -17,5 +17,10 @@ extern class Spring {
 	 * Local reference to P2 World.
 	 */
 	var world:phaser.physics.p2.World;
+	
+	/**
+	 * The actual p2 spring object.
+	 */
+	var data:Dynamic;
 	
 }

@@ -114,6 +114,11 @@ extern class Sound {
 	var pendingPlayback(default, null):Bool;
 	
 	/**
+	 * This will allow you to have multiple instances of this Sound playing at once. This is only useful when running under Web Audio, and we recommend you implement a local pooling system to not flood the sound channels.
+	 */
+	var allowMultiple:Bool;
+	
+	/**
 	 * true if this sound is being played with Web Audio.
 	 */
 	var usingWebAudio(default, null):Bool;
@@ -124,7 +129,7 @@ extern class Sound {
 	var usingAudioTag:Bool;
 	
 	/**
-	 * If defined this Sound won't connect to the SoundManager master gain node, but will instead connect to externalNode.input.
+	 * If defined this Sound won't connect to the SoundManager master gain node, but will instead connect to externalNode.
 	 */
 	var externalNode:Dynamic;
 	
@@ -179,6 +184,11 @@ extern class Sound {
 	var onMarkerComplete:phaser.core.Signal;
 	
 	/**
+	 * The onFadeComplete event is dispatched when this sound finishes fading either in or out.
+	 */
+	var onFadeComplete:phaser.core.Signal;
+	
+	/**
 	 * The global audio volume. A value between 0 (silence) and 1 (full volume).
 	 */
 	var _volume:Float;
@@ -209,7 +219,12 @@ extern class Sound {
 	var _tempVolume:Float;
 	
 	/**
-	 * Internal marker var.
+	 * Internal cache var.
+	 */
+	var _muteVolume:Float;
+	
+	/**
+	 * Internal cache var.
 	 */
 	var _tempLoop:Bool;
 	
@@ -217,6 +232,11 @@ extern class Sound {
 	 * Was this sound paused via code or a game event?
 	 */
 	var _paused:Bool;
+	
+	/**
+	 * Was the onDecoded event dispatched?
+	 */
+	var _onDecodedEventDispatched:Bool;
 	
 	/**
 	 * Called automatically when this sound is unlocked.
@@ -263,6 +283,33 @@ extern class Sound {
 	 * Stop playing this sound.
 	 */
 	function stop ():Void;
+	
+	/**
+	 * Starts this sound playing (or restarts it if already doing so) and sets the volume to zero.
+	 * Then increases the volume from 0 to 1 over the duration specified.
+	 * At the end of the fade Sound.onFadeComplete is dispatched with this Sound object as the first parameter,
+	 * and the final volume (1) as the second parameter.
+	 */
+	function fadeIn (?duration:Float = 1000, ?loop:Bool = false):Void;
+	
+	/**
+	 * Decreases the volume of this Sound from its current value to 0 over the duration specified.
+	 * At the end of the fade Sound.onFadeComplete is dispatched with this Sound object as the first parameter,
+	 * and the final volume (0) as the second parameter.
+	 */
+	function fadeOut (?duration:Float = 1000):Void;
+	
+	/**
+	 * Fades the volume of this Sound from its current value to the given volume over the duration specified.
+	 * At the end of the fade Sound.onFadeComplete is dispatched with this Sound object as the first parameter, 
+	 * and the final volume (volume) as the second parameter.
+	 */
+	function fadeTo (?duration:Float = 1000, ?volume:Float):Void;
+	
+	/**
+	 * Internal handler for Sound.fadeIn, Sound.fadeOut and Sound.fadeTo.
+	 */
+	function fadeComplete ():Void;
 	
 	/**
 	 * Destroys this sound and all associated events and removes it from the SoundManager.

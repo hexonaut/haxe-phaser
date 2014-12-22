@@ -4,7 +4,7 @@ package phaser.input;
 extern class SinglePad {
 	
 	/**
-	 * @class Phaser.SinglePad
+	 * A single Phaser Gamepad
 	 */
 	function new (game:phaser.core.Game, padParent:Dynamic);
 	
@@ -14,49 +14,14 @@ extern class SinglePad {
 	var game:phaser.core.Game;
 	
 	/**
-	 * Main Phaser Gamepad object
-	 */
-	var _padParent:phaser.input.Gamepad;
-	
-	/**
 	 * The gamepad index as per browsers data
 	 */
-	var _index:Float;
+	var index(default, null):Float;
 	
 	/**
-	 * The 'raw' gamepad data.
+	 * Whether or not this particular gamepad is connected or not.
 	 */
-	var _rawPad:Dynamic;
-	
-	/**
-	 * Is this pad connected or not.
-	 */
-	var _connected:Bool;
-	
-	/**
-	 * Used to check for differences between earlier polls and current state of gamepads.
-	 */
-	var _prevTimestamp:Float;
-	
-	/**
-	 * The 'raw' button state.
-	 */
-	var _rawButtons:Array<Dynamic>;
-	
-	/**
-	 * Current Phaser state of the buttons.
-	 */
-	var _buttons:Array<Dynamic>;
-	
-	/**
-	 * Current axes state.
-	 */
-	var _axes:Array<Dynamic>;
-	
-	/**
-	 * Hotkey buttons.
-	 */
-	var _hotkeys:Array<Dynamic>;
+	var connected(default, null):Bool;
 	
 	/**
 	 * The context under which the callbacks are run.
@@ -99,43 +64,83 @@ extern class SinglePad {
 	var deadZone:Float;
 	
 	/**
-	 * Add callbacks to the this Gamepad to handle connect/disconnect/button down/button up/axis change/float value buttons
+	 * Main Phaser Gamepad object
+	 */
+	var _padParent:phaser.input.Gamepad;
+	
+	/**
+	 * The 'raw' gamepad data.
+	 */
+	var _rawPad:Dynamic;
+	
+	/**
+	 * Used to check for differences between earlier polls and current state of gamepads.
+	 */
+	var _prevTimestamp:Float;
+	
+	/**
+	 * Array of Phaser.GamepadButton objects. This array is populated when the gamepad is connected.
+	 */
+	var _buttons:Array<Dynamic>;
+	
+	/**
+	 * Length of the _buttons array.
+	 */
+	var _buttonsLen:Float;
+	
+	/**
+	 * Current axes state.
+	 */
+	var _axes:Array<Dynamic>;
+	
+	/**
+	 * Length of the _axes array.
+	 */
+	var _axesLen:Float;
+	
+	/**
+	 * Add callbacks to this Gamepad to handle connect / disconnect / button down / button up / axis change / float value buttons.
 	 */
 	function addCallbacks (context:Dynamic, callbacks:Dynamic):Void;
 	
 	/**
-	 * If you need more fine-grained control over a Key you can create a new Phaser.Key object via this method.
-	 * The Key object can then be polled, have events attached to it, etc.
+	 * Gets a GamepadButton object from this controller to be stored and referenced locally.
+	 * The GamepadButton object can then be polled, have events attached to it, etc.
 	 */
-	function addButton (buttonCode:Float):phaser.input.GamepadButton;
+	function getButton (buttonCode:Float):phaser.input.GamepadButton;
 	
 	/**
-	 * Main update function, should be called by Phaser.Gamepad
+	 * Main update function called by Phaser.Gamepad.
 	 */
 	function pollStatus ():Void;
 	
 	/**
-	 * Gamepad connect function, should be called by Phaser.Gamepad
+	 * Gamepad connect function, should be called by Phaser.Gamepad.
 	 */
 	function connect (rawPad:Dynamic):Void;
 	
 	/**
-	 * Gamepad disconnect function, should be called by Phaser.Gamepad
+	 * Gamepad disconnect function, should be called by Phaser.Gamepad.
 	 */
 	function disconnect ():Void;
 	
 	/**
-	 * Handles changes in axis
+	 * Destroys this object and associated callback references.
+	 */
+	function destroy ():Void;
+	
+	/**
+	 * Handles changes in axis.
 	 */
 	function processAxisChange (axisState:Dynamic):Void;
 	
 	/**
-	 * Handles button down press
+	 * Handles button down press.
 	 */
 	function processButtonDown (buttonCode:Float, value:Dynamic):Void;
 	
 	/**
-	 * Handles button release
+	 * Handles button release.
 	 */
 	function processButtonUp (buttonCode:Float, value:Dynamic):Void;
 	
@@ -145,14 +150,19 @@ extern class SinglePad {
 	function processButtonFloat (buttonCode:Float, value:Dynamic):Void;
 	
 	/**
-	 * Returns value of requested axis
+	 * Returns value of requested axis.
 	 */
 	function axis (axisCode:Float):Float;
 	
 	/**
-	 * Returns true if the button is currently pressed down.
+	 * Returns true if the button is pressed down.
 	 */
 	function isDown (buttonCode:Float):Bool;
+	
+	/**
+	 * Returns true if the button is not currently pressed.
+	 */
+	function isUp (buttonCode:Float):Bool;
 	
 	/**
 	 * Returns the "just released" state of a button from this gamepad. Just released is considered as being true if the button was released within the duration given (default 250ms).
@@ -166,23 +176,13 @@ extern class SinglePad {
 	
 	/**
 	 * Returns the value of a gamepad button. Intended mainly for cases when you have floating button values, for example
-	 * analog trigger buttons on the XBOX 360 controller
+	 * analog trigger buttons on the XBOX 360 controller.
 	 */
-	function buttonValue (buttonCode:Float):Bool;
+	function buttonValue (buttonCode:Float):Float;
 	
 	/**
-	 * Reset all buttons/axes of this gamepad
+	 * Reset all buttons/axes of this gamepad.
 	 */
 	function reset ():Void;
-	
-	/**
-	 * Whether or not this particular gamepad is connected or not.
-	 */
-	var connected(default, null):Bool;
-	
-	/**
-	 * Gamepad index as per browser data
-	 */
-	var index(default, null):Float;
 	
 }

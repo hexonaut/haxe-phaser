@@ -1,20 +1,7 @@
 package phaser.gameobjects;
 
 @:native("Phaser.TileSprite")
-extern class TileSprite {
-	
-	/**
-	 * A TileSprite is a Sprite that has a repeating texture. The texture can be scrolled and scaled and will automatically wrap on the edges as it does so.
-	 * Please note that TileSprites, as with normal Sprites, have no input handler or physics bodies by default. Both need enabling.
-	 */
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:String, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:String, frame:Float):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float):Void {})
-	function new (game:phaser.core.Game, x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float);
+extern class TileSprite extends phaser.pixi.extras.TilingSprite {
 	
 	/**
 	 * A reference to the currently running Game.
@@ -64,7 +51,7 @@ extern class TileSprite {
 	/**
 	 * Internal cache var.
 	 */
-	var _scroll:Dynamic;
+	var _scroll:phaser.geom.Point;
 	
 	/**
 	 * The Input Handler for this object. Needs to be enabled with image.inputEnabled = true before you can use it.
@@ -74,7 +61,7 @@ extern class TileSprite {
 	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
-	var world:Dynamic;
+	var world:phaser.geom.Point;
 	
 	/**
 	 * Should this Sprite be automatically culled if out of range of the camera?
@@ -93,7 +80,7 @@ extern class TileSprite {
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:Dynamic;
+	var cameraOffset:phaser.geom.Point;
 	
 	/**
 	 * By default Sprites won't add themselves to any physics system and their physics body will be null.
@@ -104,6 +91,11 @@ extern class TileSprite {
 	 * If you need a different result then adjust or re-create the Body shape offsets manually, and/or reset the anchor after enabling physics.
 	 */
 	var body:Dynamic;
+	
+	/**
+	 * A useful boolean to control if the TileSprite is alive or dead (in terms of your gameplay, it doesn't effect rendering).
+	 */
+	var alive:Bool;
 	
 	/**
 	 * A small internal cache:
@@ -140,7 +132,7 @@ extern class TileSprite {
 	 * A negative x value will scroll to the left. A positive x value will scroll to the right.
 	 * A negative y value will scroll up. A positive y value will scroll down.
 	 */
-	function autoScroll ():Void;
+	function autoScroll (x:Float, y:Float):Void;
 	
 	/**
 	 * Stops an automatically scrolling TileSprite.
@@ -159,6 +151,12 @@ extern class TileSprite {
 	@:overload(function (key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
 	@:overload(function (key:phaser.gameobjects.BitmapData, frame:Float):Void {})
 	function loadTexture (key:phaser.pixi.textures.Texture, frame:Float):Void;
+	
+	/**
+	 * Sets the Texture frame the TileSprite uses for rendering.
+	 * This is primarily an internal method used by TileSprite.loadTexture, although you may call it directly.
+	 */
+	function setFrame (frame:phaser.animation.Frame):Void;
 	
 	/**
 	 * Destroys the TileSprite. This removes it from its parent group, destroys the event and animation handlers if present
@@ -215,16 +213,6 @@ extern class TileSprite {
 	 * activated for this object and it will then start to process click/touch events and more.
 	 */
 	var inputEnabled:Bool;
-	
-	/**
-	 * The position of the TileSprite on the x axis relative to the local coordinates of the parent.
-	 */
-	var x:Float;
-	
-	/**
-	 * The position of the TileSprite on the y axis relative to the local coordinates of the parent.
-	 */
-	var y:Float;
 	
 	/**
 	 * @name Phaser.TileSprite#destroyPhase

@@ -72,7 +72,7 @@ extern class Body {
 	/**
 	 * The velocity in pixels per second sq. of the Body.
 	 */
-	var velocity:Dynamic;
+	var velocity:phaser.geom.Point;
 	
 	/**
 	 * A const reference to the direction the Body is traveling or facing.
@@ -231,5 +231,10 @@ extern class Body {
 	 * @name Phaser.Physics.Ninja.Body#angle
 	 */
 	var angle(default, null):Float;
+	
+	/**
+	 * Render Sprite's Body.
+	 */
+	function render (context:Dynamic, body:phaser.physics.ninja.Body, ?color:String = 'rgba(0,255,0,0.4)', ?filled:Bool = true):Void;
 	
 }

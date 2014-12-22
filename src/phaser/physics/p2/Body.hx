@@ -9,6 +9,7 @@ extern class Body {
 	 * In most cases, the properties are used to simulate physical effects. Each body also has its own property values that determine exactly how it reacts to forces and collisions in the scene.
 	 * By default a single Rectangle shape is added to the Body that matches the dimensions of the parent Sprite. See addShape, removeShape, clearShapes to add extra shapes around the Body.
 	 * Note: When bound to a Sprite to avoid single-pixel jitters on mobile devices we strongly recommend using Sprite sizes that are even on both axis, i.e. 128x128 not 127x127.
+	 * Note: When a game object is given a P2 body it has its anchor x/y set to 0.5, so it becomes centered.
 	 */
 	function new (game:phaser.core.Game, ?sprite:phaser.gameobjects.Sprite, ?x:Float = 0, ?y:Float = 0, ?mass:Float = 1);
 	
@@ -35,7 +36,7 @@ extern class Body {
 	/**
 	 * The offset of the Physics Body from the Sprite x/y position.
 	 */
-	var offset:Dynamic;
+	var offset:phaser.geom.Point;
 	
 	/**
 	 * The p2 Body data.
@@ -45,17 +46,17 @@ extern class Body {
 	/**
 	 * The velocity of the body. Set velocity.x to a negative value to move to the left, position to the right. velocity.y negative values move up, positive move down.
 	 */
-	var velocity:Dynamic;
+	var velocity:phaser.physics.p2.InversePointProxy;
 	
 	/**
 	 * The force applied to the body.
 	 */
-	var force:Dynamic;
+	var force:phaser.physics.p2.InversePointProxy;
 	
 	/**
 	 * A locally applied gravity force to the Body. Applied directly before the world step. NOTE: Not currently implemented.
 	 */
-	var gravity:Dynamic;
+	var gravity:phaser.geom.Point;
 	
 	/**
 	 * Dispatched when a first contact is created between shapes in two bodies. This event is fired during the step, so collision has already taken place.
@@ -169,7 +170,8 @@ extern class Body {
 	/**
 	 * Apply force to a world point. This could for example be a point on the RigidBody surface. Applying force this way will add to Body.force and Body.angularForce.
 	 */
-	function applyForce (force:Float, worldX:Float, worldY:Float):Void;
+	@:overload(function (force:Dynamic, worldX:Float, worldY:Float):Void {})
+	function applyForce (force:Array<Dynamic>, worldX:Float, worldY:Float):Void;
 	
 	/**
 	 * Sets the force on the body to zero.
@@ -236,7 +238,7 @@ extern class Body {
 	 * Applies a force to the Body that causes it to 'thrust' backwards (in reverse), based on its current angle and the given speed.
 	 * The speed is represented in pixels per second. So a value of 100 would move 100 pixels in 1 second (1000ms).
 	 */
-	function rever (speed:Float):Void;
+	function reverse (speed:Float):Void;
 	
 	/**
 	 * If this Body is dynamic then this will move it to the left by setting its x velocity to the given speed.
@@ -401,24 +403,17 @@ extern class Body {
 	function loadPolygon (key:String, object:String):Bool;
 	
 	/**
-	 * DEPRECATED: This method will soon be removed from the API. Please avoid using.
-	 * Reads the physics data from a physics data file stored in the Game.Cache.
-	 * It will add the shape data to this Body, as well as set the density (mass).
-	 */
-	function loadData (key:String, object:String):Bool;
-	
-	/**
-	 * Dynamic body.
+	 * Dynamic body. Dynamic bodies body can move and respond to collisions and forces.
 	 */
 	static var DYNAMIC:Float;
 	
 	/**
-	 * Static body.
+	 * Static body. Static bodies do not move, and they do not respond to forces or collision.
 	 */
 	static var STATIC:Float;
 	
 	/**
-	 * Kinematic body.
+	 * Kinematic body. Kinematic bodies only moves according to its .velocity, and does not respond to collisions or force.
 	 */
 	static var KINEMATIC:Float;
 	
@@ -518,6 +513,8 @@ extern class Body {
 	/**
 	 * A Body can be set to collide against the World bounds automatically if this is set to true. Otherwise it will leave the World.
 	 * Note that this only applies if your World has bounds! The response to the collision should be managed via CollisionMaterials.
+	 * Also note that when you set this it will only effect Body shapes that already exist. If you then add further shapes to your Body
+	 * after setting this it will <em>not</em> proactively set them to collide with the bounds.
 	 */
 	var collideWorldBounds:Bool;
 	

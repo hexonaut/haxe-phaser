@@ -145,6 +145,26 @@ extern class Tilemap {
 	static var TILED_JSON:Float;
 	
 	/**
+	 * @constant
+	 */
+	static var NORTH:Float;
+	
+	/**
+	 * @constant
+	 */
+	static var EAST:Float;
+	
+	/**
+	 * @constant
+	 */
+	static var SOUTH:Float;
+	
+	/**
+	 * @constant
+	 */
+	static var WEST:Float;
+	
+	/**
 	 * Creates an empty map of the given dimensions and one blank layer. If layers already exist they are erased.
 	 */
 	function create (name:String, width:Float, height:Float, tileWidth:Float, tileHeight:Float, ?group:phaser.core.Group):phaser.tilemap.TilemapLayer;
@@ -170,6 +190,25 @@ extern class Tilemap {
 	function createFromObjects (name:String, gid:Float, key:String, ?frame:String, ?exists:Bool = true, ?autoCull:Bool = false, ?group:phaser.core.Group, ?CustomClass:Dynamic, ?adjustY:Bool = true):Void;
 	
 	/**
+	 * Creates a Sprite for every object matching the given tile indexes in the map data.
+	 * You can specify the group that the Sprite will be created in. If none is given it will be created in the World.
+	 * You can optional specify if the tile will be replaced with another after the Sprite is created. This is useful if you want to lay down special 
+	 * tiles in a level that are converted to Sprites, but want to replace the tile itself with a floor tile or similar once converted.
+	 */
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
+	function createFromTiles (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int;
+	
+	/**
 	 * Creates a new TilemapLayer object. By default TilemapLayers are fixed to the camera.
 	 * The layer parameter is important. If you've created your map in Tiled then you can get this by looking in Tiled and looking at the Layer name.
 	 * Or you can open the JSON file it exports and look at the layers[].name value. Either way it must match.
@@ -177,6 +216,11 @@ extern class Tilemap {
 	 */
 	@:overload(function (layer:Float, ?width:Float, ?height:Float, ?group:phaser.core.Group):phaser.tilemap.TilemapLayer {})
 	function createLayer (layer:String, ?width:Float, ?height:Float, ?group:phaser.core.Group):phaser.tilemap.TilemapLayer;
+	
+	/**
+	 * Creates a new and empty layer on this Tilemap. By default TilemapLayers are fixed to the camera.
+	 */
+	function createBlankLayer (name:String, width:Float, height:Float, tileWidth:Float, tileHeight:Float, ?group:phaser.core.Group):phaser.tilemap.TilemapLayer;
 	
 	/**
 	 * Gets the layer index based on the layers name.
@@ -228,29 +272,29 @@ extern class Tilemap {
 	 * Sets collision the given tile or tiles. You can pass in either a single numeric index or an array of indexes: [ 2, 3, 15, 20].
 	 * The collides parameter controls if collision will be enabled (true) or disabled (false).
 	 */
-	@:overload(function (indexes:Float, ?collides:Bool = true, ?layer:Float):Void {})
-	@:overload(function (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:Float):Void {})
-	@:overload(function (indexes:Float, ?collides:Bool = true, ?layer:String):Void {})
-	@:overload(function (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:String):Void {})
-	@:overload(function (indexes:Float, ?collides:Bool = true, ?layer:phaser.tilemap.TilemapLayer):Void {})
-	function setCollision (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:phaser.tilemap.TilemapLayer):Void;
+	@:overload(function (indexes:Float, ?collides:Bool = true, ?layer:Float, ?recalculate:Bool = true):Void {})
+	@:overload(function (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:Float, ?recalculate:Bool = true):Void {})
+	@:overload(function (indexes:Float, ?collides:Bool = true, ?layer:String, ?recalculate:Bool = true):Void {})
+	@:overload(function (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:String, ?recalculate:Bool = true):Void {})
+	@:overload(function (indexes:Float, ?collides:Bool = true, ?layer:phaser.tilemap.TilemapLayer, ?recalculate:Bool = true):Void {})
+	function setCollision (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:phaser.tilemap.TilemapLayer, ?recalculate:Bool = true):Void;
 	
 	/**
 	 * Sets collision on a range of tiles where the tile IDs increment sequentially.
 	 * Calling this with a start value of 10 and a stop value of 14 would set collision for tiles 10, 11, 12, 13 and 14.
 	 * The collides parameter controls if collision will be enabled (true) or disabled (false).
 	 */
-	@:overload(function (start:Float, stop:Float, ?collides:Bool = true, ?layer:Float):Void {})
-	@:overload(function (start:Float, stop:Float, ?collides:Bool = true, ?layer:String):Void {})
-	function setCollisionBetween (start:Float, stop:Float, ?collides:Bool = true, ?layer:phaser.tilemap.TilemapLayer):Void;
+	@:overload(function (start:Float, stop:Float, ?collides:Bool = true, ?layer:Float, ?recalculate:Bool = true):Void {})
+	@:overload(function (start:Float, stop:Float, ?collides:Bool = true, ?layer:String, ?recalculate:Bool = true):Void {})
+	function setCollisionBetween (start:Float, stop:Float, ?collides:Bool = true, ?layer:phaser.tilemap.TilemapLayer, ?recalculate:Bool = true):Void;
 	
 	/**
 	 * Sets collision on all tiles in the given layer, except for the IDs of those in the given array.
 	 * The collides parameter controls if collision will be enabled (true) or disabled (false).
 	 */
-	@:overload(function (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:Float):Void {})
-	@:overload(function (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:String):Void {})
-	function setCollisionByExclusion (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:phaser.tilemap.TilemapLayer):Void;
+	@:overload(function (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:Float, ?recalculate:Bool = true):Void {})
+	@:overload(function (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:String, ?recalculate:Bool = true):Void {})
+	function setCollisionByExclusion (indexes:Array<Dynamic>, ?collides:Bool = true, ?layer:phaser.tilemap.TilemapLayer, ?recalculate:Bool = true):Void;
 	
 	/**
 	 * Sets collision values on a tile in the set.
@@ -264,6 +308,12 @@ extern class Tilemap {
 	@:overload(function (layer:Float):Float {})
 	@:overload(function (layer:String):Float {})
 	function getLayer (layer:phaser.tilemap.TilemapLayer):Float;
+	
+	/**
+	 * Turn off/on the recalculation of faces for tile or collision updates. 
+	 * setPreventRecalculate(true) puts recalculation on hold while setPreventRecalculate(false) recalculates all the changed layers.
+	 */
+	function setPreventRecalculate (value:Bool):Void;
 	
 	/**
 	 * Internal function.
@@ -347,11 +397,21 @@ extern class Tilemap {
 	function putTileWorldXY (tile:Float, x:Float, y:Float, tileWidth:Float, tileHeight:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
 	
 	/**
+	 * Searches the entire map layer for the first tile matching the given index, then returns that Phaser.Tile object.
+	 * If no match is found it returns null.
+	 * The search starts from the top-left tile and continues horizontally until it hits the end of the row, then it drops down to the next column.
+	 * If the reverse boolean is true, it scans starting from the bottom-right corner travelling up to the top-left.
+	 */
+	@:overload(function (index:Float, ?skip:Float = 0, ?reverse:Float = false, ?layer:Float):phaser.tilemap.Tile {})
+	@:overload(function (index:Float, ?skip:Float = 0, ?reverse:Float = false, ?layer:String):phaser.tilemap.Tile {})
+	function searchTileIndex (index:Float, ?skip:Float = 0, ?reverse:Float = false, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
+	
+	/**
 	 * Gets a tile from the Tilemap Layer. The coordinates are given in tile values.
 	 */
-	@:overload(function (x:Float, y:Float, ?layer:Float):phaser.tilemap.Tile {})
-	@:overload(function (x:Float, y:Float, ?layer:String):phaser.tilemap.Tile {})
-	function getTile (x:Float, y:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
+	@:overload(function (x:Float, y:Float, ?layer:Float, ?nonNull:Bool = false):phaser.tilemap.Tile {})
+	@:overload(function (x:Float, y:Float, ?layer:String, ?nonNull:Bool = false):phaser.tilemap.Tile {})
+	function getTile (x:Float, y:Float, ?layer:phaser.tilemap.TilemapLayer, ?nonNull:Bool = false):phaser.tilemap.Tile;
 	
 	/**
 	 * Gets a tile from the Tilemap layer. The coordinates are given in pixel values.
@@ -363,9 +423,9 @@ extern class Tilemap {
 	/**
 	 * Copies all of the tiles in the given rectangular block into the tilemap data buffer.
 	 */
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, ?layer:Float):Array<Dynamic> {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, ?layer:String):Array<Dynamic> {})
-	function copy (x:Float, y:Float, width:Float, height:Float, ?layer:phaser.tilemap.TilemapLayer):Array<Dynamic>;
+	@:overload(function (x:Int, y:Int, width:Int, height:Int, ?layer:Int):Array<Dynamic> {})
+	@:overload(function (x:Int, y:Int, width:Int, height:Int, ?layer:String):Array<Dynamic> {})
+	function copy (x:Int, y:Int, width:Int, height:Int, ?layer:phaser.tilemap.TilemapLayer):Array<Dynamic>;
 	
 	/**
 	 * Pastes a previously copied block of tile data into the given x/y coordinates. Data should have been prepared with Tilemap.copy.
@@ -384,7 +444,7 @@ extern class Tilemap {
 	/**
 	 * Internal function that handles the swapping of tiles.
 	 */
-	function swapHandler (value:Float, index:Float):Void;
+	function swapHandler (value:Float):Void;
 	
 	/**
 	 * For each tile in the given area defined by x/y and width/height run the given callback.
@@ -436,5 +496,10 @@ extern class Tilemap {
 	 * Note: You are responsible for destroying any TilemapLayer objects you generated yourself, as Tilemap doesn't keep a reference to them.
 	 */
 	function destroy ():Void;
+	
+	/**
+	 * @name Phaser.Tilemap#layer
+	 */
+	var layer:Dynamic;
 	
 }

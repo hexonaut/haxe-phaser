@@ -15,4 +15,14 @@ extern class BitmapText extends phaser.pixi.display.DisplayObjectContainer {
 	 */
 	var textHeight:Float;
 	
+	/**
+	 * @property _pool
+	 */
+	var _pool:Dynamic;
+	
+	/**
+	 * The dirty state of this object.
+	 */
+	var dirty:Bool;
+	
 }

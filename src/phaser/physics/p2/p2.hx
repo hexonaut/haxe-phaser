@@ -4,44 +4,19 @@ package phaser.physics.p2;
 extern class p2 {
 	
 	/**
-	 * Alias for {@link vec2.subtract}
+	 * @constructor
 	 */
-	var sub:Dynamic;
+	static var var ArrayBuffer:Dynamic;
 	
 	/**
-	 * Alias for {@link vec2.multiply}
+	 * @constructor
 	 */
-	var mul:Dynamic;
+	static var var ArrayBufferView:Dynamic;
 	
 	/**
-	 * Alias for {@link vec2.divide}
+	 * @constructor
 	 */
-	var div:Dynamic;
-	
-	/**
-	 * Alias for {@link vec2.distance}
-	 */
-	var dist:Dynamic;
-	
-	/**
-	 * Alias for {@link vec2.squaredDistance}
-	 */
-	var sqrDist:Dynamic;
-	
-	/**
-	 * Alias for {@link vec2.length}
-	 */
-	var len:Dynamic;
-	
-	/**
-	 * Alias for {@link vec2.squaredLength}
-	 */
-	var sqrLen:Dynamic;
-	
-	/**
-	 * Perform some operation over an array of vec2s.
-	 */
-	var forEach:Dynamic;
+	static var var DataView:Dynamic;
 	
 	/**
 	 * Polygon class.
@@ -139,14 +114,34 @@ extern class p2 {
 	var frictionRelaxation:Float;
 	
 	/**
-	 * List of bodies currently in the broadphase.
+	 * Enable reduction of friction equations. If disabled, a box on a plane will generate 2 contact equations and 2 friction equations. If enabled, there will be only one friction equation. Same kind of simplifications are made  for all collision types.
 	 */
-	var axisList:Array<Dynamic>;
+	var enableFrictionReduction:Bool;
+	
+	/**
+	 * Keeps track of the colliding bodies last step.
+	 */
+	var collidingBodiesLastStep:Dynamic;
+	
+	/**
+	 * Contact skin size value to use in the next contact equations.
+	 */
+	var contactSkinSize:Float;
 	
 	/**
 	 * The axis to sort along.
 	 */
+	var axisList:Array<Dynamic>;
+	
+	/**
+	 * The axis to sort along. 0 means x-axis and 1 y-axis. If your bodies are more spread out over the X axis, set axisIndex to 0, and you will gain some performance.
+	 */
 	var axisIndex:Float;
+	
+	/**
+	 * The type of constraint. May be one of Constraint.DISTANCE, Constraint.GEAR, Constraint.LOCK, Constraint.PRISMATIC or Constraint.REVOLUTE.
+	 */
+	var type:Float;
 	
 	/**
 	 * Equations to be solved in this constraint
@@ -169,9 +164,29 @@ extern class p2 {
 	var collideConnected:Bool;
 	
 	/**
-	 * The distance to keep.
+	 * @static
 	 */
-	var distance:Float;
+	var DISTANCE:Float;
+	
+	/**
+	 * @static
+	 */
+	var GEAR:Float;
+	
+	/**
+	 * @static
+	 */
+	var LOCK:Float;
+	
+	/**
+	 * @static
+	 */
+	var PRISMATIC:Float;
+	
+	/**
+	 * @static
+	 */
+	var REVOLUTE:Float;
 	
 	/**
 	 * Local anchor in body A.
@@ -184,14 +199,49 @@ extern class p2 {
 	var localAnchorB:Array<Dynamic>;
 	
 	/**
-	 * The relative angle
+	 * The distance to keep.
 	 */
-	var angle:Float;
+	var distance:Float;
+	
+	/**
+	 * Max force to apply.
+	 */
+	var maxForce:Float;
+	
+	/**
+	 * If the upper limit is enabled or not.
+	 */
+	var upperLimitEnabled:Bool;
+	
+	/**
+	 * The upper constraint limit.
+	 */
+	var upperLimit:Float;
+	
+	/**
+	 * If the lower limit is enabled or not.
+	 */
+	var lowerLimitEnabled:Bool;
+	
+	/**
+	 * The lower constraint limit.
+	 */
+	var lowerLimit:Float;
+	
+	/**
+	 * Current constraint position. This is equal to the current distance between the world anchor points.
+	 */
+	var position:Float;
 	
 	/**
 	 * The gear ratio.
 	 */
 	var ratio:Float;
+	
+	/**
+	 * The relative angle
+	 */
+	var angle:Float;
 	
 	/**
 	 * The offset of bodyB in bodyA's frame.
@@ -207,31 +257,6 @@ extern class p2 {
 	 * @property localAxisA
 	 */
 	var localAxisA:Dynamic;
-	
-	/**
-	 * The position of anchor A relative to anchor B, along the constraint axis.
-	 */
-	var position:Float;
-	
-	/**
-	 * Set to true to enable lower limit.
-	 */
-	var lowerLimitEnabled:Bool;
-	
-	/**
-	 * Set to true to enable upper limit.
-	 */
-	var upperLimitEnabled:Bool;
-	
-	/**
-	 * Lower constraint limit. The constraint position is forced to be larger than this value.
-	 */
-	var lowerLimit:Float;
-	
-	/**
-	 * Upper constraint limit. The constraint position is forced to be smaller than this value.
-	 */
-	var upperLimit:Float;
 	
 	/**
 	 * Equation used for the motor.
@@ -294,11 +319,6 @@ extern class p2 {
 	var minForce:Float;
 	
 	/**
-	 * Max force to apply when solving.
-	 */
-	var maxForce:Float;
-	
-	/**
 	 * The number of time steps needed to stabilize the constraint equation. Typically between 3 and 5 time steps.
 	 */
 	var relaxation:Float;
@@ -307,14 +327,6 @@ extern class p2 {
 	 * The Jacobian entry of this equation. 6 numbers, 3 per body (x,y,angle).
 	 */
 	var G:Array<Dynamic>;
-	
-	/**
-	 * this.xi = vec2.create();
-	 *     this.xj = vec2.create();
-	 *     this.ai = 0;
-	 *     this.aj = 0;
-	 */
-	var offset:Dynamic;
 	
 	/**
 	 * Indicates if stiffness or relaxation was changed.
@@ -345,11 +357,6 @@ extern class p2 {
 	 * Tangent vector that the friction force will act along. World oriented.
 	 */
 	var t:Array<Dynamic>;
-	
-	/**
-	 * A ContactEquation connected to this friction. The contact equation can be used to rescale the max force for the friction.
-	 */
-	var contactEquation:Dynamic;
 	
 	/**
 	 * The contact material identifier
@@ -394,6 +401,41 @@ extern class p2 {
 	 * </pre>
 	 */
 	var exports:Dynamic;
+	
+	/**
+	 * Alias for vec2.subtract
+	 */
+	static var sub:Dynamic;
+	
+	/**
+	 * Alias for vec2.multiply
+	 */
+	static var mul:Dynamic;
+	
+	/**
+	 * Alias for vec2.divide
+	 */
+	static var div:Dynamic;
+	
+	/**
+	 * Alias for vec2.distance
+	 */
+	static var dist:Dynamic;
+	
+	/**
+	 * Alias for vec2.squaredDistance
+	 */
+	static var sqrDist:Dynamic;
+	
+	/**
+	 * Alias for vec2.length
+	 */
+	static var len:Dynamic;
+	
+	/**
+	 * Alias for vec2.squaredLength
+	 */
+	static var sqrLen:Dynamic;
 	
 	/**
 	 * The shapes of the body. The local transform of the shape in .shapes[i] is
@@ -498,17 +540,6 @@ extern class p2 {
 	var angularDamping:Float;
 	
 	/**
-	 * The type of motion this body has. Should be one of: {{#crossLink "Body/STATIC:property"}}Body.STATIC{{/crossLink}}, {{#crossLink "Body/DYNAMIC:property"}}Body.DYNAMIC{{/crossLink}} and {{#crossLink "Body/KINEMATIC:property"}}Body.KINEMATIC{{/crossLink}}.
-	 * 
-	 * <ul>
-	 * <li>Static bodies do not move, and they do not respond to forces or collision.</li>
-	 * <li>Dynamic bodies body can move and respond to collisions and forces.</li>
-	 * <li>Kinematic bodies only moves according to its .velocity, and does not respond to collisions or force.</li>
-	 * </ul>
-	 */
-	var motionState:Float;
-	
-	/**
 	 * Bounding circle radius.
 	 */
 	var boundingRadius:Float;
@@ -606,6 +637,11 @@ extern class p2 {
 	var restLength:Float;
 	
 	/**
+	 * Rest angle of the spring.
+	 */
+	var restAngle:Float;
+	
+	/**
 	 * The distance between the end points.
 	 */
 	var length:Float;
@@ -616,9 +652,14 @@ extern class p2 {
 	var radius:Float;
 	
 	/**
+	 * Axes defined in the local frame.
+	 */
+	var axes:Array<Dynamic>;
+	
+	/**
 	 * The center of mass of the Convex
 	 */
-	var centerOfMass:Dynamic;
+	var centerOfMass:Array<Dynamic>;
 	
 	/**
 	 * Triangulated version of this convex. The structure is Array of 3-Arrays, and each subarray contains 3 integers, referencing the vertices.
@@ -654,22 +695,6 @@ extern class p2 {
 	 * Total height of the rectangle
 	 */
 	var height:Float;
-	
-	/**
-	 * The type of the shape. One of:
-	 * 
-	 * <ul>
-	 * <li>{{#crossLink "Shape/CIRCLE:property"}}Shape.CIRCLE{{/crossLink}}</li>
-	 * <li>{{#crossLink "Shape/PARTICLE:property"}}Shape.PARTICLE{{/crossLink}}</li>
-	 * <li>{{#crossLink "Shape/PLANE:property"}}Shape.PLANE{{/crossLink}}</li>
-	 * <li>{{#crossLink "Shape/CONVEX:property"}}Shape.CONVEX{{/crossLink}}</li>
-	 * <li>{{#crossLink "Shape/LINE:property"}}Shape.LINE{{/crossLink}}</li>
-	 * <li>{{#crossLink "Shape/RECTANGLE:property"}}Shape.RECTANGLE{{/crossLink}}</li>
-	 * <li>{{#crossLink "Shape/CAPSULE:property"}}Shape.CAPSULE{{/crossLink}}</li>
-	 * <li>{{#crossLink "Shape/HEIGHTFIELD:property"}}Shape.HEIGHTFIELD{{/crossLink}}</li>
-	 * </ul>
-	 */
-	var type:Float;
 	
 	/**
 	 * Collision group that this shape belongs to (bit mask). See <a href="http://www.aurelienribon.com/blog/2011/07/box2d-tutorial-collision-filtering/">this tutorial</a>.
@@ -770,7 +795,7 @@ extern class p2 {
 	/**
 	 * Keys that are currently used.
 	 */
-	var keys:Dynamic;
+	var keys:Array<Dynamic>;
 	
 	/**
 	 * The array type to use for internal numeric computations.
@@ -800,7 +825,7 @@ extern class p2 {
 	/**
 	 * The body that is contained in this node.
 	 */
-	var a0:Dynamic;
+	var body:Dynamic;
 	
 	/**
 	 * Neighboring IslandNodes
@@ -975,9 +1000,10 @@ extern class p2 {
 	var postBroadphaseEvent:Dynamic;
 	
 	/**
-	 * Enable or disable island sleeping. Note that you must enable {{#crossLink "World/islandSplit:property"}}.islandSplit{{/crossLink}} for this to work.
+	 * How to deactivate bodies during simulation. Possible modes are: {{#crossLink "World/NO_SLEEPING:property"}}World.NO_SLEEPING{{/crossLink}}, {{#crossLink "World/BODY_SLEEPING:property"}}World.BODY_SLEEPING{{/crossLink}} and {{#crossLink "World/ISLAND_SLEEPING:property"}}World.ISLAND_SLEEPING{{/crossLink}}.
+	 * If sleeping is enabled, you might need to {{#crossLink "Body/wakeUp:method"}}wake up{{/crossLink}} the bodies if they fall asleep when they shouldn't. If you want to enable sleeping in the world, but want to disable it for a particular body, see {{#crossLink "Body/allowSleep:property"}}Body.allowSleep{{/crossLink}}.
 	 */
-	var enableIslandSleeping:Bool;
+	var sleepMode:Float;
 	
 	/**
 	 * Fired when two shapes starts start to overlap. Fired in the narrowphase, during step.
@@ -993,5 +1019,20 @@ extern class p2 {
 	 * Fired just before equations are added to the solver to be solved. Can be used to control what equations goes into the solver.
 	 */
 	var preSolveEvent:Dynamic;
+	
+	/**
+	 * Never deactivate bodies.
+	 */
+	static var NO:Float;
+	
+	/**
+	 * Deactivate individual bodies if they are sleepy.
+	 */
+	static var BODY:Float;
+	
+	/**
+	 * Deactivates bodies that are in contact, if all of them are sleepy. Note that you must enable {{#crossLink "World/islandSplit:property"}}.islandSplit{{/crossLink}} for this to work.
+	 */
+	static var ISLAND:Float;
 	
 }

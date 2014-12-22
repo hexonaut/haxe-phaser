@@ -6,17 +6,7 @@ extern class Canvas {
 	/**
 	 * Creates a canvas DOM element. The element is not automatically added to the document.
 	 */
-	function create (?width:Float = 256, ?height:Float = 256, ?id:String = '', ?noCocoon:Bool = false):Dynamic;
-	
-	/**
-	 * Get the DOM offset values of any given element
-	 */
-	function getOffset (element:Dynamic, ?point:Dynamic):Dynamic;
-	
-	/**
-	 * Returns the aspect ratio of the given canvas.
-	 */
-	function getAspectRatio (canvas:Dynamic):Float;
+	function create (?width:Float = 256, ?height:Float = 256, ?id:String = ''):Dynamic;
 	
 	/**
 	 * Sets the background color behind the canvas. This changes the canvas style property.
@@ -41,6 +31,11 @@ extern class Canvas {
 	function addToDOM (canvas:Dynamic, parent:Dynamic, ?overflowHidden:Bool = true):Dynamic;
 	
 	/**
+	 * Removes the given canvas element from the DOM.
+	 */
+	function removeFromDOM (canvas:Dynamic):Void;
+	
+	/**
 	 * Sets the transform of the given canvas to the matrix values provided.
 	 */
 	function setTransform (context:Dynamic, translateX:Float, translateY:Float, scaleX:Float, scaleY:Float, skewX:Float, skewY:Float):Dynamic;
@@ -55,7 +50,12 @@ extern class Canvas {
 	function setSmoothingEnabled (context:Dynamic, value:Bool):Dynamic;
 	
 	/**
-	 * Sets the CSS image-rendering property on the given canvas to be 'crisp' (aka 'optimize contrast on webkit').
+	 * Returns true if the given context has image smoothing enabled, otherwise returns false.
+	 */
+	function getSmoothingEnabled (context:Dynamic):Bool;
+	
+	/**
+	 * Sets the CSS image-rendering property on the given canvas to be 'crisp' (aka 'optimize contrast' on webkit).
 	 * Note that if this doesn't given the desired result then see the setSmoothingEnabled.
 	 */
 	function setImageRenderingCrisp (canvas:Dynamic):Dynamic;
@@ -65,5 +65,15 @@ extern class Canvas {
 	 * Note that if this doesn't given the desired result then see the CanvasUtils.setSmoothingEnabled method.
 	 */
 	function setImageRenderingBicubic (canvas:Dynamic):Dynamic;
+	
+	/**
+	 * Get the DOM offset values of any given element
+	 */
+	function getOffset (element:Dynamic, ?point:phaser.geom.Point):phaser.geom.Point;
+	
+	/**
+	 * Returns the aspect ratio of the given canvas.
+	 */
+	function getAspectRatio (canvas:Dynamic):Float;
 	
 }

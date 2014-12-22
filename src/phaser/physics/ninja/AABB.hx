@@ -22,12 +22,12 @@ extern class AABB {
 	/**
 	 * The position of this object.
 	 */
-	var pos:Dynamic;
+	var pos:phaser.geom.Point;
 	
 	/**
 	 * The position of this object in the previous update.
 	 */
-	var oldpos:Dynamic;
+	var oldpos:phaser.geom.Point;
 	
 	/**
 	 * Half the width.
@@ -62,7 +62,7 @@ extern class AABB {
 	/**
 	 * The velocity of this object.
 	 */
-	var velocity:Dynamic;
+	var velocity:phaser.geom.Point;
 	
 	/**
 	 * All of the collision response handlers.
@@ -153,5 +153,10 @@ extern class AABB {
 	 * Destroys this AABB's reference to Body and System
 	 */
 	function destroy ():Void;
+	
+	/**
+	 * Render this AABB for debugging purposes.
+	 */
+	function render (context:Dynamic, xOffset:Float, yOffset:Float, color:String, filled:Bool):Void;
 	
 }

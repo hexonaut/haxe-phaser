@@ -4,7 +4,8 @@ package phaser.physics.p2;
 extern class World {
 	
 	/**
-	 * @class Phaser.Physics.P2
+	 * This is your main access to the P2 Physics World.
+	 * From here you can create materials, listen for events and add bodies into the physics simulation.
 	 */
 	function new (game:phaser.core.Game, ?config:Dynamic);
 	
@@ -12,6 +13,11 @@ extern class World {
 	 * Local reference to game.
 	 */
 	var game:phaser.core.Game;
+	
+	/**
+	 * The p2 World configuration object.
+	 */
+	var config:Dynamic;
 	
 	/**
 	 * The p2 World in which the simulation is run.
@@ -156,6 +162,7 @@ extern class World {
 	/**
 	 * This will create a P2 Physics body on the given game object or array of game objects.
 	 * A game object can only have 1 physics body active at any one time, and it can't be changed until the object is destroyed.
+	 * Note: When the game object is enabled for P2 physics it has its anchor x/y set to 0.5 so it becomes centered.
 	 */
 	@:overload(function (object:Dynamic, ?debug:Bool = false, ?children:Bool = true):Void {})
 	@:overload(function (object:Array<Dynamic>, ?debug:Bool = false, ?children:Bool = true):Void {})
@@ -241,7 +248,25 @@ extern class World {
 	function update ():Void;
 	
 	/**
+	 * Called by Phaser.Physics when a State swap occurs.
+	 * Starts the begin and end Contact listeners again.
+	 */
+	function reset ():Void;
+	
+	/**
 	 * Clears all bodies from the simulation, resets callbacks and resets the collision bitmask.
+	 * 
+	 * The P2 world is also cleared:
+	 * 
+	 * <ul>
+	 * <li>Removes all solver equations</li>
+	 * <li>Removes all constraints</li>
+	 * <li>Removes all bodies</li>
+	 * <li>Removes all springs</li>
+	 * <li>Removes all contact materials</li>
+	 * </ul>
+	 * 
+	 * This is called automatically when you switch state.
 	 */
 	function clear ():Void;
 	
@@ -263,7 +288,9 @@ extern class World {
 	/**
 	 * Adds a Spring to the world.
 	 */
-	function addSpring (spring:phaser.physics.p2.Spring):phaser.physics.p2.Spring;
+	@:overload(function (spring:phaser.physics.p2.Spring):phaser.physics.p2.Spring {})
+	@:overload(function (spring:Dynamic):phaser.physics.p2.Spring {})
+	function addSpring (spring:Dynamic):phaser.physics.p2.Spring;
 	
 	/**
 	 * Removes a Spring from the world.
@@ -273,15 +300,15 @@ extern class World {
 	/**
 	 * Creates a constraint that tries to keep the distance between two bodies constant.
 	 */
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.gameobjects.Sprite, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.gameobjects.Sprite, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
-	@:overload(function (bodyA:Dynamic, bodyB:phaser.gameobjects.Sprite, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.physics.p2.Body, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.physics.p2.Body, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
-	@:overload(function (bodyA:Dynamic, bodyB:phaser.physics.p2.Body, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:Dynamic, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:Dynamic, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
-	function createDistanceConstraint (bodyA:Dynamic, bodyB:Dynamic, distance:Float, ?maxForce:Float):phaser.physics.p2.DistanceConstraint;
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.gameobjects.Sprite, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.gameobjects.Sprite, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
+	@:overload(function (bodyA:Dynamic, bodyB:phaser.gameobjects.Sprite, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.physics.p2.Body, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.physics.p2.Body, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
+	@:overload(function (bodyA:Dynamic, bodyB:phaser.physics.p2.Body, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:Dynamic, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:Dynamic, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint {})
+	function createDistanceConstraint (bodyA:Dynamic, bodyB:Dynamic, distance:Float, ?localAnchorA:Array<Dynamic>, ?localAnchorB:Array<Dynamic>, ?maxForce:Float):phaser.physics.p2.DistanceConstraint;
 	
 	/**
 	 * Creates a constraint that tries to keep the distance between two bodies constant.
@@ -300,15 +327,15 @@ extern class World {
 	 * Connects two bodies at given offset points, letting them rotate relative to each other around this point.
 	 * The pivot points are given in world (pixel) coordinates.
 	 */
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, pivotA:Array<Dynamic>, bodyB:phaser.gameobjects.Sprite, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, pivotA:Array<Dynamic>, bodyB:phaser.gameobjects.Sprite, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint {})
-	@:overload(function (bodyA:Dynamic, pivotA:Array<Dynamic>, bodyB:phaser.gameobjects.Sprite, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint {})
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, pivotA:Array<Dynamic>, bodyB:phaser.physics.p2.Body, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, pivotA:Array<Dynamic>, bodyB:phaser.physics.p2.Body, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint {})
-	@:overload(function (bodyA:Dynamic, pivotA:Array<Dynamic>, bodyB:phaser.physics.p2.Body, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint {})
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, pivotA:Array<Dynamic>, bodyB:Dynamic, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, pivotA:Array<Dynamic>, bodyB:Dynamic, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint {})
-	function createRevoluteConstraint (bodyA:Dynamic, pivotA:Array<Dynamic>, bodyB:Dynamic, pivotB:Array<Dynamic>, ?maxForce:Float = 0):phaser.physics.p2.RevoluteConstraint;
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, pivotA:Array<Dynamic>, bodyB:phaser.gameobjects.Sprite, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, pivotA:Array<Dynamic>, bodyB:phaser.gameobjects.Sprite, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint {})
+	@:overload(function (bodyA:Dynamic, pivotA:Array<Dynamic>, bodyB:phaser.gameobjects.Sprite, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint {})
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, pivotA:Array<Dynamic>, bodyB:phaser.physics.p2.Body, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, pivotA:Array<Dynamic>, bodyB:phaser.physics.p2.Body, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint {})
+	@:overload(function (bodyA:Dynamic, pivotA:Array<Dynamic>, bodyB:phaser.physics.p2.Body, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint {})
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, pivotA:Array<Dynamic>, bodyB:Dynamic, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, pivotA:Array<Dynamic>, bodyB:Dynamic, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint {})
+	function createRevoluteConstraint (bodyA:Dynamic, pivotA:Array<Dynamic>, bodyB:Dynamic, pivotB:Array<Dynamic>, ?maxForce:Float = 0, ?worldPivot:Dynamic):phaser.physics.p2.RevoluteConstraint;
 	
 	/**
 	 * Locks the relative position between two bodies.
@@ -403,9 +430,9 @@ extern class World {
 	 * Test if a world point overlaps bodies. You will get an array of actual P2 bodies back. You can find out which Sprite a Body belongs to
 	 * (if any) by checking the Body.parent.sprite property. Body.parent is a Phaser.Physics.P2.Body property.
 	 */
-	@:overload(function (worldPoint:Dynamic, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
-	@:overload(function (worldPoint:Dynamic, ?bodies:phaser.gameobjects.Sprite, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
-	function hitTest (worldPoint:Dynamic, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic>;
+	@:overload(function (worldPoint:phaser.geom.Point, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
+	@:overload(function (worldPoint:phaser.geom.Point, ?bodies:phaser.gameobjects.Sprite, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
+	function hitTest (worldPoint:phaser.geom.Point, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic>;
 	
 	/**
 	 * Converts the current world into a JSON object.
@@ -427,17 +454,30 @@ extern class World {
 	function setCollisionGroup (object:phaser.gameobjects.Sprite, group:Dynamic):Void;
 	
 	/**
-	 * Creates a spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
+	 * Creates a linear spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
 	 */
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.gameobjects.Sprite, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.gameobjects.Sprite, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
-	@:overload(function (bodyA:Dynamic, bodyB:phaser.gameobjects.Sprite, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.physics.p2.Body, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.physics.p2.Body, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
-	@:overload(function (bodyA:Dynamic, bodyB:phaser.physics.p2.Body, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
-	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:Dynamic, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
-	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:Dynamic, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
-	function createSpring (bodyA:Dynamic, bodyB:Dynamic, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring;
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.gameobjects.Sprite, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.gameobjects.Sprite, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
+	@:overload(function (bodyA:Dynamic, bodyB:phaser.gameobjects.Sprite, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.physics.p2.Body, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.physics.p2.Body, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
+	@:overload(function (bodyA:Dynamic, bodyB:phaser.physics.p2.Body, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:Dynamic, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:Dynamic, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring {})
+	function createSpring (bodyA:Dynamic, bodyB:Dynamic, ?restLength:Float = 1, ?stiffness:Float = 100, ?damping:Float = 1, ?worldA:Array<Dynamic>, ?worldB:Array<Dynamic>, ?localA:Array<Dynamic>, ?localB:Array<Dynamic>):phaser.physics.p2.Spring;
+	
+	/**
+	 * Creates a rotational spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
+	 */
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.gameobjects.Sprite, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.gameobjects.Sprite, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring {})
+	@:overload(function (bodyA:Dynamic, bodyB:phaser.gameobjects.Sprite, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring {})
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:phaser.physics.p2.Body, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:phaser.physics.p2.Body, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring {})
+	@:overload(function (bodyA:Dynamic, bodyB:phaser.physics.p2.Body, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring {})
+	@:overload(function (bodyA:phaser.gameobjects.Sprite, bodyB:Dynamic, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring {})
+	@:overload(function (bodyA:phaser.physics.p2.Body, bodyB:Dynamic, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring {})
+	function createRotationalSpring (bodyA:Dynamic, bodyB:Dynamic, ?restAngle:Float, ?stiffness:Float = 100, ?damping:Float = 1):phaser.physics.p2.RotationalSpring;
 	
 	/**
 	 * Creates a new Body and adds it to the World.
@@ -514,19 +554,9 @@ extern class World {
 	var friction:Float;
 	
 	/**
-	 * @name Phaser.Physics.P2#defaultFriction
-	 */
-	var defaultFriction:Float;
-	
-	/**
 	 * @name Phaser.Physics.P2#restitution
 	 */
 	var restitution:Float;
-	
-	/**
-	 * @name Phaser.Physics.P2#defaultRestitution
-	 */
-	var defaultRestitution:Float;
 	
 	/**
 	 * @name Phaser.Physics.P2#contactMaterial
@@ -564,9 +594,10 @@ extern class World {
 	var emitImpactEvent:Bool;
 	
 	/**
-	 * @name Phaser.Physics.P2#enableBodySleeping
+	 * How to deactivate bodies during simulation. Possible modes are: World.NO_SLEEPING, World.BODY_SLEEPING and World.ISLAND_SLEEPING.
+	 * If sleeping is enabled, you might need to wake up the bodies if they fall asleep when they shouldn't. If you want to enable sleeping in the world, but want to disable it for a particular body, see Body.allowSleep.
 	 */
-	var enableBodySleeping:Bool;
+	var sleepMode:Float;
 	
 	/**
 	 * @name Phaser.Physics.P2#total

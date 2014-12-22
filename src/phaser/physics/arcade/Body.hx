@@ -25,19 +25,24 @@ extern class Body {
 	var type:Float;
 	
 	/**
+	 * A disabled body won't be checked for any form of collision or overlap or have its pre/post updates run.
+	 */
+	var enable:Bool;
+	
+	/**
 	 * The offset of the Physics Body from the Sprite x/y position.
 	 */
-	var offset:Dynamic;
+	var offset:phaser.geom.Point;
 	
 	/**
 	 * The position of the physics body.
 	 */
-	var position(default, null):Dynamic;
+	var position(default, null):phaser.geom.Point;
 	
 	/**
 	 * The previous position of the physics body.
 	 */
-	var prev(default, null):Dynamic;
+	var prev(default, null):phaser.geom.Point;
 	
 	/**
 	 * Allow this Body to be rotated? (via angularVelocity, etc)
@@ -87,32 +92,32 @@ extern class Body {
 	/**
 	 * The center coordinate of the Physics Body.
 	 */
-	var center:Dynamic;
+	var center:phaser.geom.Point;
 	
 	/**
 	 * The velocity in pixels per second sq. of the Body.
 	 */
-	var velocity:Dynamic;
+	var velocity:phaser.geom.Point;
 	
 	/**
 	 * New velocity.
 	 */
-	var newVelocity(default, null):Dynamic;
+	var newVelocity(default, null):phaser.geom.Point;
 	
 	/**
 	 * The Sprite position is updated based on the delta x/y values. You can set a cap on those (both +-) using deltaMax.
 	 */
-	var deltaMax:Dynamic;
+	var deltaMax:phaser.geom.Point;
 	
 	/**
 	 * The velocity in pixels per second sq. of the Body.
 	 */
-	var acceleration:Dynamic;
+	var acceleration:phaser.geom.Point;
 	
 	/**
 	 * The drag applied to the motion of the Body.
 	 */
-	var drag:Dynamic;
+	var drag:phaser.geom.Point;
 	
 	/**
 	 * Allow this Body to be influenced by gravity? Either world or local.
@@ -122,17 +127,17 @@ extern class Body {
 	/**
 	 * A local gravity applied to this Body. If non-zero this over rides any world gravity, unless Body.allowGravity is set to false.
 	 */
-	var gravity:Dynamic;
+	var gravity:phaser.geom.Point;
 	
 	/**
 	 * The elasticitiy of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
 	 */
-	var bounce:Dynamic;
+	var bounce:phaser.geom.Point;
 	
 	/**
 	 * The maximum velocity in pixels per second sq. that the Body can reach.
 	 */
-	var maxVelocity:Dynamic;
+	var maxVelocity:phaser.geom.Point;
 	
 	/**
 	 * The angular velocity in pixels per second sq. of the Body.
@@ -245,12 +250,17 @@ extern class Body {
 	 * If this is an especially small or fast moving object then it can sometimes skip over tilemap collisions if it moves through a tile in a step.
 	 * Set this padding value to add extra padding to its bounds. tilePadding.x applied to its width, y to its height.
 	 */
-	var tilePadding:Dynamic;
+	var tilePadding:phaser.geom.Point;
 	
 	/**
 	 * Is this Body in a preUpdate (1) or postUpdate (2) state?
 	 */
 	var phase:Float;
+	
+	/**
+	 * If true and you collide this Sprite against a Group, it will disable the collision check from using a QuadTree.
+	 */
+	var skipQuadTree:Bool;
 	
 	/**
 	 * Internal cache var.
@@ -307,7 +317,7 @@ extern class Body {
 	 * So it could be smaller or larger than the parent Sprite. You can also control the x and y offset, which
 	 * is the position of the Body relative to the top-left of the Sprite.
 	 */
-	function setSize (width:Float, height:Float, offsetX:Float, offsetY:Float):Void;
+	function setSize (width:Float, height:Float, ?offsetX:Float, ?offsetY:Float):Void;
 	
 	/**
 	 * Resets all Body values (velocity, acceleration, rotation, etc)
@@ -377,7 +387,7 @@ extern class Body {
 	/**
 	 * Render Sprite Body.
 	 */
-	function renderDebug (context:Dynamic, body:phaser.physics.arcade.Body, ?color:String = 'rgb(255,255,255)', ?filled:Bool = true):Void;
+	function render (context:Dynamic, body:phaser.physics.arcade.Body, ?color:String = 'rgba(0,255,0,0.4)', ?filled:Bool = true):Void;
 	
 	/**
 	 * Render Sprite Body Physics Data as text.

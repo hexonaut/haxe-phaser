@@ -1,7 +1,7 @@
 package phaser.gameobjects;
 
 @:native("Phaser.Graphics")
-extern class Graphics {
+extern class Graphics extends phaser.pixi.primitives.Graphics {
 	
 	/**
 	 * Creates a new Graphics object.
@@ -36,12 +36,12 @@ extern class Graphics {
 	/**
 	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
 	 */
-	var world:Dynamic;
+	var world:phaser.geom.Point;
 	
 	/**
 	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
 	 */
-	var cameraOffset:Dynamic;
+	var cameraOffset:phaser.geom.Point;
 	
 	/**
 	 * A small internal cache:
@@ -78,9 +78,15 @@ extern class Graphics {
 	function destroy (?destroyChildren:Bool = true):Void;
 	
 	/**
-	 * Draws a {Phaser.Polygon} or a {PIXI.Polygon} filled
+	 * Draws a single {Phaser.Polygon} triangle from a {Phaser.Point} array
 	 */
-	function drawPolygon ():Void;
+	function drawTriangle (points:Dynamic, ?cull:Bool = false):Void;
+	
+	/**
+	 * Draws {Phaser.Polygon} triangles 
+	 */
+	@:overload(function (vertices:Dynamic, indices:Dynamic, ?cull:Bool = false):Void {})
+	function drawTriangles (vertices:Dynamic, indices:Dynamic, ?cull:Bool = false):Void;
 	
 	/**
 	 * Indicates the rotation of the Graphics, in degrees, from its original orientation. Values from 0 to 180 represent clockwise rotation; values from 0 to -180 represent counterclockwise rotation.

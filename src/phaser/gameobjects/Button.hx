@@ -4,84 +4,64 @@ package phaser.gameobjects;
 extern class Button extends phaser.gameobjects.Image {
 	
 	/**
-	 * Internal variable.
+	 * The name or ID of the Over state frame.
 	 */
-	var _onOverFrameName:String;
+	var onOverFrame:Dynamic;
 	
 	/**
-	 * Internal variable.
+	 * The name or ID of the Out state frame.
 	 */
-	var _onOutFrameName:String;
+	var onOutFrame:Dynamic;
 	
 	/**
-	 * Internal variable.
+	 * The name or ID of the Down state frame.
 	 */
-	var _onDownFrameName:String;
+	var onDownFrame:Dynamic;
 	
 	/**
-	 * Internal variable.
+	 * The name or ID of the Up state frame.
 	 */
-	var _onUpFrameName:String;
-	
-	/**
-	 * Internal variable.
-	 */
-	var _onOverFrameID:Float;
-	
-	/**
-	 * Internal variable.
-	 */
-	var _onOutFrameID:Float;
-	
-	/**
-	 * Internal variable.
-	 */
-	var _onDownFrameID:Float;
-	
-	/**
-	 * Internal variable.
-	 */
-	var _onUpFrameID:Float;
+	var onUpFrame:Dynamic;
 	
 	/**
 	 * The Sound to be played when this Buttons Over state is activated.
 	 */
-	var onOverSound:phaser.sound.Sound;
+	var onOverSound(default, null):Dynamic;
 	
 	/**
 	 * The Sound to be played when this Buttons Out state is activated.
 	 */
-	var onOutSound:phaser.sound.Sound;
+	var onOutSound(default, null):Dynamic;
 	
 	/**
 	 * The Sound to be played when this Buttons Down state is activated.
 	 */
-	var onDownSound:phaser.sound.Sound;
+	var onDownSound(default, null):Dynamic;
 	
 	/**
 	 * The Sound to be played when this Buttons Up state is activated.
 	 */
-	var onUpSound:phaser.sound.Sound;
+	var onUpSound(default, null):Dynamic;
 	
 	/**
 	 * The Sound Marker used in conjunction with the onOverSound.
 	 */
-	var onOverSoundMarker:String;
+	var onOverSoundMarker(default, null):String;
 	
 	/**
 	 * The Sound Marker used in conjunction with the onOutSound.
 	 */
-	var onOutSoundMarker:String;
+	var onOutSoundMarker(default, null):String;
 	
 	/**
 	 * The Sound Marker used in conjunction with the onDownSound.
 	 */
-	var onDownSoundMarker:String;
+	var onDownSoundMarker(default, null):String;
 	
 	/**
 	 * The Sound Marker used in conjunction with the onUpSound.
 	 */
-	var onUpSoundMarker:String;
+	var onUpSoundMarker(default, null):String;
 	
 	/**
 	 * The Signal (or event) dispatched when this Button is in an Over state.
@@ -104,7 +84,13 @@ extern class Button extends phaser.gameobjects.Image {
 	var onInputUp:phaser.core.Signal;
 	
 	/**
-	 * When true the Button will cease to change texture frame on all events (over, out, up, down).
+	 * If true then onOver events (such as onOverSound) will only be triggered if the Pointer object causing them was the Mouse Pointer.
+	 * The frame will still be changed as applicable.
+	 */
+	var onOverMouseOnly:Bool;
+	
+	/**
+	 * When true the the texture frame will not be automatically switched on up/down/over/out events.
 	 */
 	var freezeFrames:Bool;
 	
@@ -119,51 +105,100 @@ extern class Button extends phaser.gameobjects.Image {
 	function clearFrames ():Void;
 	
 	/**
+	 * Called when this Button is removed from the World.
+	 */
+	function removedFromWorld ():Void;
+	
+	/**
+	 * Set the frame name/ID for the given state.
+	 */
+	@:overload(function (state:Dynamic, frame:Float, switchImmediately:Bool):Void {})
+	function setStateFrame (state:Dynamic, frame:String, switchImmediately:Bool):Void;
+	
+	/**
+	 * Change the frame to that of the given state, <em>if</em> the state has a frame assigned <em>and</em> if the frames are not currently "frozen".
+	 */
+	function changeStateFrame (state:Dynamic):Bool;
+	
+	/**
 	 * Used to manually set the frames that will be used for the different states of the Button.
+	 * 
+	 * Frames can be specified as either an integer (the frame ID) or a string (the frame name); these are the same values that can be used with a Sprite constructor.
 	 */
 	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:String):Void {})
-	@:overload(function (?overFrame:Float, ?outFrame:String, ?downFrame:String, ?upFrame:String):Void {})
-	@:overload(function (?overFrame:String, ?outFrame:Float, ?downFrame:String, ?upFrame:String):Void {})
-	@:overload(function (?overFrame:Float, ?outFrame:Float, ?downFrame:String, ?upFrame:String):Void {})
-	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:Float, ?upFrame:String):Void {})
-	@:overload(function (?overFrame:Float, ?outFrame:String, ?downFrame:Float, ?upFrame:String):Void {})
-	@:overload(function (?overFrame:String, ?outFrame:Float, ?downFrame:Float, ?upFrame:String):Void {})
-	@:overload(function (?overFrame:Float, ?outFrame:Float, ?downFrame:Float, ?upFrame:String):Void {})
-	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:Float):Void {})
-	@:overload(function (?overFrame:Float, ?outFrame:String, ?downFrame:String, ?upFrame:Float):Void {})
-	@:overload(function (?overFrame:String, ?outFrame:Float, ?downFrame:String, ?upFrame:Float):Void {})
-	@:overload(function (?overFrame:Float, ?outFrame:Float, ?downFrame:String, ?upFrame:Float):Void {})
-	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:Float, ?upFrame:Float):Void {})
-	@:overload(function (?overFrame:Float, ?outFrame:String, ?downFrame:Float, ?upFrame:Float):Void {})
-	@:overload(function (?overFrame:String, ?outFrame:Float, ?downFrame:Float, ?upFrame:Float):Void {})
-	function setFrames (?overFrame:Float, ?outFrame:Float, ?downFrame:Float, ?upFrame:Float):Void;
+	@:overload(function (?overFrame:Int, ?outFrame:String, ?downFrame:String, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:Int, ?downFrame:String, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:Int, ?outFrame:Int, ?downFrame:String, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:Int, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:Int, ?outFrame:String, ?downFrame:Int, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:Int, ?downFrame:Int, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:Int, ?outFrame:Int, ?downFrame:Int, ?upFrame:String):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:Int):Void {})
+	@:overload(function (?overFrame:Int, ?outFrame:String, ?downFrame:String, ?upFrame:Int):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:Int, ?downFrame:String, ?upFrame:Int):Void {})
+	@:overload(function (?overFrame:Int, ?outFrame:Int, ?downFrame:String, ?upFrame:Int):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:String, ?downFrame:Int, ?upFrame:Int):Void {})
+	@:overload(function (?overFrame:Int, ?outFrame:String, ?downFrame:Int, ?upFrame:Int):Void {})
+	@:overload(function (?overFrame:String, ?outFrame:Int, ?downFrame:Int, ?upFrame:Int):Void {})
+	function setFrames (?overFrame:Int, ?outFrame:Int, ?downFrame:Int, ?upFrame:Int):Void;
+	
+	/**
+	 * Set the sound/marker for the given state.
+	 */
+	@:overload(function (state:Dynamic, ?sound:phaser.sound.Sound, ?marker:String = ''):Void {})
+	function setStateSound (state:Dynamic, ?sound:phaser.sound.AudioSprite, ?marker:String = ''):Void;
+	
+	/**
+	 * Play the sound for the given state, <em>if</em> the state has a sound assigned.
+	 */
+	function playStateSound (state:Dynamic):Bool;
 	
 	/**
 	 * Sets the sounds to be played whenever this Button is interacted with. Sounds can be either full Sound objects, or markers pointing to a section of a Sound object.
 	 * The most common forms of sounds are 'hover' effects and 'click' effects, which is why the order of the parameters is overSound then downSound.
-	 * Call this function with no parameters at all to reset all sounds on this Button.
+	 * 
+	 * Call this function with no parameters to reset all sounds on this Button.
 	 */
-	function setSounds (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void;
+	@:overload(function (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.AudioSprite, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.AudioSprite, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.AudioSprite, ?overMarker:String, ?downSound:phaser.sound.AudioSprite, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.AudioSprite, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.AudioSprite, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.AudioSprite, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.AudioSprite, ?downMarker:String, ?outSound:phaser.sound.AudioSprite, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.AudioSprite, ?overMarker:String, ?downSound:phaser.sound.AudioSprite, ?downMarker:String, ?outSound:phaser.sound.AudioSprite, ?outMarker:String, ?upSound:phaser.sound.Sound, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.AudioSprite, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.AudioSprite, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.AudioSprite, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.AudioSprite, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.AudioSprite, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.AudioSprite, ?overMarker:String, ?downSound:phaser.sound.AudioSprite, ?downMarker:String, ?outSound:phaser.sound.Sound, ?outMarker:String, ?upSound:phaser.sound.AudioSprite, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.AudioSprite, ?outMarker:String, ?upSound:phaser.sound.AudioSprite, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.AudioSprite, ?overMarker:String, ?downSound:phaser.sound.Sound, ?downMarker:String, ?outSound:phaser.sound.AudioSprite, ?outMarker:String, ?upSound:phaser.sound.AudioSprite, ?upMarker:String):Void {})
+	@:overload(function (?overSound:phaser.sound.Sound, ?overMarker:String, ?downSound:phaser.sound.AudioSprite, ?downMarker:String, ?outSound:phaser.sound.AudioSprite, ?outMarker:String, ?upSound:phaser.sound.AudioSprite, ?upMarker:String):Void {})
+	function setSounds (?overSound:phaser.sound.AudioSprite, ?overMarker:String, ?downSound:phaser.sound.AudioSprite, ?downMarker:String, ?outSound:phaser.sound.AudioSprite, ?outMarker:String, ?upSound:phaser.sound.AudioSprite, ?upMarker:String):Void;
 	
 	/**
 	 * The Sound to be played when a Pointer moves over this Button.
 	 */
-	function setOverSound (sound:phaser.sound.Sound, ?marker:String):Void;
+	@:overload(function (sound:phaser.sound.Sound, ?marker:String):Void {})
+	function setOverSound (sound:phaser.sound.AudioSprite, ?marker:String):Void;
 	
 	/**
 	 * The Sound to be played when a Pointer moves out of this Button.
 	 */
-	function setOutSound (sound:phaser.sound.Sound, ?marker:String):Void;
+	@:overload(function (sound:phaser.sound.Sound, ?marker:String):Void {})
+	function setOutSound (sound:phaser.sound.AudioSprite, ?marker:String):Void;
 	
 	/**
 	 * The Sound to be played when a Pointer presses down on this Button.
 	 */
-	function setDownSound (sound:phaser.sound.Sound, ?marker:String):Void;
+	@:overload(function (sound:phaser.sound.Sound, ?marker:String):Void {})
+	function setDownSound (sound:phaser.sound.AudioSprite, ?marker:String):Void;
 	
 	/**
 	 * The Sound to be played when a Pointer has pressed down and is released from this Button.
 	 */
-	function setUpSound (sound:phaser.sound.Sound, ?marker:String):Void;
+	@:overload(function (sound:phaser.sound.Sound, ?marker:String):Void {})
+	function setUpSound (sound:phaser.sound.AudioSprite, ?marker:String):Void;
 	
 	/**
 	 * Internal function that handles input events.
@@ -184,10 +219,5 @@ extern class Button extends phaser.gameobjects.Image {
 	 * Internal function that handles input events.
 	 */
 	function onInputUpHandler (sprite:phaser.gameobjects.Button, pointer:phaser.input.Pointer):Void;
-	
-	/**
-	 * Internal function that handles Button state changes.
-	 */
-	function setState (newState:Float):Void;
 	
 }
