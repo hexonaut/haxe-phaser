@@ -309,6 +309,8 @@ extern class Game {
 	 */
 	var _nextFpsNotification:Float;
 	
+	var plugins:PluginManager;
+	
 	/**
 	 * Parses a Game configuration object.
 	 */
