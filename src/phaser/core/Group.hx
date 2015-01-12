@@ -1,5 +1,7 @@
 package phaser.core;
 
+import phaser.pixi.display.DisplayObject;
+
 @:native("Phaser.Group")
 extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	
