@@ -7,7 +7,8 @@ extern class TilemapLayer {
 	 * A TilemapLayer is a Phaser.Image/Sprite that renders a specific TileLayer of a Tilemap.
 	 * 
 	 * Since a TilemapLayer is a Sprite it can be moved around the display, added to other groups or display objects, etc.
-	 * By default TilemapLayers have fixedToCamera set to true. Changing this will break Camera follow and scrolling behaviour.
+	 * 
+	 * By default TilemapLayers have fixedToCamera set to true. Changing this will break Camera follow and scrolling behavior.
 	 */
 	function new (game:phaser.core.Game, tilemap:phaser.tilemap.Tilemap, index:Int, width:Int, height:Int);
 	
@@ -57,34 +58,29 @@ extern class TilemapLayer {
 	var textureFrame:phaser.animation.Frame;
 	
 	/**
-	 * The name of the layer.
-	 */
-	var name:String;
-	
-	/**
 	 * The const type of this object.
 	 */
 	var type(default, null):Float;
 	
 	/**
-	 * An object that is fixed to the camera ignores the position of any ancestors in the display list and uses its x/y coordinates as offsets from the top left of the camera.
+	 * The const physics body type of this object.
 	 */
-	var fixToCamera:Bool;
-	
-	/**
-	 * If this object is fixed to the camera then use this Point to specify how far away from the Camera x/y it's rendered.
-	 */
-	var cameraOffset:phaser.geom.Point;
+	var physicsType(default, null):Float;
 	
 	/**
 	 * Settings that control standard (non-diagnostic) rendering.
 	 */
-	var enableScrollDelta:Bool;
+	var copyCanvas:Dynamic;
 	
 	/**
 	 * Enable an additional "debug rendering" pass to display collision information.
 	 */
 	var debug:Bool;
+	
+	/**
+	 * Controls if the core game loop and physics update this game object or not.
+	 */
+	var exists:Bool;
 	
 	/**
 	 * Settings used for debugging and diagnostics.
@@ -137,11 +133,9 @@ extern class TilemapLayer {
 	var results:Dynamic;
 	
 	/**
-	 * If no valid tileset/image can be found for a tile, the tile is rendered as a rectangle using this as a fill value.
-	 * 
-	 * Set to null to disable rendering anything for tiles without value tileset images.
+	 * Automatically called by World.preUpdate.
 	 */
-	var tileColor:Dynamic;
+	function preUpdate ():Void;
 	
 	/**
 	 * Automatically called by World.postUpdate. Handles cache updates.
@@ -200,17 +194,34 @@ extern class TilemapLayer {
 	function getTiles (x:Float, y:Float, width:Float, height:Float, ?collides:Bool = false, ?interestingFace:Bool = false):Dynamic;
 	
 	/**
-	 * Returns the appropriate tileset for the index, updating the internal cache as required. This should only be called if tilesets[index] evaluates to undefined.
+	 * If no valid tileset/image can be found for a tile, the tile is rendered as a rectangle using this as a fill value.
+	 * 
+	 * Set to null to disable rendering anything for tiles without value tileset images.
+	 */
+	var tileColor:Dynamic;
+	
+	/**
+	 * Returns the appropriate tileset for the index, updating the internal cache as required.
+	 * This should only be called if tilesets[index] evaluates to undefined.
 	 */
 	function resolveTileset (Tile:Int):Dynamic;
 	
 	/**
-	 * The TilemapLayer caches tileset look-ups. Call this method of clear the cache if tilesets have been added or updated after the layer has been rendered.
+	 * The TilemapLayer caches tileset look-ups.
+	 * 
+	 * Call this method of clear the cache if tilesets have been added or updated after the layer has been rendered.
 	 */
 	function resetTilesetCache ():Void;
 	
 	/**
-	 * Shifts the contents of the canvas - does extra math so that different browsers agree on the result. The specified (x/y) will be shifted to (0,0) after the copy. The newly exposed canvas area will need to be filled in. This method is problematic for transparent tiles.
+	 * This method will set the scale of the tilemap as well as update the underlying block data of this layer
+	 */
+	function setScale (?xScale:Float = 1, ?yScale:Float):Void;
+	
+	/**
+	 * Shifts the contents of the canvas - does extra math so that different browsers agree on the result.
+	 * 
+	 * The specified (x/y) will be shifted to (0,0) after the copy and the newly exposed canvas area will need to be filled in.
 	 */
 	function shiftCanvas (context:Dynamic, x:Int, y:Int):Void;
 	

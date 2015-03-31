@@ -45,19 +45,24 @@ extern class World {
 	var OVERLAP_BIAS:Float;
 	
 	/**
-	 * A value added to the delta values during collision with tiles. Adjust this if you get tunnelling.
-	 */
-	var TILE_BIAS:Float;
-	
-	/**
 	 * If true World.separate will always separate on the X axis before Y. Otherwise it will check gravity totals first.
 	 */
 	var forceX:Bool;
 	
 	/**
+	 * Used when colliding a Sprite vs. a Group, or a Group vs. a Group, this defines the direction the sort is based on. Default is Phaser.Physics.Arcade.LEFT_RIGHT.
+	 */
+	var sortDirection:Float;
+	
+	/**
 	 * If true the QuadTree will not be used for any collision. QuadTrees are great if objects are well spread out in your game, otherwise they are a performance hit. If you enable this you can disable on a per body basis via Body.skipQuadTree.
 	 */
 	var skipQuadTree:Bool;
+	
+	/**
+	 * If true the Body.preUpdate method will be skipped, halting all motion for all bodies. Note that other methods such as collide will still work, so be careful not to call them on paused bodies.
+	 */
+	var isPaused:Bool;
 	
 	/**
 	 * The world QuadTree.
@@ -67,67 +72,7 @@ extern class World {
 	/**
 	 * Internal cache var.
 	 */
-	var _overlap:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _maxOverlap:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _velocity1:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _velocity2:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _newVelocity1:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _newVelocity2:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _average:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _mapData:Array<Dynamic>;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _result:Bool;
-	
-	/**
-	 * Internal cache var.
-	 */
 	var _total:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _angle:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _dx:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _dy:Float;
 	
 	/**
 	 * Updates the size of this physics world.
@@ -154,7 +99,7 @@ extern class World {
 	function enableBody (object:Dynamic):Void;
 	
 	/**
-	 * Called automatically by a Physics body, it updates all motion related values on the Body.
+	 * Called automatically by a Physics body, it updates all motion related values on the Body unless World.isPaused is true.
 	 */
 	function updateMotion (The:phaser.physics.arcade.Body):Void;
 	
@@ -266,16 +211,6 @@ extern class World {
 	function collideGroupVsGroup (group1:phaser.core.Group, group2:phaser.core.Group, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void;
 	
 	/**
-	 * An internal function. Use Phaser.Physics.Arcade.collide instead.
-	 */
-	function collideSpriteVsTilemapLayer (sprite:phaser.gameobjects.Sprite, tilemapLayer:phaser.tilemap.TilemapLayer, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void;
-	
-	/**
-	 * An internal function. Use Phaser.Physics.Arcade.collide instead.
-	 */
-	function collideGroupVsTilemapLayer (group:phaser.core.Group, tilemapLayer:phaser.tilemap.TilemapLayer, collideCallback:Dynamic, processCallback:Dynamic, callbackContext:Dynamic, overlapOnly:Bool):Void;
-	
-	/**
 	 * The core separation function to separate two physics bodies.
 	 */
 	function separate (body1:phaser.physics.arcade.Body, body2:phaser.physics.arcade.Body, ?processCallback:Dynamic, ?callbackContext:Dynamic, ?overlapOnly:Bool):Bool;
@@ -296,31 +231,6 @@ extern class World {
 	function separateY (body1:phaser.physics.arcade.Body, body2:phaser.physics.arcade.Body, overlapOnly:Bool):Bool;
 	
 	/**
-	 * The core separation function to separate a physics body and a tile.
-	 */
-	function separateTile (body:phaser.physics.arcade.Body, tile:phaser.tilemap.Tile):Bool;
-	
-	/**
-	 * Check the body against the given tile on the X axis.
-	 */
-	function tileCheckX (body:phaser.physics.arcade.Body, tile:phaser.tilemap.Tile):Float;
-	
-	/**
-	 * Check the body against the given tile on the Y axis.
-	 */
-	function tileCheckY (body:phaser.physics.arcade.Body, tile:phaser.tilemap.Tile):Float;
-	
-	/**
-	 * Internal function to process the separation of a physics body from a tile.
-	 */
-	function processTileSeparationX (body:phaser.physics.arcade.Body, x:Float):Bool;
-	
-	/**
-	 * Internal function to process the separation of a physics body from a tile.
-	 */
-	function processTileSeparationY (body:phaser.physics.arcade.Body, y:Float):Void;
-	
-	/**
 	 * Given a Group and a Pointer this will check to see which Group children overlap with the Pointer coordinates.
 	 * Each child will be sent to the given callback for further processing.
 	 * Note that the children are not checked for depth order, but simply if they overlap the Pointer or not.
@@ -332,7 +242,7 @@ extern class World {
 	 * Each child will be sent to the given callback for further processing.
 	 * Note that the children are not checked for depth order, but simply if they overlap the coordinate or not.
 	 */
-	function getObjectsAtLocation (pointer:phaser.input.Pointer, group:phaser.core.Group, ?callback:Dynamic, ?callbackContext:Dynamic, ?callbackArg:Dynamic):Dynamic;
+	function getObjectsAtLocation (x:Float, y:Float, group:phaser.core.Group, ?callback:Dynamic, ?callbackContext:Dynamic, ?callbackArg:Dynamic):Dynamic;
 	
 	/**
 	 * Move the given display object towards the destination object at a steady velocity.
@@ -424,6 +334,7 @@ extern class World {
 	 * Find the distance between a display object (like a Sprite) and a Pointer. If no Pointer is given the Input.activePointer is used.
 	 * The calculation is made from the display objects x/y coordinate. This may be the top-left if its anchor hasn't been changed.
 	 * If you need to calculate from the center of a display object instead use the method distanceBetweenCenters()
+	 * The distance to the Pointer is returned in screen space, not world space.
 	 */
 	function distanceToPointer (displayObject:Dynamic, ?pointer:phaser.input.Pointer):Float;
 	

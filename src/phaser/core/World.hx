@@ -29,7 +29,7 @@ extern class World extends phaser.core.Group {
 	function boot ():Void;
 	
 	/**
-	 * Updates the size of this world. Note that this doesn't modify the world x/y coordinates, just the width and height.
+	 * Updates the size of this world and sets World.x/y to the given values
 	 * The Camera bounds and Physics bounds (if set) are also updated to match the new World bounds.
 	 */
 	function setBounds (x:Float, y:Float, width:Float, height:Float):Void;

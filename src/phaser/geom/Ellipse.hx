@@ -29,6 +29,11 @@ extern class Ellipse {
 	var height:Float;
 	
 	/**
+	 * The const type of this object.
+	 */
+	var type(default, null):Float;
+	
+	/**
 	 * Sets the members of the Ellipse to the specified values.
 	 */
 	function setTo (x:Float, y:Float, width:Float, height:Float):phaser.geom.Ellipse;

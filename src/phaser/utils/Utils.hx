@@ -72,6 +72,15 @@ extern class Utils {
 	function extend (deep:Bool, target:Dynamic):Dynamic;
 	
 	/**
+	 * Mixes in an existing mixin object with the target.
+	 * 
+	 * Values in the mixin that have either get or set functions are created as properties via defineProperty
+	 * <em>except</em> if they also define a clone method - if a clone method is defined that is called instead and
+	 * the result is assigned directly.
+	 */
+	function mixinPrototype (target:Dynamic, mixin:Dynamic, ?replace:Bool = false):Void;
+	
+	/**
 	 * Mixes the source object into the destination object, returning the newly modified destination object.
 	 * Based on original code by @mudcube
 	 */

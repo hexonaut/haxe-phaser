@@ -35,6 +35,12 @@ extern class ArraySet {
 	function getIndex (item:Dynamic):Int;
 	
 	/**
+	 * Gets an item from the set based on the property strictly equaling the value given.
+	 * Returns null if not found.
+	 */
+	function getByKey (property:String, value:Dynamic):Dynamic;
+	
+	/**
 	 * Checks for the item within this list.
 	 */
 	function exists (item:Dynamic):Bool;
@@ -61,6 +67,11 @@ extern class ArraySet {
 	 * The function is invoked using the item as the context.
 	 */
 	function callAll (key:String, ?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):Void;
+	
+	/**
+	 * Removes every member from this ArraySet and optionally destroys it.
+	 */
+	function removeAll (?destroy:Bool = false):Void;
 	
 	/**
 	 * Number of items in the ArraySet. Same as list.length.

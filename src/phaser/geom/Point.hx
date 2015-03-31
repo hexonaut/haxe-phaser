@@ -22,6 +22,11 @@ extern class Point {
 	var y:Float;
 	
 	/**
+	 * The const type of this object.
+	 */
+	var type(default, null):Float;
+	
+	/**
 	 * Copies the x and y properties from any given object to this Point.
 	 */
 	function copyFrom (source:Dynamic):phaser.geom.Point;
@@ -106,12 +111,6 @@ extern class Point {
 	 */
 	@:overload(function (a:phaser.geom.Point, ?asDegrees:Bool = false):Float {})
 	function angle (a:Dynamic, ?asDegrees:Bool = false):Float;
-	
-	/**
-	 * Returns the angle squared between this Point object and another object with public x and y properties.
-	 */
-	@:overload(function (a:phaser.geom.Point):Float {})
-	function angleSq (a:Dynamic):Float;
 	
 	/**
 	 * Rotates this Point around the x/y coordinates given to the desired angle.

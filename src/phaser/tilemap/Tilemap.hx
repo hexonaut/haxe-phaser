@@ -195,18 +195,18 @@ extern class Tilemap {
 	 * You can optional specify if the tile will be replaced with another after the Sprite is created. This is useful if you want to lay down special 
 	 * tiles in a level that are converted to Sprites, but want to replace the tile itself with a floor tile or similar once converted.
 	 */
-	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
-	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
-	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
-	@:overload(function (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:Float):Int {})
-	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
-	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
-	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
-	@:overload(function (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:String):Int {})
-	@:overload(function (tiles:Int, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
-	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
-	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int {})
-	function createFromTiles (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?group:phaser.core.Group, ?properties:Dynamic, ?layer:phaser.tilemap.TilemapLayer):Int;
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?layer:Float, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?layer:Float, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?layer:Float, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?layer:Float, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?layer:String, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?layer:String, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?layer:String, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?layer:String, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Int, replacements:Int, key:String, ?layer:phaser.tilemap.TilemapLayer, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Array<Dynamic>, replacements:Int, key:String, ?layer:phaser.tilemap.TilemapLayer, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	@:overload(function (tiles:Int, replacements:Array<Dynamic>, key:String, ?layer:phaser.tilemap.TilemapLayer, ?group:phaser.core.Group, ?properties:Dynamic):Int {})
+	function createFromTiles (tiles:Array<Dynamic>, replacements:Array<Dynamic>, key:String, ?layer:phaser.tilemap.TilemapLayer, ?group:phaser.core.Group, ?properties:Dynamic):Int;
 	
 	/**
 	 * Creates a new TilemapLayer object. By default TilemapLayers are fixed to the camera.
@@ -400,7 +400,7 @@ extern class Tilemap {
 	 * Searches the entire map layer for the first tile matching the given index, then returns that Phaser.Tile object.
 	 * If no match is found it returns null.
 	 * The search starts from the top-left tile and continues horizontally until it hits the end of the row, then it drops down to the next column.
-	 * If the reverse boolean is true, it scans starting from the bottom-right corner travelling up to the top-left.
+	 * If the reverse boolean is true, it scans starting from the bottom-right corner traveling up to the top-left.
 	 */
 	@:overload(function (index:Float, ?skip:Float = 0, ?reverse:Float = false, ?layer:Float):phaser.tilemap.Tile {})
 	@:overload(function (index:Float, ?skip:Float = 0, ?reverse:Float = false, ?layer:String):phaser.tilemap.Tile {})

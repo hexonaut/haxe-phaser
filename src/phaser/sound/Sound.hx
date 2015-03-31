@@ -109,6 +109,11 @@ extern class Sound {
 	var currentMarker:String;
 	
 	/**
+	 * The tween that fades the audio, set via Sound.fadeIn and Sound.fadeOut.
+	 */
+	var fadeTween:phaser.tween.Tween;
+	
+	/**
 	 * true if the sound file is pending playback
 	 */
 	var pendingPlayback(default, null):Bool;
@@ -142,6 +147,11 @@ extern class Sound {
 	 * The gain node in a Web Audio system.
 	 */
 	var gainNode:Dynamic;
+	
+	/**
+	 * Internal var.
+	 */
+	var _sound:Dynamic;
 	
 	/**
 	 * The onDecoded event is dispatched when the sound has finished decoding (typically for mp3 files)
@@ -255,9 +265,20 @@ extern class Sound {
 	function removeMarker (name:String):Void;
 	
 	/**
+	 * Called automatically by the AudioContext when the sound stops playing.
+	 * Doesn't get called if the sound is set to loop or is a section of an Audio Sprite.
+	 */
+	function onEndedHandler ():Void;
+	
+	/**
 	 * Called automatically by Phaser.SoundManager.
 	 */
 	function update ():Void;
+	
+	/**
+	 * Loops this entire sound. If you need to loop a section of it then use Sound.play and the marker and loop parameters.
+	 */
+	function loopFull (?volume:Float = 1):phaser.sound.Sound;
 	
 	/**
 	 * Play this sound, or a marked section of it.
@@ -287,10 +308,11 @@ extern class Sound {
 	/**
 	 * Starts this sound playing (or restarts it if already doing so) and sets the volume to zero.
 	 * Then increases the volume from 0 to 1 over the duration specified.
+	 * 
 	 * At the end of the fade Sound.onFadeComplete is dispatched with this Sound object as the first parameter,
 	 * and the final volume (1) as the second parameter.
 	 */
-	function fadeIn (?duration:Float = 1000, ?loop:Bool = false):Void;
+	function fadeIn (?duration:Float = 1000, ?loop:Bool = false, ?marker:String):Void;
 	
 	/**
 	 * Decreases the volume of this Sound from its current value to 0 over the duration specified.

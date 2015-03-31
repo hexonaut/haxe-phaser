@@ -27,7 +27,7 @@ extern class Mouse {
 	var mouseDownCallback:Dynamic;
 	
 	/**
-	 * A callback that can be fired when the mouse is moved while pressed down.
+	 * A callback that can be fired when the mouse is moved.
 	 */
 	var mouseMoveCallback:Dynamic;
 	
@@ -52,7 +52,7 @@ extern class Mouse {
 	var mouseWheelCallback:Dynamic;
 	
 	/**
-	 * If true the DOM mouse events will have event.preventDefault applied to them, if false they will propogate fully.
+	 * If true the DOM mouse events will have event.preventDefault applied to them, if false they will propagate fully.
 	 */
 	var capture:Bool;
 	

@@ -136,6 +136,11 @@ extern class Physics {
 	function clear ():Void;
 	
 	/**
+	 * Resets the active physics system. Called automatically on a Phaser.State swap.
+	 */
+	function reset ():Void;
+	
+	/**
 	 * Destroys all active physics systems. Usually only called on a Game Shutdown, not on a State swap.
 	 */
 	function destroy ():Void;

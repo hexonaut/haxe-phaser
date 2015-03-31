@@ -66,9 +66,19 @@ extern class TweenData {
 	var repeatDelay:Float;
 	
 	/**
+	 * True if the Tween will use interpolation (i.e. is an Array to Array tween)
+	 */
+	var interpolate:Bool;
+	
+	/**
 	 * True if the Tween is set to yoyo, otherwise false.
 	 */
 	var yoyo:Bool;
+	
+	/**
+	 * The amount of time in ms between yoyos of this tween.
+	 */
+	var yoyoDelay:Float;
 	
 	/**
 	 * When a Tween is yoyoing this value holds if it's currently playing forwards (false) or in reverse (true).
@@ -76,7 +86,7 @@ extern class TweenData {
 	var inReverse:Bool;
 	
 	/**
-	 * The amount to delay by until the Tween starts (in ms).
+	 * The amount to delay by until the Tween starts (in ms). Only applies to the start, use repeatDelay to handle repeats.
 	 */
 	var delay:Float;
 	
@@ -99,6 +109,11 @@ extern class TweenData {
 	 * The interpolation function used for the Tween.
 	 */
 	var interpolationFunction:Dynamic;
+	
+	/**
+	 * The interpolation function context used for the Tween.
+	 */
+	var interpolationContext:Dynamic;
 	
 	/**
 	 * If the tween is running this is set to true. Unless Phaser.Tween a TweenData that is waiting for a delay to expire is <em>not</em> considered as running.

@@ -4,6 +4,11 @@ package phaser.gameobjects;
 extern class Button extends phaser.gameobjects.Image {
 	
 	/**
+	 * The const physics body type of this object.
+	 */
+	var physicsType(default, null):Float;
+	
+	/**
 	 * The name or ID of the Over state frame.
 	 */
 	var onOverFrame:Dynamic;

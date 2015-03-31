@@ -19,19 +19,6 @@ extern class Pixi {
 	static var VERSION:String;
 	
 	/**
-	 * Various blend modes supported by pixi.
-	 */
-	static var blendModes:Float;
-	
-	/**
-	 * The scale modes that are supported by pixi.
-	 * 
-	 * The DEFAULT scale mode affects the default scaling mode of future operations.
-	 * It can be re-assigned to either LINEAR or NEAREST, depending upon suitability.
-	 */
-	static var scaleModes:Float;
-	
-	/**
 	 * @property {Number} PI_2
 	 */
 	static var PI_2:Float;
@@ -50,11 +37,6 @@ extern class Pixi {
 	 * @property {String} RETINA_PREFIX
 	 */
 	static var RETINA_PREFIX:String;
-	
-	/**
-	 * If true the default pixi startup (console) banner message will be suppressed.
-	 */
-	static var dontSayHello:Bool;
 	
 	/**
 	 * The default render options if none are supplied to

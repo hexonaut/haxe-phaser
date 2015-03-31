@@ -27,6 +27,11 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	var type:Int;
 	
 	/**
+	 * The const physics body type of this object.
+	 */
+	var physicsType(default, null):Float;
+	
+	/**
 	 * The alive property is useful for Groups that are children of other Groups and need to be included/excluded in checks like forEachAlive.
 	 */
 	var alive:Bool;
@@ -50,16 +55,11 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	var classType:Dynamic;
 	
 	/**
-	 * The current display object that the group cursor is pointing to, if any. (Can be set manully.)
+	 * The current display object that the group cursor is pointing to, if any. (Can be set manually.)
 	 * 
 	 * The cursor is a way to iterate through the children in a Group using {@link #next} and {@link #previous}.
 	 */
 	var cursor:Dynamic;
-	
-	/**
-	 * If this object is {@link #fixedToCamera} then this stores the x/y position offset relative to the top-left of the camera view.
-	 */
-	var cameraOffset:phaser.geom.Point;
 	
 	/**
 	 * If true all Sprites created by, or added to this group, will have a physics body enabled on them.
@@ -88,24 +88,33 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	var onDestroy:phaser.core.Signal;
 	
 	/**
+	 * The current index of the Group cursor. Advance it with Group.next.
+	 */
+	var cursorIndex:Int;
+	
+	/**
+	 * A Group that is fixed to the camera uses its x/y coordinates as offsets from the top left of the camera. These are stored in Group.cameraOffset.
+	 * 
+	 * Note that the cameraOffset values are in addition to any parent in the display list.
+	 * So if this Group was in a Group that has x: 200, then this will be added to the cameraOffset.x
+	 */
+	var fixedToCamera:Bool;
+	
+	/**
+	 * If this object is {@link #fixedToCamera} then this stores the x/y position offset relative to the top-left of the camera view.
+	 * If the parent of this Group is also fixedToCamera then the offset here is in addition to that and should typically be disabled.
+	 */
+	var cameraOffset:phaser.geom.Point;
+	
+	/**
+	 * An internal array used by physics for fast non z-index destructive sorting.
+	 */
+	var hash:Array<Dynamic>;
+	
+	/**
 	 * The property on which children are sorted.
 	 */
 	var sortProperty:String;
-	
-	/**
-	 * A small internal cache:
-	 * 0 = previous position.x
-	 * 1 = previous position.y
-	 * 2 = previous rotation
-	 * 3 = renderID
-	 * 4 = fresh? (0 = no, 1 = yes)
-	 * 5 = outOfBoundsFired (0 = no, 1 = yes)
-	 * 6 = exists (0 = no, 1 = yes)
-	 * 7 = fixed to camera (0 = no, 1 = yes)
-	 * 8 = cursor index
-	 * 9 = sort order
-	 */
-	var cache:Array<Dynamic>;
 	
 	/**
 	 * Adds an existing object as the top child in this group.
@@ -377,9 +386,9 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	 * <pre>Group.forEach(awardBonusGold, this, true, 100, 500)
 	 * </pre>
 	 * 
-	 * would invoke thee awardBonusGolds with the parameters (child, 100, 500).
+	 * would invoke awardBonusGold function with the parameters (child, 100, 500).
 	 * 
-	 * Note: Currently this will skip any children which are Groups themselves.
+	 * Note: This check will skip any children which are Groups themselves.
 	 */
 	function forEach (callback:Dynamic, callbackContext:Dynamic, ?checkExists:Bool = false, ?args0:Dynamic, ?args1:Dynamic, ?args2:Dynamic, ?args3:Dynamic, ?args4:Dynamic):Void;
 	
@@ -546,15 +555,5 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	 * and on-screen orientation and position.
 	 */
 	var angle:Float;
-	
-	/**
-	 * Is this group fixed to the camera?
-	 * 
-	 * A Group that is fixed to the camera uses its x/y coordinates as offsets from the top left of the camera.
-	 * 
-	 * These are stored in {@link #cameraOffset} and are in addition to any parent in the display list.
-	 * So if this group was in a Group that has x: 200, then this will be added to the cameraOffset.x
-	 */
-	var fixedToCamera:Bool;
 	
 }

@@ -23,11 +23,6 @@ extern class Polygon {
 	function new (?points0:Float, ?points1:Float, ?points2:Float, ?points3:Float, ?points4:Float);
 	
 	/**
-	 * The base object type.
-	 */
-	var type:Float;
-	
-	/**
 	 * The area of this Polygon.
 	 */
 	var area:Float;
@@ -41,6 +36,21 @@ extern class Polygon {
 	 * Is the Polygon closed or not?
 	 */
 	var closed:Bool;
+	
+	/**
+	 * The base object type.
+	 */
+	var type:Float;
+	
+	/**
+	 * Export the points as an array of flat numbers, following the sequence [ x,y, x,y, x,y ]
+	 */
+	function toNumberArray (?output:Array<Dynamic>):Array<Dynamic>;
+	
+	/**
+	 * Flattens this Polygon so the points are a sequence of numbers. Any Point objects found are removed and replaced with two numbers.
+	 */
+	function flatten ():phaser.geom.Polygon;
 	
 	/**
 	 * Creates a copy of the given Polygon.
@@ -83,11 +93,6 @@ extern class Polygon {
 	 * Sets and modifies the points of this polygon.
 	 * 
 	 * See {@link Phaser.Polygon#setTo setTo} for the different kinds of arrays formats that can be assigned.
-	 */
-	var points:Dynamic;
-	
-	/**
-	 * Sets and modifies the points of this polygon.
 	 */
 	var points:Dynamic;
 	

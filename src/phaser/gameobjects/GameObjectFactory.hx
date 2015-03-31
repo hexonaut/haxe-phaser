@@ -4,10 +4,10 @@ package phaser.gameobjects;
 extern class GameObjectFactory {
 	
 	/**
-	 * The GameObjectFactory is a quick way to create mamy common game objects
+	 * The GameObjectFactory is a quick way to create many common game objects
 	 * using {@linkcode Phaser.Game#add game.add}.
 	 * 
-	 * Created objects are <em>automtically added</em> to the appropriate Manager, World, or manually specified parent Group.
+	 * Created objects are <em>automatically added</em> to the appropriate Manager, World, or manually specified parent Group.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -150,7 +150,7 @@ extern class GameObjectFactory {
 	 * 
 	 * A particle emitter can be used for one-time explosions or for
 	 * continuous effects like rain and fire. All it really does is launch Particle objects out
-	 * at set intervals, and fixes their positions and velocities accorindgly.
+	 * at set intervals, and fixes their positions and velocities accordingly.
 	 */
 	function emitter (?x:Float = 0, ?y:Float = 0, ?maxParticles:Float = 50):Dynamic;
 	

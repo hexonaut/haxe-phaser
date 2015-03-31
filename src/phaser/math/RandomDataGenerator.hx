@@ -5,8 +5,13 @@ extern class RandomDataGenerator {
 	
 	/**
 	 * An extremely useful repeatable random data generator.
+	 * 
 	 * Based on Nonsense by Josh Faul <a href='https://github.com/jocafa/Nonsense'>https://github.com/jocafa/Nonsense</a>.
-	 * Random number generator from <a href='http://baagoe.org/en/wiki/Better_random_numbers_for_javascript'>http://baagoe.org/en/wiki/Better_random_numbers_for_javascript</a>
+	 * 
+	 * The random number genererator is based on the Alea PRNG, but is modified.
+	 *  - <a href='https://github.com/coverslide/node-alea'>https://github.com/coverslide/node-alea</a>
+	 *  - <a href='https://github.com/nquinlan/better-random-numbers-for-javascript-mirror'>https://github.com/nquinlan/better-random-numbers-for-javascript-mirror</a>
+	 *  - <a href='http://baagoe.org/en/wiki/Better_random_numbers_for_javascript'>http://baagoe.org/en/wiki/Better_random_numbers_for_javascript</a> (original, perm. 404)
 	 */
 	function new (?seeds:Dynamic);
 	
@@ -37,6 +42,8 @@ extern class RandomDataGenerator {
 	
 	/**
 	 * Reset the seed of the random data generator.
+	 * 
+	 * <em>Note</em>: the seed array is only processed up to the first undefined (or null) value, should such be present.
 	 */
 	function sow (seeds:Dynamic):Void;
 	

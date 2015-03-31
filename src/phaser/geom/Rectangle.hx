@@ -30,6 +30,11 @@ extern class Rectangle {
 	var height:Float;
 	
 	/**
+	 * The const type of this object.
+	 */
+	var type(default, null):Float;
+	
+	/**
 	 * Adjusts the location of the Rectangle object, as determined by its top-left corner, by the specified amounts.
 	 */
 	function offset (dx:Float, dy:Float):phaser.geom.Rectangle;
@@ -112,10 +117,10 @@ extern class Rectangle {
 	function intersection (b:phaser.geom.Rectangle, out:phaser.geom.Rectangle):phaser.geom.Rectangle;
 	
 	/**
-	 * Determines whether the two Rectangles intersect with each other.
-	 * This method checks the x, y, width, and height properties of the Rectangles.
+	 * Determines whether this Rectangle and another given Rectangle intersect with each other.
+	 * This method checks the x, y, width, and height properties of the two Rectangles.
 	 */
-	function intersects (b:phaser.geom.Rectangle, tolerance:Float):Bool;
+	function intersects (b:phaser.geom.Rectangle):Bool;
 	
 	/**
 	 * Determines whether the coordinates given intersects (overlaps) with this Rectangle.

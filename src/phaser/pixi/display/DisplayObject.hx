@@ -59,11 +59,6 @@ extern class DisplayObject {
 	var hitArea:Dynamic;
 	
 	/**
-	 * This is used to indicate if the displayObject should display a mouse hand cursor on rollover
-	 */
-	var buttonMode:Bool;
-	
-	/**
 	 * Can this object be rendered
 	 */
 	var renderable:Bool;
@@ -82,16 +77,6 @@ extern class DisplayObject {
 	 * [read-only] The multiplied alpha of the displayObject
 	 */
 	var worldAlpha:Float;
-	
-	/**
-	 * [read-only] Whether or not the object is interactive, do not toggle directly! use the interactive property
-	 */
-	var interactive:Bool;
-	
-	/**
-	 * This is the cursor that will be used when the mouse is over this object. To enable this the element must have interaction = true and buttonMode = true
-	 */
-	var defaultCursor:String;
 	
 	/**
 	 * [read-only] Current transform of the object based on world (parent) factors
@@ -125,6 +110,11 @@ extern class DisplayObject {
 	var currentBounds:Dynamic;
 	
 	/**
+	 * The original, cached mask of the object
+	 */
+	var mask:Dynamic;
+	
+	/**
 	 * Cached internal flag.
 	 */
 	var cacheAsBitmap:Bool;
@@ -138,13 +128,6 @@ extern class DisplayObject {
 	 * [read-only] Indicates if the sprite is globally visible.
 	 */
 	var worldVisible:Bool;
-	
-	/**
-	 * Sets a mask for the displayObject. A mask is an object that limits the visibility of an object to the shape of the mask applied to it.
-	 * In PIXI a regular mask must be a PIXI.Graphics object. This allows for much faster masking in canvas as it utilises shape clipping.
-	 * To remove a mask, set this property to null.
-	 */
-	var mask:Dynamic;
 	
 	/**
 	 * Sets the filters for the displayObject.

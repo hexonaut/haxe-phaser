@@ -150,6 +150,31 @@ extern class World {
 	var _collisionGroupID:Float;
 	
 	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsLeft:Bool;
+	
+	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsRight:Bool;
+	
+	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsTop:Bool;
+	
+	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsBottom:Bool;
+	
+	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsOwnGroup:Bool;
+	
+	/**
 	 * This will add a P2 Physics body into the removal list for the next step.
 	 */
 	function removeBodyNextStep (body:phaser.physics.p2.Body):Void;
@@ -229,6 +254,10 @@ extern class World {
 	/**
 	 * Sets the bounds of the Physics world to match the given world pixel dimensions.
 	 * You can optionally set which 'walls' to create: left, right, top or bottom.
+	 * If none of the walls are given it will default to use the walls settings it had previously.
+	 * I.e. if you previously told it to not have the left or right walls, and you then adjust the world size
+	 * the newly created bounds will also not have the left and right walls.
+	 * Explicitly state them in the parameters to override this.
 	 */
 	function setBounds (x:Float, y:Float, width:Float, height:Float, ?left:Bool = true, ?right:Bool = true, ?top:Bool = true, ?bottom:Bool = true, ?setCollisionGroup:Bool = true):Void;
 	

@@ -80,8 +80,10 @@ extern class AnimationManager {
 	function validateFrames (frames:Array<Dynamic>, ?useNumericIndex:Bool = true):Bool;
 	
 	/**
-	 * Play an animation based on the given key. The animation should previously have been added via sprite.animations.add()
-	 * If the requested animation is already playing this request will be ignored. If you need to reset an already running animation do so directly on the Animation object itself.
+	 * Play an animation based on the given key. The animation should previously have been added via animations.add
+	 * 
+	 * If the requested animation is already playing this request will be ignored. 
+	 * If you need to reset an already running animation do so directly on the Animation object itself.
 	 */
 	function play (name:String, ?frameRate:Float, ?loop:Bool = false, ?killOnComplete:Bool = false):phaser.animation.Animation;
 	

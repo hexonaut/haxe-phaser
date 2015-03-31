@@ -103,16 +103,18 @@ extern class InputHandler {
 	/**
 	 * Set to true to use pixel perfect hit detection when checking if the pointer is over this Sprite.
 	 * The x/y coordinates of the pointer are tested against the image in combination with the InputHandler.pixelPerfectAlpha value.
+	 * This feature only works for display objects with image based textures such as Sprites. It won't work on BitmapText or Rope.
 	 * Warning: This is expensive, especially on mobile (where it's not even needed!) so only enable if required. Also see the less-expensive InputHandler.pixelPerfectClick.
 	 */
-	var pixelPerfectOver:Float;
+	var pixelPerfectOver:Bool;
 	
 	/**
 	 * Set to true to use pixel perfect hit detection when checking if the pointer is over this Sprite when it's clicked or touched.
 	 * The x/y coordinates of the pointer are tested against the image in combination with the InputHandler.pixelPerfectAlpha value.
+	 * This feature only works for display objects with image based textures such as Sprites. It won't work on BitmapText or Rope.
 	 * Warning: This is expensive so only enable if you really need it.
 	 */
-	var pixelPerfectClick:Float;
+	var pixelPerfectClick:Bool;
 	
 	/**
 	 * The alpha tolerance threshold. If the alpha value of the pixel matches or is above this value, it's considered a hit.
@@ -135,7 +137,7 @@ extern class InputHandler {
 	var boundsSprite:phaser.gameobjects.Sprite;
 	
 	/**
-	 * If this object is set to consume the pointer event then it will stop all propogation from this object on.
+	 * If this object is set to consume the pointer event then it will stop all propagation from this object on.
 	 * For example if you had a stack of 6 sprites with the same priority IDs and one consumed the event, none of the others would receive it.
 	 */
 	var consumePointerEvent:Bool;
@@ -144,6 +146,26 @@ extern class InputHandler {
 	 * EXPERIMENTAL: Please do not use this property unless you know what it does. Likely to change in the future.
 	 */
 	var scaleLayer:Bool;
+	
+	/**
+	 * The offset from the Sprites position that dragging takes place from.
+	 */
+	var dragOffset:phaser.geom.Point;
+	
+	/**
+	 * Is the Sprite dragged from its center, or the point at which the Pointer was pressed down upon it?
+	 */
+	var dragFromCenter:Bool;
+	
+	/**
+	 * The Point from which the most recent drag started from. Useful if you need to return an object to its starting position.
+	 */
+	var dragStartPoint:phaser.geom.Point;
+	
+	/**
+	 * Internal cache var.
+	 */
+	var _dragPoint:phaser.geom.Point;
 	
 	/**
 	 * Internal cache var.

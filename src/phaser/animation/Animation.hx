@@ -5,6 +5,7 @@ extern class Animation {
 	
 	/**
 	 * An Animation instance contains a single animation and the controls to play it.
+	 * 
 	 * It is created by the AnimationManager, consists of Animation.Frame objects and belongs to a single Game Object such as a Sprite.
 	 */
 	@:overload(function (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, ?frameRate:Float = 60, ?loop:Bool = false, ?loop:Bool):Void {})
@@ -151,6 +152,14 @@ extern class Animation {
 	 * Updates this animation. Called automatically by the AnimationManager.
 	 */
 	function update ():Void;
+	
+	/**
+	 * Changes the currentFrame per the _frameIndex, updates the display state,
+	 * and triggers the update signal.
+	 * 
+	 * Returns true if the current frame update was 'successful', false otherwise.
+	 */
+	function updateCurrentFrame (signalUpdate:Dynamic):Void;
 	
 	/**
 	 * Advances by the given number of frames in the Animation, taking the loop value into consideration.

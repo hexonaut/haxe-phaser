@@ -94,6 +94,16 @@ extern class Device {
 	var canvas:Bool;
 	
 	/**
+	 * True if canvas supports a 'copy' bitblt onto itself when the source and destination regions overlap.
+	 */
+	var canvasBitBltShift:Dynamic;
+	
+	/**
+	 * Is webGL available?
+	 */
+	var webGL:Bool;
+	
+	/**
 	 * Is file available?
 	 */
 	var file:Bool;
@@ -107,11 +117,6 @@ extern class Device {
 	 * Is localStorage available?
 	 */
 	var localStorage:Bool;
-	
-	/**
-	 * Is webGL available?
-	 */
-	var webGL:Bool;
 	
 	/**
 	 * Is worker available?

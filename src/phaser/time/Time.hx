@@ -7,7 +7,7 @@ extern class Time {
 	 * This is the core internal game clock.
 	 * 
 	 * It manages the elapsed time and calculation of elapsed values, used for game object motion and tweens,
-	 * and also handlers the standard Timer pool.
+	 * and also handles the standard Timer pool.
 	 * 
 	 * To create a general timed event, use the master {@link Phaser.Timer} accessible through {@link Phaser.Time.events events}.
 	 */
@@ -32,7 +32,7 @@ extern class Time {
 	 * An increasing value representing cumulative milliseconds since an undisclosed epoch.
 	 * 
 	 * While this value is in milliseconds and can be used to compute time deltas,
-	 * it must must <em>not</em> be used with Date.now() as it may not use the same epoch / starting reference. 
+	 * it must must <em>not</em> be used with Date.now() as it may not use the same epoch / starting reference.
 	 * 
 	 * The source may either be from a high-res source (eg. if RAF is available) or the standard Date.now;
 	 * the value can only be relied upon within a particular game instance.
@@ -148,7 +148,7 @@ extern class Time {
 	var msMax:Float;
 	
 	/**
-	 * Records how long the game was last paused, in miliseconds.
+	 * Records how long the game was last paused, in milliseconds.
 	 * (This is not updated until the game is resumed.)
 	 */
 	var pauseDuration:Float;

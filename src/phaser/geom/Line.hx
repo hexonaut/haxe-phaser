@@ -19,6 +19,11 @@ extern class Line {
 	var end:phaser.geom.Point;
 	
 	/**
+	 * The const type of this object.
+	 */
+	var type(default, null):Float;
+	
+	/**
 	 * Sets the components of the Line to the specified values.
 	 */
 	function setTo (?x1:Float = 0, ?y1:Float = 0, ?x2:Float = 0, ?y2:Float = 0):phaser.geom.Line;
@@ -30,11 +35,22 @@ extern class Line {
 	function fromSprite (startSprite:phaser.gameobjects.Sprite, endSprite:phaser.gameobjects.Sprite, ?useCenter:Bool = false):phaser.geom.Line;
 	
 	/**
+	 * Sets this line to start at the given x and y coordinates and for the segment to extend at angle for the given length.
+	 */
+	function fromAngle (x:Float, y:Float, angle:Float, length:Float):phaser.geom.Line;
+	
+	/**
 	 * Checks for intersection between this line and another Line.
 	 * If asSegment is true it will check for segment intersection. If asSegment is false it will check for line intersection.
 	 * Returns the intersection segment of AB and EF as a Point, or null if there is no intersection.
 	 */
 	function intersects (line:phaser.geom.Line, ?asSegment:Bool = true, ?result:phaser.geom.Point):phaser.geom.Point;
+	
+	/**
+	 * Returns the reflected angle between two lines.
+	 * This is the outgoing angle based on the angle of this line and the normalAngle of the given line.
+	 */
+	function reflect (line:phaser.geom.Line):Float;
 	
 	/**
 	 * Tests if the given coordinates fall on this line. See pointOnSegment to test against just the line segment.
@@ -118,11 +134,27 @@ extern class Line {
 	var height(default, null):Float;
 	
 	/**
+	 * @name Phaser.Line#normalX
+	 */
+	var normalX(default, null):Float;
+	
+	/**
+	 * @name Phaser.Line#normalY
+	 */
+	var normalY(default, null):Float;
+	
+	/**
+	 * @name Phaser.Line#normalAngle
+	 */
+	var normalAngle(default, null):Float;
+	
+	/**
 	 * Checks for intersection between two lines as defined by the given start and end points.
 	 * If asSegment is true it will check for line segment intersection. If asSegment is false it will check for line intersection.
 	 * Returns the intersection segment of AB and EF as a Point, or null if there is no intersection.
 	 * Adapted from code by Keith Hair
 	 */
-	function intersectsPoints (a:phaser.geom.Point, b:phaser.geom.Point, e:phaser.geom.Point, f:phaser.geom.Point, ?asSegment:Bool = true, ?result:phaser.geom.Point):phaser.geom.Point;
+	@:overload(function (a:phaser.geom.Point, b:phaser.geom.Point, e:phaser.geom.Point, f:phaser.geom.Point, ?asSegment:Bool = true, ?result:phaser.geom.Point):phaser.geom.Point {})
+	function intersectsPoints (a:phaser.geom.Point, b:phaser.geom.Point, e:phaser.geom.Point, f:phaser.geom.Point, ?asSegment:Bool = true, ?result:Dynamic):phaser.geom.Point;
 	
 }

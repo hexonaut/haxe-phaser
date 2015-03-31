@@ -69,29 +69,29 @@ extern class ScaleManager {
 	
 	/**
 	 * Minimum width the canvas should be scaled to (in pixels).
-	 * Change with setMinMax.
+	 * Change with {@link #setMinMax}.
 	 */
-	var minWidth(default, null):Float;
+	var minWidth(default, null):Dynamic;
 	
 	/**
 	 * Maximum width the canvas should be scaled to (in pixels).
 	 * If null it will scale to whatever width the browser can handle.
-	 * Change with setMinMax.
+	 * Change with {@link #setMinMax}.
 	 */
-	var maxWidth(default, null):Float;
+	var maxWidth(default, null):Dynamic;
 	
 	/**
 	 * Minimum height the canvas should be scaled to (in pixels).
-	 * Change with setMinMax.
+	 * Change with {@link #setMinMax}.
 	 */
-	var minHeight(default, null):Float;
+	var minHeight(default, null):Dynamic;
 	
 	/**
 	 * Maximum height the canvas should be scaled to (in pixels).
 	 * If null it will scale to whatever height the browser can handle.
-	 * Change with setMinMax.
+	 * Change with {@link #setMinMax}.
 	 */
-	var maxHeight(default, null):Float;
+	var maxHeight(default, null):Dynamic;
 	
 	/**
 	 * The offset coordinates of the Display canvas from the top-left of the browser window.
@@ -101,30 +101,30 @@ extern class ScaleManager {
 	
 	/**
 	 * If true, the game should only run in a landscape orientation.
-	 * Change with forceOrientation.
+	 * Change with {@link #forceOrientation}.
 	 */
 	var forceLandscape(default, null):Bool;
 	
 	/**
 	 * If true, the game should only run in a portrait 
-	 * Change with forceOrientation.
+	 * Change with {@link #forceOrientation}.
 	 */
 	var forcePortrait(default, null):Bool;
 	
 	/**
-	 * True if the forceLandscape or forcePortrait are set and do not agree with the browser orientation.
+	 * True if {@link #forceLandscape} or {@link #forcePortrait} are set and do not agree with the browser orientation.
 	 * 
 	 * This value is not updated immediately.
 	 */
 	var incorrectOrientation(default, null):Bool;
 	
 	/**
-	 * See pageAlignHorizontally.
+	 * See {@link #pageAlignHorizontally}.
 	 */
 	var pageAlignHorizontally:Bool;
 	
 	/**
-	 * See pageAlignVertically.
+	 * See {@link #pageAlignVertically}.
 	 */
 	var pageAlignVertically:Bool;
 	
@@ -150,7 +150,7 @@ extern class ScaleManager {
 	 * scale.incorrectOrientation &amp;&amp; !wasIncorrect
 	 * </pre>
 	 * 
-	 * It is possible that this signal is triggered after forceOrientation so the orientation
+	 * It is possible that this signal is triggered after {@link #forceOrientation} so the orientation
 	 * correctness changes even if the orientation itself does not change.
 	 * 
 	 * This is signaled from preUpdate (or pauseUpdate) <em>even when</em> the game is paused.
@@ -172,14 +172,14 @@ extern class ScaleManager {
 	var enterPortrait:phaser.core.Signal;
 	
 	/**
-	 * This signal is dispatched when the browser enters an incorrect orientation, as defined by forceOrientation.
+	 * This signal is dispatched when the browser enters an incorrect orientation, as defined by {@link #forceOrientation}.
 	 * 
 	 * This is signaled from preUpdate (or pauseUpdate) <em>even when</em> the game is paused.
 	 */
 	var enterIncorrectOrientation:phaser.core.Signal;
 	
 	/**
-	 * This signal is dispatched when the browser leaves an incorrect orientation, as defined by forceOrientation.
+	 * This signal is dispatched when the browser leaves an incorrect orientation, as defined by {@link #forceOrientation}.
 	 * 
 	 * This is signaled from preUpdate (or pauseUpdate) <em>even when</em> the game is paused.
 	 */
@@ -198,8 +198,8 @@ extern class ScaleManager {
 	var fullScreenTarget:Dynamic;
 	
 	/**
-	 * The fullscreen target, as created by createFullScreenTarget.
-	 * This is not set if fullScreenTarget is used and is cleared when fullscreen mode ends.
+	 * The fullscreen target, as created by {@link #createFullScreenTarget}.
+	 * This is not set if {@link #fullScreenTarget} is used and is cleared when fullscreen mode ends.
 	 */
 	var createdFullScreenTarget:Dynamic;
 	
@@ -209,15 +209,15 @@ extern class ScaleManager {
 	 * 
 	 * The signal is passed two arguments: scale (the ScaleManager), and an object in the form {targetElement: DOMElement}.
 	 * 
-	 * The targetElement is the {@link Phaser.ScaleManager#fullScreenTarget fullScreenTarget} element,
-	 * if such is assigned, or a new element created by {@link Phaser.ScaleManager#createFullScreenTarget createFullScreenTarget}.
+	 * The targetElement is the {@link #fullScreenTarget} element,
+	 * if such is assigned, or a new element created by {@link #createFullScreenTarget}.
 	 * 
 	 * Custom CSS styling or resets can be applied to targetElement as required.
 	 * 
-	 * If targetElement is <em>not</em> the same element as {@link Phaser.ScaleManager.fullScreenTarget}:
+	 * If targetElement is <em>not</em> the same element as {@link #fullScreenTarget}:
 	 * - After initialization the Display canvas is moved onto the targetElement for
 	 *   the duration of the fullscreen mode, and restored to it's original DOM location when fullscreen is exited.
-	 * - The targetElement is moved/reparanted within the DOM and may have its CSS styles updated.
+	 * - The targetElement is moved/re-parented within the DOM and may have its CSS styles updated.
 	 * 
 	 * The behavior of a pre-assigned target element is covered in {@link Phaser.ScaleManager#fullScreenTarget fullScreenTarget}.
 	 */
@@ -251,7 +251,7 @@ extern class ScaleManager {
 	
 	/**
 	 * This signal is dispatched when the browser fails to enter fullscreen mode;
-	 * or if the device does not support fullscreen mode and startFullScreen is invoked.
+	 * or if the device does not support fullscreen mode and {@link #startFullScreen} is invoked.
 	 */
 	var fullScreenFailed:phaser.core.Signal;
 	
@@ -308,9 +308,11 @@ extern class ScaleManager {
 	
 	/**
 	 * Various compatibility settings.
-	 * The (auto) value indicates the setting is configured based on device and runtime information.
+	 * A value of "(auto)" indicates the setting is configured based on device and runtime information.
+	 * 
+	 * A {@link #refresh} may need to be performed after making changes.
 	 */
-	var canExpandParent:Bool;
+	var compatibility:Dynamic;
 	
 	/**
 	 * Scale mode to be used when not in fullscreen.
@@ -323,15 +325,20 @@ extern class ScaleManager {
 	var fullScreenScaleMode:Float;
 	
 	/**
-	 * If the parent container of the game is the browser window (ie. document.body), rather than a div, this should set to true.
+	 * If the parent container of the Game canvas is the browser window itself (i.e. document.body),
+	 * rather than another div, this should set to true.
+	 * 
+	 * The {@link #parentNode} property is generally ignored while this is in effect.
 	 */
-	var parentIsWindow(default, null):Bool;
+	var parentIsWindow:Bool;
 	
 	/**
 	 * The <em>original</em> DOM element for the parent of the Display canvas.
-	 * This may be different in fullscreen - see createFullScreenTarget.
+	 * This may be different in fullscreen - see {@link #createFullScreenTarget}.
+	 * 
+	 * This should only be changed after moving the Game canvas to a different DOM parent.
 	 */
-	var parentNode(default, null):Dynamic;
+	var parentNode:Dynamic;
 	
 	/**
 	 * The scale of the game in relation to its parent container.
@@ -364,7 +371,7 @@ extern class ScaleManager {
 	var onResize:Dynamic;
 	
 	/**
-	 * The context in which the onResize callback will be called.
+	 * The context in which the {@link #onResize} callback will be called.
 	 */
 	var onResizeContext:Dynamic;
 	
@@ -374,7 +381,7 @@ extern class ScaleManager {
 	var fullScreenRestore:Dynamic;
 	
 	/**
-	 * The <em>actual</em> game dimensions, as initially set or set by setGameSize.
+	 * The <em>actual</em> game dimensions, as initially set or set by {@link #setGameSize}.
 	 */
 	var gameSize:phaser.geom.Rectangle;
 	
@@ -498,24 +505,24 @@ extern class ScaleManager {
 	/**
 	 * Sets the callback that will be invoked before sizing calculations.
 	 * 
-	 * This is the appropriate place to call setUserScale if needing custom dynamic scaling.
+	 * This is the appropriate place to call {@link #setUserScale} if needing custom dynamic scaling.
 	 * 
 	 * The callback is supplied with two arguments scale and parentBounds where scale is the ScaleManager
 	 * and parentBounds, a Phaser.Rectangle, is the size of the Parent element.
 	 * 
 	 * This callback
 	 * - May be invoked even though the parent container or canvas sizes have not changed
-	 * - Unlike onSizeChange, it runs <em>before</em> the canvas is guaranteed to be updated
+	 * - Unlike {@link #onSizeChange}, it runs <em>before</em> the canvas is guaranteed to be updated
 	 * - Will be invoked from preUpdate, <em>even when</em> the game is paused    
 	 * 
-	 * See onSizeChange for a better way of reacting to layout updates.
+	 * See {@link #onSizeChange} for a better way of reacting to layout updates.
 	 */
 	function setResizeCallback (callback:Dynamic, context:Dynamic):Void;
 	
 	/**
 	 * Signals a resize - IF the canvas or Game size differs from the last signal.
 	 * 
-	 * This also triggers updates on grid (FlexGrid) and, if in a RESIZE mode, game.state (StateManager).
+	 * This also triggers updates on {@link #grid} (FlexGrid) and, if in a RESIZE mode, game.state (StateManager).
 	 */
 	function signalSizeChange ():Void;
 	
@@ -545,7 +552,7 @@ extern class ScaleManager {
 	
 	/**
 	 * Update relevant scaling values based on the ScaleManager dimension and game dimensions,
-	 * which should already be set. This does not change sourceAspectRatio.
+	 * which should already be set. This does not change {@link #sourceAspectRatio}.
 	 */
 	function updateScalingAndBounds ():Void;
 	
@@ -553,6 +560,10 @@ extern class ScaleManager {
 	 * Force the game to run in only one orientation.
 	 * 
 	 * This enables generation of incorrect orientation signals and affects resizing but does not otherwise rotate or lock the orientation.
+	 * 
+	 * Orientation checks are performed via the Screen Orientation API, if available in browser. This means it will check your monitor
+	 * orientation on desktop, or your device orientation on mobile, rather than comparing actual game dimensions. If you need to check the 
+	 * viewport dimensions instead and bypass the Screen Orientation API then set: ScaleManager.compatibility.orientationFallback = 'viewport'
 	 */
 	function forceOrientation (forceLandscape:Bool, ?forcePortrait:Bool = false):Void;
 	
@@ -582,19 +593,20 @@ extern class ScaleManager {
 	function scrollTop ():Void;
 	
 	/**
-	 * The refresh methods informs the ScaleManager that a layout refresh is required.
+	 * The "refresh" methods informs the ScaleManager that a layout refresh is required.
 	 * 
 	 * The ScaleManager automatically queues a layout refresh (eg. updates the Game size or Display canvas layout)
 	 * when the browser is resized, the orientation changes, or when there is a detected change
 	 * of the Parent size. Refreshing is also done automatically when public properties,
-	 * such as scaleMode, are updated or state-changing methods are invoked.
+	 * such as {@link #scaleMode}, are updated or state-changing methods are invoked.
 	 * 
-	 * The refresh method <em>may</em> need to be used in a few (rare) situtations when
+	 * The "refresh" method <em>may</em> need to be used in a few (rare) situtations when
 	 * 
 	 * <ul>
 	 * <li>a device change event is not correctly detected; or</li>
 	 * <li>the Parent size changes (and an immediate reflow is desired); or</li>
-	 * <li>the ScaleManager state is updated by non-standard means.</li>
+	 * <li>the ScaleManager state is updated by non-standard means; or</li>
+	 * <li>certain {@link #compatibility} properties are manually changed.</li>
 	 * </ul>
 	 * 
 	 * The queued layout refresh is not immediate but will run promptly in an upcoming preRender.
@@ -609,10 +621,10 @@ extern class ScaleManager {
 	/**
 	 * Returns the computed Parent size/bounds that the Display canvas is allowed/expected to fill.
 	 * 
-	 * If in fullscreen mode or without parent (see {@link Phaser.ScaleManager#parentIsWindow parentIsWindow}),
+	 * If in fullscreen mode or without parent (see {@link #parentIsWindow}),
 	 * this will be the bounds of the visual viewport itself.
 	 * 
-	 * This function takes the windowConstraints into consideration - if the parent is partially outside
+	 * This function takes the {@link #windowConstraints} into consideration - if the parent is partially outside
 	 * the viewport then this function may return a smaller than expected size.
 	 * 
 	 * Values are rounded to the nearest pixel.
@@ -667,15 +679,15 @@ extern class ScaleManager {
 	
 	/**
 	 * Updates the width/height such that the game is stretched to the available size.
-	 * Honors maxWidth and maxHeight when <em>not</em> in fullscreen.
+	 * Honors {@link #maxWidth} and {@link #maxHeight} when <em>not</em> in fullscreen.
 	 */
 	function setExactFit ():Void;
 	
 	/**
 	 * Creates a fullscreen target. This is called automatically as as needed when entering
-	 * fullscreen mode and the resulting element is supplied to onFullScreenInit.
+	 * fullscreen mode and the resulting element is supplied to {@link #onFullScreenInit}.
 	 * 
-	 * Use {@link Phaser.ScaleManager#onFullScreenInit onFullScreenInit} to customize the created object.
+	 * Use {@link #onFullScreenInit} to customize the created object.
 	 */
 	function createFullScreenTarget ():Void;
 	
@@ -683,10 +695,10 @@ extern class ScaleManager {
 	 * Start the browsers fullscreen mode - this <em>must</em> be called from a user input Pointer or Mouse event.
 	 * 
 	 * The Fullscreen API must be supported by the browser for this to work - it is not the same as setting
-	 * the game size to fill the browser window. See compatibility.supportsFullScreen to check if the current
+	 * the game size to fill the browser window. See {@link Phaser.ScaleManager#compatibility compatibility.supportsFullScreen} to check if the current
 	 * device is reported to support fullscreen mode.
 	 * 
-	 * The fullScreenFailed signal will be dispatched if the fullscreen change request failed or the game does not support the Fullscreen API.
+	 * The {@link #fullScreenFailed} signal will be dispatched if the fullscreen change request failed or the game does not support the Fullscreen API.
 	 */
 	function startFullScreen (?antialias:Bool, ?allowTrampoline:Bool):Bool;
 	
@@ -746,7 +758,7 @@ extern class ScaleManager {
 	/**
 	 * The DOM element that is considered the Parent bounding element, if any.
 	 * 
-	 * This null if parentIsWindow is true or if fullscreen mode is entered and fullScreenTarget is specified.
+	 * This null if {@link #parentIsWindow} is true or if fullscreen mode is entered and {@link #fullScreenTarget} is specified.
 	 * It will also be null if there is no game canvas or if the game canvas has no parent.
 	 */
 	var boundingParent(default, null):Dynamic;
@@ -764,7 +776,7 @@ extern class ScaleManager {
 	var isFullScreen(default, null):Bool;
 	
 	/**
-	 * Returns true if the browser is in portrait mode.
+	 * Returns true if the screen orientation is in portrait mode.
 	 */
 	var isPortrait(default, null):Bool;
 	
@@ -774,8 +786,24 @@ extern class ScaleManager {
 	var isLandscape(default, null):Bool;
 	
 	/**
-	 * The <em>last known</em> orientation value of the game. A value of 90 is landscape and 0 is portrait.
+	 * The <em>last known</em> orientation value of the screen. A value of 90 is landscape and 0 is portrait.
 	 */
 	var orientation(default, null):Int;
+	
+	/**
+	 * Returns true if the game dimensions are portrait (height > width).
+	 * This is especially useful to check when using the RESIZE scale mode 
+	 * but wanting to maintain game orientation on desktop browsers, 
+	 * where typically the screen orientation will always be landscape regardless of the browser viewport.
+	 */
+	var isGamePortrait(default, null):Bool;
+	
+	/**
+	 * Returns true if the game dimensions are landscape (width > height).
+	 * This is especially useful to check when using the RESIZE scale mode 
+	 * but wanting to maintain game orientation on desktop browsers, 
+	 * where typically the screen orientation will always be landscape regardless of the browser viewport.
+	 */
+	var isGameLandscape(default, null):Bool;
 	
 }

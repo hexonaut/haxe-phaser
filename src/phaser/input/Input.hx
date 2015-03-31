@@ -52,7 +52,7 @@ extern class Input {
 	var enabled:Bool;
 	
 	/**
-	 * Controls the expected behaviour when using a mouse and touch together on a multi-input device.
+	 * Controls the expected behavior when using a mouse and touch together on a multi-input device.
 	 */
 	var multiInputOverride:Float;
 	

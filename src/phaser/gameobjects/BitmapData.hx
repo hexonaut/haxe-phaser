@@ -331,6 +331,15 @@ extern class BitmapData {
 	function draw (source:phaser.gameobjects.Text, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
+	 * Draws the immediate children of a Phaser.Group to this BitmapData.
+	 * Children are only drawn if they have their exists property set to true.
+	 * The children will be drawn at their x and y world space coordinates. If this is outside the bounds of the BitmapData they won't be drawn.
+	 * When drawing it will take into account the child's rotation, scale and alpha values.
+	 * No iteration takes place. Groups nested inside other Groups will not be iterated through.
+	 */
+	function drawGroup (group:phaser.core.Group, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
+	
+	/**
 	 * Sets the shadow properties of this BitmapDatas context which will affect all draw operations made to it.
 	 * You can cancel an existing shadow by calling this method and passing no parameters.
 	 * Note: At the time of writing (October 2014) Chrome still doesn't support shadowBlur used with drawImage.
@@ -406,6 +415,13 @@ extern class BitmapData {
 	 * Draws a filled Rectangle to the BitmapData at the given x, y coordinates and width / height in size.
 	 */
 	function rect (x:Float, y:Float, width:Float, height:Float, ?fillStyle:String):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Draws text to the BitmapData in the given font and color.
+	 * The default font is 14px Courier, so useful for quickly drawing debug text.
+	 * If you need to do a lot of font work to this BitmapData we'd recommend implementing your own text draw method.
+	 */
+	function text (text:String, x:Float, y:Float, font:String, ?color:String = 'rgb(255,255,255)', ?shadow:Bool = true):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Draws a filled Circle to the BitmapData at the given x, y coordinates and radius in size.
@@ -556,7 +572,7 @@ extern class BitmapData {
 	function blendLuminosity ():phaser.gameobjects.BitmapData;
 	
 	/**
-	 * @name Phaser.Sprite#smoothed
+	 * @memberof Phaser.BitmapData
 	 */
 	var smoothed:Bool;
 	

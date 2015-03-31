@@ -15,6 +15,11 @@ extern class State {
 	var game:phaser.core.Game;
 	
 	/**
+	 * The string based identifier given to the State when added into the State Manager.
+	 */
+	var key:String;
+	
+	/**
 	 * A reference to the GameObjectFactory which can be used to add new objects to the World.
 	 */
 	var add:phaser.gameobjects.GameObjectFactory;
@@ -93,6 +98,13 @@ extern class State {
 	 * A reference to the seeded and repeatable random data generator.
 	 */
 	var rnd:phaser.math.RandomDataGenerator;
+	
+	/**
+	 * init is the very first function called when your State starts up. It's called before preload, create or anything else.
+	 * If you need to route the game away to another State you could do so here, or if you need to prepare a set of variables
+	 * or objects before the preloading starts.
+	 */
+	function init ():Void;
 	
 	/**
 	 * preload is called first. Normally you'd use this to load your game assets (or those needed for the current State)

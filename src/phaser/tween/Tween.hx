@@ -51,11 +51,6 @@ extern class Tween {
 	var repeatCounter:Float;
 	
 	/**
-	 * The amount of time in ms between repeats of this tween and any child tweens.
-	 */
-	var repeatDelay:Float;
-	
-	/**
 	 * True if this Tween is ready to be deleted by the TweenManager.
 	 */
 	var pendingDelete(default, null):Bool;
@@ -112,7 +107,7 @@ extern class Tween {
 	var chainedTween:phaser.tween.Tween;
 	
 	/**
-	 * Is this Tween paused or not?
+	 * The current Tween child being run.
 	 */
 	var isPaused:Bool;
 	
@@ -169,26 +164,53 @@ extern class Tween {
 	function stop (?complete:Bool = false):phaser.tween.Tween;
 	
 	/**
+	 * Updates either a single TweenData or all TweenData objects properties to the given value.
+	 * Used internally by methods like Tween.delay, Tween.yoyo, etc. but can also be called directly if you know which property you want to tweak.
+	 * The property is not checked, so if you pass an invalid one you'll generate a run-time error.
+	 */
+	@:overload(function (property:String, value:Float, ?index:Float = 0):phaser.tween.Tween {})
+	function updateTweenData (property:String, value:Dynamic, ?index:Float = 0):phaser.tween.Tween;
+	
+	/**
 	 * Sets the delay in milliseconds before this tween will start. If there are child tweens it sets the delay before the first child starts.
 	 * The delay is invoked as soon as you call Tween.start. If the tween is already running this method doesn't do anything for the current active tween.
+	 * If you have not yet called Tween.to or Tween.from at least once then this method will do nothing, as there are no tweens to delay.
 	 * If you have child tweens and pass -1 as the index value it sets the delay across all of them.
 	 */
 	function delay (duration:Float, ?index:Float = 0):phaser.tween.Tween;
 	
 	/**
 	 * Sets the number of times this tween will repeat.
+	 * If you have not yet called Tween.to or Tween.from at least once then this method will do nothing, as there are no tweens to repeat.
 	 * If you have child tweens and pass -1 as the index value it sets the number of times they'll repeat across all of them.
 	 * If you wish to define how many times this Tween and all children will repeat see Tween.repeatAll.
 	 */
-	function repeat (total:Float, ?index:Float = 0):phaser.tween.Tween;
+	function repeat (total:Float, ?repeat:Float = 0, ?index:Float = 0):phaser.tween.Tween;
+	
+	/**
+	 * Sets the delay in milliseconds before this tween will repeat itself.
+	 * The repeatDelay is invoked as soon as you call Tween.start. If the tween is already running this method doesn't do anything for the current active tween.
+	 * If you have not yet called Tween.to or Tween.from at least once then this method will do nothing, as there are no tweens to set repeatDelay on.
+	 * If you have child tweens and pass -1 as the index value it sets the repeatDelay across all of them.
+	 */
+	function repeatDelay (duration:Float, ?index:Float = 0):phaser.tween.Tween;
 	
 	/**
 	 * A Tween that has yoyo set to true will run through from its starting values to its end values and then play back in reverse from end to start.
 	 * Used in combination with repeat you can create endless loops.
+	 * If you have not yet called Tween.to or Tween.from at least once then this method will do nothing, as there are no tweens to yoyo.
 	 * If you have child tweens and pass -1 as the index value it sets the yoyo property across all of them.
 	 * If you wish to yoyo this Tween and all of its children then see Tween.yoyoAll.
 	 */
-	function yoyo (enable:Bool, ?index:Float = 0):phaser.tween.Tween;
+	function yoyo (enable:Bool, ?yoyoDelay:Float = 0, ?index:Float = 0):phaser.tween.Tween;
+	
+	/**
+	 * Sets the delay in milliseconds before this tween will run a yoyo (only applies if yoyo is enabled).
+	 * The repeatDelay is invoked as soon as you call Tween.start. If the tween is already running this method doesn't do anything for the current active tween.
+	 * If you have not yet called Tween.to or Tween.from at least once then this method will do nothing, as there are no tweens to set repeatDelay on.
+	 * If you have child tweens and pass -1 as the index value it sets the repeatDelay across all of them.
+	 */
+	function yoyoDelay (duration:Float, ?index:Float = 0):phaser.tween.Tween;
 	
 	/**
 	 * Set easing function this tween will use, i.e. Phaser.Easing.Linear.None.
@@ -203,9 +225,9 @@ extern class Tween {
 	 * Sets the interpolation function the tween will use. By default it uses Phaser.Math.linearInterpolation.
 	 * Also available: Phaser.Math.bezierInterpolation and Phaser.Math.catmullRomInterpolation.
 	 * The interpolation function is only used if the target properties is an array.
-	 * If you have child tweens and pass -1 as the index value it sets the interpolation function across all of them.
+	 * If you have child tweens and pass -1 as the index value and it will set the interpolation function across all of them.
 	 */
-	function interpolation (interpolation:Dynamic, ?index:Float = 0):phaser.tween.Tween;
+	function interpolation (interpolation:Dynamic, ?context:Dynamic, ?index:Float = 0):phaser.tween.Tween;
 	
 	/**
 	 * This method allows you to chain tweens together. Any tween chained to this tween will have its Tween.start method called

@@ -50,7 +50,8 @@ extern class Body {
 	var allowRotation:Bool;
 	
 	/**
-	 * The amount the Body is rotated.
+	 * An Arcade Physics Body can have angularVelocity and angularAcceleration. Please understand that the collision Body
+	 * itself never rotates, it is always axis-aligned. However these values are passed up to the parent Sprite and updates its rotation.
 	 */
 	var rotation:Float;
 	
@@ -58,6 +59,16 @@ extern class Body {
 	 * The previous rotation of the physics body.
 	 */
 	var preRotation(default, null):Float;
+	
+	/**
+	 * The calculated width of the physics body.
+	 */
+	var width(default, null):Float;
+	
+	/**
+	 * The calculated height of the physics body.
+	 */
+	var height(default, null):Float;
 	
 	/**
 	 * The un-scaled original size.
@@ -70,37 +81,27 @@ extern class Body {
 	var sourceHeight(default, null):Float;
 	
 	/**
-	 * The calculated width of the physics body.
-	 */
-	var width:Float;
-	
-	/**
-	 * @property .numInternal ID cache
-	 */
-	var height:Dynamic;
-	
-	/**
 	 * The calculated width / 2 of the physics body.
 	 */
-	var halfWidth:Float;
+	var halfWidth(default, null):Float;
 	
 	/**
 	 * The calculated height / 2 of the physics body.
 	 */
-	var halfHeight:Float;
+	var halfHeight(default, null):Float;
 	
 	/**
 	 * The center coordinate of the Physics Body.
 	 */
-	var center:phaser.geom.Point;
+	var center(default, null):phaser.geom.Point;
 	
 	/**
-	 * The velocity in pixels per second sq. of the Body.
+	 * The velocity, or rate of change in speed of the Body. Measured in pixels per second.
 	 */
 	var velocity:phaser.geom.Point;
 	
 	/**
-	 * New velocity.
+	 * The new velocity. Calculated during the Body.preUpdate and applied to its position.
 	 */
 	var newVelocity(default, null):phaser.geom.Point;
 	
@@ -110,7 +111,7 @@ extern class Body {
 	var deltaMax:phaser.geom.Point;
 	
 	/**
-	 * The velocity in pixels per second sq. of the Body.
+	 * The acceleration is the rate of change of the velocity. Measured in pixels per second squared.
 	 */
 	var acceleration:phaser.geom.Point;
 	
@@ -130,7 +131,7 @@ extern class Body {
 	var gravity:phaser.geom.Point;
 	
 	/**
-	 * The elasticitiy of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
+	 * The elasticity of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
 	 */
 	var bounce:phaser.geom.Point;
 	
@@ -140,32 +141,37 @@ extern class Body {
 	var maxVelocity:phaser.geom.Point;
 	
 	/**
-	 * The angular velocity in pixels per second sq. of the Body.
+	 * The amount of movement that will occur if another object 'rides' this one.
+	 */
+	var friction:phaser.geom.Point;
+	
+	/**
+	 * The angular velocity controls the rotation speed of the Body. It is measured in radians per second.
 	 */
 	var angularVelocity:Float;
 	
 	/**
-	 * The angular acceleration in pixels per second sq. of the Body.
+	 * The angular acceleration is the rate of change of the angular velocity. Measured in radians per second squared.
 	 */
 	var angularAcceleration:Float;
 	
 	/**
-	 * The angular drag applied to the rotation of the Body.
+	 * The drag applied during the rotation of the Body.
 	 */
 	var angularDrag:Float;
 	
 	/**
-	 * The maximum angular velocity in pixels per second sq. that the Body can reach.
+	 * The maximum angular velocity in radians per second that the Body can reach.
 	 */
 	var maxAngular:Float;
 	
 	/**
-	 * The mass of the Body.
+	 * The mass of the Body. When two bodies collide their mass is used in the calculation to determine the exchange of velocity.
 	 */
 	var mass:Float;
 	
 	/**
-	 * The angle of the Body in radians as calculated by its velocity, rather than its visual angle.
+	 * The angle of the Body in radians, as calculated by its angularVelocity.
 	 */
 	var angle(default, null):Float;
 	
@@ -253,9 +259,9 @@ extern class Body {
 	var tilePadding:phaser.geom.Point;
 	
 	/**
-	 * Is this Body in a preUpdate (1) or postUpdate (2) state?
+	 * If this Body in a preUpdate (true) or postUpdate (false) state?
 	 */
-	var phase:Float;
+	var dirty:Bool;
 	
 	/**
 	 * If true and you collide this Sprite against a Group, it will disable the collision check from using a QuadTree.
@@ -303,7 +309,7 @@ extern class Body {
 	function postUpdate ():Void;
 	
 	/**
-	 * Removes this bodies reference to its parent sprite, freeing it up for gc.
+	 * Removes this body's reference to its parent sprite, freeing it up for gc.
 	 */
 	function destroy ():Void;
 	

@@ -22,6 +22,37 @@ extern class MSPointer {
 	var callbackContext:Dynamic;
 	
 	/**
+	 * A callback that can be fired on a MSPointerDown event.
+	 */
+	var pointerDownCallback:Dynamic;
+	
+	/**
+	 * A callback that can be fired on a MSPointerMove event.
+	 */
+	var pointerMoveCallback:Dynamic;
+	
+	/**
+	 * A callback that can be fired on a MSPointerUp event.
+	 */
+	var pointerUpCallback:Dynamic;
+	
+	/**
+	 * If true the Pointer events will have event.preventDefault applied to them, if false they will propagate fully.
+	 */
+	var capture:Bool;
+	
+	/**
+	 * The type of click, either: Phaser.Mouse.NO_BUTTON, Phaser.Mouse.LEFT_BUTTON, Phaser.Mouse.MIDDLE_BUTTON or Phaser.Mouse.RIGHT_BUTTON.
+	 */
+	var button:Float;
+	
+	/**
+	 * The browser MSPointer DOM event. Will be null if no event has ever been received.
+	 * Access this property only inside a Pointer event handler and do not keep references to it.
+	 */
+	var event:Dynamic;
+	
+	/**
 	 * MSPointer input will only be processed if enabled.
 	 */
 	var enabled:Bool;

@@ -45,7 +45,7 @@ extern class StateManager {
 	var _args:Dynamic;
 	
 	/**
-	 * The current active State object (defaults to null).
+	 * The current active State object.
 	 */
 	var current:String;
 	

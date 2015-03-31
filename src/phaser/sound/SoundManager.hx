@@ -51,6 +51,26 @@ extern class SoundManager {
 	var _sounds:Array<Dynamic>;
 	
 	/**
+	 * An array set containing all the sounds being monitored for decoding status.
+	 */
+	var _watchList:Dynamic;
+	
+	/**
+	 * Is the SoundManager monitoring the watchList?
+	 */
+	var _watching:Bool;
+	
+	/**
+	 * The callback to invoke once the watchlist is clear.
+	 */
+	var _watchCallback:Dynamic;
+	
+	/**
+	 * The context in which to call the watchlist callback.
+	 */
+	var _watchContext:Dynamic;
+	
+	/**
 	 * The AudioContext being used for playback.
 	 */
 	var context:Dynamic;
@@ -111,9 +131,18 @@ extern class SoundManager {
 	function resumeAll ():Void;
 	
 	/**
-	 * Decode a sound by its assets key.
+	 * Decode a sound by its asset key.
 	 */
 	function decode (key:String, ?sound:phaser.sound.Sound):Void;
+	
+	/**
+	 * This method allows you to give the SoundManager a list of Sound files, or keys, and a callback.
+	 * Once all of the Sound files have finished decoding the callback will be invoked.
+	 * The amount of time spent decoding depends on the codec used and file size.
+	 * If all of the files given have already decoded the callback is triggered immediately.
+	 */
+	@:overload(function (files:String, callback:Dynamic, callbackContext:Dynamic):Void {})
+	function setDecodedCallback (files:Array<Dynamic>, callback:Dynamic, callbackContext:Dynamic):Void;
 	
 	/**
 	 * Updates every sound in the game.

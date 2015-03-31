@@ -258,7 +258,7 @@ extern class Math {
 	function linear (p0:Float, p1:Float, t:Float):Float;
 	
 	/**
-	 * Calculates a callmum rom value.
+	 * Calculates a catmum rom value.
 	 */
 	function catmullRom (p0:Float, p1:Float, p2:Float, p3:Float, t:Float):Float;
 	
@@ -307,10 +307,10 @@ extern class Math {
 	function roundAwayFromZero (value:Float):Int;
 	
 	/**
-	 * Generate a sine and cosine table simultaneously and extremely quickly. Based on research by Franky of scene.at
-	 * 
-	 * The parameters allow you to specify the length, amplitude and frequency of the wave. Once you have called this function
-	 * you should get the results via getSinTable() and getCosTable(). This generator is fast enough to be used in real-time.
+	 * Generate a sine and cosine table simultaneously and extremely quickly.
+	 * The parameters allow you to specify the length, amplitude and frequency of the wave.
+	 * This generator is fast enough to be used in real-time.
+	 * Code based on research by Franky of scene.at
 	 */
 	function sinCosGenerator (length:Float, sinAmplitude:Float, cosAmplitude:Float, frequency:Float):Dynamic;
 	
@@ -325,7 +325,7 @@ extern class Math {
 	function shuffleArray (array:Dynamic):Dynamic;
 	
 	/**
-	 * Returns the distance between the two given set of coordinates.
+	 * Returns the euclidian distance between the two given set of coordinates.
 	 */
 	function distance (x1:Float, y1:Float, x2:Float, y2:Float):Float;
 	

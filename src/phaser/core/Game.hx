@@ -54,6 +54,11 @@ extern class Game {
 	var height(default, null):Int;
 	
 	/**
+	 * The resolution of your game. This value is read only, but can be changed at start time it via a game configuration object.
+	 */
+	var resolution(default, null):Int;
+	
+	/**
 	 * Private internal var.
 	 */
 	var _width:Int;
@@ -179,6 +184,11 @@ extern class Game {
 	var physics:phaser.physics.Physics;
 	
 	/**
+	 * Reference to the plugin manager.
+	 */
+	var plugins:phaser.core.PluginManager;
+	
+	/**
 	 * Instance of repeatable random data generator helper.
 	 */
 	var rnd:phaser.math.RandomDataGenerator;
@@ -267,31 +277,34 @@ extern class Game {
 	
 	/**
 	 * The ID of the current/last logic update applied this render frame, starting from 0.
-	 * 
 	 * The first update is currentUpdateID === 0 and the last update is currentUpdateID === updatesThisFrame.
 	 */
 	var currentUpdateID:Int;
 	
 	/**
-	 * Number of logic updates expected to occur this render frame;
-	 * will be 1 unless there are catch-ups required (and allowed).
+	 * Number of logic updates expected to occur this render frame; will be 1 unless there are catch-ups required (and allowed).
 	 */
 	var updatesThisFrame:Int;
 	
 	/**
-	 * accumulate elapsed time until a logic update is due
+	 * Accumulate elapsed time until a logic update is due.
 	 */
 	var _deltaTime:Float;
 	
 	/**
-	 * remember how many 'catch-up' iterations were used on the logicUpdate last frame
+	 * Remember how many 'catch-up' iterations were used on the logicUpdate last frame.
 	 */
 	var _lastCount:Float;
 	
 	/**
-	 * if the 'catch-up' iterations are spiralling out of control, this counter is incremented
+	 * If the 'catch-up' iterations are spiraling out of control, this counter is incremented.
 	 */
-	var _spiralling:Float;
+	var _spiraling:Float;
+	
+	/**
+	 * Force a logic update + render by default (always set on Boot and State swap)
+	 */
+	var _kickstart:Bool;
 	
 	/**
 	 * If the game is struggling to maintain the desired FPS, this signal will be dispatched.
@@ -305,11 +318,9 @@ extern class Game {
 	var forceSingleUpdate:Bool;
 	
 	/**
-	 * the soonest game.time.time value that the next fpsProblemNotifier can be dispatched
+	 * The soonest game.time.time value that the next fpsProblemNotifier can be dispatched.
 	 */
 	var _nextFpsNotification:Float;
-	
-	var plugins:PluginManager;
 	
 	/**
 	 * Parses a Game configuration object.

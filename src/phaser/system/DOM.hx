@@ -22,7 +22,7 @@ extern class DOM {
 	function getBounds (element:Dynamic, ?cushion:Float):Dynamic;
 	
 	/**
-	 * Calibrates element coordinates for inViewport checks.
+	 * Calibrates element coordinates for inLayoutViewport checks.
 	 */
 	function calibrate (coords:Dynamic, ?cushion:Float):Dynamic;
 	
@@ -37,11 +37,11 @@ extern class DOM {
 	 * 
 	 * The optional cushion parameter allows you to specify a distance.
 	 * 
-	 * inViewport(element, 100) is true if the element is in the viewport or 100px near it.
-	 * inViewport(element, -100) is true if the element is in the viewport or at least 100px near it.
+	 * inLayoutViewport(element, 100) is true if the element is in the viewport or 100px near it.
+	 * inLayoutViewport(element, -100) is true if the element is in the viewport or at least 100px near it.
 	 */
 	@:overload(function (element:Dynamic, ?cushion:Float):Bool {})
-	function inViewport (element:Dynamic, ?cushion:Float):Bool;
+	function inLayoutViewport (element:Dynamic, ?cushion:Float):Bool;
 	
 	/**
 	 * Returns the device screen orientation.

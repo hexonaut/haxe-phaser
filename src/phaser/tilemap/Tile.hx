@@ -29,6 +29,16 @@ extern class Tile {
 	var y:Float;
 	
 	/**
+	 * The rotation angle of this tile.
+	 */
+	var rotation:Float;
+	
+	/**
+	 * Whether this tile is flipped (mirrored) or not.
+	 */
+	var flipped:Bool;
+	
+	/**
 	 * The x map coordinate of this tile.
 	 */
 	var worldX:Float;

@@ -9,6 +9,13 @@ extern class Texture {
 	var TextureCache:Dynamic;
 	
 	/**
+	 * TextureSilentFail is a boolean that defaults to false. 
+	 * If true then PIXI.Texture.setFrame will no longer throw an error if the texture dimensions are incorrect. 
+	 * Instead Texture.valid will be set to false (#1556)
+	 */
+	var TextureSilentFail:Dynamic;
+	
+	/**
 	 * A texture stores the information that represents an image or part of an image. It cannot be added
 	 * to the display list directly. Instead use it as the texture for a PIXI.Sprite. If no frame is provided then the whole image is used.
 	 */

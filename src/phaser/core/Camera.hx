@@ -120,7 +120,10 @@ extern class Camera {
 	static var FOLLOW_TOPDOWN_TIGHT:Float;
 	
 	/**
-	 * Tells this camera which sprite to follow.
+	 * Tell the camera which sprite to follow.
+	 * 
+	 * If you find you're getting a slight "jitter" effect when following a Sprite it's probably to do with sub-pixel rendering of the Sprite position.
+	 * This can be disabled by setting game.renderer.renderSession.roundPixels = true to force full pixel rendering.
 	 */
 	@:overload(function (target:phaser.gameobjects.Sprite, ?style:Float):Void {})
 	@:overload(function (target:phaser.gameobjects.Image, ?style:Float):Void {})
@@ -159,7 +162,7 @@ extern class Camera {
 	/**
 	 * Method called to ensure the camera doesn't venture outside of the game world.
 	 */
-	function checkWorldBounds ():Void;
+	function checkBounds ():Void;
 	
 	/**
 	 * A helper function to set both the X and Y properties of the camera at once

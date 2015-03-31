@@ -30,12 +30,17 @@ extern class Circle {
 	var _radius:Float;
 	
 	/**
+	 * The const type of this object.
+	 */
+	var type(default, null):Float;
+	
+	/**
 	 * The circumference of the circle.
 	 */
 	function circumference ():Float;
 	
 	/**
-	 * Returns the framing rectangle of the circle as a Phaser.Rectangle object
+	 * Returns the framing rectangle of the circle as a Phaser.Rectangle object.
 	 */
 	function getBounds ():phaser.geom.Rectangle;
 	
