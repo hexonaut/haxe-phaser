@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.AutoCull")
-extern class AutoCull {
+extern interface AutoCull {
 	
 	/**
 	 * A Game Object with autoCull set to true will check its bounds against the World Camera every frame.

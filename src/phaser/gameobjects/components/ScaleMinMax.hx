@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.ScaleMinMax")
-extern class ScaleMinMax {
+extern interface ScaleMinMax {
 	
 	/**
 	 * The callback that will apply any scale limiting to the worldTransform.

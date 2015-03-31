@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.Bounds")
-extern class Bounds {
+extern interface Bounds {
 	
 	/**
 	 * The amount the Game Object is visually offset from its x coordinate.

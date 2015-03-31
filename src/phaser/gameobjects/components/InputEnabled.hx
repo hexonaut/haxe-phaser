@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.InputEnabled")
-extern class InputEnabled {
+extern interface InputEnabled {
 	
 	/**
 	 * The Input Handler for this Game Object.

@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.PhysicsBody")
-extern class PhysicsBody {
+extern interface PhysicsBody {
 	
 	/**
 	 * body is the Game Objects physics body. Once a Game Object is enabled for physics you access all associated 

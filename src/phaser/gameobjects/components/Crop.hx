@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.Crop")
-extern class Crop {
+extern interface Crop {
 	
 	/**
 	 * The Rectangle used to crop the texture this Game Object uses.

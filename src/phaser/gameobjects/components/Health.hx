@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.Health")
-extern class Health {
+extern interface Health {
 	
 	/**
 	 * The Game Objects health value. This is a handy property for setting and manipulating health on a Game Object.

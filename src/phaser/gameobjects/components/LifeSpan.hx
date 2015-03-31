@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.LifeSpan")
-extern class LifeSpan {
+extern interface LifeSpan {
 	
 	/**
 	 * A useful flag to control if the Game Object is alive or dead.

@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.Smoothed")
-extern class Smoothed {
+extern interface Smoothed {
 	
 	/**
 	 * Enable or disable texture smoothing for this Game Object.

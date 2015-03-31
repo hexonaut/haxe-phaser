@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.Angle")
-extern class Angle {
+extern interface Angle {
 	
 	/**
 	 * The angle property is the rotation of the Game Object in <em>degrees</em> from its original orientation.

@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.FixedToCamera")
-extern class FixedToCamera {
+extern interface FixedToCamera {
 	
 	/**
 	 * A Game Object that is "fixed" to the camera uses its x/y coordinates as offsets from the top left of the camera during rendering.

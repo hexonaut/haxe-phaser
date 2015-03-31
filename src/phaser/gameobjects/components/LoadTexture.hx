@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.LoadTexture")
-extern class LoadTexture {
+extern interface LoadTexture {
 	
 	/**
 	 * Gets or sets the current frame index of the texture being used to render this Game Object.

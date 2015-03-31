@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.InWorld")
-extern class InWorld {
+extern interface InWorld {
 	
 	/**
 	 * If this is set to true the Game Object checks if it is within the World bounds each frame. 

@@ -71,7 +71,91 @@ extern class Graphics extends phaser.pixi.display.DisplayObjectContainer {
 	 * @return {PIXI.Graphics}
 	*/
 	function arcTo (x1:Float, y1:Float, x2:Float, y2:Float, radius:Float):Graphics;
+	
+	/**
+	 * The arc() method creates an arc/curve (used to create circles, or parts of circles).
+	 *
+	 * @method arc
+	 * @param  {number}   cx                The x-coordinate of the center of the circle
+	 * @param  {number}   cy                The y-coordinate of the center of the circle
+	 * @param  {number}   radius            The radius of the circle
+	 * @param  {number}   startAngle        The starting angle, in radians (0 is at the 3 o'clock position of the arc's circle)
+	 * @param  {number}   endAngle          The ending angle, in radians
+	 * @param  {number}   anticlockwise     Optional. Specifies whether the drawing should be counterclockwise or clockwise. False is default, and indicates clockwise, while true indicates counter-clockwise.
+	 * @return {PIXI.Graphics}
+	*/
+	function quadraticCurveTo (cx:Float, cy:Float, radius:Float, startAngle:Float, endAngle:Float, ?anticlockwise:Float):Graphics;
 
+	/**
+	 * @method drawPath
+	 * @param path {Number}
+	*/
+	function drawPath (path:Dynamic):Void;
+
+	/**
+	 * Specifies a simple one-color fill that subsequent calls to other Graphics methods
+	 * (such as lineTo() or drawCircle()) use when drawing.
+	 *
+	 * @method beginFill
+	 * @param color {Number} the color of the fill
+	 * @param alpha {Number} the alpha of the fill
+	*/
+	function beginFill (color:Float, ?alpha:Float):Void;
+
+	/**
+	 * Applies a fill to the lines and shapes that were added since the last call to the beginFill() method.
+	 *
+	 * @method endFill
+	*/
+	function endFill ():Void;
+
+	/**
+	 * @method drawRect
+	 *
+	 * @param x {Number} The X coord of the top-left of the rectangle
+	 * @param y {Number} The Y coord of the top-left of the rectangle
+	 * @param width {Number} The width of the rectangle
+	 * @param height {Number} The height of the rectangle
+	*/
+	function drawRect (x:Float, y:Float, width:Float, height:Float):Void;
+
+	/**
+	 * @method drawRoundedRect
+	 *
+	 * @param x {Number} The X coord of the top-left of the rectangle
+	 * @param y {Number} The Y coord of the top-left of the rectangle
+	 * @param width {Number} The width of the rectangle
+	 * @param height {Number} The height of the rectangle
+	 * @param radius {Number} Radius of the rectangle corners
+	*/
+	function drawRoundedRect (x:Float, y:Float, width:Float, height:Float, radius:Float):Void;
+
+	/**
+	 * Draws an ellipse.
+	 *
+	 * @method drawEllipse
+	 * @param x {Number} The X coordinate of the center of the ellipse
+	 * @param y {Number} The Y coordinate of the center of the ellipse
+	 * @param width {Number} The half width of the ellipse
+	 * @param height {Number} The half height of the ellipse
+	*/
+	function drawEllipse (x:Float, y:Float, width:Float, height:Float):Void;
+
+	/**
+	 * Clears the graphics that were drawn to this Graphics object, and resets fill and line style settings.
+	 *
+	 * @method clear
+	*/
+	function clear ():Void;
+
+	/**
+	 * Update the bounds of the object
+	 *
+	 * @method updateBounds
+	*/
+	function updateBounds ():Void;
+
+	function destroyCachedSprite ():Void;
 	
 	/**
 	 * The alpha value used when filling the Graphics object.

@@ -24,6 +24,16 @@ extern class Loader {
 	var hasLoaded:Bool;
 	
 	/**
+	 * The rounded load progress percentage value (from 0 to 100)
+	 */
+	var progress:Float;
+	
+	/**
+	 * The non-rounded load progress value (from 0.0 to 100.0)
+	 */
+	var progressFloat:Float;
+	
+	/**
 	 * You can optionally link a progress sprite with {@link Phaser.Loader#setPreloadSprite setPreloadSprite}.
 	 * 
 	 * This property is an object containing: sprite, rect, direction, width and height

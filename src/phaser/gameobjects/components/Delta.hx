@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.Delta")
-extern class Delta {
+extern interface Delta {
 	
 	/**
 	 * Returns the delta x value. The difference between world.x now and in the previous frame.

@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.InCamera")
-extern class InCamera {
+extern interface InCamera {
 	
 	/**
 	 * Checks if this Game Objects bounds intersects with the Game Cameras bounds.

@@ -26,9 +26,4 @@ extern class Text extends phaser.pixi.display.Sprite {
 	 */
 	var resolution:Float;
 	
-	/**
-	 * The resolution of the canvas.
-	 */
-	var resolution:Float;
-	
 }

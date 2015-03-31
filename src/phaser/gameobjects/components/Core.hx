@@ -1,7 +1,7 @@
 package phaser.gameobjects.components;
 
 @:native("Phaser.Component.Core")
-extern class Core {
+extern interface Core {
 	
 	/**
 	 * A reference to the currently running Game.
