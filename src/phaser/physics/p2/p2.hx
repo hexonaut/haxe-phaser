@@ -4,21 +4,6 @@ package phaser.physics.p2;
 extern class p2 {
 	
 	/**
-	 * @constructor
-	 */
-	static var var ArrayBuffer:Dynamic;
-	
-	/**
-	 * @constructor
-	 */
-	static var var ArrayBufferView:Dynamic;
-	
-	/**
-	 * @constructor
-	 */
-	static var var DataView:Dynamic;
-	
-	/**
 	 * Polygon class.
 	 */
 	function new ();
@@ -79,6 +64,11 @@ extern class p2 {
 	var enableFriction:Bool;
 	
 	/**
+	 * Whether to make equations enabled in upcoming contacts.
+	 */
+	var enabledEquations:Bool;
+	
+	/**
 	 * The friction slip force to use when creating friction equations.
 	 */
 	var slipForce:Float;
@@ -127,6 +117,106 @@ extern class p2 {
 	 * Contact skin size value to use in the next contact equations.
 	 */
 	var contactSkinSize:Float;
+	
+	/**
+	 * @property {array} from
+	 */
+	var from:Array<Dynamic>;
+	
+	/**
+	 * @property {array} to
+	 */
+	var to:Array<Dynamic>;
+	
+	/**
+	 * @private
+	 */
+	var direction:Array<Dynamic>;
+	
+	/**
+	 * The precision of the ray. Used when checking parallelity etc.
+	 */
+	var precision:Float;
+	
+	/**
+	 * Set to true if you want the Ray to take .collisionResponse flags into account on bodies and shapes.
+	 */
+	var checkCollisionResponse:Bool;
+	
+	/**
+	 * If set to true, the ray skips any hits with normal.dot(rayDirection) &lt; 0.
+	 */
+	var skipBackfaces:Bool;
+	
+	/**
+	 * @property {number} collisionMask
+	 */
+	var collisionMask:Float;
+	
+	/**
+	 * @property {number} collisionGroup
+	 */
+	var collisionGroup:Float;
+	
+	/**
+	 * The intersection mode. Should be Ray.ANY, Ray.ALL or Ray.CLOSEST.
+	 */
+	var mode:Float;
+	
+	/**
+	 * Will be set to true during intersectWorld() if the ray hit anything.
+	 */
+	var hasHit:Bool;
+	
+	/**
+	 * Current, user-provided result callback. Will be used if mode is Ray.ALL.
+	 */
+	var callback:Dynamic;
+	
+	/**
+	 * @property {array} rayFromWorld
+	 */
+	var rayFromWorld:Array<Dynamic>;
+	
+	/**
+	 * @property {array} rayToWorld
+	 */
+	var rayToWorld:Array<Dynamic>;
+	
+	/**
+	 * @property {array} hitNormalWorld
+	 */
+	var hitNormalWorld:Array<Dynamic>;
+	
+	/**
+	 * @property {array} hitPointWorld
+	 */
+	var hitPointWorld:Array<Dynamic>;
+	
+	/**
+	 * The hit shape, or null.
+	 */
+	var shape:Dynamic;
+	
+	/**
+	 * The hit body, or null.
+	 */
+	var body:Dynamic;
+	
+	/**
+	 * The index of the hit triangle, if the hit shape was a trimesh.
+	 */
+	var hitFaceIndex:Float;
+	
+	/**
+	 * Distance to the hit. Will be set to -1 if there was no hit.
+	 */
+	var distance:Float;
+	
+	/**
+	 * If the ray should stop traversing the bodies.
+	 */
+	var shouldStop:Bool;
 	
 	/**
 	 * List of bodies currently in the broadphase.
@@ -197,11 +287,6 @@ extern class p2 {
 	 * Local anchor in body B.
 	 */
 	var localAnchorB:Array<Dynamic>;
-	
-	/**
-	 * The distance to keep.
-	 */
-	var distance:Float;
 	
 	/**
 	 * Max force to apply.
@@ -582,9 +667,29 @@ extern class p2 {
 	var gravityScale:Float;
 	
 	/**
+	 * Whether to produce contact forces when in contact with other bodies. Note that contacts will be generated, but they will be disabled. That means that this body will move through other bodies, but it will still trigger contact events, etc.
+	 */
+	var collisionResponse:Bool;
+	
+	/**
+	 * How long the body has been sleeping.
+	 */
+	var idleTime:Float;
+	
+	/**
 	 * The last time when the body went to SLEEPY state.
 	 */
 	var timeLastSleepy:Float;
+	
+	/**
+	 * If the body speed exceeds this threshold, CCD (continuous collision detection) will be enabled. Set it to a negative number to disable CCD completely for this body.
+	 */
+	var ccdSpeedThreshold:Float;
+	
+	/**
+	 * The number of iterations that should be used when searching for the time of impact during CCD. A larger number will assure that there's a small penetration on CCD collision, but a small number will give more performance.
+	 */
+	var ccdIterations:Float;
 	
 	/**
 	 * @event sleepy
@@ -695,16 +800,6 @@ extern class p2 {
 	 * Total height of the rectangle
 	 */
 	var height:Float;
-	
-	/**
-	 * Collision group that this shape belongs to (bit mask). See <a href="http://www.aurelienribon.com/blog/2011/07/box2d-tutorial-collision-filtering/">this tutorial</a>.
-	 */
-	var collisionGroup:Float;
-	
-	/**
-	 * Collision mask of this shape. See .collisionGroup.
-	 */
-	var collisionMask:Float;
 	
 	/**
 	 * Material to use in collisions for this Shape. If this is set to null, the world will use default material properties instead.
@@ -821,11 +916,6 @@ extern class p2 {
 	 * The node queue, used when traversing the graph of nodes.
 	 */
 	var queue:Array<Dynamic>;
-	
-	/**
-	 * The body that is contained in this node.
-	 */
-	var body:Dynamic;
 	
 	/**
 	 * Neighboring IslandNodes

@@ -16,12 +16,12 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * The minimum possible velocity of a particle.
 	 */
-	var minParticleSpeed:Dynamic;
+	var minParticleSpeed:phaser.geom.Point;
 	
 	/**
 	 * The maximum possible velocity of a particle.
 	 */
-	var maxParticleSpeed:Dynamic;
+	var maxParticleSpeed:phaser.geom.Point;
 	
 	/**
 	 * The minimum possible scale of a particle. This is applied to the X and Y axis. If you need to control each axis see minParticleScaleX.
@@ -76,7 +76,7 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * The X and Y drag component of particles launched from the emitter.
 	 */
-	var particleDrag:Dynamic;
+	var particleDrag:phaser.geom.Point;
 	
 	/**
 	 * The angular drag component of particles launched from the emitter if they are rotating.
@@ -86,7 +86,7 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * How often a particle is emitted in ms (if emitter is started with Explode === false).
 	 */
-	var frequency:Bool;
+	var frequency:Float;
 	
 	/**
 	 * How long each particle lives once it is emitted in ms. Default is 2 seconds. Set lifespan to 'zero' for particles to live forever.
@@ -96,7 +96,7 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * How much each particle should bounce on each axis. 1 = full bounce, 0 = no bounce.
 	 */
-	var bounce:Dynamic;
+	var bounce:phaser.geom.Point;
 	
 	/**
 	 * Determines whether the emitter is currently emitting particles. It is totally safe to directly toggle this.
@@ -106,7 +106,7 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * When a particle is created its anchor will be set to match this Point object (defaults to x/y: 0.5 to aid in rotation)
 	 */
-	var particleAnchor:Dynamic;
+	var particleAnchor:phaser.geom.Point;
 	
 	/**
 	 * The blendMode as set on the particle when emitted from the Emitter. Defaults to NORMAL. Needs browser capable of supporting canvas blend-modes (most not available in WebGL)
@@ -150,12 +150,12 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * Internal particle scale var.
 	 */
-	var _minParticleScale:Dynamic;
+	var _minParticleScale:phaser.geom.Point;
 	
 	/**
 	 * Internal particle scale var.
 	 */
-	var _maxParticleScale:Dynamic;
+	var _maxParticleScale:phaser.geom.Point;
 	
 	/**
 	 * Internal helper for deciding how many particles to launch.
@@ -171,6 +171,16 @@ extern class Emitter extends phaser.core.Group {
 	 * Internal counter for figuring out how many particles to launch.
 	 */
 	var _counter:Float;
+	
+	/**
+	 * Internal counter for figuring out how many particles to launch per flow update.
+	 */
+	var _flowQuantity:Float;
+	
+	/**
+	 * Internal counter for figuring out how many particles to launch in total.
+	 */
+	var _flowTotal:Float;
 	
 	/**
 	 * Internal helper for the style of particle emission (all at once, or one at a time).
@@ -208,8 +218,12 @@ extern class Emitter extends phaser.core.Group {
 	
 	/**
 	 * Call this function to start emitting a flow of particles at the given frequency.
+	 * It will carry on going until the total given is reached.
+	 * Each time the flow is run the quantity number of particles will be emitted together.
+	 * If you set the total to be 20 and quantity to be 5 then flow will emit 4 times in total (4 x 5 = 20 total)
+	 * If you set the total to be -1 then no quantity cap is used and it will keep emitting.
 	 */
-	function flow (?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 0):Void;
+	function flow (?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 1, ?total:Float, ?immediate:Bool = true):Void;
 	
 	/**
 	 * Call this function to start emitting particles.
@@ -219,7 +233,7 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * This function can be used both internally and externally to emit the next particle in the queue.
 	 */
-	function emitParticle ():Void;
+	function emitParticle ():Bool;
 	
 	/**
 	 * A more compact way of setting the width and height of the emitter.
@@ -246,14 +260,14 @@ extern class Emitter extends phaser.core.Group {
 	 * The rate parameter, if set to a value above zero, lets you set the speed at which the Particle change in alpha from min to max.
 	 * If rate is zero, which is the default, the particle won't change alpha - instead it will pick a random alpha between min and max on emit.
 	 */
-	function setAlpha (?min:Float = 1, ?max:Float = 1, ?rate:Float = 0, ?ease:Float, ?yoyo:Bool = false):Void;
+	function setAlpha (?min:Float = 1, ?max:Float = 1, ?rate:Float = 0, ?ease:Dynamic, ?yoyo:Bool = false):Void;
 	
 	/**
 	 * A more compact way of setting the scale constraints of the particles.
 	 * The rate parameter, if set to a value above zero, lets you set the speed and ease which the Particle uses to change in scale from min to max across both axis.
 	 * If rate is zero, which is the default, the particle won't change scale during update, instead it will pick a random scale between min and max on emit.
 	 */
-	function setScale (?minX:Float = 1, ?maxX:Float = 1, ?minY:Float = 1, ?maxY:Float = 1, ?rate:Float = 0, ?ease:Float, ?yoyo:Bool = false):Void;
+	function setScale (?minX:Float = 1, ?maxX:Float = 1, ?minY:Float = 1, ?maxY:Float = 1, ?rate:Float = 0, ?ease:Dynamic, ?yoyo:Bool = false):Void;
 	
 	/**
 	 * Change the emitters center to match the center of any object with a center property, such as a Sprite.
@@ -265,16 +279,6 @@ extern class Emitter extends phaser.core.Group {
 	@:overload(function (object:phaser.gameobjects.TileSprite):Void {})
 	@:overload(function (object:phaser.gameobjects.Text):Void {})
 	function at (object:phaser.pixi.display.DisplayObject):Void;
-	
-	/**
-	 * @name Phaser.Particles.Arcade.Emitter#width
-	 */
-	var width:Float;
-	
-	/**
-	 * @name Phaser.Particles.Arcade.Emitter#height
-	 */
-	var height:Float;
 	
 	/**
 	 * @name Phaser.Particles.Arcade.Emitter#left

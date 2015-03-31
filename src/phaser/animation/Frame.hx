@@ -119,6 +119,12 @@ extern class Frame {
 	function setTrim (trimmed:Bool, actualWidth:Float, actualHeight:Float, destX:Float, destY:Float, destWidth:Float, destHeight:Float):Void;
 	
 	/**
+	 * Clones this Frame into a new Phaser.Frame object and returns it.
+	 * Note that all properties are cloned, including the name, index and UUID.
+	 */
+	function clone ():phaser.animation.Frame;
+	
+	/**
 	 * Returns a Rectangle set to the dimensions of this Frame.
 	 */
 	function getRect (?out:phaser.geom.Rectangle):phaser.geom.Rectangle;

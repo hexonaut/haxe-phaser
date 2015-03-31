@@ -4,8 +4,9 @@ package phaser.input;
 extern class Gamepad {
 	
 	/**
-	 * The Gamepad class handles looking after gamepad input for your game.
-	 * Remember to call gamepad.start(); expecting input!
+	 * The Gamepad class handles gamepad input and dispatches gamepad events.
+	 * 
+	 * Remember to call gamepad.start().
 	 * 
 	 * HTML5 GAMEPAD API SUPPORT IS AT AN EXPERIMENTAL STAGE!
 	 * At moment of writing this (end of 2013) only Chrome supports parts of it out of the box. Firefox supports it
@@ -35,9 +36,9 @@ extern class Gamepad {
 	var _active:Bool;
 	
 	/**
-	 * You can disable all Gamepad Input by setting disabled to true. While true all new input related events will be ignored.
+	 * Gamepad input will only be processed if enabled.
 	 */
-	var disabled:Bool;
+	var enabled:Bool;
 	
 	/**
 	 * Whether or not gamepads are supported in the current browser. Note that as of Dec. 2013 this check is actually not accurate at all due to poor implementation.
@@ -105,7 +106,7 @@ extern class Gamepad {
 	var _gamepads:Dynamic;
 	
 	/**
-	 * Add callbacks to the main Gamepad handler to handle connect/disconnect/button down/button up/axis change/float value buttons
+	 * Add callbacks to the main Gamepad handler to handle connect/disconnect/button down/button up/axis change/float value buttons.
 	 */
 	function addCallbacks (context:Dynamic, callbacks:Dynamic):Void;
 	
@@ -149,6 +150,16 @@ extern class Gamepad {
 	 * Returns true if the button is currently pressed down, on ANY gamepad.
 	 */
 	function isDown (buttonCode:Float):Bool;
+	
+	/**
+	 * Destroys this object and the associated event listeners.
+	 */
+	function destroy ():Void;
+	
+	/**
+	 * If disabled all Gamepad input will be ignored.
+	 */
+	var disabled:Bool;
 	
 	/**
 	 * If the gamepad input is active or not - if not active it should not be updated from Input.js

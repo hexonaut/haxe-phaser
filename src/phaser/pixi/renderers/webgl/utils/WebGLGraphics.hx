@@ -1,6 +1,6 @@
 package phaser.pixi.renderers.webgl.utils;
 
-@:native("PIXI.WebGLGraphics")
+@:native("PIXI.WebGLGraphicsData")
 extern class WebGLGraphics {
 	
 }

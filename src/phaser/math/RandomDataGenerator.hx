@@ -4,9 +4,16 @@ package phaser.math;
 extern class RandomDataGenerator {
 	
 	/**
-	 * Phaser.RandomDataGenerator constructor.
+	 * An extremely useful repeatable random data generator.
+	 * 
+	 * Based on Nonsense by Josh Faul <a href='https://github.com/jocafa/Nonsense'>https://github.com/jocafa/Nonsense</a>.
+	 * 
+	 * The random number genererator is based on the Alea PRNG, but is modified.
+	 *  - <a href='https://github.com/coverslide/node-alea'>https://github.com/coverslide/node-alea</a>
+	 *  - <a href='https://github.com/nquinlan/better-random-numbers-for-javascript-mirror'>https://github.com/nquinlan/better-random-numbers-for-javascript-mirror</a>
+	 *  - <a href='http://baagoe.org/en/wiki/Better_random_numbers_for_javascript'>http://baagoe.org/en/wiki/Better_random_numbers_for_javascript</a> (original, perm. 404)
 	 */
-	function new (seeds:Array<Dynamic>);
+	function new (?seeds:Dynamic);
 	
 	/**
 	 * Internal var.
@@ -35,8 +42,10 @@ extern class RandomDataGenerator {
 	
 	/**
 	 * Reset the seed of the random data generator.
+	 * 
+	 * <em>Note</em>: the seed array is only processed up to the first undefined (or null) value, should such be present.
 	 */
-	function sow (seeds:Array<Dynamic>):Void;
+	function sow (seeds:Dynamic):Void;
 	
 	/**
 	 * Internal method that creates a seed hash.

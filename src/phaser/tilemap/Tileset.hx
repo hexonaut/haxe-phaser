@@ -5,9 +5,10 @@ extern class Tileset {
 	
 	/**
 	 * A Tile set is a combination of an image containing the tiles and collision data per tile.
-	 * You should not normally instantiate this class directly.
+	 * 
+	 * Tilesets are normally created automatically when Tiled data is loaded.
 	 */
-	function new (name:String, firstgid:Float, ?width:Float = 32, ?height:Float = 32, ?margin:Float = 0, ?spacing:Float = 0, ?properties:Dynamic);
+	function new (name:String, firstgid:Int, ?width:Int = 32, ?height:Int = 32, ?margin:Int = 0, ?spacing:Int = 0, ?properties:Dynamic);
 	
 	/**
 	 * The name of the Tileset.
@@ -15,73 +16,87 @@ extern class Tileset {
 	var name:String;
 	
 	/**
-	 * The Tiled firstgid value. In non-Tiled data this should be considered the starting index value of the first tile in this set.
+	 * The Tiled firstgid value.
+	 * This is the starting index of the first tile index this Tileset contains.
 	 */
-	var firstgid:Float;
+	var firstgid:Int;
 	
 	/**
-	 * The width of a tile in pixels.
+	 * The width of each tile (in pixels).
 	 */
-	var tileWidth:Float;
+	var tileWidth(default, null):Int;
 	
 	/**
-	 * The height of a tile in pixels.
+	 * The height of each tile (in pixels).
 	 */
-	var tileHeight:Float;
+	var tileHeight(default, null):Int;
 	
 	/**
-	 * The margin around the tiles in the tileset.
+	 * The margin around the tiles in the sheet (in pixels).
+	 * Use setSpacing to change.
 	 */
-	var tileMargin:Float;
+	var tileMarge(default, null):Int;
 	
 	/**
-	 * The spacing in pixels between each tile in the tileset.
+	 * The spacing between each tile in the sheet (in pixels).
+	 * Use setSpacing to change.
 	 */
-	var tileSpacing:Float;
+	var tileSpacing(default, null):Int;
 	
 	/**
-	 * Tileset specific properties (typically defined in the Tiled editor).
+	 * Tileset-specific properties that are typically defined in the Tiled editor.
 	 */
 	var properties:Dynamic;
 	
 	/**
-	 * The image used for rendering. This is a reference to the image stored in Phaser.Cache.
+	 * The cached image that contains the individual tiles. Use {@link Phaser.Tileset.setImage setImage} to set.
 	 */
-	var image:Dynamic;
+	var image(default, null):Dynamic;
 	
 	/**
-	 * The number of rows in the tile sheet.
+	 * The number of tile rows in the the tileset.
 	 */
-	var rows:Float;
+	var a0(default, null):Int;
 	
 	/**
-	 * The number of columns in the tile sheet.
+	 * The number of tile columns in the tileset.
 	 */
-	var columns:Float;
+	var columns(default, null):Int;
 	
 	/**
-	 * The total number of tiles in the tilesheet.
+	 * The total number of tiles in the tileset.
 	 */
-	var total:Float;
+	var total(default, null):Int;
 	
 	/**
-	 * The tile drawImage look-up table
+	 * The look-up table to specific tile image offsets.
+	 * The coordinates are interlaced such that it is [x0, y0, x1, y1 .. xN, yN] and the tile with the index of firstgid is found at indices 0/1.
 	 */
-	var drawCoords:Array<Dynamic>;
+	var drawCoords:Dynamic;
 	
 	/**
 	 * Draws a tile from this Tileset at the given coordinates on the context.
 	 */
-	function draw (context:Dynamic, x:Float, y:Float, index:Float):Void;
+	function draw (context:Dynamic, x:Float, y:Float, index:Int):Void;
 	
 	/**
-	 * Adds a reference from this Tileset to an Image stored in the Phaser.Cache.
+	 * Returns true if and only if this tileset contains the given tile index.
+	 */
+	function containsTileIndex ():Bool;
+	
+	/**
+	 * Set the image associated with this Tileset and update the tile data.
 	 */
 	function setImage (image:Dynamic):Void;
 	
 	/**
 	 * Sets tile spacing and margins.
 	 */
-	function setSpacing (?tileMargin:Float, ?tileSpacing:Float):Void;
+	function setSpacing (tileMargin:Int, tileSpacing:Int):Void;
+	
+	/**
+	 * Updates tile coordinates and tileset data.
+	 */
+	function updateTileData (imageWidth:Int, imageHeight:Int):Void;
 	
 }

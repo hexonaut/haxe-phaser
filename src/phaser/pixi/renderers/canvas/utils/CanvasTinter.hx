@@ -4,23 +4,24 @@ package phaser.pixi.renderers.canvas.utils;
 extern class CanvasTinter {
 	
 	/**
-	 * @class CanvasTinter
+	 * Number of steps which will be used as a cap when rounding colors.
 	 */
-	static function new ();
+	static var cacheStepsPerColorChannel:Float;
 	
 	/**
-	 * Number of steps which will be used as a cap when rounding colors
+	 * Tint cache boolean flag.
 	 */
-	var cacheStepsPerColorChannel:Float;
+	static var convertTintToImage:Bool;
 	
 	/**
-	 * Number of steps which will be used as a cap when rounding colors
+	 * If the browser isn't capable of handling tinting with alpha this will be false.
+	 * This property is only applicable if using tintWithPerPixel.
 	 */
-	var convertTintToImage:Bool;
+	static var canHandleAlpha:Bool;
 	
 	/**
-	 * Whether or not the Canvas BlendModes are supported, consequently the ability to tint using the multiply method
+	 * Whether or not the Canvas BlendModes are supported, consequently the ability to tint using the multiply method.
 	 */
-	var canUseMultiply:Bool;
+	static var canUseMultiply:Bool;
 	
 }

@@ -36,7 +36,7 @@ extern class Body {
 	/**
 	 * The offset of the Physics Body from the Sprite x/y position.
 	 */
-	var offset:Dynamic;
+	var offset:phaser.geom.Point;
 	
 	/**
 	 * The p2 Body data.
@@ -46,17 +46,17 @@ extern class Body {
 	/**
 	 * The velocity of the body. Set velocity.x to a negative value to move to the left, position to the right. velocity.y negative values move up, positive move down.
 	 */
-	var velocity:Dynamic;
+	var velocity:phaser.physics.p2.InversePointProxy;
 	
 	/**
 	 * The force applied to the body.
 	 */
-	var force:Dynamic;
+	var force:phaser.physics.p2.InversePointProxy;
 	
 	/**
 	 * A locally applied gravity force to the Body. Applied directly before the world step. NOTE: Not currently implemented.
 	 */
-	var gravity:Dynamic;
+	var gravity:phaser.geom.Point;
 	
 	/**
 	 * Dispatched when a first contact is created between shapes in two bodies. This event is fired during the step, so collision has already taken place.
@@ -86,6 +86,11 @@ extern class Body {
 	var debugBody:phaser.physics.p2.BodyDebug;
 	
 	/**
+	 * Internally used by Sprite.x/y
+	 */
+	var dirty:Bool;
+	
+	/**
 	 * Internal var that determines if this Body collides with the world bounds or not.
 	 */
 	var _collideWorldBounds:Bool;
@@ -109,6 +114,11 @@ extern class Body {
 	 * Array of Grouo callback contexts.
 	 */
 	var _groupCallbackContext:Dynamic;
+	
+	/**
+	 * Internal var.
+	 */
+	var _reset:Bool;
 	
 	/**
 	 * Sets a callback to be fired any time a shape in this Body impacts with a shape in the given Body. The impact test is performed against body.id values.
@@ -302,6 +312,7 @@ extern class Body {
 	/**
 	 * Add a shape to the body. You can pass a local transform when adding a shape, so that the shape gets an offset and an angle relative to the body center of mass.
 	 * Will automatically update the mass properties and bounding radius.
+	 * If this Body had a previously set Collision Group you will need to re-apply it to the new Shape this creates.
 	 */
 	function addShape (shape:Dynamic, ?offsetX:Float = 0, ?offsetY:Float = 0, ?rotation:Float = 0):Dynamic;
 	
@@ -358,12 +369,14 @@ extern class Body {
 	
 	/**
 	 * Clears any previously set shapes. Then creates a new Circle shape and adds it to this Body.
+	 * If this Body had a previously set Collision Group you will need to re-apply it to the new Shape this creates.
 	 */
 	function setCircle (radius:Float, ?offsetX:Float = 0, ?offsetY:Float = 0, ?rotation:Float = 0):Void;
 	
 	/**
 	 * Clears any previously set shapes. The creates a new Rectangle shape at the given size and offset, and adds it to this Body.
 	 * If you wish to create a Rectangle to match the size of a Sprite or Image see Body.setRectangleFromSprite.
+	 * If this Body had a previously set Collision Group you will need to re-apply it to the new Shape this creates.
 	 */
 	function setRectangle (?width:Float = 16, ?height:Float = 16, ?offsetX:Float = 0, ?offsetY:Float = 0, ?rotation:Float = 0):Dynamic;
 	
@@ -371,6 +384,7 @@ extern class Body {
 	 * Clears any previously set shapes.
 	 * Then creates a Rectangle shape sized to match the dimensions and orientation of the Sprite given.
 	 * If no Sprite is given it defaults to using the parent of this Body.
+	 * If this Body had a previously set Collision Group you will need to re-apply it to the new Shape this creates.
 	 */
 	@:overload(function (?sprite:phaser.gameobjects.Sprite):Dynamic {})
 	function setRectangleFromSprite (?sprite:phaser.gameobjects.Image):Dynamic;

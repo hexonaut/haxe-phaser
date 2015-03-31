@@ -1,22 +1,17 @@
 package phaser.gameobjects;
 
 @:native("Phaser.Text")
-extern class Text extends phaser.pixi.text.Text {
+extern class Text extends phaser.gameobjects.components.Smoothed {
 	
 	/**
-	 * A reference to the currently running Game.
+	 * Create a new game object for displaying Text.
+	 * 
+	 * This uses a local hidden Canvas object and renders the type into it. It then makes a texture from this for rendering to the view.
+	 * Because of this you can only display fonts that are currently loaded and available to the browser: fonts must be pre-loaded.
+	 * 
+	 * See {@link <a href='http://www.jordanm.co.uk/tinytype'>http://www.jordanm.co.uk/tinytype</a> this compatibility table} for the available default fonts across mobile browsers.
 	 */
-	var game:phaser.core.Game;
-	
-	/**
-	 * If exists = false then the Text isn't updated by the core game loop.
-	 */
-	var exists:Bool;
-	
-	/**
-	 * The user defined name given to this object.
-	 */
-	var name:String;
+	function new (game:phaser.core.Game, x:Float, y:Float, text:String, style:Dynamic);
 	
 	/**
 	 * The const type of this object.
@@ -24,14 +19,15 @@ extern class Text extends phaser.pixi.text.Text {
 	var type:Float;
 	
 	/**
-	 * The z-depth value of this object within its Group (remember the World is a Group as well). No two objects in a Group can have the same z value.
+	 * The const physics body type of this object.
 	 */
-	var z:Float;
+	var physicsType(default, null):Float;
 	
 	/**
-	 * The world coordinates of this Sprite. This differs from the x/y coordinates which are relative to the Sprites container.
+	 * Specify a padding value which is added to the line width and height when calculating the Text size.
+	 * ALlows you to add extra spacing if Phaser is unable to accurately determine the true font dimensions.
 	 */
-	var world:Dynamic;
+	var padding:phaser.geom.Point;
 	
 	/**
 	 * Internal cache var.
@@ -39,19 +35,9 @@ extern class Text extends phaser.pixi.text.Text {
 	var _text:String;
 	
 	/**
-	 * Internal cache var.
+	 * The font, broken down into components, set in setStyle.
 	 */
-	var _font:String;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _fontSize:Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _fontWeight:String;
+	var _fontComponents:Dynamic;
 	
 	/**
 	 * Additional spacing (in pixels) between each line of text if multi-line.
@@ -59,33 +45,14 @@ extern class Text extends phaser.pixi.text.Text {
 	var _lineSpacing:Float;
 	
 	/**
-	 * The Events you can subscribe to that are dispatched when certain things happen on this Sprite or its components.
+	 * Internal character counter used by the text coloring.
 	 */
-	var events:phaser.gameobjects.Events;
+	var _charCount:Float;
 	
 	/**
-	 * The Input Handler for this object. Needs to be enabled with image.inputEnabled = true before you can use it.
+	 * An array of the color values as specified by {@link Phaser.Text#addColor addColor}.
 	 */
-	var input:Dynamic;
-	
-	/**
-	 * If this object is fixedToCamera then this stores the x/y offset that its drawn at, from the top-left of the camera view.
-	 */
-	var cameraOffset:Dynamic;
-	
-	/**
-	 * A small internal cache:
-	 * 0 = previous position.x
-	 * 1 = previous position.y
-	 * 2 = previous rotation
-	 * 3 = renderID
-	 * 4 = fresh? (0 = no, 1 = yes)
-	 * 5 = outOfBoundsFired (0 = no, 1 = yes)
-	 * 6 = exists (0 = no, 1 = yes)
-	 * 7 = fixed to camera (0 = no, 1 = yes)
-	 * 8 = destroy phase? (0 = no, 1 = yes)
-	 */
-	var cache:Array<Dynamic>;
+	var colors:Array<Dynamic>;
 	
 	/**
 	 * Automatically called by World.preUpdate.
@@ -93,19 +60,28 @@ extern class Text extends phaser.pixi.text.Text {
 	function preUpdate ():Void;
 	
 	/**
-	 * Override and use this function in your own custom objects to handle any update requirements you may have.
+	 * Override this function to handle any special update requirements.
 	 */
 	function update ():Void;
 	
 	/**
-	 * Automatically called by World.postUpdate.
+	 * Destroy this Text object, removing it from the group it belongs to.
 	 */
-	function postUpdate ():Void;
+	function destroy (?destroyChildren:Bool = true):Void;
+	
+	/**
+	 * Sets a drop shadow effect on the Text. You can specify the horizontal and vertical distance of the drop shadow with the x and y parameters.
+	 * The color controls the shade of the shadow (default is black) and can be either an rgba or hex value.
+	 * The blur is the strength of the shadow. A value of zero means a hard shadow, a value of 10 means a very soft shadow.
+	 * To remove a shadow already in place you can call this method with no parameters set.
+	 */
+	function setShadow (?x:Float = 0, ?y:Float = 0, ?color:String = 'rgba(0,0,0,1)', ?blur:Float = 0):Void;
 	
 	/**
 	 * Set the style of the text by passing a single style object to it.
 	 */
-	function setStyle (Object:Dynamic, pt:Dynamic, Object:Dynamic, String:Dynamic, String:Dynamic, Number:Dynamic, Boolean:Dynamic, Number:Dynamic):Void;
+	@:overload(function (?style:Dynamic, ?style:String, ?style:String, ?style:String, ?style:String, ?style:String, ?style:String, ?style:String, ?style:String, ?style:String, ?style:Float, ?style:Bool, ?style:Float):Void {})
+	function setStyle (?style:Dynamic, ?style:String, ?style:String, ?style:String, ?style:String, ?style:Float, ?style:String, ?style:String, ?style:String, ?style:String, ?style:Float, ?style:Bool, ?style:Float):Void;
 	
 	/**
 	 * Renders text. This replaces the Pixi.Text.updateText function as we need a few extra bits in here.
@@ -113,16 +89,44 @@ extern class Text extends phaser.pixi.text.Text {
 	function updateText ():Void;
 	
 	/**
-	 * Greedy wrapping algorithm that will wrap words as the line grows longer than its horizontal bounds.
+	 * Updates a line of text.
 	 */
-	function runWordWrap ():Void;
+	function updateLine ():Void;
 	
 	/**
-	 * Indicates the rotation of the Text, in degrees, from its original orientation. Values from 0 to 180 represent clockwise rotation; values from 0 to -180 represent counterclockwise rotation.
-	 * Values outside this range are added to or subtracted from 360 to obtain a value within the range. For example, the statement player.angle = 450 is the same as player.angle = 90.
-	 * If you wish to work in radians instead of degrees use the property Sprite.rotation instead.
+	 * Clears any previously set color stops.
 	 */
-	var angle:Float;
+	function clearColors ():Void;
+	
+	/**
+	 * Set specific colors for certain characters within the Text.
+	 * 
+	 * It works by taking a color value, which is a typical HTML string such as #ff0000 or rgb(255,0,0) and a position.
+	 * The position value is the index of the character in the Text string to start applying this color to.
+	 * Once set the color remains in use until either another color or the end of the string is encountered.
+	 * For example if the Text was Photon Storm and you did Text.addColor('#ffff00', 6) it would color in the word Storm in yellow.
+	 */
+	function addColor (color:String, position:Float):Void;
+	
+	/**
+	 * Greedy wrapping algorithm that will wrap words as the line grows longer than its horizontal bounds.
+	 */
+	function runWordWrap (text:String):Void;
+	
+	/**
+	 * Updates the internal style.font if it now differs according to generation from components.
+	 */
+	function updateFont (components:Dynamic):Void;
+	
+	/**
+	 * Converting a short CSS-font string into the relevant components.
+	 */
+	function fontToComponents (font:String):Void;
+	
+	/**
+	 * Converts individual font components (see fontToComponents) to a short CSS font string.
+	 */
+	function componentsToFont (components:Dynamic):Void;
 	
 	/**
 	 * The text string to be displayed by this Text object, taking into account the style settings.
@@ -130,19 +134,47 @@ extern class Text extends phaser.pixi.text.Text {
 	var text:String;
 	
 	/**
-	 * @name Phaser.Text#font
+	 * Change the font used.
+	 * 
+	 * This is equivalent of the font property specified to {@link Phaser.Text#setStyle setStyle}, except
+	 * that unlike using setStyle this will not change any current font fill/color settings.
+	 * 
+	 * The CSS font string can also be individually altered with the font, fontSize, fontWeight, fontStyle, and fontVariant properties.
+	 */
+	var cssFont:String;
+	
+	/**
+	 * Change the font family that the text will be rendered in, such as 'Arial'.
+	 * 
+	 * Multiple CSS font families and generic fallbacks can be specified as long as
+	 * {@link <a href='http://www.w3.org/TR/CSS2/fonts.html#propdef-font-family'>http://www.w3.org/TR/CSS2/fonts.html#propdef-font-family</a> CSS font-family rules} are followed.
+	 * 
+	 * To change the entire font string use {@link Phaser.Text#cssFont cssFont} instead: eg. text.cssFont = 'bold 20pt Arial'.
 	 */
 	var font:String;
 	
 	/**
-	 * @name Phaser.Text#fontSize
+	 * The size of the font.
+	 * 
+	 * If the font size is specified in pixels (eg. 32 or '32px') then a number (ie. 32) representing
+	 * the font size in pixels is returned; otherwise the value with CSS unit is returned as a string (eg. '12pt').
 	 */
-	var fontSize:Float;
+	var fontSize:Dynamic;
 	
 	/**
-	 * @name Phaser.Text#fontWeight
+	 * The weight of the font: 'normal', 'bold', or {@link <a href='http://www.w3.org/TR/CSS2/fonts.html#propdef-font-weight'>http://www.w3.org/TR/CSS2/fonts.html#propdef-font-weight</a> a valid CSS font weight}.
 	 */
-	var fontWeight:Float;
+	var fontWeight:String;
+	
+	/**
+	 * The style of the font: 'normal', 'italic', 'oblique'
+	 */
+	var fontStyle:String;
+	
+	/**
+	 * The variant the font: 'normal', 'small-caps'
+	 */
+	var fontVariant:String;
 	
 	/**
 	 * @name Phaser.Text#fill
@@ -198,23 +230,5 @@ extern class Text extends phaser.pixi.text.Text {
 	 * @name Phaser.Text#shadowBlur
 	 */
 	var shadowBlur:Float;
-	
-	/**
-	 * By default a Text object won't process any input events at all. By setting inputEnabled to true the Phaser.InputHandler is
-	 * activated for this object and it will then start to process click/touch events and more.
-	 */
-	var inputEnabled:Bool;
-	
-	/**
-	 * An Text that is fixed to the camera uses its x/y coordinates as offsets from the top left of the camera. These are stored in Text.cameraOffset.
-	 * Note that the cameraOffset values are in addition to any parent in the display list.
-	 * So if this Text was in a Group that has x: 200, then this will be added to the cameraOffset.x
-	 */
-	var fixedToCamera:Bool;
-	
-	/**
-	 * @name Phaser.Text#destroyPhase
-	 */
-	var destroyPhase:Bool;
 	
 }

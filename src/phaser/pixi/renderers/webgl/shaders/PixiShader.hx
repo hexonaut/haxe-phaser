@@ -6,7 +6,12 @@ extern class PixiShader {
 	/**
 	 * @class PixiShader
 	 */
-	function new ();
+	function new (WebGLContext:Dynamic);
+	
+	/**
+	 * @property _UID
+	 */
+	var _UID:Dynamic;
 	
 	/**
 	 * @property gl
@@ -29,7 +34,22 @@ extern class PixiShader {
 	var textureCount:Float;
 	
 	/**
-	 * The Default Vertex shader source
+	 * A local flag
+	 */
+	var firstRun:Bool;
+	
+	/**
+	 * A dirty flag
+	 */
+	var dirty:Bool;
+	
+	/**
+	 * Uniform attributes cache.
+	 */
+	var attributes:Array<Dynamic>;
+	
+	/**
+	 * The Default Vertex shader source.
 	 */
 	var defaultVertexSrc:String;
 	

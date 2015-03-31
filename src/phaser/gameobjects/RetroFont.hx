@@ -134,7 +134,7 @@ extern class RetroFont extends phaser.gameobjects.RenderTexture {
 	function updateOffset (?xOffset:Float = 0, ?yOffset:Float = 0):Void;
 	
 	/**
-	 * @name Phaser.BitmapText#text
+	 * @name Phaser.RetroFont#text
 	 */
 	var text:String;
 	

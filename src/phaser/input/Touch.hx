@@ -14,9 +14,9 @@ extern class Touch {
 	var game:phaser.core.Game;
 	
 	/**
-	 * You can disable all Touch events by setting disabled = true. While set all new touch events will be ignored.
+	 * Touch events will only be processed if enabled.
 	 */
-	var disabled:Bool;
+	var enabled:Bool;
 	
 	/**
 	 * The context under which callbacks are called.
@@ -140,5 +140,10 @@ extern class Touch {
 	 * Stop the event listeners.
 	 */
 	function stop ():Void;
+	
+	/**
+	 * If disabled all Touch events will be ignored.
+	 */
+	var disabled:Bool;
 	
 }

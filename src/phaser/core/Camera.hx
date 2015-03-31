@@ -28,7 +28,7 @@ extern class Camera {
 	 * Camera view.
 	 * The view into the world we wish to render (by default the game dimensions).
 	 * The x/y values are in world coordinates, not screen coordinates, the width/height is how many pixels to render.
-	 * Objects outside of this view are not rendered if set to camera cull.
+	 * Sprites outside of this view are not rendered if Sprite.autoCull is set to true. Otherwise they are always rendered.
 	 */
 	var view:phaser.geom.Rectangle;
 	
@@ -40,7 +40,7 @@ extern class Camera {
 	/**
 	 * The Camera is bound to this Rectangle and cannot move outside of it. By default it is enabled and set to the size of the World.
 	 * The Rectangle can be located anywhere in the world and updated as often as you like. If you don't wish the Camera to be bound
-	 * at all then set this to null. The values can be anything and are in World coordinates, with 0,0 being the center of the world.
+	 * at all then set this to null. The values can be anything and are in World coordinates, with 0,0 being the top-left of the world.
 	 */
 	var bounds:phaser.geom.Rectangle;
 	
@@ -70,16 +70,6 @@ extern class Camera {
 	var target:phaser.gameobjects.Sprite;
 	
 	/**
-	 * Edge property.
-	 */
-	var _edge:Float;
-	
-	/**
-	 * Current position of the camera in world.
-	 */
-	var _position:Dynamic;
-	
-	/**
 	 * The display object to which all game objects are added. Set by World.boot
 	 */
 	var displayObject:phaser.pixi.display.DisplayObject;
@@ -87,7 +77,27 @@ extern class Camera {
 	/**
 	 * The scale of the display object to which all game objects are added. Set by World.boot
 	 */
-	var scale:Dynamic;
+	var scale:phaser.geom.Point;
+	
+	/**
+	 * The total number of Sprites with autoCull set to true that are visible by this Camera.
+	 */
+	var totalInView(default, null):Float;
+	
+	/**
+	 * Internal point used to calculate target position
+	 */
+	var _targetPosition:phaser.geom.Point;
+	
+	/**
+	 * Edge property.
+	 */
+	var _edge:Float;
+	
+	/**
+	 * Current position of the camera in world.
+	 */
+	var _position:phaser.geom.Point;
 	
 	/**
 	 * @constant
@@ -110,7 +120,10 @@ extern class Camera {
 	static var FOLLOW_TOPDOWN_TIGHT:Float;
 	
 	/**
-	 * Tells this camera which sprite to follow.
+	 * Tell the camera which sprite to follow.
+	 * 
+	 * If you find you're getting a slight "jitter" effect when following a Sprite it's probably to do with sub-pixel rendering of the Sprite position.
+	 * This can be disabled by setting game.renderer.renderSession.roundPixels = true to force full pixel rendering.
 	 */
 	@:overload(function (target:phaser.gameobjects.Sprite, ?style:Float):Void {})
 	@:overload(function (target:phaser.gameobjects.Image, ?style:Float):Void {})
@@ -149,7 +162,7 @@ extern class Camera {
 	/**
 	 * Method called to ensure the camera doesn't venture outside of the game world.
 	 */
-	function checkWorldBounds ():Void;
+	function checkBounds ():Void;
 	
 	/**
 	 * A helper function to set both the X and Y properties of the camera at once
@@ -180,7 +193,7 @@ extern class Camera {
 	/**
 	 * The Cameras position. This value is automatically clamped if it falls outside of the World bounds.
 	 */
-	var position:Dynamic;
+	var position:phaser.geom.Point;
 	
 	/**
 	 * The Cameras width. By default this is the same as the Game size and should not be adjusted for now.

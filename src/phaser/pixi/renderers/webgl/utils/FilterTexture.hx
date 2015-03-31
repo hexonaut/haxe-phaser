@@ -13,4 +13,14 @@ extern class FilterTexture {
 	 */
 	var gl:Dynamic;
 	
+	/**
+	 * @property frameBuffer
+	 */
+	var frameBuffer:Dynamic;
+	
+	/**
+	 * @property texture
+	 */
+	var texture:Dynamic;
+	
 }

@@ -4,7 +4,7 @@ package phaser.tilemap;
 extern class Tile {
 	
 	/**
-	 * Create a new Tile object.
+	 * A Tile is a representation of a single tile within the Tilemap.
 	 */
 	function new (layer:Dynamic, index:Float, x:Float, y:Float, width:Float, height:Float);
 	
@@ -27,6 +27,16 @@ extern class Tile {
 	 * The y map coordinate of this tile.
 	 */
 	var y:Float;
+	
+	/**
+	 * The rotation angle of this tile.
+	 */
+	var rotation:Float;
+	
+	/**
+	 * Whether this tile is flipped (mirrored) or not.
+	 */
+	var flipped:Bool;
 	
 	/**
 	 * The x map coordinate of this tile.

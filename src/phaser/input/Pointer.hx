@@ -4,7 +4,7 @@ package phaser.input;
 extern class Pointer {
 	
 	/**
-	 * Phaser - Pointer constructor.
+	 * A Pointer object is used by the Mouse, Touch and MSPoint managers and represents a single finger on the touch screen.
 	 */
 	function new (game:phaser.core.Game, id:Float);
 	
@@ -191,23 +191,34 @@ extern class Pointer {
 	/**
 	 * A Phaser.Point object containing the current x/y values of the pointer on the display.
 	 */
-	var position:Dynamic;
+	var position:phaser.geom.Point;
 	
 	/**
 	 * A Phaser.Point object containing the x/y values of the pointer when it was last in a down state on the display.
 	 */
-	var positionDown:Dynamic;
+	var positionDown:phaser.geom.Point;
 	
 	/**
 	 * A Phaser.Point object containing the x/y values of the pointer when it was last released.
 	 */
-	var positionUp:Dynamic;
+	var positionUp:phaser.geom.Point;
 	
 	/**
 	 * A Phaser.Circle that is centered on the x/y coordinates of this pointer, useful for hit detection.
 	 * The Circle size is 44px (Apples recommended "finger tip" size).
 	 */
 	var circle:phaser.geom.Circle;
+	
+	/**
+	 * Click trampolines associated with this pointer. See addClickTrampoline.
+	 */
+	var clickTrampolines:Dynamic;
+	
+	/**
+	 * When the Pointer has click trampolines the last target object is stored here
+	 * so it can be used to check for validity of the trampoline in a post-Up/'stop'.
+	 */
+	var trampolineTargetObject:Dynamic;
 	
 	/**
 	 * Called when the Pointer is pressed onto the touchscreen.
@@ -258,6 +269,24 @@ extern class Pointer {
 	 * If you wish to check if the Pointer was released just once then see the Sprite.events.onInputUp event.
 	 */
 	function justReleased (?duration:Float):Bool;
+	
+	/**
+	 * Add a click trampoline to this pointer.
+	 * 
+	 * A click trampoline is a callback that is run on the DOM 'click' event; this is primarily
+	 * needed with certain browsers (ie. IE11) which restrict some actions like requestFullscreen
+	 * to the DOM 'click' event and reject it for 'pointer<em>' and 'mouse</em>' events.
+	 * 
+	 * This is used internally by the ScaleManager; click trampoline usage is uncommon.
+	 * Click trampolines can only be added to pointers that are currently down.
+	 */
+	@:overload(function (name:String, callback:Dynamic, callbackContext:Dynamic, callbackArgs:Dynamic):Void {})
+	function addClickTrampoline (name:String, callback:Dynamic, callbackContext:Dynamic, callbackArgs:Dynamic):Void;
+	
+	/**
+	 * Fire all click trampolines for which the pointers are still refering to the registered object.
+	 */
+	function processClickTrampolines ():Void;
 	
 	/**
 	 * Resets the Pointer properties. Called by InputManager.reset when you perform a State change.

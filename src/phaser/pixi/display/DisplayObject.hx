@@ -20,6 +20,19 @@ extern class DisplayObject {
 	var scale:Dynamic;
 	
 	/**
+	 * The transform callback is an optional callback that if set will be called at the end of the updateTransform method and sent two parameters:
+	 * This Display Objects worldTransform matrix and its parents transform matrix. Both are PIXI.Matrix object types.
+	 * The matrix are passed by reference and can be modified directly without needing to return them.
+	 * This ability allows you to check any of the matrix values and perform actions such as clamping scale or limiting rotation, regardless of the parent transforms.
+	 */
+	var transformCallback:Dynamic;
+	
+	/**
+	 * The context under which the transformCallback is invoked.
+	 */
+	var transformCallbackContext:Dynamic;
+	
+	/**
 	 * The pivot point of the displayObject that it rotates around
 	 */
 	var pivot:Dynamic;
@@ -46,11 +59,6 @@ extern class DisplayObject {
 	var hitArea:Dynamic;
 	
 	/**
-	 * This is used to indicate if the displayObject should display a mouse hand cursor on rollover
-	 */
-	var buttonMode:Bool;
-	
-	/**
 	 * Can this object be rendered
 	 */
 	var renderable:Bool;
@@ -71,29 +79,19 @@ extern class DisplayObject {
 	var worldAlpha:Float;
 	
 	/**
-	 * [read-only] Whether or not the object is interactive, do not toggle directly! use the interactive property
-	 */
-	var interactive:Bool;
-	
-	/**
-	 * This is the cursor that will be used when the mouse is over this object. To enable this the element must have interaction = true and buttonMode = true
-	 */
-	var defaultCursor:String;
-	
-	/**
 	 * [read-only] Current transform of the object based on world (parent) factors
 	 */
 	var worldTransform:Dynamic;
 	
 	/**
-	 * [NYI] Unknown
+	 * cached sin rotation and cos rotation
 	 */
-	var color:Dynamic;
+	var sr:Float;
 	
 	/**
-	 * [NYI] Holds whether or not this object is dynamic, for rendering optimization
+	 * cached sin rotation and cos rotation
 	 */
-	var a0:Bool;
+	var cr:Float;
 	
 	/**
 	 * The area the filter is applied to like the hitArea this is used as more of an optimisation
@@ -112,30 +110,31 @@ extern class DisplayObject {
 	var currentBounds:Dynamic;
 	
 	/**
-	 * [read-only] Indicates if the sprite is globaly visible.
-	 */
-	var worldVisible:Bool;
-	
-	/**
-	 * Sets a mask for the displayObject. A mask is an object that limits the visibility of an object to the shape of the mask applied to it.
-	 * In PIXI a regular mask must be a PIXI.Graphics object. This allows for much faster masking in canvas as it utilises shape clipping.
-	 * To remove a mask, set this property to null.
+	 * The original, cached mask of the object
 	 */
 	var mask:Dynamic;
+	
+	/**
+	 * Cached internal flag.
+	 */
+	var cacheAsBitmap:Bool;
+	
+	/**
+	 * Cached internal flag.
+	 */
+	var cacheIsDirty:Bool;
+	
+	/**
+	 * [read-only] Indicates if the sprite is globally visible.
+	 */
+	var worldVisible:Bool;
 	
 	/**
 	 * Sets the filters for the displayObject.
 	 * * IMPORTANT: This is a webGL only feature and will be ignored by the canvas renderer.
 	 * To remove filters simply set this property to 'null'
 	 */
-	var filters:Array<Dynamic>;
-	
-	/**
-	 * Set weather or not a the display objects is cached as a bitmap.
-	 * This basically takes a snap shot of the display object as it is at that moment. It can provide a performance benefit for complex static displayObjects
-	 * To remove filters simply set this property to 'null'
-	 */
-	var cacheAsBitmap:Bool;
+	var filters:Dynamic;
 	
 	/**
 	 * The position of the displayObject on the x axis relative to the local coordinates of the parent.

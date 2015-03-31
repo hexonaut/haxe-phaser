@@ -72,7 +72,7 @@ extern class Body {
 	/**
 	 * The velocity in pixels per second sq. of the Body.
 	 */
-	var velocity:Dynamic;
+	var velocity:phaser.geom.Point;
 	
 	/**
 	 * A const reference to the direction the Body is traveling or facing.

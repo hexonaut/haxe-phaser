@@ -4,7 +4,8 @@ package phaser.physics.p2;
 extern class World {
 	
 	/**
-	 * @class Phaser.Physics.P2
+	 * This is your main access to the P2 Physics World.
+	 * From here you can create materials, listen for events and add bodies into the physics simulation.
 	 */
 	function new (game:phaser.core.Game, ?config:Dynamic);
 	
@@ -149,6 +150,31 @@ extern class World {
 	var _collisionGroupID:Float;
 	
 	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsLeft:Bool;
+	
+	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsRight:Bool;
+	
+	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsTop:Bool;
+	
+	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsBottom:Bool;
+	
+	/**
+	 * Internal var that keeps track of world bounds settings.
+	 */
+	var _boundsOwnGroup:Bool;
+	
+	/**
 	 * This will add a P2 Physics body into the removal list for the next step.
 	 */
 	function removeBodyNextStep (body:phaser.physics.p2.Body):Void;
@@ -228,6 +254,10 @@ extern class World {
 	/**
 	 * Sets the bounds of the Physics world to match the given world pixel dimensions.
 	 * You can optionally set which 'walls' to create: left, right, top or bottom.
+	 * If none of the walls are given it will default to use the walls settings it had previously.
+	 * I.e. if you previously told it to not have the left or right walls, and you then adjust the world size
+	 * the newly created bounds will also not have the left and right walls.
+	 * Explicitly state them in the parameters to override this.
 	 */
 	function setBounds (x:Float, y:Float, width:Float, height:Float, ?left:Bool = true, ?right:Bool = true, ?top:Bool = true, ?bottom:Bool = true, ?setCollisionGroup:Bool = true):Void;
 	
@@ -247,7 +277,25 @@ extern class World {
 	function update ():Void;
 	
 	/**
+	 * Called by Phaser.Physics when a State swap occurs.
+	 * Starts the begin and end Contact listeners again.
+	 */
+	function reset ():Void;
+	
+	/**
 	 * Clears all bodies from the simulation, resets callbacks and resets the collision bitmask.
+	 * 
+	 * The P2 world is also cleared:
+	 * 
+	 * <ul>
+	 * <li>Removes all solver equations</li>
+	 * <li>Removes all constraints</li>
+	 * <li>Removes all bodies</li>
+	 * <li>Removes all springs</li>
+	 * <li>Removes all contact materials</li>
+	 * </ul>
+	 * 
+	 * This is called automatically when you switch state.
 	 */
 	function clear ():Void;
 	
@@ -411,9 +459,9 @@ extern class World {
 	 * Test if a world point overlaps bodies. You will get an array of actual P2 bodies back. You can find out which Sprite a Body belongs to
 	 * (if any) by checking the Body.parent.sprite property. Body.parent is a Phaser.Physics.P2.Body property.
 	 */
-	@:overload(function (worldPoint:Dynamic, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
-	@:overload(function (worldPoint:Dynamic, ?bodies:phaser.gameobjects.Sprite, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
-	function hitTest (worldPoint:Dynamic, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic>;
+	@:overload(function (worldPoint:phaser.geom.Point, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
+	@:overload(function (worldPoint:phaser.geom.Point, ?bodies:phaser.gameobjects.Sprite, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic> {})
+	function hitTest (worldPoint:phaser.geom.Point, ?bodies:Dynamic, ?precision:Float = 5, ?filterStatic:Bool = false):Array<Dynamic>;
 	
 	/**
 	 * Converts the current world into a JSON object.

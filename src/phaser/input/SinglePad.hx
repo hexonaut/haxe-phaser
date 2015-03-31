@@ -4,7 +4,7 @@ package phaser.input;
 extern class SinglePad {
 	
 	/**
-	 * @class Phaser.SinglePad
+	 * A single Phaser Gamepad
 	 */
 	function new (game:phaser.core.Game, padParent:Dynamic);
 	
@@ -99,7 +99,7 @@ extern class SinglePad {
 	var _axesLen:Float;
 	
 	/**
-	 * Add callbacks to the this Gamepad to handle connect / disconnect / button down / button up / axis change / float value buttons.
+	 * Add callbacks to this Gamepad to handle connect / disconnect / button down / button up / axis change / float value buttons.
 	 */
 	function addCallbacks (context:Dynamic, callbacks:Dynamic):Void;
 	
@@ -123,6 +123,11 @@ extern class SinglePad {
 	 * Gamepad disconnect function, should be called by Phaser.Gamepad.
 	 */
 	function disconnect ():Void;
+	
+	/**
+	 * Destroys this object and associated callback references.
+	 */
+	function destroy ():Void;
 	
 	/**
 	 * Handles changes in axis.
