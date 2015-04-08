@@ -21,6 +21,26 @@ extern class Events {
 	 * The Sprite that owns these events.
 	 */
 	var parent:phaser.gameobjects.Sprite;
+
+	/**
+	 * This signal is dispatched if the parent is inputEnabled and receives a down event from a Pointer.
+	 */
+	var onInputDown:phaser.core.Signal;
+
+	/**
+	 * This signal is dispatched if the parent is inputEnabled and receives an over event from a Pointer.
+	 */
+	var onInputOver:phaser.core.Signal;
+
+	/**
+	 * This signal is dispatched if the parent is inputEnabled and receives an out event from a Pointer.
+	 */
+	var onInputOut:phaser.core.Signal;
+
+	/**
+	 * This signal is dispatched if the parent is inputEnabled and receives an up event from a Pointer.
+	 */
+	var onInputUp:phaser.core.Signal;
 	
 	/**
 	 * Removes all events.
