@@ -84,6 +84,8 @@ extern class Graphics extends phaser.pixi.display.DisplayObjectContainer {
 	 * @param  {number}   anticlockwise     Optional. Specifies whether the drawing should be counterclockwise or clockwise. False is default, and indicates clockwise, while true indicates counter-clockwise.
 	 * @return {PIXI.Graphics}
 	*/
+	function arc (cx:Float, cy:Float, radius:Float, startAngle:Float, endAngle:Float, ?anticlockwise:Bool):Graphics;
+	
 	function quadraticCurveTo (cx:Float, cy:Float, radius:Float, startAngle:Float, endAngle:Float, ?anticlockwise:Float):Graphics;
 
 	/**
