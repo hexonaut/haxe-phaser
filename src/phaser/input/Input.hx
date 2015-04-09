@@ -396,7 +396,8 @@ extern class Input {
 	/**
 	 * This will return the local coordinates of the specified displayObject based on the given Pointer.
 	 */
-	@:overload(function (displayObject:phaser.gameobjects.Sprite, pointer:phaser.input.Pointer):phaser.geom.Point {})
+	@:overload(function (displayObject:phaser.gameobjects.Sprite, pointer:phaser.input.Pointer):phaser.geom.Point { } )
+	@:overload(function (displayObject:phaser.core.Group, pointer:phaser.input.Pointer):phaser.geom.Point {})
 	function getLocalPosition (displayObject:phaser.gameobjects.Image, pointer:phaser.input.Pointer):phaser.geom.Point;
 	
 	/**
