@@ -18,4 +18,9 @@ extern class DisplayObjectContainer extends phaser.pixi.display.DisplayObject {
 	 */
 	var height:Float;
 	
+	/**
+	 * Retrieves the non-global local bounds of the displayObjectContainer as a rectangle. The calculation takes all visible children into consideration.
+	 */
+	function getLocalBounds():phaser.geom.Rectangle;
+	
 }
