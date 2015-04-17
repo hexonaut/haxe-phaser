@@ -6,7 +6,7 @@ extern class DisplayObjectContainer extends phaser.pixi.display.DisplayObject {
 	/**
 	 * [read-only] The array of children of this container.
 	 */
-	var children:Dynamic;
+	var children:Array<DisplayObject>;
 	
 	/**
 	 * The width of the displayObjectContainer, setting this will actually modify the scale to achieve the value set
