@@ -13,4 +13,8 @@ extern class RenderTexture extends phaser.pixi.textures.Texture {
 	 */
 	var renderer:Dynamic;
 	
+	/**
+	 * Will return a a base64 encoded string of this texture. It works by calling RenderTexture.getCanvas and then running toDataURL on that.
+	 */
+	function getBase64():String;
 }
