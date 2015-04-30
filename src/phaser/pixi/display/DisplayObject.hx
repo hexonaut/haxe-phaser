@@ -1,5 +1,4 @@
 package phaser.pixi.display;
-import phaser.geom.Point;
 
 @:native("PIXI.DisplayObject")
 extern class DisplayObject {
@@ -156,5 +155,5 @@ extern class DisplayObject {
 	/**
 	 * Calculates the global position of the display object
 	 */
-	function toGlobal(position:Point):Point;
+	function toGlobal(position:Point):phaser.geom.Point;
 }
