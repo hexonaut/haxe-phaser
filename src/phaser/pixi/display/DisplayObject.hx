@@ -84,6 +84,24 @@ extern class DisplayObject {
 	var worldTransform:Dynamic;
 	
 	/**
+	 * The position of the Display Object based on the world transform.
+	 * This value is updated at the end of updateTransform and takes all parent transforms into account.
+	 */
+	var worldPosition:Dynamic;
+	
+	/**
+	 * The scale of the Display Object based on the world transform.
+	 * This value is updated at the end of updateTransform and takes all parent transforms into account.
+	 */
+	var worldScale:Dynamic;
+	
+	/**
+	 * The rotation of the Display Object, in radians, based on the world transform.
+	 * This value is updated at the end of updateTransform and takes all parent transforms into account.
+	 */
+	var worldRotation:Float;
+	
+	/**
 	 * cached sin rotation and cos rotation
 	 */
 	var sr:Float;
@@ -131,8 +149,12 @@ extern class DisplayObject {
 	
 	/**
 	 * Sets the filters for the displayObject.
-	 * * IMPORTANT: This is a webGL only feature and will be ignored by the canvas renderer.
-	 * To remove filters simply set this property to 'null'
+	 * IMPORTANT: This is a webGL only feature and will be ignored by the Canvas renderer.
+	 * 
+	 * To remove filters simply set this property to 'null'.
+	 * 
+	 * You cannot have a filter and a multiply blend mode active at the same time. Setting a filter will reset
+	 * this objects blend mode to NORMAL.
 	 */
 	var filters:Dynamic;
 	

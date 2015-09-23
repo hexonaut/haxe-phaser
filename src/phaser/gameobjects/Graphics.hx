@@ -17,7 +17,7 @@ extern class Graphics extends phaser.pixi.primitives.Graphics
 	/**
 	 * Creates a new Graphics object.
 	 */
-	function new (game:phaser.core.Game, x:Float, y:Float);
+	function new (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0);
 	
 	/**
 	 * The const type of this object.
@@ -324,5 +324,23 @@ extern class Graphics extends phaser.pixi.primitives.Graphics
 	* If this Game Object has a Physics Body it will reset the Body.
 	*/
 	function reset (x:Float, y:Float, ?health:Float = 1):Dynamic;
+	
+	/**
+	 * The key of the image or texture used by this Game Object during rendering.
+	 * If it is a string it's the string used to retrieve the texture from the Phaser Image Cache.
+	 * It can also be an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
+	 * If a Game Object is created without a key it is automatically assigned the key __default which is a 32x32 transparent PNG stored within the Cache.
+	 * If a Game Object is given a key which doesn't exist in the Image Cache it is re-assigned the key __missing which is a 32x32 PNG of a green box with a line through it.
+	 */
+	var key:Dynamic;
+	
+	/**
+	 * A Game Object is that is pendingDestroy is flagged to have its destroy method called on the next logic update.
+	 * You can set it directly to allow you to flag an object to be destroyed on its next update.
+	 * 
+	 * This is extremely useful if you wish to destroy an object from within one of its own callbacks 
+	 * such as with Buttons or other Input events.
+	 */
+	var pendingDestroy:Bool;
 	
 }

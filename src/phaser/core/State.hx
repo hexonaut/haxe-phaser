@@ -138,6 +138,11 @@ extern class State {
 	function update ():Void;
 	
 	/**
+	 * The preRender method is called after all Game Objects have been updated, but before any rendering takes place.
+	 */
+	function preRender ():Void;
+	
+	/**
 	 * Nearly all display objects in Phaser render automatically, you don't need to tell them to render.
 	 * However the render method is called AFTER the game renderer and plugins have rendered, so you're able to do any
 	 * final post-processing style effects here. Note that this happens before plugins postRender takes place.
@@ -153,6 +158,11 @@ extern class State {
 	 * This method will be called if the core game loop is paused.
 	 */
 	function paused ():Void;
+	
+	/**
+	 * This method will be called when the core game loop resumes from a paused state.
+	 */
+	function resumed ():Void;
 	
 	/**
 	 * pauseUpdate is called while the game is paused instead of preUpdate, update and postUpdate.

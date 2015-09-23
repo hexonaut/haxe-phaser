@@ -10,4 +10,10 @@ extern interface Health {
 	 */
 	var health:Float;
 	
+	/**
+	 * The Game Objects maximum health value. This works in combination with the heal method to ensure
+	 * the health value never exceeds the maximum.
+	 */
+	var maxHealth:Float;
+	
 }

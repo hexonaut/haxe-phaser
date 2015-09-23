@@ -170,7 +170,7 @@ extern class TweenData {
 	/**
 	 * Updates this Tween. This is called automatically by Phaser.Tween.
 	 */
-	function update ():Float;
+	function update (time:Float):Float;
 	
 	/**
 	 * This will generate an array populated with the tweened object values from start to end.

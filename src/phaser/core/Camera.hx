@@ -33,11 +33,6 @@ extern class Camera {
 	var view:phaser.geom.Rectangle;
 	
 	/**
-	 * Used by Sprites to work out Camera culling.
-	 */
-	var screenView:phaser.geom.Rectangle;
-	
-	/**
 	 * The Camera is bound to this Rectangle and cannot move outside of it. By default it is enabled and set to the size of the World.
 	 * The Rectangle can be located anywhere in the world and updated as often as you like. If you don't wish the Camera to be bound
 	 * at all then set this to null. The values can be anything and are in World coordinates, with 0,0 being the top-left of the world.
@@ -118,6 +113,11 @@ extern class Camera {
 	 * @constant
 	 */
 	static var FOLLOW_TOPDOWN_TIGHT:Float;
+	
+	/**
+	 * Camera preUpdate. Sets the total view counter to zero.
+	 */
+	function preUpdate ():Void;
 	
 	/**
 	 * Tell the camera which sprite to follow.

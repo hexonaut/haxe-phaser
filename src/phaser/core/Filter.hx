@@ -6,7 +6,8 @@ extern class Filter {
 	/**
 	 * This is a base Filter class to use for any Phaser filter development.
 	 */
-	function new (game:phaser.core.Game, uniforms:Dynamic, fragmentSrc:Array<Dynamic>);
+	@:overload(function (game:phaser.core.Game, uniforms:Dynamic, fragmentSrc:Array<Dynamic>):Void {})
+	function new (game:phaser.core.Game, uniforms:Dynamic, fragmentSrc:String);
 	
 	/**
 	 * A reference to the currently running game.
@@ -52,7 +53,7 @@ extern class Filter {
 	/**
 	 * The fragment shader code.
 	 */
-	var fragmentSrc:Array<Dynamic>;
+	var fragmentSrc:Dynamic;
 	
 	/**
 	 * Should be over-ridden.

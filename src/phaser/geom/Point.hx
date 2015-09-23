@@ -46,7 +46,7 @@ extern class Point {
 	/**
 	 * Sets the x and y values of this Point object to the given values.
 	 * If you omit the y value then the x value will be applied to both, for example:
-	 * Point.setTo(2) is the same as Point.setTo(2, 2)
+	 * Point.set(2) is the same as Point.set(2, 2)
 	 */
 	function set (x:Float, ?y:Float):phaser.geom.Point;
 	
@@ -115,7 +115,7 @@ extern class Point {
 	/**
 	 * Rotates this Point around the x/y coordinates given to the desired angle.
 	 */
-	function rotate (x:Float, y:Float, angle:Float, asDegrees:Bool, ?distance:Float):phaser.geom.Point;
+	function rotate (x:Float, y:Float, angle:Float, ?asDegrees:Bool = false, ?distance:Float):phaser.geom.Point;
 	
 	/**
 	 * Calculates the length of the Point object.

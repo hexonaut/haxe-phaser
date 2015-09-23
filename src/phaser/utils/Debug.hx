@@ -68,7 +68,7 @@ extern class Debug {
 	var currentY:Float;
 	
 	/**
-	 * The current alpha the debug information will be rendered at.
+	 * The alpha of the Debug context, set before all debug information is rendered to it.
 	 */
 	var currentAlpha:Float;
 	
@@ -150,7 +150,7 @@ extern class Debug {
 	function spriteBounds (sprite:phaser.gameobjects.Image, ?color:String, ?filled:Bool = true):Void;
 	
 	/**
-	 * Renders the Rope's segments. Note: This is really expensive as it has to calculate new segments everytime you call it
+	 * Renders the Rope's segments. Note: This is really expensive as it has to calculate new segments every time you call it
 	 */
 	function ropeSegments (rope:phaser.gameobjects.Rope, ?color:String, ?filled:Bool = true):Void;
 	
@@ -194,9 +194,9 @@ extern class Debug {
 	function quadTree (quadtree:phaser.math.QuadTree, color:String):Void;
 	
 	/**
-	 * Render a Sprites Physics body if it has one set. Note this only works for Arcade and
-	 * Ninja (AABB, circle only) Physics.
-	 * To display a P2 body you should enable debug mode on the body when creating it.
+	 * Render a Sprites Physics body if it has one set. The body is rendered as a filled or stroked rectangle.
+	 * This only works for Arcade Physics, Ninja Physics (AABB and Circle only) and Box2D Physics bodies.
+	 * To display a P2 Physics body you should enable debug mode on the body when creating it.
 	 */
 	function body (sprite:phaser.gameobjects.Sprite, ?color:String = 'rgba(0,255,0,0.4)', ?filled:Bool = true):Void;
 	
@@ -217,5 +217,10 @@ extern class Debug {
 	 * This uses the standard debug drawing feature of Box2D, so colors will be decided by the Box2D engine.
 	 */
 	function box2dBody (sprite:phaser.gameobjects.Sprite, ?color:String = 'rgb(0,255,0)'):Void;
+	
+	/**
+	 * Destroy this object.
+	 */
+	function destroy ():Void;
 	
 }

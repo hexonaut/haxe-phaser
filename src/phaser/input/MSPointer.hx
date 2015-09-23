@@ -6,8 +6,14 @@ extern class MSPointer {
 	/**
 	 * The MSPointer class handles Microsoft touch interactions with the game and the resulting Pointer objects.
 	 * 
-	 * It will work only in Internet Explorer 10 and Windows Store or Windows Phone 8 apps using JavaScript.
+	 * It will work only in Internet Explorer 10+ and Windows Store or Windows Phone 8 apps using JavaScript.
 	 * <a href='http://msdn.microsoft.com/en-us/library/ie/hh673557(v=vs.85).aspx'>http://msdn.microsoft.com/en-us/library/ie/hh673557(v=vs.85).aspx</a>
+	 * 
+	 * You should not normally access this class directly, but instead use a Phaser.Pointer object which 
+	 * normalises all game input for you including accurate button handling.
+	 * 
+	 * Please note that at the current time of writing Phaser does not yet support chorded button interactions:
+	 * <a href='http://www.w3.org/TR/pointerevents/#chorded-button-interactions'>http://www.w3.org/TR/pointerevents/#chorded-button-interactions</a>
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -15,6 +21,11 @@ extern class MSPointer {
 	 * A reference to the currently running game.
 	 */
 	var game:phaser.core.Game;
+	
+	/**
+	 * A reference to the Phaser Input Manager.
+	 */
+	var input:phaser.input.Input;
 	
 	/**
 	 * The context under which callbacks are called (defaults to game).
@@ -42,7 +53,9 @@ extern class MSPointer {
 	var capture:Bool;
 	
 	/**
-	 * The type of click, either: Phaser.Mouse.NO_BUTTON, Phaser.Mouse.LEFT_BUTTON, Phaser.Mouse.MIDDLE_BUTTON or Phaser.Mouse.RIGHT_BUTTON.
+	 * This property was removed in Phaser 2.4 and should no longer be used.
+	 * Instead please see the Pointer button properties such as Pointer.leftButton, Pointer.rightButton and so on.
+	 * Or Pointer.button holds the DOM event button value if you require that.
 	 */
 	var button:Float;
 	
@@ -73,6 +86,21 @@ extern class MSPointer {
 	var _onMSPointerUp:Dynamic;
 	
 	/**
+	 * Internal function to handle MSPointer events.
+	 */
+	var _onMSPointerUpGlobal:Dynamic;
+	
+	/**
+	 * Internal function to handle MSPointer events.
+	 */
+	var _onMSPointerOut:Dynamic;
+	
+	/**
+	 * Internal function to handle MSPointer events.
+	 */
+	var _onMSPointerOver:Dynamic;
+	
+	/**
 	 * Starts the event listeners running.
 	 */
 	function start ():Void;
@@ -93,13 +121,18 @@ extern class MSPointer {
 	function onPointerUp (event:Dynamic):Void;
 	
 	/**
+	 * The internal method that handles the mouse up event from the window.
+	 */
+	function onPointerUpGlobal (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the pointer out event from the browser.
+	 */
+	function onPointerOut (event:Dynamic):Void;
+	
+	/**
 	 * Stop the event listeners.
 	 */
 	function stop ():Void;
-	
-	/**
-	 * If disabled all MSPointer input will be ignored.
-	 */
-	var disabled:Bool;
 	
 }

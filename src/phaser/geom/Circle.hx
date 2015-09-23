@@ -40,6 +40,12 @@ extern class Circle {
 	function circumference ():Float;
 	
 	/**
+	 * Returns a uniformly distributed random point from anywhere within this Circle.
+	 */
+	@:overload(function (?out:phaser.geom.Point):phaser.geom.Point {})
+	function random (?out:Dynamic):phaser.geom.Point;
+	
+	/**
 	 * Returns the framing rectangle of the circle as a Phaser.Rectangle object.
 	 */
 	function getBounds ():phaser.geom.Rectangle;

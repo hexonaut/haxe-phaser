@@ -1,21 +1,7 @@
 package phaser.tilemap;
 
 @:native("Phaser.TilemapLayer")
-extern class TilemapLayer {
-	
-	/**
-	 * A TilemapLayer is a Phaser.Image/Sprite that renders a specific TileLayer of a Tilemap.
-	 * 
-	 * Since a TilemapLayer is a Sprite it can be moved around the display, added to other groups or display objects, etc.
-	 * 
-	 * By default TilemapLayers have fixedToCamera set to true. Changing this will break Camera follow and scrolling behavior.
-	 */
-	function new (game:phaser.core.Game, tilemap:phaser.tilemap.Tilemap, index:Int, width:Int, height:Int);
-	
-	/**
-	 * A reference to the currently running Game.
-	 */
-	var game(default, null):phaser.core.Game;
+extern class TilemapLayer extends phaser.gameobjects.Sprite {
 	
 	/**
 	 * The Tilemap to which this layer is bound.
@@ -43,44 +29,9 @@ extern class TilemapLayer {
 	var context:Dynamic;
 	
 	/**
-	 * Required Pixi var.
-	 */
-	var baseTexture:phaser.pixi.textures.BaseTexture;
-	
-	/**
-	 * Required Pixi var.
-	 */
-	var texture:phaser.pixi.textures.Texture;
-	
-	/**
-	 * Dimensions of the renderable area.
-	 */
-	var textureFrame:phaser.animation.Frame;
-	
-	/**
-	 * The const type of this object.
-	 */
-	var type(default, null):Float;
-	
-	/**
-	 * The const physics body type of this object.
-	 */
-	var physicsType(default, null):Float;
-	
-	/**
 	 * Settings that control standard (non-diagnostic) rendering.
 	 */
 	var copyCanvas:Dynamic;
-	
-	/**
-	 * Enable an additional "debug rendering" pass to display collision information.
-	 */
-	var debug:Bool;
-	
-	/**
-	 * Controls if the core game loop and physics update this game object or not.
-	 */
-	var exists:Bool;
 	
 	/**
 	 * Settings used for debugging and diagnostics.
@@ -133,6 +84,13 @@ extern class TilemapLayer {
 	var results:Dynamic;
 	
 	/**
+	 * Create if needed (and return) a shared copy canvas that is shared across all TilemapLayers.
+	 * 
+	 * Code that uses the canvas is responsible to ensure the dimensions and save/restore state as appropriate.
+	 */
+	static function ensureSharedCopyCanvas ():Void;
+	
+	/**
 	 * Automatically called by World.preUpdate.
 	 */
 	function preUpdate ():Void;
@@ -141,6 +99,17 @@ extern class TilemapLayer {
 	 * Automatically called by World.postUpdate. Handles cache updates.
 	 */
 	function postUpdate ():Void;
+	
+	/**
+	 * Resizes the internal canvas and texture frame used by this TilemapLayer.
+	 * 
+	 * This is an expensive call, so don't bind it to a window resize event! But instead call it at carefully
+	 * selected times.
+	 * 
+	 * Be aware that no validation of the new sizes takes place and the current map scroll coordinates are not
+	 * modified either. You will have to handle both of these things from your game code if required.
+	 */
+	function resize (width:Float, height:Float):Void;
 	
 	/**
 	 * Sets the world size to match the size of this layer.
@@ -192,13 +161,6 @@ extern class TilemapLayer {
 	 * Get all tiles that exist within the given area, defined by the top-left corner, width and height. Values given are in pixels, not tiles.
 	 */
 	function getTiles (x:Float, y:Float, width:Float, height:Float, ?collides:Bool = false, ?interestingFace:Bool = false):Dynamic;
-	
-	/**
-	 * If no valid tileset/image can be found for a tile, the tile is rendered as a rectangle using this as a fill value.
-	 * 
-	 * Set to null to disable rendering anything for tiles without value tileset images.
-	 */
-	var tileColor:Dynamic;
 	
 	/**
 	 * Returns the appropriate tileset for the index, updating the internal cache as required.

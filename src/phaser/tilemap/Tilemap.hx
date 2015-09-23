@@ -85,6 +85,11 @@ extern class Tilemap {
 	var tilesets:Array<Dynamic>;
 	
 	/**
+	 * An array of Image Collections.
+	 */
+	var imagecollections:Array<Dynamic>;
+	
+	/**
 	 * The super array of Tiles.
 	 */
 	var tiles:Array<Dynamic>;
@@ -178,7 +183,8 @@ extern class Tilemap {
 	 * Adds an image to the map to be used as a tileset. A single map may use multiple tilesets.
 	 * Note that the tileset name can be found in the JSON file exported from Tiled, or in the Tiled editor.
 	 */
-	function addTilesetImage (tileset:String, ?key:String, ?tileWidth:Float = 32, ?tileHeight:Float = 32, ?tileMargin:Float = 0, ?tileSpacing:Float = 0, ?gid:Float = 0):phaser.tilemap.Tileset;
+	@:overload(function (tileset:String, ?key:String, ?tileWidth:Float = 32, ?tileHeight:Float = 32, ?tileMargin:Float = 0, ?tileSpacing:Float = 0, ?gid:Float = 0):phaser.tilemap.Tileset {})
+	function addTilesetImage (tileset:String, ?key:phaser.gameobjects.BitmapData, ?tileWidth:Float = 32, ?tileHeight:Float = 32, ?tileMargin:Float = 0, ?tileSpacing:Float = 0, ?gid:Float = 0):phaser.tilemap.Tileset;
 	
 	/**
 	 * Creates a Sprite for every object matching the given gid in the map data. You can optionally specify the group that the Sprite will be created in. If none is
@@ -416,9 +422,9 @@ extern class Tilemap {
 	/**
 	 * Gets a tile from the Tilemap layer. The coordinates are given in pixel values.
 	 */
-	@:overload(function (x:Float, y:Float, ?tileWidth:Float, ?tileHeight:Float, ?layer:Float):phaser.tilemap.Tile {})
-	@:overload(function (x:Float, y:Float, ?tileWidth:Float, ?tileHeight:Float, ?layer:String):phaser.tilemap.Tile {})
-	function getTileWorldXY (x:Float, y:Float, ?tileWidth:Float, ?tileHeight:Float, ?layer:phaser.tilemap.TilemapLayer):phaser.tilemap.Tile;
+	@:overload(function (x:Float, y:Float, ?tileWidth:Float, ?tileHeight:Float, ?layer:Float, ?nonNull:Bool = false):phaser.tilemap.Tile {})
+	@:overload(function (x:Float, y:Float, ?tileWidth:Float, ?tileHeight:Float, ?layer:String, ?nonNull:Bool = false):phaser.tilemap.Tile {})
+	function getTileWorldXY (x:Float, y:Float, ?tileWidth:Float, ?tileHeight:Float, ?layer:phaser.tilemap.TilemapLayer, ?nonNull:Bool = false):phaser.tilemap.Tile;
 	
 	/**
 	 * Copies all of the tiles in the given rectangular block into the tilemap data buffer.

@@ -79,7 +79,7 @@ extern class SinglePad {
 	var _prevTimestamp:Float;
 	
 	/**
-	 * Array of Phaser.GamepadButton objects. This array is populated when the gamepad is connected.
+	 * Array of Phaser.DeviceButton objects. This array is populated when the gamepad is connected.
 	 */
 	var _buttons:Array<Dynamic>;
 	
@@ -104,10 +104,10 @@ extern class SinglePad {
 	function addCallbacks (context:Dynamic, callbacks:Dynamic):Void;
 	
 	/**
-	 * Gets a GamepadButton object from this controller to be stored and referenced locally.
-	 * The GamepadButton object can then be polled, have events attached to it, etc.
+	 * Gets a DeviceButton object from this controller to be stored and referenced locally.
+	 * The DeviceButton object can then be polled, have events attached to it, etc.
 	 */
-	function getButton (buttonCode:Float):phaser.input.GamepadButton;
+	function getButton (buttonCode:Float):phaser.input.DeviceButton;
 	
 	/**
 	 * Main update function called by Phaser.Gamepad.

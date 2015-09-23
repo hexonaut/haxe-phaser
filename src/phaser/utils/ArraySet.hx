@@ -1,6 +1,6 @@
 package phaser.utils;
 
-@:native("Phaser.ArrayList")
+@:native("Phaser.ArraySet")
 extern class ArraySet {
 	
 	/**

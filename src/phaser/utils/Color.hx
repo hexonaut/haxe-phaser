@@ -206,28 +206,170 @@ extern class Color {
 	static function getBlue (color:Float):Float;
 	
 	/**
-	 * DEPRECATED: This method will be removed in Phaser 2.1.
-	 * Returns a string containing handy information about the given color including string hex value,
-	 * RGB format information. Each section starts on a newline, 3 lines in total.
+	 * Blends the source color, ignoring the backdrop.
 	 */
-	static function getColorInfo (color:Float):String;
+	static function blendNormal (a:Int, b:Int):Int;
 	
 	/**
-	 * DEPRECATED: This method will be removed in Phaser 2.1. Please use Phaser.Color.RGBtoString instead.
-	 * Return a string representation of the color in the format 0xAARRGGBB.
+	 * Selects the lighter of the backdrop and source colors.
 	 */
-	static function RGBtoHexstring (color:Float):String;
+	static function blendLighten (a:Int, b:Int):Int;
 	
 	/**
-	 * DEPRECATED: This method will be removed in Phaser 2.1. Please use Phaser.Color.RGBtoString instead.
-	 * Return a string representation of the color in the format #RRGGBB.
+	 * Selects the darker of the backdrop and source colors.
 	 */
-	static function RGBtoWebstring (color:Float):String;
+	static function blendDarken (a:Int, b:Int):Int;
 	
 	/**
-	 * DEPRECATED: This method will be removed in Phaser 2.1. Please use Phaser.Color.componentToHex instead.
-	 * Return a string containing a hex representation of the given color.
+	 * Multiplies the backdrop and source color values.
+	 * The result color is always at least as dark as either of the two constituent
+	 * colors. Multiplying any color with black produces black;
+	 * multiplying with white leaves the original color unchanged.
 	 */
-	static function colorToHexstring (color:Float):String;
+	static function blendMultiply (a:Int, b:Int):Int;
+	
+	/**
+	 * Takes the average of the source and backdrop colors.
+	 */
+	static function blendAverage (a:Int, b:Int):Int;
+	
+	/**
+	 * Adds the source and backdrop colors together and returns the value, up to a maximum of 255.
+	 */
+	static function blendAdd (a:Int, b:Int):Int;
+	
+	/**
+	 * Combines the source and backdrop colors and returns their value minus 255.
+	 */
+	static function blendSubtract (a:Int, b:Int):Int;
+	
+	/**
+	 * Subtracts the darker of the two constituent colors from the lighter.
+	 * 
+	 * Painting with white inverts the backdrop color; painting with black produces no change. 
+	 */
+	static function blendDifference (a:Int, b:Int):Int;
+	
+	/**
+	 * Negation blend mode.
+	 */
+	static function blendNegation (a:Int, b:Int):Int;
+	
+	/**
+	 * Multiplies the complements of the backdrop and source color values, then complements the result.
+	 * The result color is always at least as light as either of the two constituent colors. 
+	 * Screening any color with white produces white; screening with black leaves the original color unchanged. 
+	 */
+	static function blendScreen (a:Int, b:Int):Int;
+	
+	/**
+	 * Produces an effect similar to that of the Difference mode, but lower in contrast. 
+	 * Painting with white inverts the backdrop color; painting with black produces no change. 
+	 */
+	static function blendExclusion (a:Int, b:Int):Int;
+	
+	/**
+	 * Multiplies or screens the colors, depending on the backdrop color.
+	 * Source colors overlay the backdrop while preserving its highlights and shadows. 
+	 * The backdrop color is not replaced, but is mixed with the source color to reflect the lightness or darkness of the backdrop.
+	 */
+	static function blendOverlay (a:Int, b:Int):Int;
+	
+	/**
+	 * Darkens or lightens the colors, depending on the source color value. 
+	 * 
+	 * If the source color is lighter than 0.5, the backdrop is lightened, as if it were dodged; 
+	 * this is useful for adding highlights to a scene. 
+	 * 
+	 * If the source color is darker than 0.5, the backdrop is darkened, as if it were burned in. 
+	 * The degree of lightening or darkening is proportional to the difference between the source color and 0.5; 
+	 * if it is equal to 0.5, the backdrop is unchanged.
+	 * 
+	 * Painting with pure black or white produces a distinctly darker or lighter area, but does not result in pure black or white. 
+	 * The effect is similar to shining a diffused spotlight on the backdrop. 
+	 */
+	static function blendSoftLight (a:Int, b:Int):Int;
+	
+	/**
+	 * Multiplies or screens the colors, depending on the source color value. 
+	 * 
+	 * If the source color is lighter than 0.5, the backdrop is lightened, as if it were screened; 
+	 * this is useful for adding highlights to a scene. 
+	 * 
+	 * If the source color is darker than 0.5, the backdrop is darkened, as if it were multiplied; 
+	 * this is useful for adding shadows to a scene. 
+	 * 
+	 * The degree of lightening or darkening is proportional to the difference between the source color and 0.5; 
+	 * if it is equal to 0.5, the backdrop is unchanged.
+	 * 
+	 * Painting with pure black or white produces pure black or white. The effect is similar to shining a harsh spotlight on the backdrop. 
+	 */
+	static function blendHardLight (a:Int, b:Int):Int;
+	
+	/**
+	 * Brightens the backdrop color to reflect the source color. 
+	 * Painting with black produces no change.
+	 */
+	static function blendColorDodge (a:Int, b:Int):Int;
+	
+	/**
+	 * Darkens the backdrop color to reflect the source color.
+	 * Painting with white produces no change. 
+	 */
+	static function blendColorBurn (a:Int, b:Int):Int;
+	
+	/**
+	 * An alias for blendAdd, it simply sums the values of the two colors.
+	 */
+	static function blendLinearDodge (a:Int, b:Int):Int;
+	
+	/**
+	 * An alias for blendSubtract, it simply sums the values of the two colors and subtracts 255.
+	 */
+	static function blendLinearBurn (a:Int, b:Int):Int;
+	
+	/**
+	 * This blend mode combines Linear Dodge and Linear Burn (rescaled so that neutral colors become middle gray).
+	 * Dodge applies to values of top layer lighter than middle gray, and burn to darker values.
+	 * The calculation simplifies to the sum of bottom layer and twice the top layer, subtract 128. The contrast decreases.
+	 */
+	static function blendLinearLight (a:Int, b:Int):Int;
+	
+	/**
+	 * This blend mode combines Color Dodge and Color Burn (rescaled so that neutral colors become middle gray).
+	 * Dodge applies when values in the top layer are lighter than middle gray, and burn to darker values.
+	 * The middle gray is the neutral color. When color is lighter than this, this effectively moves the white point of the bottom 
+	 * layer down by twice the difference; when it is darker, the black point is moved up by twice the difference. The perceived contrast increases.
+	 */
+	static function blendVividLight (a:Int, b:Int):Int;
+	
+	/**
+	 * If the backdrop color (light source) is lighter than 50%, the blendDarken mode is used, and colors lighter than the backdrop color do not change.
+	 * If the backdrop color is darker than 50% gray, colors lighter than the blend color are replaced, and colors darker than the blend color do not change.
+	 */
+	static function blendPinLight (a:Int, b:Int):Int;
+	
+	/**
+	 * Runs blendVividLight on the source and backdrop colors.
+	 * If the resulting color is 128 or more, it receives a value of 255; if less than 128, a value of 0.
+	 * Therefore, all blended pixels have red, green, and blue channel values of either 0 or 255.
+	 * This changes all pixels to primary additive colors (red, green, or blue), white, or black.
+	 */
+	static function blendHardMix (a:Int, b:Int):Int;
+	
+	/**
+	 * Reflect blend mode. This mode is useful when adding shining objects or light zones to images. 
+	 */
+	static function blendReflect (a:Int, b:Int):Int;
+	
+	/**
+	 * Glow blend mode. This mode is a variation of reflect mode with the source and backdrop colors swapped.
+	 */
+	static function blendGlow (a:Int, b:Int):Int;
+	
+	/**
+	 * Phoenix blend mode. This subtracts the lighter color from the darker color, and adds 255, giving a bright result.
+	 */
+	static function blendPhoenix (a:Int, b:Int):Int;
 	
 }

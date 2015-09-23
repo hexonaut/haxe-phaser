@@ -21,6 +21,7 @@ extern class AnimationManager {
 	
 	/**
 	 * The currently displayed Frame of animation, if any.
+	 * This property is only set once an Animation starts playing. Until that point it remains set as null.
 	 */
 	var currentFrame:phaser.animation.Frame;
 	

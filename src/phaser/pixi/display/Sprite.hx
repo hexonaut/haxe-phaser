@@ -22,7 +22,19 @@ extern class Sprite extends phaser.pixi.display.DisplayObjectContainer {
 	var tint:Float;
 	
 	/**
+	 * The tint applied to the sprite. This is a hex value. A value of 0xFFFFFF will remove any tint effect.
+	 */
+	var cachedTint:Float;
+	
+	/**
+	 * A canvas that contains the tinted version of the Sprite (in Canvas mode, WebGL doesn't populate this)
+	 */
+	var tintedTexture:Dynamic;
+	
+	/**
 	 * The blend mode to be applied to the sprite. Set to PIXI.blendModes.NORMAL to remove any blend mode.
+	 * 
+	 * Warning: You cannot have a blend mode and a filter active on the same Sprite. Doing so will render the sprite invisible.
 	 */
 	var blendMode:Float;
 	

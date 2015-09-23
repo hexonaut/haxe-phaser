@@ -64,6 +64,12 @@ extern class Ellipse {
 	function contains (x:Float, y:Float):Bool;
 	
 	/**
+	 * Returns a uniformly distributed random point from anywhere within this Ellipse.
+	 */
+	@:overload(function (?out:phaser.geom.Point):phaser.geom.Point {})
+	function random (?out:Dynamic):phaser.geom.Point;
+	
+	/**
 	 * Returns a string representation of this object.
 	 */
 	function toString ():String;

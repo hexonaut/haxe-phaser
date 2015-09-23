@@ -50,6 +50,11 @@ extern class Physics {
 	var chipmunk:Dynamic;
 	
 	/**
+	 * The MatterJS Physics system (coming soon).
+	 */
+	var matter:Dynamic;
+	
+	/**
 	 * @const
 	 */
 	static var ARCADE:Float;
@@ -73,6 +78,11 @@ extern class Physics {
 	 * @const
 	 */
 	static var CHIPMUNK:Float;
+	
+	/**
+	 * @const
+	 */
+	static var MATTERJS:Float;
 	
 	/**
 	 * Parses the Physics Configuration object passed to the Game constructor and starts any physics systems specified within.
@@ -107,6 +117,7 @@ extern class Physics {
 	 * Phaser.Physics.P2JS - A full-body advanced physics system supporting multiple object shapes, polygon loading, contact materials, springs and constraints.
 	 * Phaser.Physics.NINJA - A port of Metanet Softwares N+ physics system. Advanced AABB and Circle vs. Tile collision.
 	 * Phaser.Physics.BOX2D - A port of <a href='https://code.google.com/p/box2d-html5'>https://code.google.com/p/box2d-html5</a>
+	 * Phaser.Physics.MATTER - A full-body and light-weight advanced physics system (still in development)
 	 * Phaser.Physics.CHIPMUNK is still in development.
 	 * 
 	 * If you require more control over what type of body is created, for example to create a Ninja Physics Circle instead of the default AABB, then see the

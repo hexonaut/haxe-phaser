@@ -32,33 +32,15 @@ extern class Utils {
 	function randomChoice (choice1:Dynamic, choice2:Dynamic):Dynamic;
 	
 	/**
-	 * Transposes the elements of the given matrix (array of arrays).
-	 */
-	function transposeArray (array:Dynamic):Dynamic;
-	
-	/**
-	 * Rotates the given matrix (array of arrays).
-	 * 
-	 * Based on the routine from {@link <a href='http://jsfiddle.net/MrPolywhirl/NH42z/}'>http://jsfiddle.net/MrPolywhirl/NH42z/}</a>.
-	 */
-	@:overload(function (matrix:Dynamic, direction:Float):Dynamic {})
-	function rotateArray (matrix:Dynamic, direction:String):Dynamic;
-	
-	/**
-	 * A standard Fisher-Yates Array shuffle implementation.
-	 */
-	function shuffle (array:Dynamic):Dynamic;
-	
-	/**
 	 * Get a unit dimension from a string.
 	 */
 	@:overload(function (size:String, dimension:Float):Float {})
 	function parseDimension (size:Float, dimension:Float):Float;
 	
 	/**
-	 * Javascript string pad <a href='http://www.webtoolkit.info/'>http://www.webtoolkit.info/</a>.
+	 * JavaScript string pad <a href='http://www.webtoolkit.info/'>http://www.webtoolkit.info/</a>.
 	 */
-	function pad (str:String, len:Float, pad:Float, ?dir:Float = 3):String;
+	function pad (str:String, ?len:Int = 0, ?pad:String, ?dir:Int = 3):String;
 	
 	/**
 	 * This is a slightly modified version of jQuery.isPlainObject.

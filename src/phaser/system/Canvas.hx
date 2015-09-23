@@ -6,7 +6,7 @@ extern class Canvas {
 	/**
 	 * Creates a canvas DOM element. The element is not automatically added to the document.
 	 */
-	function create (?width:Float = 256, ?height:Float = 256, ?id:String = ''):Dynamic;
+	function create (parent:Dynamic, ?width:Float = 256, ?height:Float = 256, ?id:String, ?skipPool:Bool = false):Dynamic;
 	
 	/**
 	 * Sets the background color behind the canvas. This changes the canvas style property.
@@ -65,15 +65,5 @@ extern class Canvas {
 	 * Note that if this doesn't given the desired result then see the CanvasUtils.setSmoothingEnabled method.
 	 */
 	function setImageRenderingBicubic (canvas:Dynamic):Dynamic;
-	
-	/**
-	 * Get the DOM offset values of any given element
-	 */
-	function getOffset (element:Dynamic, ?point:phaser.geom.Point):phaser.geom.Point;
-	
-	/**
-	 * Returns the aspect ratio of the given canvas.
-	 */
-	function getAspectRatio (canvas:Dynamic):Float;
 	
 }

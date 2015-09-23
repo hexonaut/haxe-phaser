@@ -70,6 +70,16 @@ extern class Rectangle {
 	function floorAll ():Void;
 	
 	/**
+	 * Runs Math.ceil() on both the x and y values of this Rectangle.
+	 */
+	function ceil ():Void;
+	
+	/**
+	 * Runs Math.ceil() on the x, y, width and height values of this Rectangle.
+	 */
+	function ceilAll ():Void;
+	
+	/**
 	 * Copies the x, y, width and height properties from any given object to this Rectangle.
 	 */
 	function copyFrom (source:Dynamic):phaser.geom.Rectangle;
@@ -88,6 +98,12 @@ extern class Rectangle {
 	 * The size of the Rectangle object, expressed as a Point object with the values of the width and height properties.
 	 */
 	function size (?output:phaser.geom.Point):phaser.geom.Point;
+	
+	/**
+	 * Resize the Rectangle by providing a new width and height.
+	 * The x and y positions remain unchanged.
+	 */
+	function resize (width:Float, height:Float):phaser.geom.Rectangle;
 	
 	/**
 	 * Returns a new Rectangle object with the same values for the x, y, width, and height properties as the original Rectangle object.
@@ -133,6 +149,12 @@ extern class Rectangle {
 	function union (b:phaser.geom.Rectangle, ?out:phaser.geom.Rectangle):phaser.geom.Rectangle;
 	
 	/**
+	 * Returns a uniformly distributed random point from anywhere within this Rectangle.
+	 */
+	@:overload(function (?out:phaser.geom.Point):phaser.geom.Point {})
+	function random (?out:Dynamic):phaser.geom.Point;
+	
+	/**
 	 * Returns a string representation of this object.
 	 */
 	function toString ():String;
@@ -151,6 +173,11 @@ extern class Rectangle {
 	 * The sum of the y and height properties. Changing the bottom property of a Rectangle object has no effect on the x, y and width properties, but does change the height property.
 	 */
 	var bottom:Float;
+	
+	/**
+	 * The location of the Rectangles bottom left corner as a Point object.
+	 */
+	var bottomLeft:phaser.geom.Point;
 	
 	/**
 	 * The location of the Rectangles bottom right corner as a Point object.

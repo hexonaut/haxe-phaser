@@ -8,7 +8,7 @@ extern class SignalBinding {
 	 * This is an internal constructor and shouldn't be created directly.
 	 * Inspired by Joa Ebert AS3 SignalBinding and Robert Penner's Slot classes.
 	 */
-	function new (signal:phaser.core.Signal, listener:Dynamic, isOnce:Bool, ?listenerContext:Dynamic, ?priority:Float);
+	function new (signal:phaser.core.Signal, listener:Dynamic, isOnce:Bool, ?listenerContext:Dynamic, ?priority:Float, ?args0:Dynamic, ?args1:Dynamic, ?args2:Dynamic, ?args3:Dynamic, ?args4:Dynamic);
 	
 	/**
 	 * Handler function bound to the signal.

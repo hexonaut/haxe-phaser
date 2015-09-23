@@ -22,14 +22,14 @@ extern class Image extends phaser.pixi.display.Sprite
 	 * An Image is a light-weight object you can use to display anything that doesn't need physics or animation.
 	 * It can still rotate, scale, crop and receive input events. This makes it perfect for logos, backgrounds, simple buttons and other non-Sprite graphics.
 	 */
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:String, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:String):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:String, frame:Float):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:Float):Void {})
-	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:Float):Void {})
-	function new (game:phaser.core.Game, x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:Float);
+	@:overload(function (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0, ?key:String, ?frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.RenderTexture, ?frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.BitmapData, ?frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?frame:String):Void {})
+	@:overload(function (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0, ?key:String, ?frame:Float):Void {})
+	@:overload(function (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.RenderTexture, ?frame:Float):Void {})
+	@:overload(function (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.BitmapData, ?frame:Float):Void {})
+	function new (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?frame:Float);
 	
 	/**
 	 * The const type of this object.
@@ -390,5 +390,23 @@ extern class Image extends phaser.pixi.display.Sprite
 	 * Smoothing is enabled by default.
 	 */
 	var smoothed:Bool;
+	
+	/**
+	 * The key of the image or texture used by this Game Object during rendering.
+	 * If it is a string it's the string used to retrieve the texture from the Phaser Image Cache.
+	 * It can also be an instance of a RenderTexture, BitmapData, Video or PIXI.Texture.
+	 * If a Game Object is created without a key it is automatically assigned the key __default which is a 32x32 transparent PNG stored within the Cache.
+	 * If a Game Object is given a key which doesn't exist in the Image Cache it is re-assigned the key __missing which is a 32x32 PNG of a green box with a line through it.
+	 */
+	var key:Dynamic;
+	
+	/**
+	 * A Game Object is that is pendingDestroy is flagged to have its destroy method called on the next logic update.
+	 * You can set it directly to allow you to flag an object to be destroyed on its next update.
+	 * 
+	 * This is extremely useful if you wish to destroy an object from within one of its own callbacks 
+	 * such as with Buttons or other Input events.
+	 */
+	var pendingDestroy:Bool;
 	
 }

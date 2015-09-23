@@ -49,6 +49,11 @@ extern class Device {
 	var nodeWebkit:Bool;
 	
 	/**
+	 * Is the game running under GitHub Electron?
+	 */
+	var electron:Bool;
+	
+	/**
 	 * Is the game running under Ejecta?
 	 */
 	var ejecta:Bool;
@@ -179,6 +184,11 @@ extern class Device {
 	var chrome:Bool;
 	
 	/**
+	 * If running in Chrome this will contain the major version number.
+	 */
+	var chromeVersion:Float;
+	
+	/**
 	 * Set to true if running in Epiphany.
 	 */
 	var epiphany:Bool;
@@ -187,6 +197,11 @@ extern class Device {
 	 * Set to true if running in Firefox.
 	 */
 	var firefox:Bool;
+	
+	/**
+	 * If running in Firefox this will contain the major version number.
+	 */
+	var firefoxVersion:Float;
 	
 	/**
 	 * Set to true if running in Internet Explorer.
@@ -277,6 +292,36 @@ extern class Device {
 	 * Can this device play webm files?
 	 */
 	var webm:Bool;
+	
+	/**
+	 * Can this device play ogg video files?
+	 */
+	var oggVideo:Bool;
+	
+	/**
+	 * Can this device play h264 mp4 video files?
+	 */
+	var h264Video:Bool;
+	
+	/**
+	 * Can this device play h264 mp4 video files?
+	 */
+	var mp4Video:Bool;
+	
+	/**
+	 * Can this device play webm video files?
+	 */
+	var webmVideo:Bool;
+	
+	/**
+	 * Can this device play vp9 video files?
+	 */
+	var vp9Video:Bool;
+	
+	/**
+	 * Can this device play hls video files?
+	 */
+	var hlsVideo:Bool;
 	
 	/**
 	 * Is running on iPhone?

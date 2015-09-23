@@ -52,13 +52,13 @@ extern class FrameData {
 	 * Returns all of the Frames in this FrameData set where the frame index is found in the input array.
 	 * The frames are returned in the output array, or if none is provided in a new Array object.
 	 */
-	function getFrames (frames:Array<Dynamic>, ?useNumericIndex:Bool = true, ?output:Array<Dynamic>):Array<Dynamic>;
+	function getFrames (?frames:Array<Dynamic>, ?useNumericIndex:Bool = true, ?output:Array<Dynamic>):Array<Dynamic>;
 	
 	/**
 	 * Returns all of the Frame indexes in this FrameData set.
 	 * The frames indexes are returned in the output array, or if none is provided in a new Array object.
 	 */
-	function getFrameIndexes (frames:Array<Dynamic>, ?useNumericIndex:Bool = true, ?output:Array<Dynamic>):Array<Dynamic>;
+	function getFrameIndexes (?frames:Array<Dynamic>, ?useNumericIndex:Bool = true, ?output:Array<Dynamic>):Array<Dynamic>;
 	
 	/**
 	 * @name Phaser.FrameData#total

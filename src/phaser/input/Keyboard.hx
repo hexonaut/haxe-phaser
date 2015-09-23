@@ -98,6 +98,15 @@ extern class Keyboard {
 	function addKey (keycode:Float):phaser.input.Key;
 	
 	/**
+	 * A practical way to create an object containing user selected hotkeys.
+	 * 
+	 * For example: addKeys( { 'up': Phaser.Keyboard.W, 'down': Phaser.Keyboard.S, 'left': Phaser.Keyboard.A, 'right': Phaser.Keyboard.D } );
+	 * 
+	 * Would return an object containing the properties up, down, left and right that you could poll just like a Phaser.Key object.
+	 */
+	function addKeys (keys:Dynamic):Dynamic;
+	
+	/**
 	 * Removes a Key object from the Keyboard manager.
 	 */
 	function removeKey (keycode:Float):Void;
@@ -185,11 +194,6 @@ extern class Keyboard {
 	 * Returns true of the key is currently pressed down. Note that it can only detect key presses on the web browser.
 	 */
 	function isDown (keycode:Float):Bool;
-	
-	/**
-	 * If disabled all Keyboard input will be ignored.
-	 */
-	var disabled:Bool;
 	
 	/**
 	 * Returns the string value of the most recently pressed key.

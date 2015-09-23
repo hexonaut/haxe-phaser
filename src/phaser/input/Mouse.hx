@@ -6,8 +6,12 @@ extern class Mouse {
 	/**
 	 * The Mouse class is responsible for handling all aspects of mouse interaction with the browser.
 	 * 
-	 * It captures and processes mouse events that happen on the game canvas object. It also adds a single mouseup listener to window which
-	 * is used to capture the mouse being released when not over the game.
+	 * It captures and processes mouse events that happen on the game canvas object.
+	 * It also adds a single mouseup listener to window which is used to capture the mouse being released 
+	 * when not over the game.
+	 * 
+	 * You should not normally access this class directly, but instead use a Phaser.Pointer object 
+	 * which normalises all game input for you, including accurate button handling.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -15,6 +19,11 @@ extern class Mouse {
 	 * A reference to the currently running game.
 	 */
 	var game:phaser.core.Game;
+	
+	/**
+	 * A reference to the Phaser Input Manager.
+	 */
+	var input:phaser.input.Input;
 	
 	/**
 	 * The context under which callbacks are called.
@@ -25,11 +34,6 @@ extern class Mouse {
 	 * A callback that can be fired when the mouse is pressed down.
 	 */
 	var mouseDownCallback:Dynamic;
-	
-	/**
-	 * A callback that can be fired when the mouse is moved.
-	 */
-	var mouseMoveCallback:Dynamic;
 	
 	/**
 	 * A callback that can be fired when the mouse is released from a pressed down state.
@@ -57,12 +61,14 @@ extern class Mouse {
 	var capture:Bool;
 	
 	/**
-	 * The type of click, either: Phaser.Mouse.NO_BUTTON, Phaser.Mouse.LEFT_BUTTON, Phaser.Mouse.MIDDLE_BUTTON or Phaser.Mouse.RIGHT_BUTTON.
+	 * This property was removed in Phaser 2.4 and should no longer be used.
+	 * Instead please see the Pointer button properties such as Pointer.leftButton, Pointer.rightButton and so on.
+	 * Or Pointer.button holds the DOM event button value if you require that.
 	 */
 	var button:Float;
 	
 	/**
-	 * The direction of the <em>last</em> mousewheel usage 1 for up -1 for down
+	 * The direction of the <em>last</em> mousewheel usage 1 for up -1 for down.
 	 */
 	var wheelDelta:Float;
 	
@@ -150,6 +156,16 @@ extern class Mouse {
 	/**
 	 * @constant
 	 */
+	static var BACK_BUTTON:Float;
+	
+	/**
+	 * @constant
+	 */
+	static var FORWARD_BUTTON:Float;
+	
+	/**
+	 * @constant
+	 */
 	static var WHEEL_UP:Float;
 	
 	/**
@@ -188,14 +204,14 @@ extern class Mouse {
 	function onMouseOut (event:Dynamic):Void;
 	
 	/**
-	 * The internal method that handles the mouse wheel event from the browser.
-	 */
-	function onMouseWheel (event:Dynamic):Void;
-	
-	/**
 	 * The internal method that handles the mouse over event from the browser.
 	 */
 	function onMouseOver (event:Dynamic):Void;
+	
+	/**
+	 * The internal method that handles the mouse wheel event from the browser.
+	 */
+	function onMouseWheel (event:Dynamic):Void;
 	
 	/**
 	 * If the browser supports it you can request that the pointer be locked to the browser window.
@@ -218,11 +234,6 @@ extern class Mouse {
 	 * Stop the event listeners.
 	 */
 	function stop ():Void;
-	
-	/**
-	 * If disabled all Mouse input will be ignored.
-	 */
-	var disabled:Bool;
 	
 	/**
 	 * A purely internal event support class to proxy 'wheelscroll' and 'DOMMouseWheel'

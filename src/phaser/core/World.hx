@@ -29,6 +29,14 @@ extern class World extends phaser.core.Group {
 	function boot ():Void;
 	
 	/**
+	 * Called whenever the State changes or resets.
+	 * 
+	 * It resets the world.x and world.y coordinates back to zero,
+	 * then resets the Camera.
+	 */
+	function stateChange ():Void;
+	
+	/**
 	 * Updates the size of this world and sets World.x/y to the given values
 	 * The Camera bounds and Physics bounds (if set) are also updated to match the new World bounds.
 	 */

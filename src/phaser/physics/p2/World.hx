@@ -55,42 +55,58 @@ extern class World {
 	var walls:Dynamic;
 	
 	/**
-	 * Dispatched when a new Body is added to the World.
+	 * This signal is dispatched when a new Body is added to the World.
+	 * 
+	 * It sends 1 argument: body which is the Phaser.Physics.P2.Body that was added to the world.
 	 */
 	var onBodyAdded:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when a Body is removed from the World.
+	 * This signal is dispatched when a Body is removed to the World.
+	 * 
+	 * It sends 1 argument: body which is the Phaser.Physics.P2.Body that was removed from the world.
 	 */
 	var onBodyRemoved:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when a new Spring is added to the World.
+	 * This signal is dispatched when a Spring is added to the World.
+	 * 
+	 * It sends 1 argument: spring which is either a Phaser.Physics.P2.Spring, p2.LinearSpring or p2.RotationalSpring that was added to the world.
 	 */
 	var onSpringAdded:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when a Spring is removed from the World.
+	 * This signal is dispatched when a Spring is removed from the World.
+	 * 
+	 * It sends 1 argument: spring which is either a Phaser.Physics.P2.Spring, p2.LinearSpring or p2.RotationalSpring that was removed from the world.
 	 */
 	var onSpringRemoved:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when a new Constraint is added to the World.
+	 * This signal is dispatched when a Constraint is added to the World.
+	 * 
+	 * It sends 1 argument: constraint which is the Phaser.Physics.P2.Constraint that was added to the world.
 	 */
 	var onConstraintAdded:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when a Constraint is removed from the World.
+	 * This signal is dispatched when a Constraint is removed from the World.
+	 * 
+	 * It sends 1 argument: constraint which is the Phaser.Physics.P2.Constraint that was removed from the world.
 	 */
 	var onConstraintRemoved:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when a new ContactMaterial is added to the World.
+	 * This signal is dispatched when a Contact Material is added to the World.
+	 * 
+	 * It sends 1 argument: material which is the Phaser.Physics.P2.ContactMaterial that was added to the world.
 	 */
 	var onContactMaterialAdded:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when a ContactMaterial is removed from the World.
+	 * This signal is dispatched when a Contact Material is removed from the World.
+	 * 
+	 * It sends 1 argument: material which is the Phaser.Physics.P2.ContactMaterial that was removed from the world.
 	 */
 	var onContactMaterialRemoved:phaser.core.Signal;
 	
@@ -105,12 +121,22 @@ extern class World {
 	var callbackContext:Dynamic;
 	
 	/**
-	 * Dispatched when a first contact is created between two bodies. This event is fired before the step has been done.
+	 * This Signal is dispatched when a first contact is created between two bodies. This happens <em>before</em> the step has been done.
+	 * 
+	 * It sends 5 arguments: bodyA, bodyB, shapeA, shapeB and contactEquations.
+	 * 
+	 * It is possible that in certain situations the bodyA or bodyB values are null. You should check for this
+	 * in your own code to avoid processing potentially null physics bodies.
 	 */
 	var onBeginContact:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when final contact occurs between two bodies. This event is fired before the step has been done.
+	 * This Signal is dispatched when final contact occurs between two bodies. This happens <em>before</em> the step has been done.
+	 * 
+	 * It sends 4 arguments: bodyA, bodyB, shapeA and shapeB.
+	 * 
+	 * It is possible that in certain situations the bodyA or bodyB values are null. You should check for this
+	 * in your own code to avoid processing potentially null physics bodies.
 	 */
 	var onEndContact:phaser.core.Signal;
 	
@@ -452,6 +478,8 @@ extern class World {
 	
 	/**
 	 * Populates and returns an array of all current Constraints in the world.
+	 * You will get an array of p2 constraints back. This can be of mixed types, for example the array may contain
+	 * PrismaticConstraints, RevoluteConstraints or any other valid p2 constraint type.
 	 */
 	function getConstraints ():Dynamic;
 	

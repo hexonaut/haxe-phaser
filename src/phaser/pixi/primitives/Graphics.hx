@@ -131,6 +131,16 @@ extern class Graphics extends phaser.pixi.display.DisplayObjectContainer {
 	function drawRoundedRect (x:Float, y:Float, width:Float, height:Float, radius:Float):Void;
 
 	/**
+	 * Draws a circle.
+	 *
+	 * @method drawCircle
+	 * @param x {Number} The X coordinate of the center of the circle
+	 * @param y {Number} The Y coordinate of the center of the circle
+	 * @param diameter {Number} The diameter of the circle
+	*/
+	function drawCircle (x:Float, y:Float, diameter:Float):Void;
+
+	/**
 	 * Draws an ellipse.
 	 *
 	 * @method drawEllipse
@@ -221,10 +231,5 @@ extern class Graphics extends phaser.pixi.display.DisplayObjectContainer {
 	 * Used to detect if the cached sprite object needs to be updated.
 	 */
 	var cachedSpriteDirty:Bool;
-	
-	/**
-	 * Draws a circle.
-	 */
-	function drawCircle (x:Float, y:Float, diameter:Float):Dynamic;
 	
 }

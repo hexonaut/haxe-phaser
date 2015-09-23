@@ -38,21 +38,18 @@ extern class Math {
 	/**
 	 * Snap a value to nearest grid slice, using floor.
 	 * 
-	 * Example: if you have an interval gap of 5 and a position of 12... you will snap to 10. As will 14 snap to 10... but 16 will snap to 15
+	 * Example: if you have an interval gap of 5 and a position of 12... you will snap to 10. 
+	 * As will 14 snap to 10... but 16 will snap to 15.
 	 */
 	function snapToFloor (input:Float, gap:Float, ?start:Float):Float;
 	
 	/**
 	 * Snap a value to nearest grid slice, using ceil.
 	 * 
-	 * Example: if you have an interval gap of 5 and a position of 12... you will snap to 15. As will 14 will snap to 15... but 16 will snap to 20.
+	 * Example: if you have an interval gap of 5 and a position of 12... you will snap to 15.
+	 * As will 14 will snap to 15... but 16 will snap to 20.
 	 */
 	function snapToCeil (input:Float, gap:Float, ?start:Float):Float;
-	
-	/**
-	 * Snaps a value to the nearest value in an array.
-	 */
-	function snapToInArray (input:Float, arr:Dynamic, sort:Bool):Float;
 	
 	/**
 	 * Round to some place comparative to a base, default is 10 for decimal place.
@@ -87,11 +84,6 @@ extern class Math {
 	function roundTo (value:Float, place:Float, base:Float):Float;
 	
 	/**
-	 * A one dimensional linear interpolation of a value.
-	 */
-	function interpolateFloat (a:Float, b:Float, weight:Float):Float;
-	
-	/**
 	 * Find the angle of a segment from (x1, y1) -> (x2, y2).
 	 */
 	function angleBetween (x1:Float, y1:Float, x2:Float, y2:Float):Float;
@@ -124,40 +116,6 @@ extern class Math {
 	function normalizeAngle (angleRad:Float):Float;
 	
 	/**
-	 * Normalizes a latitude to the [-90,90] range. Latitudes above 90 or below -90 are capped, not wrapped.
-	 */
-	function normalizeLatitude (lat:Float):Float;
-	
-	/**
-	 * Normalizes a longitude to the [-180,180] range. Longitudes above 180 or below -180 are wrapped.
-	 */
-	function normalizeLongitude (lng:Float):Float;
-	
-	/**
-	 * Generate a random bool result based on the chance value.
-	 * 
-	 * Returns true or false based on the chance value (default 50%). For example if you wanted a player to have a 30% chance
-	 * of getting a bonus, call chanceRoll(30) - true means the chance passed, false means it failed.
-	 */
-	function chanceRoll (chance:Float):Bool;
-	
-	/**
-	 * Create an array representing the inclusive range of numbers (usually integers) in [start, end].
-	 */
-	function numberArray (start:Float, end:Float):Dynamic;
-	
-	/**
-	 * Create an array of numbers (positive and/or negative) progressing from start
-	 * up to but not including end by advancing by step.
-	 * 
-	 * If start is less than stop a zero-length range is created unless a negative step is specified.
-	 * 
-	 * Certain values for start and end (eg. NaN/undefined/null) are coerced to 0;
-	 * for forward compatibility make sure to pass in actual numbers.
-	 */
-	function numberArrayStep (start:Float, end:Float, ?step:Float = 1):Array<Dynamic>;
-	
-	/**
 	 * Adds the given amount to the value, but never lets the value go over the specified maximum.
 	 */
 	function maxAdd (value:Float, amount:Float, max:Float):Float;
@@ -182,16 +140,6 @@ extern class Math {
 	function wrapValue (value:Float, amount:Float, max:Float):Float;
 	
 	/**
-	 * Ensures the given value is between min and max inclusive.
-	 */
-	function limitValue (value:Float, min:Float, max:Float):Float;
-	
-	/**
-	 * Randomly returns either a 1 or -1.
-	 */
-	function randomSign ():Float;
-	
-	/**
 	 * Returns true if the number given is odd.
 	 */
 	function isOdd (n:Int):Bool;
@@ -202,7 +150,7 @@ extern class Math {
 	function isEven (n:Int):Bool;
 	
 	/**
-	 * Variation of Math.min that can be passed either an array of numbers or the numbers as parameters.    
+	 * Variation of Math.min that can be passed either an array of numbers or the numbers as parameters.
 	 * 
 	 * Prefer the standard Math.min function when appropriate.
 	 */
@@ -231,11 +179,6 @@ extern class Math {
 	 * Keeps an angle value between -180 and +180; or -PI and PI if radians.
 	 */
 	function wrapAngle (angle:Float, ?radians:Bool = false):Float;
-	
-	/**
-	 * Keeps an angle value between the given min and max values.
-	 */
-	function angleLimit (angle:Float, min:Float, max:Float):Float;
 	
 	/**
 	 * A Linear Interpolation Method, mostly used by Phaser.Tween.
@@ -268,40 +211,6 @@ extern class Math {
 	function difference (a:Float, b:Float):Float;
 	
 	/**
-	 * Fetch a random entry from the given array.
-	 * 
-	 * Will return null if there are no array items that fall within the specified range
-	 * or if there is no item for the randomly choosen index.
-	 */
-	function getRandom (objects:Dynamic, startIndex:Int, length:Int):Dynamic;
-	
-	/**
-	 * Removes a random object from the given array and returns it.
-	 * 
-	 * Will return null if there are no array items that fall within the specified range
-	 * or if there is no item for the randomly choosen index.
-	 */
-	function removeRandom (objects:Dynamic, startIndex:Int, length:Int):Dynamic;
-	
-	/**
-	 * <em>Do not use this function.</em>
-	 * 
-	 * Round to the next whole number <em>towards</em> zero.
-	 * 
-	 * E.g. floor(1.7) == 1, and floor(-2.7) == -2.
-	 */
-	function floor (value:Float):Int;
-	
-	/**
-	 * <em>Do not use this function.</em>
-	 * 
-	 * Round to the next whole number <em>away</em> from zero.
-	 * 
-	 * E.g. ceil(1.3) == 2, and ceil(-2.3) == -3.
-	 */
-	function ceil (value:Float):Int;
-	
-	/**
 	 * Round to the next whole number <em>away</em> from zero.
 	 */
 	function roundAwayFromZero (value:Float):Int;
@@ -315,29 +224,20 @@ extern class Math {
 	function sinCosGenerator (length:Float, sinAmplitude:Float, cosAmplitude:Float, frequency:Float):Dynamic;
 	
 	/**
-	 * Moves the element from the start of the array to the end, shifting all items in the process.
-	 */
-	function shift (array:Dynamic):Dynamic;
-	
-	/**
-	 * Shuffles the data in the given array into a new order.
-	 */
-	function shuffleArray (array:Dynamic):Dynamic;
-	
-	/**
 	 * Returns the euclidian distance between the two given set of coordinates.
 	 */
 	function distance (x1:Float, y1:Float, x2:Float, y2:Float):Float;
 	
 	/**
+	 * Returns the euclidean distance squared between the two given set of
+	 * coordinates (cuts out a square root operation before returning).
+	 */
+	function distanceSq (x1:Float, y1:Float, x2:Float, y2:Float):Float;
+	
+	/**
 	 * Returns the distance between the two given set of coordinates at the power given.
 	 */
 	function distancePow (x1:Float, y1:Float, x2:Float, y2:Float, ?pow:Float = 2):Float;
-	
-	/**
-	 * Returns the rounded distance between the two given set of coordinates.
-	 */
-	function distanceRounded (x1:Float, y1:Float, x2:Float, y2:Float):Float;
 	
 	/**
 	 * Force a value within the boundaries by clamping x to the range [a, b].

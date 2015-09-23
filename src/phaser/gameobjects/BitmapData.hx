@@ -31,11 +31,6 @@ extern class BitmapData {
 	var height:Float;
 	
 	/**
-	 * The canvas to which this BitmapData draws.
-	 */
-	var canvas:Dynamic;
-	
-	/**
 	 * The 2d context of the canvas.
 	 */
 	var context:Dynamic;
@@ -47,11 +42,14 @@ extern class BitmapData {
 	
 	/**
 	 * The context image data.
+	 * Please note that a call to BitmapData.draw() or BitmapData.copy() does not update immediately this property for performance reason. Use BitmapData.update() to do so.
+	 * This property is updated automatically after the first game loop, according to the dirty flag property.
 	 */
 	var imageData:Dynamic;
 	
 	/**
 	 * A Uint8ClampedArray view into BitmapData.buffer.
+	 * Note that this is unavailable in some browsers (such as Epic Browser due to its security restrictions)
 	 */
 	var data:Dynamic;
 	
@@ -146,7 +144,34 @@ extern class BitmapData {
 	var _circle:phaser.geom.Circle;
 	
 	/**
-	 * Updates the given objects so that they use this BitmapData as their texture. This will replace any texture they will currently have set.
+	 * A swap canvas.
+	 */
+	var _swapCanvas:Dynamic;
+	
+	/**
+	 * Shifts the contents of this BitmapData by the distances given.
+	 * 
+	 * The image will wrap-around the edges on all sides.
+	 */
+	function move (x:Int, y:Int):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Shifts the contents of this BitmapData horizontally.
+	 * 
+	 * The image will wrap-around the sides.
+	 */
+	function moveH (distance:Int):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Shifts the contents of this BitmapData vertically.
+	 * 
+	 * The image will wrap-around the sides.
+	 */
+	function moveV (distance:Int):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Updates the given objects so that they use this BitmapData as their texture.
+	 * This will replace any texture they will currently have set.
 	 */
 	@:overload(function (object:phaser.gameobjects.Sprite):phaser.gameobjects.BitmapData {})
 	@:overload(function (object:Dynamic):phaser.gameobjects.BitmapData {})
@@ -174,13 +199,38 @@ extern class BitmapData {
 	
 	/**
 	 * Clears the BitmapData context using a clearRect.
+	 * 
+	 * You can optionally define the area to clear.
+	 * If the arguments are left empty it will clear the entire canvas.
 	 */
-	function clear ():phaser.gameobjects.BitmapData;
+	function clear (?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Fills the BitmapData with the given color.
 	 */
 	function fill (r:Float, g:Float, b:Float, ?a:Float = 1):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Creates a new Image element by converting this BitmapDatas canvas into a dataURL.
+	 * 
+	 * The image is then stored in the image Cache using the key given.
+	 * 
+	 * Finally a PIXI.Texture is created based on the image and returned.
+	 * 
+	 * You can apply the texture to a sprite or any other supporting object by using either the
+	 * key or the texture. First call generateTexture:
+	 * 
+	 * var texture = bitmapdata.generateTexture('ball');
+	 * 
+	 * Then you can either apply the texture to a sprite:
+	 * 
+	 * game.add.sprite(0, 0, texture);
+	 * 
+	 * or by using the string based key:
+	 * 
+	 * game.add.sprite(0, 0, 'ball');
+	 */
+	function generateTexture (key:String):phaser.pixi.textures.Texture;
 	
 	/**
 	 * Resizes the BitmapData. This changes the size of the underlying canvas and refreshes the buffer.
@@ -192,7 +242,7 @@ extern class BitmapData {
 	 * It then re-builds the ArrayBuffer, the data Uint8ClampedArray reference and the pixels Int32Array.
 	 * If not given the dimensions defaults to the full size of the context.
 	 */
-	function update (?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):phaser.gameobjects.BitmapData;
+	function update (?x:Float = 0, ?y:Float = 0, ?width:Float = 1, ?height:Float = 1):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Scans through the area specified in this BitmapData and sends a color object for every pixel to the given callback.
@@ -241,7 +291,7 @@ extern class BitmapData {
 	/**
 	 * Sets the color of the given pixel to the specified red, green and blue values.
 	 */
-	function setPixel (x:Float, y:Float, red:Float, green:Float, blue:Float, alpha:Float, ?immediate:Bool = true):phaser.gameobjects.BitmapData;
+	function setPixel (x:Float, y:Float, red:Float, green:Float, blue:Float, ?immediate:Bool = true):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Get the color of a specific pixel in the context into a color object.
@@ -272,7 +322,7 @@ extern class BitmapData {
 	
 	/**
 	 * Scans the BitmapData, pixel by pixel, until it encounters a pixel that isn't transparent (i.e. has an alpha value > 0).
-	 * It then stops scanning and returns an object containing the colour of the pixel in r, g and b properties and the location in the x and y properties.
+	 * It then stops scanning and returns an object containing the color of the pixel in r, g and b properties and the location in the x and y properties.
 	 * 
 	 * The direction parameter controls from which direction it should start the scan:
 	 * 
@@ -285,7 +335,7 @@ extern class BitmapData {
 	
 	/**
 	 * Scans the BitmapData and calculates the bounds. This is a rectangle that defines the extent of all non-transparent pixels.
-	 * The rectangle returned will extend from the top-left of the image to the bottom-right, exluding transparent pixels.
+	 * The rectangle returned will extend from the top-left of the image to the bottom-right, excluding transparent pixels.
 	 */
 	function getBounds (?rect:phaser.geom.Rectangle):phaser.geom.Rectangle;
 	
@@ -303,32 +353,32 @@ extern class BitmapData {
 	 * This method has a lot of parameters for maximum control.
 	 * You can use the more friendly methods like copyRect and draw to avoid having to remember them all.
 	 */
-	@:overload(function (?source:phaser.gameobjects.Sprite, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (?source:phaser.gameobjects.Image, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (?source:phaser.gameobjects.Text, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (?source:phaser.gameobjects.BitmapData, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (?source:Dynamic, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (?source:Dynamic, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	function copy (?source:String, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
+	@:overload(function (?source:phaser.gameobjects.Sprite, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (?source:phaser.gameobjects.Image, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (?source:phaser.gameobjects.Text, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (?source:phaser.gameobjects.BitmapData, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (?source:Dynamic, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (?source:Dynamic, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	function copy (?source:String, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?tx:Float, ?ty:Float, ?newWidth:Float, ?newHeight:Float, ?rotate:Float = 0, ?anchorX:Float = 0, ?anchorY:Float = 0, ?scaleX:Float = 1, ?scaleY:Float = 1, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Copies the area defined by the Rectangle parameter from the source image to this BitmapData at the given location.
 	 */
-	@:overload(function (source:phaser.gameobjects.Sprite, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Text, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.BitmapData, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:Dynamic, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	function copyRect (source:String, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
+	@:overload(function (source:phaser.gameobjects.Sprite, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Text, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.BitmapData, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:Dynamic, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	function copyRect (source:String, area:phaser.geom.Rectangle, x:Float, y:Float, ?alpha:Float = 1, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Draws the given Phaser.Sprite, Phaser.Image or Phaser.Text to this BitmapData at the coordinates specified.
 	 * You can use the optional width and height values to 'stretch' the sprite as it is drawn. This uses drawImage stretching, not scaling.
 	 * When drawing it will take into account the Sprites rotation, scale and alpha values.
 	 */
-	@:overload(function (source:phaser.gameobjects.Sprite, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	@:overload(function (source:phaser.gameobjects.Image, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
-	function draw (source:phaser.gameobjects.Text, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
+	@:overload(function (source:phaser.gameobjects.Sprite, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (source:phaser.gameobjects.Image, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	function draw (source:phaser.gameobjects.Text, ?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Draws the immediate children of a Phaser.Group to this BitmapData.
@@ -337,7 +387,31 @@ extern class BitmapData {
 	 * When drawing it will take into account the child's rotation, scale and alpha values.
 	 * No iteration takes place. Groups nested inside other Groups will not be iterated through.
 	 */
-	function drawGroup (group:phaser.core.Group, ?blendMode:Float, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
+	function drawGroup (group:phaser.core.Group, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Draws the Game Object or Group to this BitmapData and then recursively iterates through all of its children.
+	 * 
+	 * If a child has an exists property then it (and its children) will be only be drawn if exists is true.
+	 * 
+	 * The children will be drawn at their x and y world space coordinates. If this is outside the bounds of the BitmapData 
+	 * they won't be drawn. Depending on your requirements you may need to resize the BitmapData in advance to match the 
+	 * bounds of the top-level Game Object.
+	 * 
+	 * When drawing it will take into account the child's world rotation, scale and alpha values.
+	 * 
+	 * It's perfectly valid to pass in game.world as the parent object, and it will iterate through the entire display list.
+	 * 
+	 * Note: If you are trying to grab your entire game at the start of a State then you should ensure that at least 1 full update
+	 * has taken place before doing so, otherwise all of the objects will render with incorrect positions and scales. You can 
+	 * trigger an update yourself by calling stage.updateTransform() before calling drawFull.
+	 */
+	@:overload(function (parent:phaser.core.World, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (parent:phaser.core.Group, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (parent:phaser.gameobjects.Sprite, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (parent:phaser.gameobjects.Image, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	@:overload(function (parent:phaser.gameobjects.Text, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData {})
+	function drawFull (parent:phaser.gameobjects.BitmapText, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Sets the shadow properties of this BitmapDatas context which will affect all draw operations made to it.
@@ -429,6 +503,11 @@ extern class BitmapData {
 	function circle (x:Float, y:Float, radius:Float, ?fillStyle:String):phaser.gameobjects.BitmapData;
 	
 	/**
+	 * Draws a line between the coordinates given in the color and thickness specified.
+	 */
+	function line (x1:Float, y1:Float, x2:Float, y2:Float, ?color:String = '#fff', ?width:Float = 1):phaser.gameobjects.BitmapData;
+	
+	/**
 	 * Takes the given Line object and image and renders it to this BitmapData as a repeating texture line.
 	 */
 	@:overload(function (line:phaser.geom.Line, image:String, ?repeat:String = 'repeat-x'):phaser.gameobjects.BitmapData {})
@@ -440,6 +519,11 @@ extern class BitmapData {
 	 * If you wish to suppress this functionality set BitmapData.disableTextureUpload to true.
 	 */
 	function render ():phaser.gameobjects.BitmapData;
+	
+	/**
+	 * Destroys this BitmapData and puts the canvas it was using back into the canvas pool for re-use.
+	 */
+	function destroy ():Void;
 	
 	/**
 	 * Resets the blend mode (effectively sets it to 'source-over')
@@ -575,6 +659,11 @@ extern class BitmapData {
 	 * @memberof Phaser.BitmapData
 	 */
 	var smoothed:Bool;
+	
+	/**
+	 * @memberof Phaser.BitmapData
+	 */
+	var op:String;
 	
 	/**
 	 * Gets a JavaScript object that has 6 properties set that are used by BitmapData in a transform.

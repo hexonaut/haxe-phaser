@@ -84,6 +84,7 @@ extern class Time {
 	
 	/**
 	 * The suggested frame rate for your game, based on an averaged real frame rate.
+	 * This value is only populated if Time.advancedTiming is enabled.
 	 * 
 	 * <em>Note:</em> This is not available until after a few frames have passed; use it after a few seconds (eg. after the menus)
 	 */
@@ -97,7 +98,7 @@ extern class Time {
 	var slowMotion:Float;
 	
 	/**
-	 * If true then advanced profiling, including the fps rate, fps min/max and msMin/msMax are updated.
+	 * If true then advanced profiling, including the fps rate, fps min/max, suggestedFps and msMin/msMax are updated.
 	 */
 	var advancedTiming:Bool;
 	
@@ -227,6 +228,30 @@ extern class Time {
 	 * Updates the game clock and if enabled the advanced timing data. This is called automatically by Phaser.Game.
 	 */
 	function update (time:Float):Void;
+	
+	/**
+	 * setTimeOut specific time update handler.
+	 * Called automatically by Time.update.
+	 */
+	function updateSetTimeout (time:Float):Void;
+	
+	/**
+	 * raf specific time update handler.
+	 * Called automatically by Time.update.
+	 */
+	function updateRAF (time:Float):Void;
+	
+	/**
+	 * Handles the updating of the Phaser.Timers (if any)
+	 * Called automatically by Time.update.
+	 */
+	function updateTimers ():Void;
+	
+	/**
+	 * Handles the updating of the advanced timing values (if enabled)
+	 * Called automatically by Time.update.
+	 */
+	function updateAdvancedTiming ():Void;
 	
 	/**
 	 * Called when the game enters a paused state.

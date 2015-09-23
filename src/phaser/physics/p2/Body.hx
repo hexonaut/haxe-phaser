@@ -59,14 +59,29 @@ extern class Body {
 	var gravity:phaser.geom.Point;
 	
 	/**
-	 * Dispatched when a first contact is created between shapes in two bodies. This event is fired during the step, so collision has already taken place.
-	 * The event will be sent 4 parameters: The body it is in contact with, the shape from this body that caused the contact, the shape from the contact body and the contact equation data array.
+	 * Dispatched when a first contact is created between shapes in two bodies. 
+	 * This event is fired during the step, so collision has already taken place.
+	 * 
+	 * The event will be sent 5 arguments in this order:
+	 * 
+	 * The Phaser.Physics.P2.Body it is in contact with. <em>This might be null</em> if the Body was created directly in the p2 world.
+	 * The p2.Body this Body is in contact with.
+	 * The Shape from this body that caused the contact.
+	 * The Shape from the contact body.
+	 * The Contact Equation data array.
 	 */
 	var onBeginContact:phaser.core.Signal;
 	
 	/**
-	 * Dispatched when contact ends between shapes in two bodies. This event is fired during the step, so collision has already taken place.
-	 * The event will be sent 3 parameters: The body it is in contact with, the shape from this body that caused the contact and the shape from the contact body.
+	 * Dispatched when contact ends between shapes in two bodies.
+	 * This event is fired during the step, so collision has already taken place.
+	 * 
+	 * The event will be sent 4 arguments in this order:
+	 * 
+	 * The Phaser.Physics.P2.Body it is in contact with. <em>This might be null</em> if the Body was created directly in the p2 world.
+	 * The p2.Body this Body has ended contact with.
+	 * The Shape from this body that caused the original contact.
+	 * The Shape from the contact body.
 	 */
 	var onEndContact:phaser.core.Signal;
 	
@@ -173,12 +188,37 @@ extern class Body {
 	function adjustCenterOfMass ():Void;
 	
 	/**
+	 * Gets the velocity of a point in the body.
+	 */
+	function getVelocityAtPoint (result:Array<Dynamic>, relativePoint:Array<Dynamic>):Array<Dynamic>;
+	
+	/**
 	 * Apply damping, see <a href='http://code.google.com/p/bullet/issues/detail?id=74'>http://code.google.com/p/bullet/issues/detail?id=74</a> for details.
 	 */
 	function applyDamping (dt:Float):Void;
 	
 	/**
-	 * Apply force to a world point. This could for example be a point on the RigidBody surface. Applying force this way will add to Body.force and Body.angularForce.
+	 * Apply impulse to a point relative to the body.
+	 * This could for example be a point on the Body surface. An impulse is a force added to a body during a short 
+	 * period of time (impulse = force * time). Impulses will be added to Body.velocity and Body.angularVelocity.
+	 */
+	@:overload(function (impulse:Dynamic, worldX:Float, worldY:Float):Void {})
+	function applyImpulse (impulse:Array<Dynamic>, worldX:Float, worldY:Float):Void;
+	
+	/**
+	 * Apply impulse to a point local to the body.
+	 * 
+	 * This could for example be a point on the Body surface. An impulse is a force added to a body during a short 
+	 * period of time (impulse = force * time). Impulses will be added to Body.velocity and Body.angularVelocity.
+	 */
+	@:overload(function (impulse:Dynamic, localX:Float, localY:Float):Void {})
+	function applyImpulseLocal (impulse:Array<Dynamic>, localX:Float, localY:Float):Void;
+	
+	/**
+	 * Apply force to a world point.
+	 * 
+	 * This could for example be a point on the RigidBody surface. Applying force 
+	 * this way will add to Body.force and Body.angularForce.
 	 */
 	@:overload(function (force:Dynamic, worldX:Float, worldY:Float):Void {})
 	function applyForce (force:Array<Dynamic>, worldX:Float, worldY:Float):Void;
@@ -413,8 +453,14 @@ extern class Body {
 	
 	/**
 	 * Reads the shape data from a physics data file stored in the Game.Cache and adds it as a polygon to this Body.
+	 * 
+	 * As well as reading the data from the Cache you can also pass null as the first argument and a
+	 * physics data object as the second. When doing this you must ensure the structure of the object is correct in advance.
+	 * 
+	 * For more details see the format of the Lime / Corona Physics Editor export.
 	 */
-	function loadPolygon (key:String, object:String):Bool;
+	@:overload(function (key:String, object:String):Bool {})
+	function loadPolygon (key:String, object:Dynamic):Bool;
 	
 	/**
 	 * Dynamic body. Dynamic bodies body can move and respond to collisions and forces.

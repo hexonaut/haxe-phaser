@@ -47,9 +47,19 @@ extern class Texture {
 	var valid:Bool;
 	
 	/**
+	 * Is this a tiling texture? As used by the likes of a TilingSprite.
+	 */
+	var isTiling:Bool;
+	
+	/**
 	 * This will let a renderer know that a texture has been updated (used mainly for webGL uv updates)
 	 */
 	var requiresUpdate:Bool;
+	
+	/**
+	 * This will let a renderer know that a tinted parent has updated its texture.
+	 */
+	var requiresReTint:Bool;
 	
 	/**
 	 * The WebGL UV data cache.

@@ -4,9 +4,9 @@ package phaser.physics.arcade;
 extern class TilemapCollision {
 	
 	/**
-	 * The Arcade Physics tilemap collision methods.
+	 * The Arcade Physics Tile map collision methods.
 	 */
-	function new (game:phaser.core.Game);
+	function new ();
 	
 	/**
 	 * An internal function. Use Phaser.Physics.Arcade.collide instead.

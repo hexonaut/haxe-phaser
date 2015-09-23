@@ -6,7 +6,7 @@ extern class Frame {
 	/**
 	 * A Frame is a single frame of an animation and is part of a FrameData collection.
 	 */
-	function new (index:Float, x:Float, y:Float, width:Float, height:Float, name:String, uuid:String);
+	function new (index:Float, x:Float, y:Float, width:Float, height:Float, name:String);
 	
 	/**
 	 * The index of this Frame within the FrameData set it is being added to.
@@ -39,11 +39,6 @@ extern class Frame {
 	var name:String;
 	
 	/**
-	 * DEPRECATED: A link to the PIXI.TextureCache entry.
-	 */
-	var uuid:String;
-	
-	/**
 	 * Center X position within the image to cut from.
 	 */
 	var centerX:Float;
@@ -74,12 +69,12 @@ extern class Frame {
 	var trimmed:Bool;
 	
 	/**
-	 * Width of the original sprite.
+	 * Width of the original sprite before it was trimmed.
 	 */
 	var sourceSizeW:Float;
 	
 	/**
-	 * Height of the original sprite.
+	 * Height of the original sprite before it was trimmed.
 	 */
 	var sourceSizeH:Float;
 	
@@ -112,6 +107,11 @@ extern class Frame {
 	 * The bottom of the frame (y + height).
 	 */
 	var bottom:Float;
+	
+	/**
+	 * Adjusts of all the Frame properties based on the given width and height values.
+	 */
+	function resize (width:Int, height:Int):Void;
 	
 	/**
 	 * If the frame was trimmed when added to the Texture Atlas this records the trim and source data.

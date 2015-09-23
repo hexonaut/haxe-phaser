@@ -12,6 +12,10 @@ extern class SoundManager {
 	 * If you are reloading a Phaser Game on a page that never properly refreshes (such as in an AngularJS project) then you will quickly run out
 	 * of AudioContext nodes. If this is the case create a global var called PhaserGlobal on the window object before creating the game. The active
 	 * AudioContext will then be saved to window.PhaserGlobal.audioContext when the Phaser game is destroyed, and re-used when it starts again.
+	 * 
+	 * Mobile warning: There are some mobile devices (certain iPad 2 and iPad Mini revisions) that cannot play 48000 Hz audio.
+	 * When they try to play the audio becomes extremely distorted and buzzes, eventually crashing the sound system.
+	 * The solution is to use a lower encoding rate such as 44100 Hz.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -24,6 +28,56 @@ extern class SoundManager {
 	 * The event dispatched when a sound decodes (typically only for mp3 files)
 	 */
 	var onSoundDecode:phaser.core.Signal;
+	
+	/**
+	 * This signal is dispatched whenever the global volume changes. The new volume is passed as the only parameter to your callback.
+	 */
+	var onVolumeChange:phaser.core.Signal;
+	
+	/**
+	 * This signal is dispatched when the SoundManager is globally muted, either directly via game code or as a result of the game pausing.
+	 */
+	var onMute:phaser.core.Signal;
+	
+	/**
+	 * This signal is dispatched when the SoundManager is globally un-muted, either directly via game code or as a result of the game resuming from a pause.
+	 */
+	var onUnMute:phaser.core.Signal;
+	
+	/**
+	 * The AudioContext being used for playback.
+	 */
+	var context:Dynamic;
+	
+	/**
+	 * True the SoundManager and device are both using Web Audio.
+	 */
+	var usingWebAudio(default, null):Bool;
+	
+	/**
+	 * True the SoundManager and device are both using the Audio tag instead of Web Audio.
+	 */
+	var usingAudioTag(default, null):Bool;
+	
+	/**
+	 * True if audio been disabled via the PhaserGlobal (useful if you need to use a 3rd party audio library) or the device doesn't support any audio.
+	 */
+	var noAudio:Bool;
+	
+	/**
+	 * Used in conjunction with Sound.externalNode this allows you to stop a Sound node being connected to the SoundManager master gain node.
+	 */
+	var connectToMaster:Bool;
+	
+	/**
+	 * true if the audio system is currently locked awaiting a touch event.
+	 */
+	var touchLocked:Bool;
+	
+	/**
+	 * The number of audio channels to use in playback.
+	 */
+	var channels:Float;
 	
 	/**
 	 * Internal mute tracking var.
@@ -53,7 +107,7 @@ extern class SoundManager {
 	/**
 	 * An array set containing all the sounds being monitored for decoding status.
 	 */
-	var _watchList:Dynamic;
+	var _watchList:phaser.utils.ArraySet;
 	
 	/**
 	 * Is the SoundManager monitoring the watchList?
@@ -71,49 +125,20 @@ extern class SoundManager {
 	var _watchContext:Dynamic;
 	
 	/**
-	 * The AudioContext being used for playback.
-	 */
-	var context:Dynamic;
-	
-	/**
-	 * true if this sound is being played with Web Audio.
-	 */
-	var usingWebAudio(default, null):Bool;
-	
-	/**
-	 * true if the sound is being played via the Audio tag.
-	 */
-	var usingAudioTag(default, null):Bool;
-	
-	/**
-	 * Has audio been disabled via the PhaserGlobal object? Useful if you need to use a 3rd party audio library instead.
-	 */
-	var noAudio:Bool;
-	
-	/**
-	 * Used in conjunction with Sound.externalNode this allows you to stop a Sound node being connected to the SoundManager master gain node.
-	 */
-	var connectToMaster:Bool;
-	
-	/**
-	 * true if the audio system is currently locked awaiting a touch event.
-	 */
-	var touchLocked:Bool;
-	
-	/**
-	 * The number of audio channels to use in playback.
-	 */
-	var channels:Float;
-	
-	/**
 	 * Initialises the sound manager.
 	 */
 	function boot ():Void;
 	
 	/**
+	 * Sets the Input Manager touch callback to be SoundManager.unlock.
+	 * Required for iOS audio device unlocking. Mostly just used internally.
+	 */
+	function setTouchLock ():Void;
+	
+	/**
 	 * Enables the audio, usually after the first touch.
 	 */
-	function unlock ():Void;
+	function unlock ():Bool;
 	
 	/**
 	 * Stops all the sounds in the game.
@@ -145,7 +170,7 @@ extern class SoundManager {
 	function setDecodedCallback (files:Array<Dynamic>, callback:Dynamic, callbackContext:Dynamic):Void;
 	
 	/**
-	 * Updates every sound in the game.
+	 * Updates every sound in the game, checks for audio unlock on mobile and monitors the decoding watch list.
 	 */
 	function update ():Void;
 	
@@ -176,12 +201,12 @@ extern class SoundManager {
 	function play (key:String, ?volume:Float = 1, ?loop:Bool = false):phaser.sound.Sound;
 	
 	/**
-	 * Internal mute handler called automatically by the Sound.mute setter.
+	 * Internal mute handler called automatically by the SoundManager.mute setter.
 	 */
 	function setMute ():Void;
 	
 	/**
-	 * Internal mute handler called automatically by the Sound.mute setter.
+	 * Internal mute handler called automatically by the SoundManager.mute setter.
 	 */
 	function unsetMute ():Void;
 	

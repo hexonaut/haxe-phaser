@@ -19,11 +19,11 @@ extern class ArrayUtils {
 	 * Create an array of numbers (positive and/or negative) progressing from start
 	 * up to but not including end by advancing by step.
 	 * 
-	 * If start is less than stop a zero-length range is created unless a negative step is specified.
+	 * If start is less than end a zero-length range is created unless a negative step is specified.
 	 * 
 	 * Certain values for start and end (eg. NaN/undefined/null) are currently coerced to 0;
 	 * for forward compatibility make sure to pass in actual numbers.
 	 */
-	function numberArrayStep (start:Float, end:Float, ?step:Float = 1):Array<Dynamic>;
+	function numberArrayStep (start:Float, ?end:Float, ?step:Float = 1):Array<Dynamic>;
 	
 }
