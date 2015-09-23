@@ -94,7 +94,10 @@ extern class World {
 	
 	/**
 	 * Creates an Arcade Physics body on the given game object.
+	 * 
 	 * A game object can only have 1 physics body active at any one time, and it can't be changed until the body is nulled.
+	 * 
+	 * When you add an Arcade Physics body to an object it will automatically add the object into its parent Groups hash array.
 	 */
 	function enableBody (object:Dynamic):Void;
 	
@@ -169,6 +172,45 @@ extern class World {
 	@:overload(function (object1:Dynamic, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	@:overload(function (object1:phaser.tilemap.TilemapLayer, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool {})
 	function collide (object1:Array<Dynamic>, object2:Array<Dynamic>, ?collideCallback:Dynamic, ?processCallback:Dynamic, ?callbackContext:Dynamic):Bool;
+	
+	/**
+	 * A Sort function for sorting two bodies based on a LEFT to RIGHT sort direction.
+	 * 
+	 * This is called automatically by World.sort
+	 */
+	function sortLeftRight (a:phaser.gameobjects.Sprite, b:phaser.gameobjects.Sprite):Int;
+	
+	/**
+	 * A Sort function for sorting two bodies based on a RIGHT to LEFT sort direction.
+	 * 
+	 * This is called automatically by World.sort
+	 */
+	function sortRightLeft (a:phaser.gameobjects.Sprite, b:phaser.gameobjects.Sprite):Int;
+	
+	/**
+	 * A Sort function for sorting two bodies based on a TOP to BOTTOM sort direction.
+	 * 
+	 * This is called automatically by World.sort
+	 */
+	function sortTopBottom (a:phaser.gameobjects.Sprite, b:phaser.gameobjects.Sprite):Int;
+	
+	/**
+	 * A Sort function for sorting two bodies based on a BOTTOM to TOP sort direction.
+	 * 
+	 * This is called automatically by World.sort
+	 */
+	function sortBottomTop (a:phaser.gameobjects.Sprite, b:phaser.gameobjects.Sprite):Int;
+	
+	/**
+	 * This method will sort a Groups hash array.
+	 * 
+	 * If the Group has physicsSortDirection set it will use the sort direction defined.
+	 * 
+	 * Otherwise if the sortDirection parameter is undefined, or Group.physicsSortDirection is null, it will use Phaser.Physics.Arcade.sortDirection.
+	 * 
+	 * By changing Group.physicsSortDirection you can customise each Group to sort in a different order.
+	 */
+	function sort (group:phaser.core.Group, ?sortDirection:Int):Void;
 	
 	/**
 	 * Internal collision handler.

@@ -269,6 +269,14 @@ extern class Body {
 	var skipQuadTree:Bool;
 	
 	/**
+	 * If true the Body will check itself against the Sprite.getBounds() dimensions and adjust its width and height accordingly.
+	 * If false it will compare its dimensions against the Sprite scale instead, and adjust its width height if the scale has changed.
+	 * Typically you would need to enable syncBounds if your sprite is the child of a responsive display object such as a FlexLayer, 
+	 * or in any situation where the Sprite scale doesn't change, but its parents scale is effecting the dimensions regardless.
+	 */
+	var syncBounds:Bool;
+	
+	/**
 	 * Internal cache var.
 	 */
 	var _reset:Bool;
@@ -309,7 +317,7 @@ extern class Body {
 	function postUpdate ():Void;
 	
 	/**
-	 * Removes this body's reference to its parent sprite, freeing it up for gc.
+	 * Removes this bodys reference to its parent sprite, freeing it up for gc.
 	 */
 	function destroy ():Void;
 	

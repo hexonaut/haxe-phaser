@@ -68,9 +68,4 @@ extern class Graphics extends phaser.pixi.display.DisplayObjectContainer {
 	 */
 	var cachedSpriteDirty:Bool;
 	
-	/**
-	 * Draws a circle.
-	 */
-	function drawCircle (x:Float, y:Float, diameter:Float):Dynamic;
-	
 }

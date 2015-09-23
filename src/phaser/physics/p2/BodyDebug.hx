@@ -29,34 +29,39 @@ extern class BodyDebug extends phaser.core.Group {
 	function draw ():Void;
 	
 	/**
-	 * Draws the P2 shapes to the Graphics object.
+	 * Draws a p2.Box to the Graphics object.
 	 */
 	function drawRectangle ():Void;
 	
 	/**
-	 * Draws a P2 Circle shape.
+	 * Draws a p2.Circle to the Graphics object.
 	 */
 	function drawCircle ():Void;
 	
 	/**
-	 * Draws a P2 Line shape.
+	 * Draws a p2.Line to the Graphics object.
 	 */
 	function drawLine ():Void;
 	
 	/**
-	 * Draws a P2 Convex shape.
+	 * Draws a p2.Convex to the Graphics object.
 	 */
 	function drawConvex ():Void;
 	
 	/**
-	 * Draws a P2 Path.
+	 * Draws a p2.Path to the Graphics object.
 	 */
 	function drawPath ():Void;
 	
 	/**
-	 * Draws a P2 Plane shape.
+	 * Draws a p2.Plane to the Graphics object.
 	 */
 	function drawPlane ():Void;
+	
+	/**
+	 * Draws a p2.Capsule to the Graphics object.
+	 */
+	function drawCapsule ():Void;
 	
 	/**
 	 * Picks a random pastel color.

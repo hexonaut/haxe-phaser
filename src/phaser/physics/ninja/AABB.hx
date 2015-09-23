@@ -75,9 +75,14 @@ extern class AABB {
 	function integrate ():Void;
 	
 	/**
+	 * Process a collision partner-agnostic collision response and apply the resulting forces.
+	 */
+	function reportCollision (px:Float, py:Float, dx:Float, dy:Float):Void;
+	
+	/**
 	 * Process a world collision and apply the resulting forces.
 	 */
-	function reportCollisionVsWorld (px:Float, py:Float, dx:Float, dy:Float, obj:Float):Void;
+	function reportCollisionVsWorld (px:Float, py:Float, dx:Float, dy:Float):Void;
 	
 	/**
 	 * Process a body collision and apply the resulting forces. Still very much WIP and doesn't work fully. Feel free to fix!

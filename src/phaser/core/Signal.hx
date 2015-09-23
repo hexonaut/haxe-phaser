@@ -4,7 +4,7 @@ package phaser.core;
 extern class Signal {
 	
 	/**
-	 * A Signal is an event dispatch mechansim than supports broadcasting to multiple listeners.
+	 * A Signal is an event dispatch mechanism that supports broadcasting to multiple listeners.
 	 * 
 	 * Event listeners are uniquely identified by the listener/callback function and the context.
 	 */
@@ -19,7 +19,7 @@ extern class Signal {
 	var memorize:Bool;
 	
 	/**
-	 * Is the Signal active? Only active signal will broadcast dispatched events.
+	 * Is the Signal active? Only active signals will broadcast dispatched events.
 	 * 
 	 * Setting this property during a dispatch will only affect the next dispatch. To stop the propagation of a signal from a listener use {@link #halt}.
 	 */
@@ -31,9 +31,23 @@ extern class Signal {
 	function has (listener:Dynamic, ?context:Dynamic):Bool;
 	
 	/**
-	 * Add an event listener.
+	 * Add an event listener for this signal.
+	 * 
+	 * An event listener is a callback with a related context and priority.
+	 * 
+	 * You can optionally provide extra arguments which will be passed to the callback after any internal parameters.
+	 * 
+	 * For example: Phaser.Key.onDown when dispatched will send the Phaser.Key object that caused the signal as the first parameter.
+	 * Any arguments you've specified after priority will be sent as well:
+	 * 
+	 * fireButton.onDown.add(shoot, this, 0, 'lazer', 100);
+	 * 
+	 * When onDown dispatches it will call the shoot callback passing it: Phaser.Key, 'lazer', 100.
+	 * 
+	 * Where the first parameter is the one that Key.onDown dispatches internally and 'lazer', 
+	 * and the value 100 were the custom arguments given in the call to 'add'.
 	 */
-	function add (listener:Dynamic, ?listenerContext:Dynamic, ?priority:Float):phaser.core.SignalBinding;
+	function add (listener:Dynamic, ?listenerContext:Dynamic, ?priority:Float, ?args0:Dynamic, ?args1:Dynamic, ?args2:Dynamic, ?args3:Dynamic, ?args4:Dynamic):phaser.core.SignalBinding;
 	
 	/**
 	 * Add a one-time listener - the listener is automatically removed after the first execution.
@@ -41,7 +55,7 @@ extern class Signal {
 	 * If there is as {@link Phaser.Signal#memorize memorized} event then it will be dispatched and
 	 * the listener will be removed immediately.
 	 */
-	function addOnce (listener:Dynamic, ?listenerContext:Dynamic, ?priority:Float):phaser.core.SignalBinding;
+	function addOnce (listener:Dynamic, ?listenerContext:Dynamic, ?priority:Float, ?args0:Dynamic, ?args1:Dynamic, ?args2:Dynamic, ?args3:Dynamic, ?args4:Dynamic):phaser.core.SignalBinding;
 	
 	/**
 	 * Remove a single event listener.
@@ -61,7 +75,7 @@ extern class Signal {
 	/**
 	 * Stop propagation of the event, blocking the dispatch to next listener on the queue.
 	 * 
-	 * This should be called only during event dispatch as calling it before/after dispatch won't affect other broadcast.
+	 * This should be called only during event dispatch as calling it before/after dispatch won't affect another broadcast.
 	 * See {@link #active} to enable/disable the signal entirely.
 	 */
 	function halt ():Void;

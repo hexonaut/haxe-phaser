@@ -163,6 +163,11 @@ extern class InputHandler {
 	var dragStartPoint:phaser.geom.Point;
 	
 	/**
+	 * If the sprite is set to snap while dragging this holds the point of the most recent 'snap' event.
+	 */
+	var snapPoint:phaser.geom.Point;
+	
+	/**
 	 * Internal cache var.
 	 */
 	var _dragPoint:phaser.geom.Point;
@@ -319,7 +324,7 @@ extern class InputHandler {
 	function _pointerOutHandler (pointer:phaser.input.Pointer):Void;
 	
 	/**
-	 * Internal method handling the touched event.
+	 * Internal method handling the touched / clicked event.
 	 */
 	function _touchedHandler (pointer:phaser.input.Pointer):Void;
 	
@@ -364,7 +369,14 @@ extern class InputHandler {
 	function downDuration (pointer:phaser.input.Pointer):Float;
 	
 	/**
-	 * Make this Sprite draggable by the mouse. You can also optionally set mouseStartDragCallback and mouseStopDragCallback
+	 * Allow this Sprite to be dragged by any valid pointer.
+	 * 
+	 * When the drag begins the Sprite.events.onDragStart event will be dispatched.
+	 * 
+	 * When the drag completes by way of the user letting go of the pointer that was dragging the sprite, the Sprite.events.onDragStop event is dispatched.
+	 * 
+	 * For the duration of the drag the Sprite.events.onDragUpdate event is dispatched. This event is only dispatched when the pointer actually
+	 * changes position and moves. The event sends 5 parameters: sprite, pointer, dragX, dragY and snapPoint.
 	 */
 	function enableDrag (?lockCenter:Bool = false, ?bringToTop:Bool = false, ?pixelPerfect:Bool = false, ?alphaThreshold:Bool = 255, ?boundsRect:phaser.geom.Rectangle, ?boundsSprite:phaser.gameobjects.Sprite):Void;
 	
@@ -402,7 +414,7 @@ extern class InputHandler {
 	 * Make this Sprite snap to the given grid either during drag or when it's released.
 	 * For example 16x16 as the snapX and snapY would make the sprite snap to every 16 pixels.
 	 */
-	function enableSnap (snapX:Float, snapY:Float, ?onDrag:Bool = true, ?onRelease:Bool = false, ?snapOffsetX:Float = 0, ?snapOffsetX:Float = 0):Void;
+	function enableSnap (snapX:Float, snapY:Float, ?onDrag:Bool = true, ?onRelease:Bool = false, ?snapOffsetX:Float = 0, ?snapOffsetY:Float = 0):Void;
 	
 	/**
 	 * Stops the sprite from snapping to a grid during drag or release.

@@ -50,6 +50,18 @@ extern class StateManager {
 	var current:String;
 	
 	/**
+	 * onStateChange is a Phaser.Signal that is dispatched whenever the game changes state.
+	 * 
+	 * It is dispatched only when the new state is started, which isn't usually at the same time as StateManager.start
+	 * is called because state swapping is done in sync with the game loop. It is dispatched <em>before</em> any of the new states
+	 * methods (such as preload and create) are called, and <em>after</em> the previous states shutdown method has been run.
+	 * 
+	 * The callback you specify is sent two parameters: the string based key of the new state, 
+	 * and the second parameter is the string based key of the old / previous state.
+	 */
+	var onStateChange:phaser.core.Signal;
+	
+	/**
 	 * This is called when the state is set as the active state.
 	 */
 	var onInitCallback:Dynamic;
@@ -189,5 +201,10 @@ extern class StateManager {
 	 * You don't recover from this without rebuilding the Phaser instance again.
 	 */
 	function destroy ():Void;
+	
+	/**
+	 * @name Phaser.StateManager#created
+	 */
+	var created:Bool;
 	
 }

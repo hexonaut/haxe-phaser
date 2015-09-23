@@ -157,11 +157,6 @@ extern class Gamepad {
 	function destroy ():Void;
 	
 	/**
-	 * If disabled all Gamepad input will be ignored.
-	 */
-	var disabled:Bool;
-	
-	/**
 	 * If the gamepad input is active or not - if not active it should not be updated from Input.js
 	 */
 	var active(default, null):Bool;

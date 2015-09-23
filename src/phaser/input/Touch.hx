@@ -5,6 +5,8 @@ extern class Touch {
 	
 	/**
 	 * Phaser.Touch handles touch events with your game. Note: Android 2.x only supports 1 touch event at once, no multi-touch.
+	 * 
+	 * You should not normally access this class directly, but instead use a Phaser.Pointer object which normalises all game input for you.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -17,6 +19,13 @@ extern class Touch {
 	 * Touch events will only be processed if enabled.
 	 */
 	var enabled:Bool;
+	
+	/**
+	 * An array of callbacks that will be fired every time a native touch start event is received from the browser.
+	 * This is used internally to handle audio and video unlocking on mobile devices.
+	 * To add a callback to this array please use Touch.addTouchLockCallback.
+	 */
+	var touchLockCallbacks:Array<Dynamic>;
 	
 	/**
 	 * The context under which callbacks are called.
@@ -104,6 +113,22 @@ extern class Touch {
 	function consumeTouchMove ():Void;
 	
 	/**
+	 * Adds a callback that is fired when a browser touchstart event is received.
+	 * 
+	 * This is used internally to handle audio and video unlocking on mobile devices.
+	 * 
+	 * If the callback returns 'true' then the callback is automatically deleted once invoked.
+	 * 
+	 * The callback is added to the Phaser.Touch.touchLockCallbacks array and should be removed with Phaser.Touch.removeTouchLockCallback.
+	 */
+	function addTouchLockCallback (callback:Dynamic, context:Dynamic):Void;
+	
+	/**
+	 * Removes the callback at the defined index from the Phaser.Touch.touchLockCallbacks array
+	 */
+	function removeTouchLockCallback (callback:Dynamic, context:Dynamic):Bool;
+	
+	/**
 	 * The internal method that handles the touchstart event from the browser.
 	 */
 	function onTouchStart (event:Dynamic):Void;
@@ -140,10 +165,5 @@ extern class Touch {
 	 * Stop the event listeners.
 	 */
 	function stop ():Void;
-	
-	/**
-	 * If disabled all Touch events will be ignored.
-	 */
-	var disabled:Bool;
 	
 }

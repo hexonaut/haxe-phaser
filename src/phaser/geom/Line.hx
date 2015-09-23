@@ -40,6 +40,23 @@ extern class Line {
 	function fromAngle (x:Float, y:Float, angle:Float, length:Float):phaser.geom.Line;
 	
 	/**
+	 * Rotates the line by the amount specified in angle.
+	 * 
+	 * Rotation takes place from the center of the line.
+	 * If you wish to rotate around a different point see Line.rotateAround.
+	 * 
+	 * If you wish to rotate the ends of the Line then see Line.start.rotate or Line.end.rotate.
+	 */
+	function rotate (angle:Float, ?asDegrees:Bool = false):phaser.geom.Line;
+	
+	/**
+	 * Rotates the line by the amount specified in angle.
+	 * 
+	 * Rotation takes place around the coordinates given.
+	 */
+	function rotateAround (angle:Float, ?asDegrees:Bool = false):phaser.geom.Line;
+	
+	/**
 	 * Checks for intersection between this line and another Line.
 	 * If asSegment is true it will check for segment intersection. If asSegment is false it will check for line intersection.
 	 * Returns the intersection segment of AB and EF as a Point, or null if there is no intersection.
@@ -53,6 +70,19 @@ extern class Line {
 	function reflect (line:phaser.geom.Line):Float;
 	
 	/**
+	 * Returns a Point object where the x and y values correspond to the center (or midpoint) of the Line segment.
+	 */
+	function midPoint (?out:phaser.geom.Point):phaser.geom.Point;
+	
+	/**
+	 * Centers this Line on the given coordinates.
+	 * 
+	 * The line is centered by positioning the start and end points so that the lines midpoint matches
+	 * the coordinates given.
+	 */
+	function centerOn (x:Float, y:Float):phaser.geom.Line;
+	
+	/**
 	 * Tests if the given coordinates fall on this line. See pointOnSegment to test against just the line segment.
 	 */
 	function pointOnLine (x:Float, y:Float):Bool;
@@ -61,6 +91,12 @@ extern class Line {
 	 * Tests if the given coordinates fall on this line and within the segment. See pointOnLine to test against just the line.
 	 */
 	function pointOnSegment (x:Float, y:Float):Bool;
+	
+	/**
+	 * Picks a random point from anywhere on the Line segment and returns it.
+	 */
+	@:overload(function (?out:phaser.geom.Point):phaser.geom.Point {})
+	function random (?out:Dynamic):phaser.geom.Point;
 	
 	/**
 	 * Using Bresenham's line algorithm this will return an array of all coordinates on this line.

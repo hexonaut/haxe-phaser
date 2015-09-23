@@ -45,6 +45,16 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	var ignoreDestroy:Bool;
 	
 	/**
+	 * A Group is that has pendingDestroy set to true is flagged to have its destroy method 
+	 * called on the next logic update.
+	 * You can set it directly to flag the Group to be destroyed on its next update.
+	 * 
+	 * This is extremely useful if you wish to destroy a Group from within one of its own callbacks 
+	 * or a callback of one of its children.
+	 */
+	var pendingDestroy:Bool;
+	
+	/**
 	 * The type of objects that will be created when using {@link #create} or {@link #createMultiple}.
 	 * 
 	 * Any object may be used but it should extend either Sprite or Image and accept the same constructor arguments:
@@ -81,6 +91,21 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	var physicsBodyType:Int;
 	
 	/**
+	 * If this Group contains Arcade Physics Sprites you can set a custom sort direction via this property.
+	 * 
+	 * It should be set to one of the Phaser.Physics.Arcade sort direction constants: 
+	 * 
+	 * Phaser.Physics.Arcade.SORT_NONE
+	 * Phaser.Physics.Arcade.LEFT_RIGHT
+	 * Phaser.Physics.Arcade.RIGHT_LEFT
+	 * Phaser.Physics.Arcade.TOP_BOTTOM
+	 * Phaser.Physics.Arcade.BOTTOM_TOP
+	 * 
+	 * If set to null the Group will use whatever Phaser.Physics.Arcade.sortDirection is set to. This is the default behavior.
+	 */
+	var physicsSortDirection:Int;
+	
+	/**
 	 * This signal is dispatched when the group is destroyed.
 	 */
 	var onDestroy:phaser.core.Signal;
@@ -105,7 +130,13 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	var cameraOffset:phaser.geom.Point;
 	
 	/**
-	 * An internal array used by physics for fast non z-index destructive sorting.
+	 * The hash array is an array belonging to this Group into which you can add any of its children via Group.addToHash and Group.removeFromHash.
+	 * 
+	 * Only children of this Group can be added to and removed from the hash.
+	 * 
+	 * This hash is used automatically by Phaser Arcade Physics in order to perform non z-index based destructive sorting.
+	 * However if you don't use Arcade Physics, or this isn't a physics enabled Group, then you can use the hash to perform your own
+	 * sorting and filtering of Group children without touching their z-index (and therefore display draw order)
 	 */
 	var hash:Array<Dynamic>;
 	
@@ -119,18 +150,34 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	 * 
 	 * The child is automatically added to the top of the group and is displayed on top of every previous child.
 	 * 
+	 * If Group.enableBody is set then a physics body will be created on the object, so long as one does not already exist.
+	 * 
 	 * Use {@link #addAt} to control where a child is added. Use {@link #create} to create and add a new child.
 	 */
 	function add (child:Dynamic, ?silent:Bool = false):Dynamic;
 	
 	/**
-	 * Adds an array of existing display objects to this group.
-	 * 
-	 * The children are automatically added to the top of the group, so render on-top of everything else within the group.
-	 * 
-	 * TODO: Add ability to pass the children as parameters rather than having to be an array.
+	 * Adds a child of this Group into the hash array.
+	 * This call will return false if the child is not a child of this Group, or is already in the hash.
 	 */
-	function addMultiple (children:Dynamic, ?silent:Bool = false):Dynamic;
+	function addToHash (child:Dynamic):Bool;
+	
+	/**
+	 * Removes a child of this Group from the hash array.
+	 * This call will return false if the child is not in the hash.
+	 */
+	function removeFromHash (child:Dynamic):Bool;
+	
+	/**
+	 * Adds an array of existing Display Objects to this Group.
+	 * 
+	 * The Display Objects are automatically added to the top of this Group, and will render on-top of everything already in this Group.
+	 * 
+	 * As well as an array you can also pass another Group as the first argument. In this case all of the children from that
+	 * Group will be removed from it and added into this Group.
+	 */
+	@:overload(function (children:Dynamic, ?silent:Bool = false):Dynamic {})
+	function addMultiple (children:phaser.core.Group, ?silent:Bool = false):Dynamic;
 	
 	/**
 	 * Adds an existing object to this group.
@@ -158,13 +205,13 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	 * Useful if you need to quickly generate a pool of identical sprites, such as bullets.
 	 * 
 	 * By default the sprites will be set to not exist and will be positioned at 0, 0 (relative to the group.x/y).
-	 * Use {@link #classType} to change the type of object creaded.
+	 * Use {@link #classType} to change the type of object created.
 	 */
 	@:overload(function (quantity:Int, key:String, ?frame:Int, ?exists:Bool = false):Void {})
 	function createMultiple (quantity:Int, key:String, ?frame:String, ?exists:Bool = false):Void;
 	
 	/**
-	 * Internal method that re-applies all of the childrens Z values.
+	 * Internal method that re-applies all of the children's Z values.
 	 * 
 	 * This must be called whenever children ordering is altered so that their z indices are correctly updated.
 	 */
@@ -374,7 +421,7 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	 * 
 	 * Note: Currently this will skip any children which are Groups themselves.
 	 */
-	function filter (predicate:Dynamic, ?checkExists:Bool = false):Dynamic;
+	function filter (predicate:Dynamic, ?checkExists:Bool = false):phaser.utils.ArraySet;
 	
 	/**
 	 * Call a function on each child in this group.
@@ -516,6 +563,11 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	 * If the group cursor was referring to the removed child it is updated to refer to the next child.
 	 */
 	function remove (child:Dynamic, ?destroy:Bool = false, ?silent:Bool = false):Bool;
+	
+	/**
+	 * Moves all children from this Group to the Group given.
+	 */
+	function moveAll (group:phaser.core.Group, ?silent:Bool = false):phaser.core.Group;
 	
 	/**
 	 * Removes all children from this group, but does not remove the group from its parent.

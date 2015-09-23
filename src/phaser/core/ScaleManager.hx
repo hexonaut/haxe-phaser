@@ -90,11 +90,6 @@ extern class ScaleManager {
 	var pageAlignVertically:Bool;
 	
 	/**
-	 * The maximum number of times a canvas will be resized (in a row) in order to fill the browser.
-	 */
-	var maxIterations:Float;
-	
-	/**
 	 * This signal is dispatched when the orientation changes <em>or</em> the validity of the current orientation changes.
 	 * 
 	 * The signal is supplied with the following arguments:
@@ -117,20 +112,6 @@ extern class ScaleManager {
 	 * This is signaled from preUpdate (or pauseUpdate) <em>even when</em> the game is paused.
 	 */
 	var onOrientationChange:phaser.core.Signal;
-	
-	/**
-	 * This signal is dispatched when the browser enters landscape orientation, having been in portrait.
-	 * 
-	 * This is signaled from  preUpdate (or pauseUpdate) <em>even when</em> the game is paused.
-	 */
-	var enterLandscape:phaser.core.Signal;
-	
-	/**
-	 * This signal is dispatched when the browser enters portrait orientation, having been in landscape.
-	 * 
-	 * This is signaled from preUpdate (or pauseUpdate) <em>even when</em> the game is paused.
-	 */
-	var enterPortrait:phaser.core.Signal;
 	
 	/**
 	 * This signal is dispatched when the browser enters an incorrect orientation, as defined by {@link #forceOrientation}.
@@ -199,22 +180,6 @@ extern class ScaleManager {
 	 * The signal is supplied with a single argument: scale (the ScaleManager).
 	 */
 	var onFullScreenError:phaser.core.Signal;
-	
-	/**
-	 * This signal is dispatched when the browser enters fullscreen mode, if supported.
-	 */
-	var enterFullScreen:phaser.core.Signal;
-	
-	/**
-	 * This signal is dispatched when the browser leaves fullscreen mode.
-	 */
-	var leaveFullScreen:phaser.core.Signal;
-	
-	/**
-	 * This signal is dispatched when the browser fails to enter fullscreen mode;
-	 * or if the device does not support fullscreen mode and {@link #startFullScreen} is invoked.
-	 */
-	var fullScreenFailed:phaser.core.Signal;
 	
 	/**
 	 * The <em>last known</em> orientation of the screen, as defined in the Window Screen Web API.
@@ -337,6 +302,11 @@ extern class ScaleManager {
 	var onResizeContext:Dynamic;
 	
 	/**
+	 * Used to retain the scale mode if set from config before Boot.
+	 */
+	var _pendingScaleMode:Int;
+	
+	/**
 	 * Information saved when fullscreen mode is started.
 	 */
 	var fullScreenRestore:Dynamic;
@@ -387,6 +357,11 @@ extern class ScaleManager {
 	 * The Game size at which the last onSizeChange signal was triggered.
 	 */
 	var lastReportedGameSize:phaser.geom.Rectangle;
+	
+	/**
+	 * ScaleManager booted state.
+	 */
+	var _booted:Bool;
 	
 	/**
 	 * Start the ScaleManager.
@@ -683,15 +658,6 @@ extern class ScaleManager {
 	function destroy ():Void;
 	
 	/**
-	 * Updates the size of the Game or the size/position of the Display canvas based on internal state.
-	 * 
-	 * Do not call this directly. To "refresh" the layout use {@link Phaser.ScaleManager#refresh refresh}.
-	 * To precisely control the scaling/size, apply appropriate rules to the bounding Parent container or
-	 * use the {@link Phaser.ScaleManager#scaleMode USER_SCALE scale mode}.
-	 */
-	function setScreenSize ():Void;
-	
-	/**
 	 * The DOM element that is considered the Parent bounding element, if any.
 	 * 
 	 * This null if {@link #parentIsWindow} is true or if fullscreen mode is entered and {@link #fullScreenTarget} is specified.
@@ -720,11 +686,6 @@ extern class ScaleManager {
 	 * Returns true if the screen orientation is in landscape mode.
 	 */
 	var isLandscape(default, null):Bool;
-	
-	/**
-	 * The <em>last known</em> orientation value of the screen. A value of 90 is landscape and 0 is portrait.
-	 */
-	var orientation(default, null):Int;
 	
 	/**
 	 * Returns true if the game dimensions are portrait (height > width).

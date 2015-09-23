@@ -44,9 +44,69 @@ extern class Pointer {
 	var target:Dynamic;
 	
 	/**
-	 * The button property of the Pointer as set by the DOM event when this Pointer is started.
+	 * The button property of the most recent DOM event when this Pointer is started.
+	 * You should not rely on this value for accurate button detection, instead use the Pointer properties
+	 * leftButton, rightButton, middleButton and so on.
 	 */
 	var button:Dynamic;
+	
+	/**
+	 * If this Pointer is a Mouse or Pen / Stylus then you can access its left button directly through this property.
+	 * 
+	 * The DeviceButton has its own properties such as isDown, duration and methods like justReleased for more fine-grained
+	 * button control.
+	 */
+	var leftButton:phaser.input.DeviceButton;
+	
+	/**
+	 * If this Pointer is a Mouse or Pen / Stylus then you can access its middle button directly through this property.
+	 * 
+	 * The DeviceButton has its own properties such as isDown, duration and methods like justReleased for more fine-grained
+	 * button control.
+	 * 
+	 * Please see the DeviceButton docs for details on browser button limitations.
+	 */
+	var middleButton:phaser.input.DeviceButton;
+	
+	/**
+	 * If this Pointer is a Mouse or Pen / Stylus then you can access its right button directly through this property.
+	 * 
+	 * The DeviceButton has its own properties such as isDown, duration and methods like justReleased for more fine-grained
+	 * button control.
+	 * 
+	 * Please see the DeviceButton docs for details on browser button limitations.
+	 */
+	var rightButton:phaser.input.DeviceButton;
+	
+	/**
+	 * If this Pointer is a Mouse or Pen / Stylus then you can access its X1 (back) button directly through this property.
+	 * 
+	 * The DeviceButton has its own properties such as isDown, duration and methods like justReleased for more fine-grained
+	 * button control.
+	 * 
+	 * Please see the DeviceButton docs for details on browser button limitations.
+	 */
+	var backButton:phaser.input.DeviceButton;
+	
+	/**
+	 * If this Pointer is a Mouse or Pen / Stylus then you can access its X2 (forward) button directly through this property.
+	 * 
+	 * The DeviceButton has its own properties such as isDown, duration and methods like justReleased for more fine-grained
+	 * button control.
+	 * 
+	 * Please see the DeviceButton docs for details on browser button limitations.
+	 */
+	var forwardButton:phaser.input.DeviceButton;
+	
+	/**
+	 * If this Pointer is a Pen / Stylus then you can access its eraser button directly through this property.
+	 * 
+	 * The DeviceButton has its own properties such as isDown, duration and methods like justReleased for more fine-grained
+	 * button control.
+	 * 
+	 * Please see the DeviceButton docs for details on browser button limitations.
+	 */
+	var eraserButton:phaser.input.DeviceButton;
 	
 	/**
 	 * Local private variable to store the status of dispatching a hold event.
@@ -134,17 +194,19 @@ extern class Pointer {
 	var y:Float;
 	
 	/**
-	 * If the Pointer is a mouse this is true, otherwise false.
+	 * If the Pointer is a mouse or pen / stylus this is true, otherwise false.
 	 */
 	var isMouse:Bool;
 	
 	/**
-	 * If the Pointer is touching the touchscreen, or the mouse button is held down, isDown is set to true.
+	 * If the Pointer is touching the touchscreen, or <em>any</em> mouse or pen button is held down, isDown is set to true.
+	 * If you need to check a specific mouse or pen button then use the button properties, i.e. Pointer.rightButton.isDown.
 	 */
 	var isDown:Bool;
 	
 	/**
-	 * If the Pointer is not touching the touchscreen, or the mouse button is up, isUp is set to true.
+	 * If the Pointer is not touching the touchscreen, or <em>all</em> mouse or pen buttons are up, isUp is set to true.
+	 * If you need to check a specific mouse or pen button then use the button properties, i.e. Pointer.rightButton.isUp.
 	 */
 	var isUp:Bool;
 	
@@ -221,6 +283,27 @@ extern class Pointer {
 	var trampolineTargetObject:Dynamic;
 	
 	/**
+	 * Resets the states of all the button booleans.
+	 */
+	function resetButtons ():Void;
+	
+	/**
+	 * Called by updateButtons.
+	 */
+	function processButtonsDown (buttons:Int, event:Dynamic):Void;
+	
+	/**
+	 * Called by updateButtons.
+	 */
+	function processButtonsUp (buttons:Int, event:Dynamic):Void;
+	
+	/**
+	 * Called when the event.buttons property changes from zero.
+	 * Contains a button bitmask.
+	 */
+	function updateButtons (event:Dynamic):Void;
+	
+	/**
 	 * Called when the Pointer is pressed onto the touchscreen.
 	 */
 	function start (event:Dynamic):Void;
@@ -275,7 +358,7 @@ extern class Pointer {
 	 * 
 	 * A click trampoline is a callback that is run on the DOM 'click' event; this is primarily
 	 * needed with certain browsers (ie. IE11) which restrict some actions like requestFullscreen
-	 * to the DOM 'click' event and reject it for 'pointer<em>' and 'mouse</em>' events.
+	 * to the DOM 'click' event and rejects it for 'pointer<em>' and 'mouse</em>' events.
 	 * 
 	 * This is used internally by the ScaleManager; click trampoline usage is uncommon.
 	 * Click trampolines can only be added to pointers that are currently down.
@@ -284,7 +367,7 @@ extern class Pointer {
 	function addClickTrampoline (name:String, callback:Dynamic, callbackContext:Dynamic, callbackArgs:Dynamic):Void;
 	
 	/**
-	 * Fire all click trampolines for which the pointers are still refering to the registered object.
+	 * Fire all click trampolines for which the pointers are still referring to the registered object.
 	 */
 	function processClickTrampolines ():Void;
 	
@@ -299,7 +382,9 @@ extern class Pointer {
 	function resetMovement ():Void;
 	
 	/**
-	 * How long the Pointer has been depressed on the touchscreen. If not currently down it returns -1.
+	 * How long the Pointer has been depressed on the touchscreen or <em>any</em> of the mouse buttons have been held down.
+	 * If not currently down it returns -1.
+	 * If you need to test a specific mouse or pen button then access the buttons directly, i.e. Pointer.rightButton.duration.
 	 */
 	var duration(default, null):Float;
 	

@@ -214,7 +214,7 @@ extern class Game {
 	var context:Dynamic;
 	
 	/**
-	 * A set of useful debug utilitie.
+	 * A set of useful debug utilities.
 	 */
 	var debug:phaser.utils.Debug;
 	
@@ -222,6 +222,11 @@ extern class Game {
 	 * The Particle Manager.
 	 */
 	var particles:phaser.particles.Particles;
+	
+	/**
+	 * The Asset Generator.
+	 */
+	var create:phaser.core.Create;
 	
 	/**
 	 * If false Phaser will automatically render the display list every update. If true the render loop will be skipped.
@@ -341,6 +346,16 @@ extern class Game {
 	 * Checks if the device is capable of using the requested renderer and sets it up or an alternative if not.
 	 */
 	function setUpRenderer ():Void;
+	
+	/**
+	 * Handles WebGL context loss.
+	 */
+	function contextLost (event:Dynamic):Void;
+	
+	/**
+	 * Handles WebGL context restoration.
+	 */
+	function contextRestored ():Void;
 	
 	/**
 	 * The core game loop.

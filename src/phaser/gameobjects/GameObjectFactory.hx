@@ -22,35 +22,70 @@ extern class GameObjectFactory {
 	var world:phaser.core.World;
 	
 	/**
-	 * Adds an existing object to the game world.
+	 * Adds an existing display object to the game world.
 	 */
 	function existing (object:Dynamic):Dynamic;
 	
 	/**
-	 * Create a new Image object. An Image is a light-weight object you can use to display anything that doesn't need physics or animation.
-	 * It can still rotate, scale, crop and receive input events. This makes it perfect for logos, backgrounds, simple buttons and other non-Sprite graphics.
+	 * Create a new Image object.
+	 * 
+	 * An Image is a light-weight object you can use to display anything that doesn't need physics or animation.
+	 * 
+	 * It can still rotate, scale, crop and receive input events. 
+	 * This makes it perfect for logos, backgrounds, simple buttons and other non-Sprite graphics.
 	 */
-	@:overload(function (x:Float, y:Float, key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	@:overload(function (x:Float, y:Float, key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	function image (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite;
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.BitmapData, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.Video, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.BitmapData, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.Video, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Image {})
+	function image (?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Image;
 	
 	/**
 	 * Create a new Sprite with specific position and sprite sheet key.
+	 * 
+	 * At its most basic a Sprite consists of a set of coordinates and a texture that is used when rendered.
+	 * They also contain additional properties allowing for physics motion (via Sprite.body), input handling (via Sprite.input),
+	 * events (via Sprite.events), animation (via Sprite.animations), camera culling and more. Please see the Examples for use cases.
 	 */
-	@:overload(function (x:Float, y:Float, key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	@:overload(function (x:Float, y:Float, key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
-	function sprite (x:Float, y:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite;
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.BitmapData, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.Video, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.BitmapData, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.Video, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite {})
+	function sprite (?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.Sprite;
 	
 	/**
-	 * Create a tween on a specific object. The object can be any JavaScript object or Phaser object such as Sprite.
+	 * Create a new Creature Animation object.
+	 * 
+	 * Creature is a custom Game Object used in conjunction with the Creature Runtime libraries by Kestrel Moon Studios.
+	 * 
+	 * It allows you to display animated Game Objects that were created with the <a href="http://www.kestrelmoon.com/creature/">Creature Automated Animation Tool</a>.
+	 * 
+	 * Note 1: You can only use Phaser.Creature objects in WebGL enabled games. They do not work in Canvas mode games.
+	 * 
+	 * Note 2: You must use a build of Phaser that includes the CreatureMeshBone.js runtime and gl-matrix.js, or have them
+	 * loaded before your Phaser game boots.
+	 * 
+	 * See the Phaser custom build process for more details.
 	 */
-	function tween (obj:Dynamic):phaser.tween.Tween;
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?group:phaser.core.Group):phaser.gameobjects.Creature {})
+	function creature (?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?group:phaser.core.Group):phaser.gameobjects.Creature;
+	
+	/**
+	 * Create a tween on a specific object.
+	 * 
+	 * The object can be any JavaScript object or Phaser object such as Sprite.
+	 */
+	function tween (object:Dynamic):phaser.tween.Tween;
 	
 	/**
 	 * A Group is a container for display objects that allows for fast pooling, recycling and collision checks.
@@ -59,6 +94,7 @@ extern class GameObjectFactory {
 	
 	/**
 	 * A Group is a container for display objects that allows for fast pooling, recycling and collision checks.
+	 * 
 	 * A Physics Group is the same as an ordinary Group except that is has enableBody turned on by default, so any Sprites it creates
 	 * are automatically given a physics body.
 	 */
@@ -69,8 +105,8 @@ extern class GameObjectFactory {
 	 * Use when you need a lot of sprites or particles all sharing the same texture.
 	 * The speed gains are specifically for WebGL. In Canvas mode you won't see any real difference.
 	 */
-	@:overload(function (parent:phaser.core.Group, ?name:String = 'group', ?addToStage:Bool = false):phaser.core.Group {})
-	function spriteBatch (parent:Dynamic, ?name:String = 'group', ?addToStage:Bool = false):phaser.core.Group;
+	@:overload(function (parent:phaser.core.Group, ?name:String = 'group', ?addToStage:Bool = false):phaser.gameobjects.SpriteBatch {})
+	function spriteBatch (parent:Dynamic, ?name:String = 'group', ?addToStage:Bool = false):phaser.gameobjects.SpriteBatch;
 	
 	/**
 	 * Creates a new Sound object.
@@ -90,56 +126,62 @@ extern class GameObjectFactory {
 	/**
 	 * Creates a new TileSprite object.
 	 */
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	function tileSprite (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.Video, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, ?frame:String, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:String, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.RenderTexture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.BitmapData, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	@:overload(function (x:Float, y:Float, width:Float, height:Float, key:phaser.gameobjects.Video, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
+	function tileSprite (x:Float, y:Float, width:Float, height:Float, key:phaser.pixi.textures.Texture, ?frame:Float, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
 	
 	/**
 	 * Creates a new Rope object.
+	 * 
+	 * Example usage: <a href='https://github.com/codevinsky/phaser-rope-demo/blob/master/dist/demo.js'>https://github.com/codevinsky/phaser-rope-demo/blob/master/dist/demo.js</a>
 	 */
-	@:overload(function (x:Float, y:Float, key:String, frame:String, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:String, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:String, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:String, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, key:String, frame:Float, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:Float, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	@:overload(function (x:Float, y:Float, key:phaser.gameobjects.BitmapData, frame:Float, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite {})
-	function rope (x:Float, y:Float, key:phaser.pixi.textures.Texture, frame:Float, points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.TileSprite;
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?frame:String, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.RenderTexture, ?frame:String, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.BitmapData, ?frame:String, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.Video, ?frame:String, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?frame:String, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?frame:Float, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.RenderTexture, ?frame:Float, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.BitmapData, ?frame:Float, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:phaser.gameobjects.Video, ?frame:Float, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope {})
+	function rope (?x:Float = 0, ?y:Float = 0, ?key:phaser.pixi.textures.Texture, ?frame:Float, ?points:Array<Dynamic>, ?group:phaser.core.Group):phaser.gameobjects.Rope;
 	
 	/**
 	 * Creates a new Text object.
 	 */
-	function text (x:Float, y:Float, text:String, style:Dynamic, ?group:phaser.core.Group):phaser.gameobjects.Text;
+	function text (?x:Float = 0, ?y:Float = 0, ?text:String = '', ?style:Dynamic, ?group:phaser.core.Group):phaser.gameobjects.Text;
 	
 	/**
 	 * Creates a new Button object.
 	 */
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:String, ?downFrame:String, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:Float, ?downFrame:String, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:Float, ?downFrame:String, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:String, ?downFrame:Float, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:String, ?downFrame:Float, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:Float, ?downFrame:Float, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:Float, ?downFrame:Float, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:String, ?downFrame:String, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:Float, ?downFrame:String, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:Float, ?downFrame:String, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:String, ?downFrame:Float, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:String, ?downFrame:Float, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	@:overload(function (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:Float, ?downFrame:Float, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
-	function button (?x:Float, ?y:Float, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:Float, ?downFrame:Float, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button;
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:String, ?downFrame:String, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:Float, ?downFrame:String, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:Float, ?downFrame:String, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:String, ?downFrame:Float, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:String, ?downFrame:Float, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:Float, ?downFrame:Float, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:Float, ?downFrame:Float, ?upFrame:String, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:String, ?downFrame:String, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:String, ?downFrame:String, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:Float, ?downFrame:String, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:Float, ?downFrame:String, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:String, ?downFrame:Float, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:String, ?downFrame:Float, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	@:overload(function (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:String, ?outFrame:Float, ?downFrame:Float, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button {})
+	function button (?x:Float = 0, ?y:Float = 0, ?key:String, ?callback:Dynamic, ?callbackContext:Dynamic, ?overFrame:Float, ?outFrame:Float, ?downFrame:Float, ?upFrame:Float, ?group:phaser.core.Group):phaser.gameobjects.Button;
 	
 	/**
 	 * Creates a new Graphics object.
 	 */
-	function graphics (x:Float, y:Float, ?group:phaser.core.Group):phaser.gameobjects.Graphics;
+	function graphics (?x:Float = 0, ?y:Float = 0, ?group:phaser.core.Group):phaser.gameobjects.Graphics;
 	
 	/**
 	 * Create a new Emitter.
@@ -148,7 +190,7 @@ extern class GameObjectFactory {
 	 * continuous effects like rain and fire. All it really does is launch Particle objects out
 	 * at set intervals, and fixes their positions and velocities accordingly.
 	 */
-	function emitter (?x:Float = 0, ?y:Float = 0, ?maxParticles:Float = 50):Dynamic;
+	function emitter (?x:Float = 0, ?y:Float = 0, ?maxParticles:Float = 50):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * Create a new RetroFont object.
@@ -164,8 +206,24 @@ extern class GameObjectFactory {
 	
 	/**
 	 * Create a new BitmapText object.
+	 * 
+	 * BitmapText objects work by taking a texture file and an XML file that describes the font structure.
+	 * It then generates a new Sprite object for each letter of the text, proportionally spaced out and aligned to 
+	 * match the font structure.
+	 * 
+	 * BitmapText objects are less flexible than Text objects, in that they have less features such as shadows, fills and the ability 
+	 * to use Web Fonts. However you trade this flexibility for pure rendering speed. You can also create visually compelling BitmapTexts by 
+	 * processing the font texture in an image editor first, applying fills and any other effects required.
+	 * 
+	 * To create multi-line text insert \r, \n or \r\n escape codes into the text string.
+	 * 
+	 * To create a BitmapText data files you can use:
+	 * 
+	 * BMFont (Windows, free): <a href='http://www.angelcode.com/products/bmfont/'>http://www.angelcode.com/products/bmfont/</a>
+	 * Glyph Designer (OS X, commercial): <a href='http://www.71squared.com/en/glyphdesigner'>http://www.71squared.com/en/glyphdesigner</a>
+	 * Littera (Web-based, free): <a href='http://kvazars.com/littera/'>http://kvazars.com/littera/</a>
 	 */
-	function bitmapText (x:Float, y:Float, font:String, ?text:String, ?size:Float, ?group:phaser.core.Group):phaser.gameobjects.BitmapText;
+	function bitmapText (x:Float, y:Float, font:String, ?text:String = '', ?size:Float = 32, ?group:phaser.core.Group):phaser.gameobjects.BitmapText;
 	
 	/**
 	 * Creates a new Phaser.Tilemap object.
@@ -182,6 +240,16 @@ extern class GameObjectFactory {
 	 * A dynamic initially blank canvas to which images can be drawn.
 	 */
 	function renderTexture (?width:Float = 100, ?height:Float = 100, ?key:String = '', ?addToCache:Bool = false):phaser.gameobjects.RenderTexture;
+	
+	/**
+	 * Create a Video object.
+	 * 
+	 * This will return a Phaser.Video object which you can pass to a Sprite to be used as a texture.
+	 */
+	@:overload(function (?key:String, ?url:String):phaser.gameobjects.Video {})
+	@:overload(function (?key:Dynamic, ?url:String):phaser.gameobjects.Video {})
+	@:overload(function (?key:String, ?url:Dynamic):phaser.gameobjects.Video {})
+	function video (?key:Dynamic, ?url:Dynamic):phaser.gameobjects.Video;
 	
 	/**
 	 * Create a BitmapData object.

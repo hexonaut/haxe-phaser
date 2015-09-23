@@ -20,6 +20,17 @@ extern class TweenManager {
 	var game:phaser.core.Game;
 	
 	/**
+	 * Are all newly created Tweens frame or time based? A frame based tween will use the physics elapsed timer when updating. This means
+	 * it will retain the same consistent frame rate, regardless of the speed of the device. The duration value given should
+	 * be given in frames.
+	 * 
+	 * If the Tween uses a time based update (which is the default) then the duration is given in milliseconds.
+	 * In this situation a 2000ms tween will last exactly 2 seconds, regardless of the device and how many visual updates the tween
+	 * has actually been through. For very short tweens you may wish to experiment with a frame based update instead.
+	 */
+	var frameBased:Bool;
+	
+	/**
 	 * All of the currently running tweens.
 	 */
 	var _tweens:Dynamic;

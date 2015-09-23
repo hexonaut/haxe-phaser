@@ -34,7 +34,7 @@ extern class p2 {
 	var world:phaser.physics.p2.p2;
 	
 	/**
-	 * The bounding volume type to use in the broadphase algorithms.
+	 * The bounding volume type to use in the broadphase algorithms. Should be set to Broadphase.AABB or Broadphase.BOUNDING_CIRCLE.
 	 */
 	var boundingVolumeType:Float;
 	
@@ -84,6 +84,16 @@ extern class p2 {
 	var surfaceVelocity:Float;
 	
 	/**
+	 * Keeps track of the allocated ContactEquations.
+	 */
+	var contactEquationPool:Dynamic;
+	
+	/**
+	 * Keeps track of the allocated ContactEquations.
+	 */
+	var frictionEquationPool:Dynamic;
+	
+	/**
 	 * The restitution value to use in the next contact equations.
 	 */
 	var restitution:Float;
@@ -119,24 +129,14 @@ extern class p2 {
 	var contactSkinSize:Float;
 	
 	/**
-	 * @property {array} from
+	 * Ray start point.
 	 */
 	var from:Array<Dynamic>;
 	
 	/**
-	 * @property {array} to
+	 * Ray end point
 	 */
 	var to:Array<Dynamic>;
-	
-	/**
-	 * @private
-	 */
-	var direction:Array<Dynamic>;
-	
-	/**
-	 * The precision of the ray. Used when checking parallelity etc.
-	 */
-	var precision:Float;
 	
 	/**
 	 * Set to true if you want the Ray to take .collisionResponse flags into account on bodies and shapes.
@@ -159,14 +159,9 @@ extern class p2 {
 	var collisionGroup:Float;
 	
 	/**
-	 * The intersection mode. Should be Ray.ANY, Ray.ALL or Ray.CLOSEST.
+	 * The intersection mode. Should be {{#crossLink "Ray/ANY:property"}}Ray.ANY{{/crossLink}}, {{#crossLink "Ray/ALL:property"}}Ray.ALL{{/crossLink}} or {{#crossLink "Ray/CLOSEST:property"}}Ray.CLOSEST{{/crossLink}}.
 	 */
 	var mode:Float;
-	
-	/**
-	 * Will be set to true during intersectWorld() if the ray hit anything.
-	 */
-	var hasHit:Bool;
 	
 	/**
 	 * Current, user-provided result callback. Will be used if mode is Ray.ALL.
@@ -174,24 +169,34 @@ extern class p2 {
 	var callback:Dynamic;
 	
 	/**
-	 * @property {array} rayFromWorld
+	 * @readOnly
 	 */
-	var rayFromWorld:Array<Dynamic>;
+	var direction:Array<Dynamic>;
 	
 	/**
-	 * @property {array} rayToWorld
+	 * Length of the ray
 	 */
-	var rayToWorld:Array<Dynamic>;
+	var length:Float;
 	
 	/**
-	 * @property {array} hitNormalWorld
+	 * This raycasting mode will make the Ray traverse through all intersection points and only return the closest one.
 	 */
-	var hitNormalWorld:Array<Dynamic>;
+	static var CLOSEST:Float;
 	
 	/**
-	 * @property {array} hitPointWorld
+	 * This raycasting mode will make the Ray stop when it finds the first intersection point.
 	 */
-	var hitPointWorld:Array<Dynamic>;
+	static var ANY:Float;
+	
+	/**
+	 * This raycasting mode will traverse all intersection points and executes a callback for each one.
+	 */
+	static var ALL:Float;
+	
+	/**
+	 * The normal of the hit, oriented in world space.
+	 */
+	var normal:Array<Dynamic>;
 	
 	/**
 	 * The hit shape, or null.
@@ -204,19 +209,19 @@ extern class p2 {
 	var body:Dynamic;
 	
 	/**
-	 * The index of the hit triangle, if the hit shape was a trimesh.
+	 * The index of the hit triangle, if the hit shape was indexable.
 	 */
-	var hitFaceIndex:Float;
+	var faceIndex:Float;
 	
 	/**
-	 * Distance to the hit. Will be set to -1 if there was no hit.
+	 * Distance to the hit, as a fraction. 0 is at the "from" point, 1 is at the "to" point. Will be set to -1 if there was no hit yet.
 	 */
-	var distance:Float;
+	var fraction:Float;
 	
 	/**
-	 * If the ray should stop traversing the bodies.
+	 * If the ray should stop traversing.
 	 */
-	var shouldStop:Bool;
+	var isStopped(default, null):Bool;
 	
 	/**
 	 * List of bodies currently in the broadphase.
@@ -287,6 +292,11 @@ extern class p2 {
 	 * Local anchor in body B.
 	 */
 	var localAnchorB:Array<Dynamic>;
+	
+	/**
+	 * The distance to keep.
+	 */
+	var distance:Float;
 	
 	/**
 	 * Max force to apply.
@@ -523,21 +533,9 @@ extern class p2 {
 	static var sqrLen:Dynamic;
 	
 	/**
-	 * The shapes of the body. The local transform of the shape in .shapes[i] is
-	 * defined by .shapeOffsets[i] and .shapeAngles[i].
+	 * The shapes of the body.
 	 */
 	var shapes:Array<Dynamic>;
-	
-	/**
-	 * The local shape offsets, relative to the body center of mass. This is an
-	 * array of Array.
-	 */
-	var shapeOffsets:Array<Dynamic>;
-	
-	/**
-	 * The body-local shape angle transforms. This is an array of numbers (angles).
-	 */
-	var shapeAngles:Array<Dynamic>;
 	
 	/**
 	 * The mass of the body.
@@ -565,12 +563,27 @@ extern class p2 {
 	var fixedRotation:Bool;
 	
 	/**
-	 * The interpolated position of the body.
+	 * Set to true if you want to fix the body movement along the X axis. The body will still be able to move along Y.
+	 */
+	var fixedX:Bool;
+	
+	/**
+	 * Set to true if you want to fix the body movement along the Y axis. The body will still be able to move along X.
+	 */
+	var fixedY:Bool;
+	
+	/**
+	 * @private
+	 */
+	var massMultiplier:Array<Dynamic>;
+	
+	/**
+	 * The interpolated position of the body. Use this for rendering.
 	 */
 	var interpolatedPosition:Array<Dynamic>;
 	
 	/**
-	 * The interpolated angle of the body.
+	 * The interpolated angle of the body. Use this for rendering.
 	 */
 	var interpolatedAngle:Float;
 	
@@ -585,7 +598,7 @@ extern class p2 {
 	var previousAngle:Float;
 	
 	/**
-	 * The velocity of the body
+	 * The current velocity of the body.
 	 */
 	var velocity:Array<Dynamic>;
 	
@@ -747,9 +760,44 @@ extern class p2 {
 	var restAngle:Float;
 	
 	/**
-	 * The distance between the end points.
+	 * @property {Body} chassisBody
 	 */
-	var length:Float;
+	var chassisBody:Dynamic;
+	
+	/**
+	 * @property {Array} wheels
+	 */
+	var wheels:Array<Dynamic>;
+	
+	/**
+	 * @property {number} steerValue
+	 */
+	var steerValue:Float;
+	
+	/**
+	 * @property {number} engineForce
+	 */
+	var engineForce:Float;
+	
+	/**
+	 * @property {Array} localForwardVector
+	 */
+	var localForwardVector:Array<Dynamic>;
+	
+	/**
+	 * @property {Array} localPosition
+	 */
+	var localPosition:Array<Dynamic>;
+	
+	/**
+	 * Total width of the box
+	 */
+	var width:Float;
+	
+	/**
+	 * Total height of the box
+	 */
+	var height:Float;
 	
 	/**
 	 * The radius of the capsule.
@@ -774,15 +822,15 @@ extern class p2 {
 	/**
 	 * An array of numbers, or height values, that are spread out along the x axis.
 	 */
-	var data:Array<Dynamic>;
+	var heights:Array<Dynamic>;
 	
 	/**
-	 * Max value of the data
+	 * Max value of the heights
 	 */
 	var maxValue:Float;
 	
 	/**
-	 * Max value of the data
+	 * Max value of the heights
 	 */
 	var minValue:Float;
 	
@@ -790,16 +838,6 @@ extern class p2 {
 	 * The width of each element
 	 */
 	var elementWidth:Float;
-	
-	/**
-	 * Total width of the rectangle
-	 */
-	var width:Float;
-	
-	/**
-	 * Total height of the rectangle
-	 */
-	var height:Float;
 	
 	/**
 	 * Material to use in collisions for this Shape. If this is set to null, the world will use default material properties instead.
@@ -844,7 +882,7 @@ extern class p2 {
 	/**
 	 * @static
 	 */
-	var RECTANGLE:Float;
+	var BOX:Float;
 	
 	/**
 	 * @static
@@ -857,7 +895,7 @@ extern class p2 {
 	var HEIGHTFIELD:Float;
 	
 	/**
-	 * The number of iterations to do when solving. More gives better results, but is more expensive.
+	 * The max number of iterations to do when solving. More gives better results, but is more expensive.
 	 */
 	var iterations:Float;
 	
@@ -888,19 +926,39 @@ extern class p2 {
 	var equationSortFunction:Dynamic;
 	
 	/**
+	 * @property {Array} objects
+	 */
+	var objects:Array<Dynamic>;
+	
+	/**
+	 * The data storage
+	 */
+	var data:Dynamic;
+	
+	/**
 	 * Keys that are currently used.
 	 */
 	var keys:Array<Dynamic>;
 	
 	/**
-	 * The array type to use for internal numeric computations.
+	 * The array type to use for internal numeric computations throughout the library. Float32Array is used if it is available, but falls back on Array. If you want to set array type manually, inject it via the global variable P2_ARRAY_TYPE. See example below.
 	 */
-	static var ARRAY:Array<Dynamic>;
+	static var ARRAY:Dynamic;
 	
 	/**
 	 * Current bodies in this island.
 	 */
 	var bodies:Array<Dynamic>;
+	
+	/**
+	 * @property nodePool
+	 */
+	var nodePool:Dynamic;
+	
+	/**
+	 * @property islandPool
+	 */
+	var islandPool:Dynamic;
 	
 	/**
 	 * The resulting {{#crossLink "Island"}}{{/crossLink}}s.
@@ -973,16 +1031,6 @@ extern class p2 {
 	var useFrictionGravityOnZeroGravity:Bool;
 	
 	/**
-	 * Whether to do timing measurements during the step() or not.
-	 */
-	var doPofiling:Bool;
-	
-	/**
-	 * How many millisecconds the last step() took. This is updated each step if .doProfiling is set to true.
-	 */
-	var lastStepTime:Float;
-	
-	/**
 	 * The broadphase algorithm to use.
 	 */
 	var broadphase:Dynamic;
@@ -1038,7 +1086,7 @@ extern class p2 {
 	var time:Float;
 	
 	/**
-	 * Is true during the step().
+	 * Is true during step().
 	 */
 	var stepping:Bool;
 	
@@ -1048,7 +1096,7 @@ extern class p2 {
 	var bodiesToBeRemoved:Array<Dynamic>;
 	
 	/**
-	 * Whether to enable island splitting. Island splitting can be an advantage for many things, including solver performance. See {{#crossLink "IslandManager"}}{{/crossLink}}.
+	 * Whether to enable island splitting. Island splitting can be an advantage for both precision and performance. See {{#crossLink "IslandManager"}}{{/crossLink}}.
 	 */
 	var islandSplit:Bool;
 	
@@ -1109,6 +1157,11 @@ extern class p2 {
 	 * Fired just before equations are added to the solver to be solved. Can be used to control what equations goes into the solver.
 	 */
 	var preSolveEvent:Dynamic;
+	
+	/**
+	 * @property {OverlapKeeper} overlapKeeper
+	 */
+	var overlapKeeper:Dynamic;
 	
 	/**
 	 * Never deactivate bodies.

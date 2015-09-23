@@ -130,9 +130,9 @@ extern class World {
 	 * Your slopeMap array would look like this: [ 1, 1, 1, 1, 2, 3 ].
 	 * Where each element of the array is a tile in your tilemap and the resulting Ninja Tile it should create.
 	 */
-	@:overload(function (map:phaser.tilemap.Tilemap, ?layer:Float, ?slopeMap:Dynamic):Array<Dynamic> {})
-	@:overload(function (map:phaser.tilemap.Tilemap, ?layer:String, ?slopeMap:Dynamic):Array<Dynamic> {})
-	function convertTilemap (map:phaser.tilemap.Tilemap, ?layer:phaser.tilemap.TilemapLayer, ?slopeMap:Dynamic):Array<Dynamic>;
+	@:overload(function (map:phaser.tilemap.Tilemap, layer:Float, slopeMap:Dynamic):Array<Dynamic> {})
+	@:overload(function (map:phaser.tilemap.Tilemap, layer:String, slopeMap:Dynamic):Array<Dynamic> {})
+	function convertTilemap (map:phaser.tilemap.Tilemap, layer:phaser.tilemap.TilemapLayer, slopeMap:Dynamic):Array<Dynamic>;
 	
 	/**
 	 * Checks for overlaps between two game objects. The objects can be Sprites, Groups or Emitters.

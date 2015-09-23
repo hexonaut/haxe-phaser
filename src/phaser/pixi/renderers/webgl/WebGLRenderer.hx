@@ -65,16 +65,6 @@ extern class WebGLRenderer {
 	var view:Dynamic;
 	
 	/**
-	 * @property contextLostBound
-	 */
-	var contextLostBound:Dynamic;
-	
-	/**
-	 * @property contextRestoredBound
-	 */
-	var contextRestoredBound:Dynamic;
-	
-	/**
 	 * @property _contextOptions
 	 */
 	var _contextOptions:Dynamic;

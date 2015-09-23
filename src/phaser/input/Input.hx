@@ -26,18 +26,9 @@ extern class Input {
 	
 	/**
 	 * An array of callbacks that will be fired every time the activePointer receives a move event from the DOM.
+	 * To add a callback to this array please use Input.addMoveCallback.
 	 */
 	var moveCallbacks:Array<Dynamic>;
-	
-	/**
-	 * An optional callback that will be fired every time the activePointer receives a move event from the DOM. Set to null to disable.
-	 */
-	var moveCallback:Dynamic;
-	
-	/**
-	 * The context in which the moveCallback will be sent. Defaults to Phaser.Input but can be set to any valid JS object.
-	 */
-	var moveCallbackContext:Dynamic;
 	
 	/**
 	 * How often should the input pointers be checked for updates? A value of 0 means every single frame (60fps); a value of 1 means every other frame (30fps) and so on.
@@ -81,11 +72,6 @@ extern class Input {
 	 * The maximum number of Pointers allowed to be active at any one time. A value of -1 is only limited by the total number of pointers. For lots of games it's useful to set this to 1.
 	 */
 	var maxPointers:Int;
-	
-	/**
-	 * The current number of active Pointers.
-	 */
-	var currentPointers:Float;
 	
 	/**
 	 * The number of milliseconds that the Pointer has to be pressed down and then released to be considered a tap or click.
@@ -188,6 +174,7 @@ extern class Input {
 	
 	/**
 	 * The most recently active Pointer object.
+	 * 
 	 * When you've limited max pointers to 1 this will accurately be either the first finger touched or mouse.
 	 */
 	var activePointer:phaser.input.Pointer;
@@ -199,6 +186,9 @@ extern class Input {
 	
 	/**
 	 * The Mouse Input manager.
+	 * 
+	 * You should not usually access this manager directly, but instead use Input.mousePointer or Input.activePointer 
+	 * which normalizes all the input values for you, regardless of browser.
 	 */
 	var mouse:phaser.input.Mouse;
 	
@@ -208,12 +198,18 @@ extern class Input {
 	var keyboard:phaser.input.Keyboard;
 	
 	/**
-	 * the Touch Input manager.
+	 * The Touch Input manager.
+	 * 
+	 * You should not usually access this manager directly, but instead use Input.activePointer 
+	 * which normalizes all the input values for you, regardless of browser.
 	 */
 	var touch:phaser.input.Touch;
 	
 	/**
 	 * The MSPointer Input manager.
+	 * 
+	 * You should not usually access this manager directly, but instead use Input.activePointer 
+	 * which normalizes all the input values for you, regardless of browser.
 	 */
 	var mspointer:phaser.input.MSPointer;
 	
@@ -223,7 +219,8 @@ extern class Input {
 	var gamepad:phaser.input.Gamepad;
 	
 	/**
-	 * If the Input Manager has been reset locked then all calls made to InputManager.reset, such as from a State change, are ignored.
+	 * If the Input Manager has been reset locked then all calls made to InputManager.reset, 
+	 * such as from a State change, are ignored.
 	 */
 	var resetLocked:Bool;
 	
@@ -248,14 +245,15 @@ extern class Input {
 	var onHold:phaser.core.Signal;
 	
 	/**
-	 * You can tell all Pointers to ignore any object with a priorityID lower than the minPriorityID. Useful when stacking UI layers. Set to zero to disable.
+	 * You can tell all Pointers to ignore any Game Object with a priorityID lower than this value.
+	 * This is useful when stacking UI layers. Set to zero to disable.
 	 */
 	var minPriorityID:Float;
 	
 	/**
 	 * A list of interactive objects. The InputHandler components add and remove themselves from this list.
 	 */
-	var interactiveItems:Dynamic;
+	var interactiveItems:phaser.utils.ArraySet;
 	
 	/**
 	 * Internal cache var.
@@ -314,14 +312,15 @@ extern class Input {
 	 * 
 	 * It will be called every time the activePointer moves, which in a multi-touch game can be a lot of times, so this is best
 	 * to only use if you've limited input to a single pointer (i.e. mouse or touch).
+	 * 
 	 * The callback is added to the Phaser.Input.moveCallbacks array and should be removed with Phaser.Input.deleteMoveCallback.
 	 */
-	function addMoveCallback (callback:Dynamic, context:Dynamic):Float;
+	function addMoveCallback (callback:Dynamic, context:Dynamic):Void;
 	
 	/**
-	 * Removes the callback at the defined index from the Phaser.Input.moveCallbacks array
+	 * Removes the callback from the Phaser.Input.moveCallbacks array.
 	 */
-	function deleteMoveCallback (index:Float):Void;
+	function deleteMoveCallback (callback:Dynamic, context:Dynamic):Void;
 	
 	/**
 	 * Add a new Pointer object to the Input Manager.
@@ -445,11 +444,5 @@ extern class Input {
 	 * The world Y coordinate of the most recently active pointer.
 	 */
 	var worldY(default, null):Float;
-	
-	/**
-	 * <em>All</em> input sources (eg. Mouse, Keyboard, Touch) are ignored when Input is disabled.
-	 * To disable just one type of input; for example, the Mouse, use input.mouse.enabled = false.
-	 */
-	var disabled:Bool;
 	
 }

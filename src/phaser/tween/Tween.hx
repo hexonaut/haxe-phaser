@@ -112,6 +112,19 @@ extern class Tween {
 	var isPaused:Bool;
 	
 	/**
+	 * Is this Tween frame or time based? A frame based tween will use the physics elapsed timer when updating. This means
+	 * it will retain the same consistent frame rate, regardless of the speed of the device. The duration value given should
+	 * be given in frames.
+	 * 
+	 * If the Tween uses a time based update (which is the default) then the duration is given in milliseconds.
+	 * In this situation a 2000ms tween will last exactly 2 seconds, regardless of the device and how many visual updates the tween
+	 * has actually been through. For very short tweens you may wish to experiment with a frame based update instead.
+	 * 
+	 * The default value is whatever you've set in TweenManager.frameBased.
+	 */
+	var frameBased:Bool;
+	
+	/**
 	 * An onUpdate callback.
 	 */
 	var _onUpdateCallback:Dynamic;
@@ -130,6 +143,11 @@ extern class Tween {
 	 * Was the Tween paused by code or by Game focus loss?
 	 */
 	var _codePaused:Bool;
+	
+	/**
+	 * Internal var to track if the Tween has started yet or not.
+	 */
+	var _hasStarted:Bool;
 	
 	/**
 	 * Sets this tween to be a to tween on the properties given. A to tween starts at the current value and tweens to the destination value given.

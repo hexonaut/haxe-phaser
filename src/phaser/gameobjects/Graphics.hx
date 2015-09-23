@@ -6,7 +6,7 @@ extern class Graphics extends phaser.gameobjects.components.Reset {
 	/**
 	 * Creates a new Graphics object.
 	 */
-	function new (game:phaser.core.Game, x:Float, y:Float);
+	function new (game:phaser.core.Game, ?x:Float = 0, ?y:Float = 0);
 	
 	/**
 	 * The const type of this object.

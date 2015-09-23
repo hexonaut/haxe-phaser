@@ -92,7 +92,7 @@ extern class Tileset {
 	/**
 	 * Sets tile spacing and margins.
 	 */
-	function setSpacing (tileMargin:Int, tileSpacing:Int):Void;
+	function setSpacing (?margin:Int = 0, ?spacing:Int = 0):Void;
 	
 	/**
 	 * Updates tile coordinates and tileset data.

@@ -102,7 +102,8 @@ extern class Animation {
 	var onStart:phaser.core.Signal;
 	
 	/**
-	 * This event is dispatched when the Animation changes frame. By default this event is disabled due to its intensive nature. Enable it with: Animation.enableUpdate = true.
+	 * This event is dispatched when the Animation changes frame. 
+	 * By default this event is disabled due to its intensive nature. Enable it with: Animation.enableUpdate = true.
 	 */
 	var onUpdate:Dynamic;
 	
@@ -159,7 +160,7 @@ extern class Animation {
 	 * 
 	 * Returns true if the current frame update was 'successful', false otherwise.
 	 */
-	function updateCurrentFrame (signalUpdate:Dynamic):Void;
+	function updateCurrentFrame (signalUpdate:Bool, fromPlay:Bool):Bool;
 	
 	/**
 	 * Advances by the given number of frames in the Animation, taking the loop value into consideration.
