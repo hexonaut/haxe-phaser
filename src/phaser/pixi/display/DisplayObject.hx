@@ -168,4 +168,14 @@ extern class DisplayObject {
 	 */
 	var y:Float;
 	
+	/**
+	 * Useful function that returns a texture of the displayObject object that can then be used to create sprites.
+	 * This can be quite useful if your displayObject is static / complicated and needs to be reused multiple times.
+	 */
+	function generateTexture (resolution:Float, scaleMode:Float, renderer:Dynamic):phaser.pixi.textures.RenderTexture;
+	
+	/**
+	 * Calculates the global position of the display object
+	 */
+	function toGlobal(position:Point):phaser.geom.Point;
 }
