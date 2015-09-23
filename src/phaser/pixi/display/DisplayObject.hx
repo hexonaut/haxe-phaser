@@ -177,5 +177,11 @@ extern class DisplayObject {
 	/**
 	 * Calculates the global position of the display object
 	 */
-	function toGlobal(position:Point):phaser.geom.Point;
+	function toGlobal (position:phaser.pixi.geom.Point):phaser.pixi.geom.Point;
+	
+	/**
+	 * Calculates the local position of the display object relative to another point
+	 */
+	function toLocal (position:phaser.pixi.geom.Point, from:phaser.pixi.display.DisplayObject):phaser.pixi.geom.Point;
+	
 }
