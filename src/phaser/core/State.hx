@@ -104,7 +104,7 @@ extern class State {
 	 * If you need to route the game away to another State you could do so here, or if you need to prepare a set of variables
 	 * or objects before the preloading starts.
 	 */
-	function init ():Void;
+	function init (?parameter0:Dynamic, ?parameter1:Dynamic, ?parameter2:Dynamic, ?parameter3:Dynamic, ?parameter4:Dynamic):Void;
 	
 	/**
 	 * preload is called first. Normally you'd use this to load your game assets (or those needed for the current State)
