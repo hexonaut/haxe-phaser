@@ -497,4 +497,14 @@ extern class Sprite extends phaser.pixi.display.Sprite
 	 */
 	var pendingDestroy:Bool;
 	
+	/**
+	 * The callback that will apply any scale limiting to the worldTransform.
+	 */
+	var transformCallback:Dynamic;
+	
+	/**
+	 * The context under which transformCallback is called.
+	 */
+	var transformCallbackContext:Dynamic;
+	
 }
