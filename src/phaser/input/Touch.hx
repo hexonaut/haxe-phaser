@@ -21,7 +21,7 @@ extern class Touch {
 	var enabled:Bool;
 	
 	/**
-	 * An array of callbacks that will be fired every time a native touch start event is received from the browser.
+	 * An array of callbacks that will be fired every time a native touch start or touch end event is received from the browser.
 	 * This is used internally to handle audio and video unlocking on mobile devices.
 	 * To add a callback to this array please use Touch.addTouchLockCallback.
 	 */
@@ -113,7 +113,7 @@ extern class Touch {
 	function consumeTouchMove ():Void;
 	
 	/**
-	 * Adds a callback that is fired when a browser touchstart event is received.
+	 * Adds a callback that is fired when a browser touchstart or touchend event is received.
 	 * 
 	 * This is used internally to handle audio and video unlocking on mobile devices.
 	 * 
@@ -121,7 +121,7 @@ extern class Touch {
 	 * 
 	 * The callback is added to the Phaser.Touch.touchLockCallbacks array and should be removed with Phaser.Touch.removeTouchLockCallback.
 	 */
-	function addTouchLockCallback (callback:Dynamic, context:Dynamic):Void;
+	function addTouchLockCallback (callback:Dynamic, context:Dynamic, ?onEnd:Bool = false):Void;
 	
 	/**
 	 * Removes the callback at the defined index from the Phaser.Touch.touchLockCallbacks array

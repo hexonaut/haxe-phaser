@@ -4,13 +4,13 @@ package phaser.time;
 extern class Timer {
 	
 	/**
-	 * A Timer is a way to create small re-usable (or disposable) objects that wait for a specific moment in time,
-	 * and then run the specified callbacks.
+	 * A Timer is a way to create and manage {@link Phaser.TimerEvent timer events} that wait for a specific duration and then run a callback.
+	 * Many different timer events, with individual delays, can be added to the same Timer.
 	 * 
-	 * You can add many events to a Timer, each with their own delays. A Timer uses milliseconds as its unit of time (there are 1000 ms in 1 second).
-	 * So a delay to 250 would fire the event every quarter of a second.
+	 * All Timer delays are in milliseconds (there are 1000 ms in 1 second); so a delay value of 250 represents a quarter of a second.
 	 * 
-	 * Timers are based on real-world (not physics) time, adjusted for game pause durations.
+	 * Timers are based on real life time, adjusted for game pause durations.
+	 * That is, <em>timer events are based on elapsed {@link Phaser.Time game time}</em> and do <em>not</em> take physics time or slow motion into account.
 	 */
 	function new (game:phaser.core.Game, ?autoDestroy:Bool = true);
 	
@@ -118,7 +118,7 @@ extern class Timer {
 	 * 
 	 * Use {@link Phaser.Timer#add}, {@link Phaser.Timer#add}, or {@link Phaser.Timer#add} methods to create a new event.
 	 */
-	function create (delay:Float, loop:Bool, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, arguments:Dynamic):phaser.time.TimerEvent;
+	function create (delay:Int, loop:Bool, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, arguments:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Adds a new Event to this Timer.
@@ -128,17 +128,18 @@ extern class Timer {
 	 * 
 	 * Make sure to call {@link Phaser.Timer#start start} after adding all of the Events you require for this Timer.
 	 */
-	function add (delay:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
+	function add (delay:Int, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Adds a new TimerEvent that will always play through once and then repeat for the given number of iterations.
 	 * 
 	 * The event will fire after the given amount of delay in milliseconds has passed, once the Timer has started running.
-	 * The delay is in relation to when the Timer starts, not the time it was added. If the Timer is already running the delay will be calculated based on the timers current time.
+	 * The delay is in relation to when the Timer starts, not the time it was added.
+	 * If the Timer is already running the delay will be calculated based on the timers current time.
 	 * 
 	 * Make sure to call {@link Phaser.Timer#start start} after adding all of the Events you require for this Timer.
 	 */
-	function repeat (delay:Float, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
+	function repeat (delay:Int, repeatCount:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Adds a new looped Event to this Timer that will repeat forever or until the Timer is stopped.
@@ -148,12 +149,12 @@ extern class Timer {
 	 * 
 	 * Make sure to call {@link Phaser.Timer#start start} after adding all of the Events you require for this Timer.
 	 */
-	function loop (delay:Float, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
+	function loop (delay:Int, callback:Dynamic, callbackContext:Dynamic, ?arguments0:Dynamic, ?arguments1:Dynamic, ?arguments2:Dynamic, ?arguments3:Dynamic, ?arguments4:Dynamic):phaser.time.TimerEvent;
 	
 	/**
 	 * Starts this Timer running.
 	 */
-	function start (?delay:Float = 0):Void;
+	function start (?delay:Int = 0):Void;
 	
 	/**
 	 * Stops this Timer from running. Does not cause it to be destroyed if autoDestroy is set to true.

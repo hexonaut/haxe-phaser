@@ -349,6 +349,11 @@ extern class Body {
 	function onFloor ():Bool;
 	
 	/**
+	 * Returns true if the top of this Body is in contact with either the world bounds or a tile.
+	 */
+	function onTop ():Bool;
+	
+	/**
 	 * Returns true if either side of this Body is in contact with either the world bounds or a tile.
 	 */
 	function onWall ():Bool;

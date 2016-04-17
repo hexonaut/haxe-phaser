@@ -7,7 +7,12 @@ extern class CanvasRenderer {
 	 * The CanvasRenderer draws the Stage and all its content onto a 2d canvas. This renderer should be used for browsers that do not support webGL.
 	 * Don't forget to add the CanvasRenderer.view to your DOM or you will not see anything :)
 	 */
-	function new (Number:Dynamic, Number:Dynamic, Object:Dynamic, HTMLCanvasElement:Dynamic, Boolean:Dynamic, Boolean:Dynamic, Number:Dynamic, Boolean:Dynamic);
+	function new (Phaser:Dynamic);
+	
+	/**
+	 * A reference to the Phaser Game instance.
+	 */
+	var game:phaser.core.Game;
 	
 	/**
 	 * The renderer type.

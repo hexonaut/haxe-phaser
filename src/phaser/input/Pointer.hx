@@ -1,12 +1,12 @@
 package phaser.input;
 
-@:native("Phaser.Pointer")
+@:native("Phaser.PointerMode")
 extern class Pointer {
 	
 	/**
 	 * A Pointer object is used by the Mouse, Touch and MSPoint managers and represents a single finger on the touch screen.
 	 */
-	function new (game:phaser.core.Game, id:Float);
+	function new (game:phaser.core.Game, id:Float, pointerMode:phaser.input.Pointer);
 	
 	/**
 	 * A reference to the currently running game.
@@ -37,6 +37,11 @@ extern class Pointer {
 	 * The pointerId property of the Pointer as set by the DOM event when this Pointer is started. The browser can and will recycle this value.
 	 */
 	var pointerId:Float;
+	
+	/**
+	 * The operational mode of this pointer.
+	 */
+	var pointerMode:phaser.input.Pointer;
 	
 	/**
 	 * The target property of the Pointer as set by the DOM event when this Pointer is started.

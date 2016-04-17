@@ -84,6 +84,12 @@ extern class Game {
 	var preserveDrawingBuffer:Bool;
 	
 	/**
+	 * Clear the Canvas each frame before rendering the display list.
+	 * You can set this to false to gain some performance if your game always contains a background that completely fills the display.
+	 */
+	var clearBeforeRender:Bool;
+	
+	/**
 	 * The Pixi Renderer.
 	 */
 	var renderer:Dynamic;

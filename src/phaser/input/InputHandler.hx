@@ -137,12 +137,6 @@ extern class InputHandler {
 	var boundsSprite:phaser.gameobjects.Sprite;
 	
 	/**
-	 * If this object is set to consume the pointer event then it will stop all propagation from this object on.
-	 * For example if you had a stack of 6 sprites with the same priority IDs and one consumed the event, none of the others would receive it.
-	 */
-	var consumePointerEvent:Bool;
-	
-	/**
 	 * EXPERIMENTAL: Please do not use this property unless you know what it does. Likely to change in the future.
 	 */
 	var scaleLayer:Bool;
@@ -237,136 +231,138 @@ extern class InputHandler {
 	 * The x coordinate of the Input pointer, relative to the top-left of the parent Sprite.
 	 * This value is only set when the pointer is over this Sprite.
 	 */
-	function pointerX (pointer:Float):Float;
+	function pointerX (?pointerId:Int = 0):Float;
 	
 	/**
 	 * The y coordinate of the Input pointer, relative to the top-left of the parent Sprite
 	 * This value is only set when the pointer is over this Sprite.
 	 */
-	function pointerY (pointer:Float):Float;
+	function pointerY (?pointerId:Int = 0):Float;
 	
 	/**
-	 * If the Pointer is down this returns true. Please note that it only checks if the Pointer is down, not if it's down over any specific Sprite.
+	 * If the Pointer is down this returns true.
+	 * This <em>only</em> checks if the Pointer is down, not if it's down over any specific Sprite.
 	 */
-	function pointerDown (pointer:Float):Bool;
+	function pointerDown (?pointerId:Int = 0):Bool;
 	
 	/**
-	 * If the Pointer is up this returns true. Please note that it only checks if the Pointer is up, not if it's up over any specific Sprite.
+	 * If the Pointer is up this returns true.
+	 * This <em>only</em> checks if the Pointer is up, not if it's up over any specific Sprite.
 	 */
-	function pointerUp (pointer:Float):Bool;
+	function pointerUp (?pointerId:Int = 0):Bool;
 	
 	/**
 	 * A timestamp representing when the Pointer first touched the touchscreen.
 	 */
-	function pointerTimeDown (pointer:Float):Float;
+	function pointerTimeDown (pointerId:Int):Float;
 	
 	/**
 	 * A timestamp representing when the Pointer left the touchscreen.
 	 */
-	function pointerTimeUp (pointer:phaser.input.Pointer):Float;
+	function pointerTimeUp (?pointerId:Int = 0):Float;
 	
 	/**
 	 * Is the Pointer over this Sprite?
 	 */
-	function pointerOver (?index:Float):Bool;
+	function pointerOver (pointerId:Int):Bool;
 	
 	/**
 	 * Is the Pointer outside of this Sprite?
 	 */
-	function pointerOut (?index:Float):Bool;
+	function pointerOut (pointerId:Int):Bool;
 	
 	/**
 	 * A timestamp representing when the Pointer first touched the touchscreen.
 	 */
-	function pointerTimeOver (pointer:phaser.input.Pointer):Float;
+	function pointerTimeOver (?pointerId:Int = 0):Float;
 	
 	/**
 	 * A timestamp representing when the Pointer left the touchscreen.
 	 */
-	function pointerTimeOut (pointer:phaser.input.Pointer):Float;
+	function pointerTimeOut (?pointerId:Int = 0):Float;
 	
 	/**
 	 * Is this sprite being dragged by the mouse or not?
 	 */
-	function pointerDragged (pointer:phaser.input.Pointer):Bool;
+	function pointerDragged (?pointerId:Int = 0):Bool;
 	
 	/**
 	 * Checks if the given pointer is both down and over the Sprite this InputHandler belongs to.
 	 * Use the fastTest flag is to quickly check just the bounding hit area even if InputHandler.pixelPerfectOver is true.
 	 */
-	function checkPointerDown (pointer:phaser.input.Pointer, ?fastTest:Bool = false):Bool;
+	function checkPointerDown (pointer:Dynamic, ?fastTest:Bool = false):Bool;
 	
 	/**
 	 * Checks if the given pointer is over the Sprite this InputHandler belongs to.
 	 * Use the fastTest flag is to quickly check just the bounding hit area even if InputHandler.pixelPerfectOver is true.
 	 */
-	function checkPointerOver (pointer:phaser.input.Pointer, ?fastTest:Bool = false):Bool;
+	function checkPointerOver (pointer:Dynamic, ?fastTest:Bool = false):Bool;
 	
 	/**
 	 * Runs a pixel perfect check against the given x/y coordinates of the Sprite this InputHandler is bound to.
 	 * It compares the alpha value of the pixel and if >= InputHandler.pixelPerfectAlpha it returns true.
 	 */
-	function checkPixel (x:Float, y:Float, ?pointer:phaser.input.Pointer):Bool;
+	function checkPixel (x:Float, y:Float, ?pointer:Dynamic):Bool;
 	
 	/**
 	 * Update.
 	 */
-	function update (pointer:phaser.input.Pointer):Void;
+	function update (pointer:Dynamic):Void;
 	
 	/**
 	 * Internal method handling the pointer over event.
 	 */
-	function _pointerOverHandler (pointer:phaser.input.Pointer):Void;
+	function _pointerOverHandler (pointer:Dynamic):Void;
 	
 	/**
 	 * Internal method handling the pointer out event.
 	 */
-	function _pointerOutHandler (pointer:phaser.input.Pointer):Void;
+	function _pointerOutHandler (pointer:Dynamic):Void;
 	
 	/**
 	 * Internal method handling the touched / clicked event.
 	 */
-	function _touchedHandler (pointer:phaser.input.Pointer):Void;
+	function _touchedHandler (pointer:Dynamic):Void;
 	
 	/**
 	 * Internal method handling the pointer released event.
 	 */
-	function _releasedHandler (pointer:phaser.input.Pointer):Void;
+	function _releasedHandler (pointer:Dynamic):Void;
 	
 	/**
 	 * Updates the Pointer drag on this Sprite.
 	 */
-	function updateDrag (pointer:phaser.input.Pointer):Bool;
+	function updateDrag (pointer:Dynamic):Bool;
 	
 	/**
 	 * Returns true if the pointer has entered the Sprite within the specified delay time (defaults to 500ms, half a second)
 	 */
-	function justOver (pointer:phaser.input.Pointer, delay:Float):Bool;
+	function justOver (?pointerId:Int = 0, ?delay:Float):Bool;
 	
 	/**
 	 * Returns true if the pointer has left the Sprite within the specified delay time (defaults to 500ms, half a second)
 	 */
-	function justOut (pointer:phaser.input.Pointer, delay:Float):Bool;
+	function justOut (?pointerId:Int = 0, ?delay:Float):Bool;
 	
 	/**
 	 * Returns true if the pointer has touched or clicked on the Sprite within the specified delay time (defaults to 500ms, half a second)
 	 */
-	function justPressed (pointer:phaser.input.Pointer, delay:Float):Bool;
+	function justPressed (?pointerId:Int = 0, ?delay:Float):Bool;
 	
 	/**
 	 * Returns true if the pointer was touching this Sprite, but has been released within the specified delay time (defaults to 500ms, half a second)
 	 */
-	function justReleased (pointer:phaser.input.Pointer, delay:Float):Bool;
+	function justReleased (?pointerId:Int = 0, ?delay:Float):Bool;
 	
 	/**
 	 * If the pointer is currently over this Sprite this returns how long it has been there for in milliseconds.
 	 */
-	function overDuration (pointer:phaser.input.Pointer):Float;
+	function overDuration (?pointerId:Int = 0):Float;
 	
 	/**
 	 * If the pointer is currently over this Sprite this returns how long it has been there for in milliseconds.
 	 */
-	function downDuration (pointer:phaser.input.Pointer):Float;
+	function downDuration (?pointerId:Int = 0):Float;
 	
 	/**
 	 * Allow this Sprite to be dragged by any valid pointer.
@@ -381,14 +377,15 @@ extern class InputHandler {
 	function enableDrag (?lockCenter:Bool = false, ?bringToTop:Bool = false, ?pixelPerfect:Bool = false, ?alphaThreshold:Bool = 255, ?boundsRect:phaser.geom.Rectangle, ?boundsSprite:phaser.gameobjects.Sprite):Void;
 	
 	/**
-	 * Stops this sprite from being able to be dragged. If it is currently the target of an active drag it will be stopped immediately. Also disables any set callbacks.
+	 * Stops this sprite from being able to be dragged.
+	 * If it is currently the target of an active drag it will be stopped immediately; also disables any set callbacks.
 	 */
 	function disableDrag ():Void;
 	
 	/**
 	 * Called by Pointer when drag starts on this Sprite. Should not usually be called directly.
 	 */
-	function startDrag (pointer:phaser.input.Pointer):Void;
+	function startDrag (pointer:Dynamic):Void;
 	
 	/**
 	 * Warning: EXPERIMENTAL
@@ -403,7 +400,7 @@ extern class InputHandler {
 	/**
 	 * Called by Pointer when drag is stopped on this Sprite. Should not usually be called directly.
 	 */
-	function stopDrag (pointer:phaser.input.Pointer):Void;
+	function stopDrag (pointer:Dynamic):Void;
 	
 	/**
 	 * Restricts this sprite to drag movement only on the given axis. Note: If both are set to false the sprite will never move!

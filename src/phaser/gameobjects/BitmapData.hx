@@ -5,8 +5,12 @@ extern class BitmapData {
 	
 	/**
 	 * A BitmapData object contains a Canvas element to which you can draw anything you like via normal Canvas context operations.
-	 * A single BitmapData can be used as the texture for one or many Images/Sprites. 
+	 * A single BitmapData can be used as the texture for one or many Images / Sprites. 
 	 * So if you need to dynamically create a Sprite texture then they are a good choice.
+	 * 
+	 * Important note: Every BitmapData creates its own Canvas element. Because BitmapData's are now Game Objects themselves, and don't
+	 * live on the display list, they are NOT automatically cleared when you change State. Therefore you <em>must</em> call BitmapData.destroy
+	 * in your State's shutdown method if you wish to free-up the resources the BitmapData used, it will not happen for you.
 	 */
 	function new (game:phaser.core.Game, key:String, ?width:Float = 256, ?height:Float = 256);
 	
@@ -29,6 +33,11 @@ extern class BitmapData {
 	 * The height of the BitmapData in pixels.
 	 */
 	var height:Float;
+	
+	/**
+	 * The canvas to which this BitmapData draws.
+	 */
+	var canvas:Dynamic;
 	
 	/**
 	 * The 2d context of the canvas.
@@ -144,30 +153,30 @@ extern class BitmapData {
 	var _circle:phaser.geom.Circle;
 	
 	/**
-	 * A swap canvas.
+	 * A swap canvas. Used by moveH and moveV, created in those methods.
 	 */
 	var _swapCanvas:Dynamic;
 	
 	/**
 	 * Shifts the contents of this BitmapData by the distances given.
 	 * 
-	 * The image will wrap-around the edges on all sides.
+	 * The image will wrap-around the edges on all sides if the wrap argument is true (the default).
 	 */
-	function move (x:Int, y:Int):phaser.gameobjects.BitmapData;
+	function move (x:Int, y:Int, ?wrap:Bool = true):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Shifts the contents of this BitmapData horizontally.
 	 * 
-	 * The image will wrap-around the sides.
+	 * The image will wrap-around the sides if the wrap argument is true (the default).
 	 */
-	function moveH (distance:Int):phaser.gameobjects.BitmapData;
+	function moveH (distance:Int, ?wrap:Bool = true):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Shifts the contents of this BitmapData vertically.
 	 * 
-	 * The image will wrap-around the sides.
+	 * The image will wrap-around the sides if the wrap argument is true (the default).
 	 */
-	function moveV (distance:Int):phaser.gameobjects.BitmapData;
+	function moveV (distance:Int, ?wrap:Bool = true):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * Updates the given objects so that they use this BitmapData as their texture.
@@ -202,6 +211,9 @@ extern class BitmapData {
 	 * 
 	 * You can optionally define the area to clear.
 	 * If the arguments are left empty it will clear the entire canvas.
+	 * 
+	 * You may need to call BitmapData.update after this in order to clear out the pixel data, 
+	 * but Phaser will not do this automatically for you.
 	 */
 	function clear (?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float):phaser.gameobjects.BitmapData;
 	
@@ -235,12 +247,14 @@ extern class BitmapData {
 	/**
 	 * Resizes the BitmapData. This changes the size of the underlying canvas and refreshes the buffer.
 	 */
-	function resize ():phaser.gameobjects.BitmapData;
+	function resize (width:Int, height:Int):phaser.gameobjects.BitmapData;
 	
 	/**
 	 * This re-creates the BitmapData.imageData from the current context.
 	 * It then re-builds the ArrayBuffer, the data Uint8ClampedArray reference and the pixels Int32Array.
 	 * If not given the dimensions defaults to the full size of the context.
+	 * 
+	 * Warning: This is a very expensive operation, so use it sparingly.
 	 */
 	function update (?x:Float = 0, ?y:Float = 0, ?width:Float = 1, ?height:Float = 1):phaser.gameobjects.BitmapData;
 	
@@ -382,12 +396,19 @@ extern class BitmapData {
 	
 	/**
 	 * Draws the immediate children of a Phaser.Group to this BitmapData.
-	 * Children are only drawn if they have their exists property set to true.
+	 * Children are only drawn if they have their exists property set to true and have image based Textures.
 	 * The children will be drawn at their x and y world space coordinates. If this is outside the bounds of the BitmapData they won't be drawn.
 	 * When drawing it will take into account the child's rotation, scale and alpha values.
 	 * No iteration takes place. Groups nested inside other Groups will not be iterated through.
 	 */
 	function drawGroup (group:phaser.core.Group, ?blendMode:String, ?roundPx:Bool = false):phaser.gameobjects.BitmapData;
+	
+	/**
+	 * A proxy for drawGroup that handles child iteration for more complex Game Objects.
+	 */
+	@:overload(function (child:phaser.gameobjects.Sprite, ?blendMode:String, ?roundPx:Bool = false):Void {})
+	@:overload(function (child:phaser.gameobjects.Image, ?blendMode:String, ?roundPx:Bool = false):Void {})
+	function drawGroupProxy (child:phaser.gameobjects.BitmapText, ?blendMode:String, ?roundPx:Bool = false):Void;
 	
 	/**
 	 * Draws the Game Object or Group to this BitmapData and then recursively iterates through all of its children.

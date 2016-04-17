@@ -125,7 +125,7 @@ extern class Debug {
 	/**
 	 * Renders the Pointer.circle object onto the stage in green if down or red if up along with debug text.
 	 */
-	function pointer (pointer:phaser.input.Pointer, ?hideIfUp:Bool = false, ?downColor:String = 'rgba(0,255,0,0.5)', ?upColor:String = 'rgba(255,0,0,0.5)', ?color:String = 'rgb(255,255,255)'):Void;
+	function pointer (pointer:Dynamic, ?hideIfUp:Bool = false, ?downColor:String = 'rgba(0,255,0,0.5)', ?upColor:String = 'rgba(255,0,0,0.5)', ?color:String = 'rgb(255,255,255)'):Void;
 	
 	/**
 	 * Render Sprite Input Debug information.

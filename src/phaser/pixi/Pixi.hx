@@ -4,6 +4,11 @@ package phaser.pixi;
 extern class Pixi {
 	
 	/**
+	 * A reference to the Phaser Game instance that owns this Pixi renderer.
+	 */
+	static var game:phaser.core.Game;
+	
+	/**
 	 * @property {Number} WEBGL_RENDERER
 	 */
 	static var WEBGL_RENDERER:Float;

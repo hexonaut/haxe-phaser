@@ -119,52 +119,52 @@ extern class Input {
 	/**
 	 * A Pointer object.
 	 */
-	var pointer1:phaser.input.Pointer;
+	var pointer1:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer2:phaser.input.Pointer;
+	var pointer2:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer3:phaser.input.Pointer;
+	var pointer3:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer4:phaser.input.Pointer;
+	var pointer4:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer5:phaser.input.Pointer;
+	var pointer5:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer6:phaser.input.Pointer;
+	var pointer6:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer7:phaser.input.Pointer;
+	var pointer7:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer8:phaser.input.Pointer;
+	var pointer8:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer9:phaser.input.Pointer;
+	var pointer9:Dynamic;
 	
 	/**
 	 * A Pointer object.
 	 */
-	var pointer10:phaser.input.Pointer;
+	var pointer10:Dynamic;
 	
 	/**
 	 * An array of non-mouse pointers that have been added to the game.
@@ -177,7 +177,7 @@ extern class Input {
 	 * 
 	 * When you've limited max pointers to 1 this will accurately be either the first finger touched or mouse.
 	 */
-	var activePointer:phaser.input.Pointer;
+	var activePointer:Dynamic;
 	
 	/**
 	 * The mouse has its own unique Phaser.Pointer object which you can use if making a desktop specific game.
@@ -352,18 +352,18 @@ extern class Input {
 	 * Find the first free Pointer object and start it, passing in the event data.
 	 * This is called automatically by Phaser.Touch and Phaser.MSPointer.
 	 */
-	function startPointer (event:Dynamic):phaser.input.Pointer;
+	function startPointer (event:Dynamic):Dynamic;
 	
 	/**
 	 * Updates the matching Pointer object, passing in the event data.
 	 * This is called automatically and should not normally need to be invoked.
 	 */
-	function updatePointer (event:Dynamic):phaser.input.Pointer;
+	function updatePointer (event:Dynamic):Dynamic;
 	
 	/**
 	 * Stops the matching Pointer object, passing in the event data.
 	 */
-	function stopPointer (event:Dynamic):phaser.input.Pointer;
+	function stopPointer (event:Dynamic):Dynamic;
 	
 	/**
 	 * Returns the total number of active pointers, not exceeding the specified limit
@@ -373,7 +373,7 @@ extern class Input {
 	/**
 	 * Get the first Pointer with the given active state.
 	 */
-	function getPointer (?isActive:Bool = false):phaser.input.Pointer;
+	function getPointer (?isActive:Bool = false):Dynamic;
 	
 	/**
 	 * Get the Pointer object whos identifier property matches the given identifier value.
@@ -382,7 +382,7 @@ extern class Input {
 	 * Also it can change every time you press the pointer down, and is not fixed once set.
 	 * Note: Not all browsers set the identifier property and it's not part of the W3C spec, so you may need getPointerFromId instead.
 	 */
-	function getPointerFromIdentifier (identifier:Float):phaser.input.Pointer;
+	function getPointerFromIdentifier (identifier:Float):Dynamic;
 	
 	/**
 	 * Get the Pointer object whos pointerId property matches the given value.
@@ -390,7 +390,7 @@ extern class Input {
 	 * The pointerId property is not set until the Pointer has been used at least once, as its populated by the DOM event.
 	 * Also it can change every time you press the pointer down if the browser recycles it.
 	 */
-	function getPointerFromId (pointerId:Float):phaser.input.Pointer;
+	function getPointerFromId (pointerId:Float):Dynamic;
 	
 	/**
 	 * This will return the local coordinates of the specified displayObject based on the given Pointer.
@@ -402,7 +402,7 @@ extern class Input {
 	/**
 	 * Tests if the pointer hits the given object.
 	 */
-	function hitTest (displayObject:Dynamic, pointer:phaser.input.Pointer, localPoint:phaser.geom.Point):Void;
+	function hitTest (displayObject:Dynamic, pointer:Dynamic, localPoint:phaser.geom.Point):Void;
 	
 	/**
 	 * Used for click trampolines. See {@link Phaser.Pointer.addClickTrampoline}.

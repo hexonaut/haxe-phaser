@@ -135,6 +135,14 @@ extern class BitmapText extends phaser.pixi.display.DisplayObjectContainer
 	function scanLine (data:Dynamic, scale:Dynamic, text:String):Dynamic;
 	
 	/**
+	 * Given a text string this will scan each character in the string to ensure it exists
+	 * in the BitmapText font data. If it doesn't the character is removed, or replaced with the replace argument.
+	 * 
+	 * If no font data has been loaded at all this returns an empty string, as nothing can be rendered.
+	 */
+	function cleanText (text:String, ?replace:String = ''):String;
+	
+	/**
 	 * Renders text and updates it when needed.
 	 */
 	function updateText ():Void;

@@ -199,6 +199,11 @@ extern class Mouse {
 	function onMouseUpGlobal (event:Dynamic):Void;
 	
 	/**
+	 * The internal method that handles the mouse out event from the window.
+	 */
+	function onMouseOutGlobal (event:Dynamic):Void;
+	
+	/**
 	 * The internal method that handles the mouse out event from the browser.
 	 */
 	function onMouseOut (event:Dynamic):Void;

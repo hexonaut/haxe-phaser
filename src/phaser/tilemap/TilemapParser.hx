@@ -11,7 +11,7 @@ extern class TilemapParser {
 	/**
 	 * Parses a CSV file into valid map data.
 	 */
-	function parseCSV (data:String, ?tileWidth:Float = 32, ?tileHeight:Float = 32):Dynamic;
+	function parseCSV (key:String, data:String, ?tileWidth:Float = 32, ?tileHeight:Float = 32):Dynamic;
 	
 	/**
 	 * Returns an empty map data object.

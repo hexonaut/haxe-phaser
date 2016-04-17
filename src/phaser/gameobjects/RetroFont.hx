@@ -138,4 +138,9 @@ extern class RetroFont extends phaser.gameobjects.RenderTexture {
 	 */
 	var text:String;
 	
+	/**
+	 * @name Phaser.RetroFont#smoothed
+	 */
+	var smoothed:Bool;
+	
 }

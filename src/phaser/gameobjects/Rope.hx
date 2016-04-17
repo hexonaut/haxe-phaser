@@ -23,9 +23,11 @@ extern class Rope extends phaser.pixi.extras.Rope
 	implements phaser.gameobjects.components.Smoothed {
 	
 	/**
-	 * A Rope is a Sprite that has a repeating texture. The texture can be scrolled and scaled and will automatically wrap on the edges as it does so.
-	 * Please note that Ropes, as with normal Sprites, have no input handler or physics bodies by default. Both need enabling.
-	 * Example usage: <a href='https://github.com/codevinsky/phaser-rope-demo/blob/master/dist/demo.js'>https://github.com/codevinsky/phaser-rope-demo/blob/master/dist/demo.js</a>
+	 * A Rope is a Sprite that has a repeating texture.
+	 * 
+	 * The texture will automatically wrap on the edges as it moves.
+	 * 
+	 * Please note that Ropes cannot have an input handler.
 	 */
 	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:String, frame:String, points:Array<Dynamic>):Void {})
 	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:String, points:Array<Dynamic>):Void {})
@@ -40,11 +42,6 @@ extern class Rope extends phaser.pixi.extras.Rope
 	 * The const type of this object.
 	 */
 	var type(default, null):Float;
-	
-	/**
-	 * Internal cache var.
-	 */
-	var _scroll:phaser.geom.Point;
 	
 	/**
 	 * Automatically called by World.preUpdate.

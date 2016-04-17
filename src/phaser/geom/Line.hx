@@ -54,7 +54,7 @@ extern class Line {
 	 * 
 	 * Rotation takes place around the coordinates given.
 	 */
-	function rotateAround (angle:Float, ?asDegrees:Bool = false):phaser.geom.Line;
+	function rotateAround (x:Float, y:Float, angle:Float, ?asDegrees:Bool = false):phaser.geom.Line;
 	
 	/**
 	 * Checks for intersection between this line and another Line.

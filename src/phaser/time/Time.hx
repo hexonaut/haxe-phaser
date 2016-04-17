@@ -10,6 +10,31 @@ extern class Time {
 	 * and also handles the standard Timer pool.
 	 * 
 	 * To create a general timed event, use the master {@link Phaser.Timer} accessible through {@link Phaser.Time.events events}.
+	 * 
+	 * There are different <em>types</em> of time in Phaser:
+	 * 
+	 * <ul>
+	 * <li><strong><em>Game time</em></strong> always runs at the speed of time in real life.
+	 * 
+	 * Unlike wall-clock time, <em>game time stops when Phaser is paused</em>.
+	 * 
+	 * Game time is used for {@link Phaser.Timer timer events}.
+	 * 
+	 * </li>
+	 * <li><strong><em>Physics time</em></strong> represents the amount of time given to physics calculations.
+	 * 
+	 * <em>When {@link #slowMotion} is in effect physics time runs slower than game time.</em>
+	 * Like game time, physics time stops when Phaser is paused.
+	 * 
+	 * Physics time is used for physics calculations and {@link Phaser.Tween tweens}.
+	 * 
+	 * </li>
+	 * <li>{@link <a href='https://en.wikipedia.org/wiki/Wall-clock_time'>https://en.wikipedia.org/wiki/Wall-clock_time</a> <strong><em>Wall-clock time</em></strong>} represents the duration between two events in real life time.
+	 * 
+	 * This time is independent of Phaser and always progresses, regardless of if Phaser is paused.
+	 * 
+	 * </li>
+	 * </ul>
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -76,6 +101,11 @@ extern class Time {
 	var physicsElapsedMS:Float;
 	
 	/**
+	 * The desiredFps multiplier as used by Game.update.
+	 */
+	var desiredFpsMult:Int;
+	
+	/**
 	 * The desired frame rate of the game.
 	 * 
 	 * This is used is used to calculate the physic/logic multiplier and how to apply catch-up logic updates.
@@ -86,7 +116,8 @@ extern class Time {
 	 * The suggested frame rate for your game, based on an averaged real frame rate.
 	 * This value is only populated if Time.advancedTiming is enabled.
 	 * 
-	 * <em>Note:</em> This is not available until after a few frames have passed; use it after a few seconds (eg. after the menus)
+	 * <em>Note:</em> This is not available until after a few frames have passed; until then
+	 * it's set to the same value as desiredFps.
 	 */
 	var suggestedFps:Float;
 	
@@ -225,21 +256,14 @@ extern class Time {
 	function removeAll ():Void;
 	
 	/**
+	 * Refreshes the Time.time and Time.elapsedMS properties from the system clock.
+	 */
+	function refresh ():Void;
+	
+	/**
 	 * Updates the game clock and if enabled the advanced timing data. This is called automatically by Phaser.Game.
 	 */
 	function update (time:Float):Void;
-	
-	/**
-	 * setTimeOut specific time update handler.
-	 * Called automatically by Time.update.
-	 */
-	function updateSetTimeout (time:Float):Void;
-	
-	/**
-	 * raf specific time update handler.
-	 * Called automatically by Time.update.
-	 */
-	function updateRAF (time:Float):Void;
 	
 	/**
 	 * Handles the updating of the Phaser.Timers (if any)

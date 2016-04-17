@@ -17,6 +17,11 @@ extern class AnimationParser {
 	/**
 	 * Parse the JSON data and extract the animation frame data from it.
 	 */
+	function JSONDataPyxel (game:phaser.core.Game, json:Dynamic):phaser.animation.FrameData;
+	
+	/**
+	 * Parse the JSON data and extract the animation frame data from it.
+	 */
 	function JSONDataHash (game:phaser.core.Game, json:Dynamic):phaser.animation.FrameData;
 	
 	/**

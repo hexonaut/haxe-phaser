@@ -65,6 +65,14 @@ extern class BaseTexture {
 	var _dirty:Dynamic;
 	
 	/**
+	 * A BaseTexture can be set to skip the rendering phase in the WebGL Sprite Batch.
+	 * 
+	 * You may want to do this if you have a parent Sprite with no visible texture (i.e. uses the internal __default texture)
+	 * that has children that you do want to render, without causing a batch flush in the process.
+	 */
+	var skipRender:Bool;
+	
+	/**
 	 * @property imageUrl
 	 */
 	var imageUrl:Dynamic;

@@ -95,14 +95,23 @@ extern class Button extends phaser.gameobjects.Image {
 	var onOverMouseOnly:Bool;
 	
 	/**
+	 * Suppresse the over event if a pointer was just released and it matches the given {@link Phaser.PointerModer pointer mode bitmask}.
+	 * 
+	 * This behavior was introduced in Phaser 2.3.1; this property is a soft-revert of the change.
+	 */
+	var justReleasedPreventsOver:Dynamic;
+	
+	/**
 	 * When true the the texture frame will not be automatically switched on up/down/over/out events.
 	 */
 	var freezeFrames:Bool;
 	
 	/**
 	 * When the Button is touched / clicked and then released you can force it to enter a state of "out" instead of "up".
+	 * 
+	 * This can also accept a {@link Phaser.PointerModer pointer mode bitmask} for more refined control.
 	 */
-	var forceOut:Bool;
+	var forceOut:Dynamic;
 	
 	/**
 	 * Clears all of the frames set on this Button.
@@ -208,21 +217,21 @@ extern class Button extends phaser.gameobjects.Image {
 	/**
 	 * Internal function that handles input events.
 	 */
-	function onInputOverHandler (sprite:phaser.gameobjects.Button, pointer:phaser.input.Pointer):Void;
+	function onInputOverHandler (sprite:phaser.gameobjects.Button, pointer:Dynamic):Void;
 	
 	/**
 	 * Internal function that handles input events.
 	 */
-	function onInputOutHandler (sprite:phaser.gameobjects.Button, pointer:phaser.input.Pointer):Void;
+	function onInputOutHandler (sprite:phaser.gameobjects.Button, pointer:Dynamic):Void;
 	
 	/**
 	 * Internal function that handles input events.
 	 */
-	function onInputDownHandler (sprite:phaser.gameobjects.Button, pointer:phaser.input.Pointer):Void;
+	function onInputDownHandler (sprite:phaser.gameobjects.Button, pointer:Dynamic):Void;
 	
 	/**
 	 * Internal function that handles input events.
 	 */
-	function onInputUpHandler (sprite:phaser.gameobjects.Button, pointer:phaser.input.Pointer):Void;
+	function onInputUpHandler (sprite:phaser.gameobjects.Button, pointer:Dynamic):Void;
 	
 }

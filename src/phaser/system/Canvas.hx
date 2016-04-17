@@ -11,7 +11,7 @@ extern class Canvas {
 	/**
 	 * Sets the background color behind the canvas. This changes the canvas style property.
 	 */
-	function setBackgroundColor (canvas:Dynamic, ?color:String):Dynamic;
+	function setBackgroundColor (canvas:Dynamic, ?color:String = 'rgb(0,0,0)'):Dynamic;
 	
 	/**
 	 * Sets the touch-action property on the canvas style. Can be used to disable default browser touch actions.
@@ -48,6 +48,11 @@ extern class Canvas {
 	 * patchy on earlier browsers, especially on mobile.
 	 */
 	function setSmoothingEnabled (context:Dynamic, value:Bool):Dynamic;
+	
+	/**
+	 * Gets the Smoothing Enabled vendor prefix being used on the given context, or null if not set.
+	 */
+	function getSmoothingPrefix (context:Dynamic):Dynamic;
 	
 	/**
 	 * Returns true if the given context has image smoothing enabled, otherwise returns false.

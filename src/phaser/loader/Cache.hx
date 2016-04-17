@@ -204,7 +204,7 @@ extern class Cache {
 	/**
 	 * Add a new Bitmap Font to the Cache.
 	 */
-	function addBitmapFont (key:String, url:String, data:Dynamic, atlasData:Dynamic, ?xSpacing:Float = 0, ?ySpacing:Float = 0):Void;
+	function addBitmapFont (key:String, url:String, data:Dynamic, atlasData:Dynamic, ?atlasType:String = 'xml', ?xSpacing:Float = 0, ?ySpacing:Float = 0):Void;
 	
 	/**
 	 * Add a new json object into the cache.

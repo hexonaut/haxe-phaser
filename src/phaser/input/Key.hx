@@ -6,7 +6,7 @@ extern class Key {
 	/**
 	 * If you need more fine-grained control over the handling of specific keys you can create and use Phaser.Key objects.
 	 */
-	function new (game:phaser.core.Game, keycode:Float);
+	function new (game:phaser.core.Game, keycode:Int);
 	
 	/**
 	 * A reference to the currently running game.

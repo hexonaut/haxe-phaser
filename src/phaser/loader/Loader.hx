@@ -65,8 +65,8 @@ extern class Loader {
 	 * load.image("tree", "level1/oaktree.png");
 	 * load.image("boom", "<a href='http://server.com/explode.png'>http://server.com/explode.png</a>");
 	 * 
-	 * Would load the ball file from images/sprites/ball.png and the tree from 
-	 * images/sprites/level1/oaktree.png but the file boom would load from the URL 
+	 * Would load the ball file from images/sprites/ball.png and the tree from
+	 * images/sprites/level1/oaktree.png but the file boom would load from the URL
 	 * given as it's an absolute URL.
 	 * 
 	 * Please note that the path is added before the filename but <em>after</em> the baseURL (if set.)
@@ -140,7 +140,7 @@ extern class Loader {
 	 * 
 	 * To disable all parallel downloads this must be set to false prior to any resource being loaded.
 	 */
-	var enableParallel:Int;
+	var enableParallel:Bool;
 	
 	/**
 	 * The number of concurrent / parallel resources to try and fetch at once.
@@ -227,6 +227,11 @@ extern class Loader {
 	 * @constant
 	 */
 	static var PHYSICS_PHASER_JSON:Float;
+	
+	/**
+	 * @constant
+	 */
+	static var TEXTURE_ATLAS_JSON_PYXEL:Float;
 	
 	/**
 	 * Set a Sprite to be a "preload" sprite by passing it to this method.
@@ -460,7 +465,7 @@ extern class Loader {
 	 * The file is <strong>not</strong> loaded immediately after calling this method. The file is added to the queue ready to be loaded when the loader starts.
 	 * 
 	 * To clarify the terminology that Phaser uses: A Sprite Sheet is an image containing frames, usually of an animation, that are all equal
-	 * dimensions and often in sequence. For example if the frame size is 32x32 then every frame in the sprite sheet will be that size. 
+	 * dimensions and often in sequence. For example if the frame size is 32x32 then every frame in the sprite sheet will be that size.
 	 * Sometimes (outside of Phaser) the term "sprite sheet" is used to refer to a texture atlas.
 	 * A Texture Atlas works by packing together images as best it can, using whatever frame sizes it likes, often with cropping and trimming
 	 * the frames in the process. Software such as Texture Packer, Flash CC or Shoebox all generate texture atlases, not sprite sheets.
@@ -610,8 +615,8 @@ extern class Loader {
 	 * 
 	 * If the textureURL isn't specified then the Loader will take the key and create a filename from that.
 	 * For example if the key is "megaFont" and textureURL is null then the Loader will set the URL to be "megaFont.png".
-	 * The same is true for the xmlURL. If xmlURL isn't specified and no xmlData has been provided then the Loader will
-	 * set the xmlURL to be the key. For example if the key is "megaFont" the xmlURL will be set to "megaFont.xml".
+	 * The same is true for the atlasURL. If atlasURL isn't specified and no atlasData has been provided then the Loader will
+	 * set the atlasURL to be the key. For example if the key is "megaFont" the atlasURL will be set to "megaFont.xml".
 	 * 
 	 * If you do not desire this action then provide URLs and / or a data object.
 	 */
@@ -768,7 +773,7 @@ extern class Loader {
 	/**
 	 * Add a synchronization point to a specific file/asset in the load queue.
 	 * 
-	 * This has no effect on already loaded assets.    
+	 * This has no effect on already loaded assets.
 	 */
 	function addSyncPoint (type:String, key:String):phaser.loader.Loader;
 	
@@ -819,7 +824,8 @@ extern class Loader {
 	
 	/**
 	 * Transforms the asset URL.
-	 * The default implementation prepends the baseURL if the url doesn't being with http or //
+	 * 
+	 * The default implementation prepends the baseURL if the url doesn't begin with http or //
 	 */
 	function transformUrl (url:String, file:Dynamic):String;
 	
@@ -877,6 +883,11 @@ extern class Loader {
 	 * Successfully loaded an XML file - only used for certain types.
 	 */
 	function xmlLoadComplete (file:Dynamic, xhr:Dynamic):Void;
+	
+	/**
+	 * Parses string data as XML.
+	 */
+	function parseXml (data:String):Dynamic;
 	
 	/**
 	 * Update the loading sprite progress.

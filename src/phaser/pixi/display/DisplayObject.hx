@@ -20,19 +20,6 @@ extern class DisplayObject {
 	var scale:Dynamic;
 	
 	/**
-	 * The transform callback is an optional callback that if set will be called at the end of the updateTransform method and sent two parameters:
-	 * This Display Objects worldTransform matrix and its parents transform matrix. Both are PIXI.Matrix object types.
-	 * The matrix are passed by reference and can be modified directly without needing to return them.
-	 * This ability allows you to check any of the matrix values and perform actions such as clamping scale or limiting rotation, regardless of the parent transforms.
-	 */
-	var transformCallback:Dynamic;
-	
-	/**
-	 * The context under which the transformCallback is invoked.
-	 */
-	var transformCallbackContext:Dynamic;
-	
-	/**
 	 * The pivot point of the displayObject that it rotates around
 	 */
 	var pivot:Dynamic;

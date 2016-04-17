@@ -1,7 +1,7 @@
 package phaser.core;
 
 @:native("Phaser.Stage")
-extern class Stage extends phaser.pixi.display.Stage {
+extern class Stage extends phaser.pixi.display.DisplayObjectContainer {
 	
 	/**
 	 * A reference to the currently running Game.
@@ -14,7 +14,11 @@ extern class Stage extends phaser.pixi.display.Stage {
 	var name:String;
 	
 	/**
-	 * By default if the browser tab loses focus the game will pause. You can stop that behaviour by setting this property to true.
+	 * By default if the browser tab loses focus the game will pause.
+	 * You can stop that behavior by setting this property to true.
+	 * Note that the browser can still elect to pause your game if it wishes to do so,
+	 * for example swapping to another browser tab. This will cause the RAF callback to halt,
+	 * effectively pausing your game, even though no in-game pause event is triggered if you enable this property.
 	 */
 	var disableVisibilityChange:Bool;
 	
@@ -39,9 +43,9 @@ extern class Stage extends phaser.pixi.display.Stage {
 	var _onChange:Dynamic;
 	
 	/**
-	 * Stage background color.
+	 * Stage background color object. Populated by setBackgroundColor.
 	 */
-	var _backgroundColor:Float;
+	var _bgColor:Float;
 	
 	/**
 	 * Parses a Game configuration object.
@@ -95,9 +99,11 @@ extern class Stage extends phaser.pixi.display.Stage {
 	 * The color can be given as a hex string ('#RRGGBB'), a CSS color string ('rgb(r,g,b)'), or a numeric value (0xRRGGBB).
 	 * 
 	 * An alpha channel is <em>not</em> supported and will be ignored.
+	 * 
+	 * If you've set your game to be transparent then calls to setBackgroundColor are ignored.
 	 */
-	@:overload(function (backgroundColor:Float):Void {})
-	function setBackgroundColor (backgroundColor:String):Void;
+	@:overload(function (color:Float):Void {})
+	function setBackgroundColor (color:String):Void;
 	
 	/**
 	 * Destroys the Stage and removes event listeners.
