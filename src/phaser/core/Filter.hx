@@ -5,6 +5,9 @@ extern class Filter {
 	
 	/**
 	 * This is a base Filter class to use for any Phaser filter development.
+	 * 
+	 * The vast majority of filters (including all of those that ship with Phaser) use fragment shaders, and
+	 * therefore only work in WebGL and are not supported by Canvas at all.
 	 */
 	@:overload(function (game:phaser.core.Game, uniforms:Dynamic, fragmentSrc:Array<Dynamic>):Void {})
 	function new (game:phaser.core.Game, uniforms:Dynamic, fragmentSrc:String);
@@ -68,7 +71,18 @@ extern class Filter {
 	/**
 	 * Updates the filter.
 	 */
-	function update (?pointer:phaser.input.Pointer):Void;
+	function update (?pointer:Dynamic):Void;
+	
+	/**
+	 * Creates a new Phaser.Image object using a blank texture and assigns 
+	 * this Filter to it. The image is then added to the world.
+	 * 
+	 * If you don't provide width and height values then Filter.width and Filter.height are used.
+	 * 
+	 * If you do provide width and height values then this filter will be resized to match those
+	 * values.
+	 */
+	function addToWorld (?x:Float = 0, ?y:Float = 0, ?width:Float, ?height:Float, ?anchorX:Float = 0, ?anchorY:Float = 0):phaser.gameobjects.Image;
 	
 	/**
 	 * Clear down this Filter and null out references

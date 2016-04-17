@@ -23,7 +23,7 @@ extern class DeviceButton {
 	 * <li>On Mac OS X 10.5 there is no platform API for implementing any advanced buttons.</li>
 	 * </ul>
 	 */
-	@:overload(function (parent:phaser.input.Pointer, buttonCode:Float):Void {})
+	@:overload(function (parent:Dynamic, buttonCode:Float):Void {})
 	function new (parent:phaser.input.SinglePad, buttonCode:Float);
 	
 	/**
@@ -55,13 +55,6 @@ extern class DeviceButton {
 	 * The timestamp when the button was last pressed down.
 	 */
 	var timeDown:Float;
-	
-	/**
-	 * If the button is down this value holds the duration of that button press and is constantly updated.
-	 * If the button is up it holds the duration of the previous down session.
-	 * The value is stored in milliseconds.
-	 */
-	var duration:Float;
 	
 	/**
 	 * The timestamp when the button was last released.
@@ -162,5 +155,11 @@ extern class DeviceButton {
 	 * and clears the parent and game references.
 	 */
 	function destroy ():Void;
+	
+	/**
+	 * How long the button has been held down for in milliseconds.
+	 * If not currently down it returns -1.
+	 */
+	var duration(default, null):Float;
 	
 }

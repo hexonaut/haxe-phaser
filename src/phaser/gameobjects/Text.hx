@@ -52,6 +52,17 @@ extern class Text extends phaser.gameobjects.Sprite {
 	var autoRound:Bool;
 	
 	/**
+	 * Will this Text object use Basic or Advanced Word Wrapping?
+	 * 
+	 * Advanced wrapping breaks long words if they are the first of a line, and repeats the process as necessary.
+	 * White space is condensed (e.g., consecutive spaces are replaced with one).
+	 * Lines are trimmed of white space before processing.
+	 * 
+	 * It throws an error if wordWrapWidth is less than a single character.
+	 */
+	var useAdvancedWrap:Bool;
+	
+	/**
 	 * Internal canvas resolution var.
 	 */
 	var _res:Float;
@@ -200,9 +211,31 @@ extern class Text extends phaser.gameobjects.Sprite {
 	function addFontWeight (style:String, position:Float):phaser.gameobjects.Text;
 	
 	/**
+	 * Runs the given text through the Text.runWordWrap function and returns
+	 * the results as an array, where each element of the array corresponds to a wrapped
+	 * line of text.
+	 * 
+	 * Useful if you wish to control pagination on long pieces of content.
+	 */
+	function precalculateWordWrap (text:String):Array<Dynamic>;
+	
+	/**
 	 * Greedy wrapping algorithm that will wrap words as the line grows longer than its horizontal bounds.
 	 */
 	function runWordWrap (text:String):Void;
+	
+	/**
+	 * Advanced wrapping algorithm that will wrap words as the line grows longer than its horizontal bounds.
+	 * White space is condensed (e.g., consecutive spaces are replaced with one).
+	 * Lines are trimmed of white space before processing.
+	 * Throws an error if the user was smart enough to specify a wordWrapWidth less than a single character.
+	 */
+	function advancedWordWrap (text:String):Void;
+	
+	/**
+	 * Greedy wrapping algorithm that will wrap words as the line grows longer than its horizontal bounds.
+	 */
+	function basicWordWrap (text:String):Void;
 	
 	/**
 	 * Updates the internal style.font if it now differs according to generation from components.

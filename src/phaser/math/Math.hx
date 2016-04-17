@@ -11,17 +11,27 @@ extern class Math {
 	/**
 	 * Two number are fuzzyEqual if their difference is less than epsilon.
 	 */
-	function fuzzyEqual (a:Float, b:Float, epsilon:Float):Bool;
+	function fuzzyEqual (a:Float, b:Float, ?epsilon:Float = 0.0001):Bool;
 	
 	/**
 	 * a is fuzzyLessThan b if it is less than b + epsilon.
 	 */
-	function fuzzyLessThan (a:Float, b:Float, epsilon:Float):Bool;
+	function fuzzyLessThan (a:Float, b:Float, ?epsilon:Float = 0.0001):Bool;
 	
 	/**
 	 * a is fuzzyGreaterThan b if it is more than b - epsilon.
 	 */
-	function fuzzyGreaterThan (a:Float, b:Float, epsilon:Float):Bool;
+	function fuzzyGreaterThan (a:Float, b:Float, ?epsilon:Float = 0.0001):Bool;
+	
+	/**
+	 * Applies a fuzzy ceil to the given value.
+	 */
+	function fuzzyCeil (val:Float, ?epsilon:Float = 0.0001):Float;
+	
+	/**
+	 * Applies a fuzzy floor to the given value.
+	 */
+	function fuzzyFloor (val:Float, ?epsilon:Float = 0.0001):Float;
 	
 	/**
 	 * Averages all values passed to the function and returns the result.
@@ -38,7 +48,7 @@ extern class Math {
 	/**
 	 * Snap a value to nearest grid slice, using floor.
 	 * 
-	 * Example: if you have an interval gap of 5 and a position of 12... you will snap to 10. 
+	 * Example: if you have an interval gap of 5 and a position of 12... you will snap to 10.
 	 * As will 14 snap to 10... but 16 will snap to 15.
 	 */
 	function snapToFloor (input:Float, gap:Float, ?start:Float):Float;

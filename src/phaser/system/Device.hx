@@ -24,6 +24,11 @@ extern class Device {
 	var iOS:Bool;
 	
 	/**
+	 * If running in iOS this will contain the major version number.
+	 */
+	var iOSVersion:Float;
+	
+	/**
 	 * Is the game running under CocoonJS?
 	 */
 	var cocoonJS:Bool;
@@ -224,6 +229,11 @@ extern class Device {
 	var tridentVersion:Float;
 	
 	/**
+	 * Set to true if running in Microsoft Edge browser.
+	 */
+	var edge:Bool;
+	
+	/**
 	 * Set to true if running in Mobile Safari.
 	 */
 	var mobileSafari:Bool;
@@ -242,6 +252,11 @@ extern class Device {
 	 * Set to true if running in Safari.
 	 */
 	var safari:Bool;
+	
+	/**
+	 * If running in Safari this will contain the major version number.
+	 */
+	var safariVersion:Float;
 	
 	/**
 	 * Set to true if running as a WebApp, i.e. within a WebView
@@ -292,6 +307,11 @@ extern class Device {
 	 * Can this device play webm files?
 	 */
 	var webm:Bool;
+	
+	/**
+	 * Can this device play EC-3 Dolby Digital Plus files?
+	 */
+	var dolby:Bool;
 	
 	/**
 	 * Can this device play ogg video files?

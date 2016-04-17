@@ -277,7 +277,7 @@ extern class World {
 	 * Each child will be sent to the given callback for further processing.
 	 * Note that the children are not checked for depth order, but simply if they overlap the Pointer or not.
 	 */
-	function getObjectsUnderPointer (pointer:phaser.input.Pointer, group:phaser.core.Group, ?callback:Dynamic, ?callbackContext:Dynamic):Dynamic;
+	function getObjectsUnderPointer (pointer:Dynamic, group:phaser.core.Group, ?callback:Dynamic, ?callbackContext:Dynamic):Dynamic;
 	
 	/**
 	 * Given a Group and a location this will check to see which Group children overlap with the coordinates.
@@ -303,7 +303,7 @@ extern class World {
 	 * Note: The display object does not continuously track the target. If the target changes location during transit the display object will not modify its course.
 	 * Note: The display object doesn't stop moving once it reaches the destination coordinates.
 	 */
-	function moveToPointer (displayObject:Dynamic, ?speed:Float = 60, ?pointer:phaser.input.Pointer, ?maxTime:Float = 0):Float;
+	function moveToPointer (displayObject:Dynamic, ?speed:Float = 60, ?pointer:Dynamic, ?maxTime:Float = 0):Float;
 	
 	/**
 	 * Move the given display object towards the x/y coordinates at a steady velocity.
@@ -350,7 +350,7 @@ extern class World {
 	 * Note: The display object does not continuously track the target. If the target changes location during transit the display object will not modify its course.
 	 * Note: The display object doesn't stop moving once it reaches the destination coordinates.
 	 */
-	function accelerateToPointer (displayObject:Dynamic, ?pointer:phaser.input.Pointer, ?speed:Float = 60, ?xSpeedMax:Float = 500, ?ySpeedMax:Float = 500):Float;
+	function accelerateToPointer (displayObject:Dynamic, ?pointer:Dynamic, ?speed:Float = 60, ?xSpeedMax:Float = 500, ?ySpeedMax:Float = 500):Float;
 	
 	/**
 	 * Sets the acceleration.x/y property on the display object so it will move towards the x/y coordinates at the given speed (in pixels per second sq.)
@@ -378,7 +378,7 @@ extern class World {
 	 * If you need to calculate from the center of a display object instead use the method distanceBetweenCenters()
 	 * The distance to the Pointer is returned in screen space, not world space.
 	 */
-	function distanceToPointer (displayObject:Dynamic, ?pointer:phaser.input.Pointer):Float;
+	function distanceToPointer (displayObject:Dynamic, ?pointer:Dynamic):Float;
 	
 	/**
 	 * Find the angle in radians between two display objects (like Sprites).
@@ -393,6 +393,12 @@ extern class World {
 	/**
 	 * Find the angle in radians between a display object (like a Sprite) and a Pointer, taking their x/y and center into account.
 	 */
-	function angleToPointer (displayObject:Dynamic, ?pointer:phaser.input.Pointer):Float;
+	function angleToPointer (displayObject:Dynamic, ?pointer:Dynamic):Float;
+	
+	/**
+	 * Find the angle in radians between a display object (like a Sprite) and a Pointer, 
+	 * taking their x/y and center into account relative to the world.
+	 */
+	function worldAngleToPointer (displayObject:Dynamic, ?pointer:Dynamic):Float;
 	
 }

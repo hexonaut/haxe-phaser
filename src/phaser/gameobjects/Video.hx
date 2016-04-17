@@ -174,6 +174,16 @@ extern class Video {
 	var _autoplay:Bool;
 	
 	/**
+	 * The addEventListener ended function.
+	 */
+	var _endCallback:Dynamic;
+	
+	/**
+	 * The addEventListener playing function.
+	 */
+	var _playCallback:Dynamic;
+	
+	/**
 	 * The PIXI.Texture.
 	 */
 	var texture:phaser.pixi.textures.Texture;
@@ -355,17 +365,17 @@ extern class Video {
 	function destroy ():Void;
 	
 	/**
-	 * @memberof Phaser.Video
+	 * @name Phaser.Video#currentTime
 	 */
 	var currentTime:Float;
 	
 	/**
-	 * @memberof Phaser.Video
+	 * @name Phaser.Video#duration
 	 */
 	var duration:Float;
 	
 	/**
-	 * @memberof Phaser.Video
+	 * @name Phaser.Video#progress
 	 */
 	var progress:Float;
 	

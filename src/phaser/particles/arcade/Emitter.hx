@@ -204,17 +204,17 @@ extern class Emitter extends phaser.core.Group {
 	/**
 	 * Call this function to turn off all the particles and the emitter.
 	 */
-	function kill ():Void;
+	function kill ():phaser.particles.arcade.Emitter;
 	
 	/**
 	 * Handy for bringing game objects "back to life". Just sets alive and exists back to true.
 	 */
-	function revive ():Void;
+	function revive ():phaser.particles.arcade.Emitter;
 	
 	/**
 	 * Call this function to emit the given quantity of particles at all once (an explosion)
 	 */
-	function explode (?lifespan:Float = 0, ?quantity:Float = 0):Void;
+	function explode (?lifespan:Float = 0, ?quantity:Float = 0):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * Call this function to start emitting a flow of particles at the given frequency.
@@ -223,62 +223,75 @@ extern class Emitter extends phaser.core.Group {
 	 * If you set the total to be 20 and quantity to be 5 then flow will emit 4 times in total (4 x 5 = 20 total)
 	 * If you set the total to be -1 then no quantity cap is used and it will keep emitting.
 	 */
-	function flow (?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 1, ?total:Float, ?immediate:Bool = true):Void;
+	function flow (?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 1, ?total:Float, ?immediate:Bool = true):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * Call this function to start emitting particles.
 	 */
-	function start (?explode:Bool = true, ?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 0, ?forceQuantity:Float = false):Void;
+	function start (?explode:Bool = true, ?lifespan:Float = 0, ?frequency:Float = 250, ?quantity:Float = 0, ?forceQuantity:Float = false):phaser.particles.arcade.Emitter;
 	
 	/**
-	 * This function can be used both internally and externally to emit the next particle in the queue.
+	 * This function is used internally to emit the next particle in the queue.
+	 * 
+	 * However it can also be called externally to emit a particle.
+	 * 
+	 * When called externally you can use the arguments to override any defaults the Emitter has set.
 	 */
-	function emitParticle ():Bool;
+	@:overload(function (?x:Float, ?y:Float, ?key:String, ?frame:String):Bool {})
+	@:overload(function (?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:String):Bool {})
+	@:overload(function (?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:String):Bool {})
+	@:overload(function (?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:String):Bool {})
+	@:overload(function (?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:String):Bool {})
+	@:overload(function (?x:Float, ?y:Float, ?key:String, ?frame:Float):Bool {})
+	@:overload(function (?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:Float):Bool {})
+	@:overload(function (?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:Float):Bool {})
+	@:overload(function (?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:Float):Bool {})
+	function emitParticle (?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:Float):Bool;
 	
 	/**
 	 * A more compact way of setting the width and height of the emitter.
 	 */
-	function setSize (width:Float, height:Float):Void;
+	function setSize (width:Float, height:Float):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * A more compact way of setting the X velocity range of the emitter.
 	 */
-	function setXSpeed (?min:Float = 0, ?max:Float = 0):Void;
+	function setXSpeed (?min:Float = 0, ?max:Float = 0):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * A more compact way of setting the Y velocity range of the emitter.
 	 */
-	function setYSpeed (?min:Float = 0, ?max:Float = 0):Void;
+	function setYSpeed (?min:Float = 0, ?max:Float = 0):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * A more compact way of setting the angular velocity constraints of the particles.
 	 */
-	function setRotation (?min:Float = 0, ?max:Float = 0):Void;
+	function setRotation (?min:Float = 0, ?max:Float = 0):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * A more compact way of setting the alpha constraints of the particles.
 	 * The rate parameter, if set to a value above zero, lets you set the speed at which the Particle change in alpha from min to max.
 	 * If rate is zero, which is the default, the particle won't change alpha - instead it will pick a random alpha between min and max on emit.
 	 */
-	function setAlpha (?min:Float = 1, ?max:Float = 1, ?rate:Float = 0, ?ease:Dynamic, ?yoyo:Bool = false):Void;
+	function setAlpha (?min:Float = 1, ?max:Float = 1, ?rate:Float = 0, ?ease:Dynamic, ?yoyo:Bool = false):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * A more compact way of setting the scale constraints of the particles.
 	 * The rate parameter, if set to a value above zero, lets you set the speed and ease which the Particle uses to change in scale from min to max across both axis.
 	 * If rate is zero, which is the default, the particle won't change scale during update, instead it will pick a random scale between min and max on emit.
 	 */
-	function setScale (?minX:Float = 1, ?maxX:Float = 1, ?minY:Float = 1, ?maxY:Float = 1, ?rate:Float = 0, ?ease:Dynamic, ?yoyo:Bool = false):Void;
+	function setScale (?minX:Float = 1, ?maxX:Float = 1, ?minY:Float = 1, ?maxY:Float = 1, ?rate:Float = 0, ?ease:Dynamic, ?yoyo:Bool = false):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * Change the emitters center to match the center of any object with a center property, such as a Sprite.
 	 * If the object doesn't have a center property it will be set to object.x + object.width / 2
 	 */
-	@:overload(function (object:Dynamic):Void {})
-	@:overload(function (object:phaser.gameobjects.Sprite):Void {})
-	@:overload(function (object:phaser.gameobjects.Image):Void {})
-	@:overload(function (object:phaser.gameobjects.TileSprite):Void {})
-	@:overload(function (object:phaser.gameobjects.Text):Void {})
-	function at (object:phaser.pixi.display.DisplayObject):Void;
+	@:overload(function (object:Dynamic):phaser.particles.arcade.Emitter {})
+	@:overload(function (object:phaser.gameobjects.Sprite):phaser.particles.arcade.Emitter {})
+	@:overload(function (object:phaser.gameobjects.Image):phaser.particles.arcade.Emitter {})
+	@:overload(function (object:phaser.gameobjects.TileSprite):phaser.particles.arcade.Emitter {})
+	@:overload(function (object:phaser.gameobjects.Text):phaser.particles.arcade.Emitter {})
+	function at (object:phaser.pixi.display.DisplayObject):phaser.particles.arcade.Emitter;
 	
 	/**
 	 * @name Phaser.Particles.Arcade.Emitter#left

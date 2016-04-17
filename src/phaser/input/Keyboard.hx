@@ -6,8 +6,8 @@ extern class Keyboard {
 	/**
 	 * The Keyboard class monitors keyboard input and dispatches keyboard events.
 	 * 
-	 * <em>Be aware</em> that many keyboards are unable to process certain combinations of keys due to hardware
-	 * limitations known as ghosting. Full details here: <a href='http://www.html5gamedevs.com/topic/4876-impossible-to-use-more-than-2-keyboard-input-buttons-at-the-same-time/'>http://www.html5gamedevs.com/topic/4876-impossible-to-use-more-than-2-keyboard-input-buttons-at-the-same-time/</a>
+	 * <em>Note</em>: many keyboards are unable to process certain combinations of keys due to hardware limitations known as ghosting.
+	 * See <a href='http://www.html5gamedevs.com/topic/4876-impossible-to-use-more-than-2-keyboard-input-buttons-at-the-same-time/'>http://www.html5gamedevs.com/topic/4876-impossible-to-use-more-than-2-keyboard-input-buttons-at-the-same-time/</a> for more details.
 	 */
 	function new (game:phaser.core.Game);
 	
@@ -95,21 +95,24 @@ extern class Keyboard {
 	 * If you need more fine-grained control over a Key you can create a new Phaser.Key object via this method.
 	 * The Key object can then be polled, have events attached to it, etc.
 	 */
-	function addKey (keycode:Float):phaser.input.Key;
+	function addKey (keycode:Int):phaser.input.Key;
 	
 	/**
 	 * A practical way to create an object containing user selected hotkeys.
 	 * 
-	 * For example: addKeys( { 'up': Phaser.Keyboard.W, 'down': Phaser.Keyboard.S, 'left': Phaser.Keyboard.A, 'right': Phaser.Keyboard.D } );
+	 * For example,
 	 * 
-	 * Would return an object containing the properties up, down, left and right that you could poll just like a Phaser.Key object.
+	 * <pre>addKeys( { 'up': Phaser.KeyCode.W, 'down': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D } );
+	 * </pre>
+	 * 
+	 * would return an object containing properties (up, down, left and right) referring to {@link Phaser.Key} object.
 	 */
 	function addKeys (keys:Dynamic):Dynamic;
 	
 	/**
 	 * Removes a Key object from the Keyboard manager.
 	 */
-	function removeKey (keycode:Float):Void;
+	function removeKey (keycode:Int):Void;
 	
 	/**
 	 * Creates and returns an object containing 4 hotkeys for Up, Down, Left and Right.
@@ -136,17 +139,20 @@ extern class Keyboard {
 	/**
 	 * By default when a key is pressed Phaser will not stop the event from propagating up to the browser.
 	 * There are some keys this can be annoying for, like the arrow keys or space bar, which make the browser window scroll.
-	 * You can use addKeyCapture to consume the keyboard event for specific keys so it doesn't bubble up to the the browser.
+	 * 
+	 * The addKeyCapture method enables consuming keyboard event for specific keys so it doesn't bubble up to the the browser
+	 * and cause the default browser behavior.
+	 * 
 	 * Pass in either a single keycode or an array/hash of keycodes.
 	 */
-	@:overload(function (keycode:Float):Void {})
-	@:overload(function (keycode:Array<Dynamic>):Void {})
+	@:overload(function (keycode:Int):Void {})
+	@:overload(function (keycode:Dynamic):Void {})
 	function addKeyCapture (keycode:Dynamic):Void;
 	
 	/**
 	 * Removes an existing key capture.
 	 */
-	function removeKeyCapture (keycode:Float):Void;
+	function removeKeyCapture (keycode:Int):Void;
 	
 	/**
 	 * Clear all set key captures.
@@ -182,18 +188,19 @@ extern class Keyboard {
 	 * Returns true if the Key was pressed down within the duration value given, or false if it either isn't down,
 	 * or was pressed down longer ago than then given duration.
 	 */
-	function downDuration (keycode:Float, ?duration:Float = 50):Bool;
+	function downDuration (keycode:Int, ?duration:Float = 50):Bool;
 	
 	/**
 	 * Returns true if the Key was pressed down within the duration value given, or false if it either isn't down,
 	 * or was pressed down longer ago than then given duration.
 	 */
-	function upDuration (keycode:Float, ?duration:Float = 50):Bool;
+	@:overload(function (keycode:Dynamic, ?duration:Float = 50):Bool {})
+	function upDuration (keycode:Int, ?duration:Float = 50):Bool;
 	
 	/**
 	 * Returns true of the key is currently pressed down. Note that it can only detect key presses on the web browser.
 	 */
-	function isDown (keycode:Float):Bool;
+	function isDown (keycode:Int):Bool;
 	
 	/**
 	 * Returns the string value of the most recently pressed key.
@@ -204,5 +211,20 @@ extern class Keyboard {
 	 * Returns the most recently pressed Key. This is a Phaser.Key object and it changes every time a key is pressed.
 	 */
 	var lastKey(default, null):phaser.input.Key;
+	
+	/**
+	 * A key code represents a physical key on a keyboard.
+	 * 
+	 * The KeyCode class contains commonly supported keyboard key codes which can be used
+	 * as keycode`-parameters in several {@link Phaser.Keyboard} and {@link Phaser.Key} methods.
+	 * 
+	 * <em>Note</em>: These values should only be used indirectly, eg. as Phaser.KeyCode.KEY.
+	 * Future versions may replace the actual values, such that they remain compatible with keycode-parameters.
+	 * The current implementation maps to the {@link <a href='https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode'>https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode</a> KeyboardEvent.keyCode} property.
+	 * 
+	 * <em>Note</em>: Use Phaser.KeyCode.KEY instead of Phaser.Keyboard.KEY to refer to a key code;
+	 * the latter approach is supported for compatibility.
+	 */
+	var KeyCode:Dynamic;
 	
 }

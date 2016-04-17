@@ -4,9 +4,11 @@ package phaser.gameobjects;
 extern class Rope extends phaser.gameobjects.components.Smoothed {
 	
 	/**
-	 * A Rope is a Sprite that has a repeating texture. The texture can be scrolled and scaled and will automatically wrap on the edges as it does so.
-	 * Please note that Ropes, as with normal Sprites, have no input handler or physics bodies by default. Both need enabling.
-	 * Example usage: <a href='https://github.com/codevinsky/phaser-rope-demo/blob/master/dist/demo.js'>https://github.com/codevinsky/phaser-rope-demo/blob/master/dist/demo.js</a>
+	 * A Rope is a Sprite that has a repeating texture.
+	 * 
+	 * The texture will automatically wrap on the edges as it moves.
+	 * 
+	 * Please note that Ropes cannot have an input handler.
 	 */
 	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:String, frame:String, points:Array<Dynamic>):Void {})
 	@:overload(function (game:phaser.core.Game, x:Float, y:Float, key:phaser.gameobjects.RenderTexture, frame:String, points:Array<Dynamic>):Void {})
@@ -23,11 +25,6 @@ extern class Rope extends phaser.gameobjects.components.Smoothed {
 	var type(default, null):Float;
 	
 	/**
-	 * Internal cache var.
-	 */
-	var _scroll:phaser.geom.Point;
-	
-	/**
 	 * Automatically called by World.preUpdate.
 	 */
 	function preUpdate ():Void;
@@ -38,14 +35,14 @@ extern class Rope extends phaser.gameobjects.components.Smoothed {
 	function update ():Void;
 	
 	/**
-	 * Resets the Rope. This places the Rope at the given x/y world coordinates, resets the tilePosition and then
+	 * Resets the Rope. This places the Rope at the given x/y world coordinates and then
 	 * sets alive, exists, visible and renderable all to true. Also resets the outOfBounds state.
 	 * If the Rope has a physics body that too is reset.
 	 */
-	function reset (x:Float, y:Float):Dynamic;
+	function reset (x:Float, y:Float):phaser.gameobjects.Rope;
 	
 	/**
-	 * A Rope will call it's updateAnimation function on each update loop if it has one
+	 * A Rope will call its updateAnimation function on each update loop if it has one.
 	 */
 	var updateAnimation:Dynamic;
 	

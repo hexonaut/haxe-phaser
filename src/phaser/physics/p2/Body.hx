@@ -177,6 +177,12 @@ extern class Body {
 	function clearCollision (?clearGroup:Bool = true, ?clearMask:Bool = true, ?shape:Dynamic):Void;
 	
 	/**
+	 * Removes the given CollisionGroup, or array of CollisionGroups, from the list of groups that this body will collide with and updates the collision masks.
+	 */
+	@:overload(function (group:Dynamic, ?clearCallback:Bool = true, ?shape:Dynamic):Void {})
+	function removeCollisionGroup (group:Array<Dynamic>, ?clearCallback:Bool = true, ?shape:Dynamic):Void;
+	
+	/**
 	 * Adds the given CollisionGroup, or array of CollisionGroups, to the list of groups that this body will collide with and updates the collision masks.
 	 */
 	@:overload(function (group:Dynamic, ?callback:Dynamic, ?callbackContext:Dynamic, ?shape:Dynamic):Void {})
@@ -442,9 +448,11 @@ extern class Body {
 	
 	/**
 	 * Reads the shape data from a physics data file stored in the Game.Cache and adds it as a polygon to this Body.
-	 * The shape data format is based on the custom phaser export in.
+	 * The shape data format is based on the output of the
+	 * {@link <a href='https://github.com/photonstorm/phaser/tree/master/resources/PhysicsEditor%20Exporter|custom'>https://github.com/photonstorm/phaser/tree/master/resources/PhysicsEditor%20Exporter|custom</a> phaser exporter} for
+	 * {@link <a href='https://www.codeandweb.com/physicseditor|PhysicsEditor}'>https://www.codeandweb.com/physicseditor|PhysicsEditor}</a>
 	 */
-	function addPhaserPolygon (key:String, object:String):Void;
+	function addPhaserPolygon (key:String, object:String):Array<Dynamic>;
 	
 	/**
 	 * Add a polygon fixture. This is used during #loadPolygon.

@@ -58,6 +58,6 @@ extern class Particle extends phaser.gameobjects.Sprite {
 	 * sets alive, exists, visible and renderable all to true. Also resets the outOfBounds state and health values.
 	 * If the Particle has a physics body that too is reset.
 	 */
-	function reset (x:Float, y:Float, ?health:Float = 1):Dynamic;
+	function reset (x:Float, y:Float, ?health:Float = 1):phaser.gameobjects.Particle;
 	
 }

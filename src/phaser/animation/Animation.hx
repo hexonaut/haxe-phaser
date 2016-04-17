@@ -8,8 +8,8 @@ extern class Animation {
 	 * 
 	 * It is created by the AnimationManager, consists of Animation.Frame objects and belongs to a single Game Object such as a Sprite.
 	 */
-	@:overload(function (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, ?frameRate:Float = 60, ?loop:Bool = false, ?loop:Bool):Void {})
-	function new (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, ?frameRate:Float = 60, ?loop:Bool = false, ?loop:Bool);
+	@:overload(function (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, ?frameRate:Float = 60, ?loop:Bool = false):Void {})
+	function new (game:phaser.core.Game, parent:phaser.gameobjects.Sprite, name:String, frameData:phaser.animation.FrameData, frames:Dynamic, ?frameRate:Float = 60, ?loop:Bool = false);
 	
 	/**
 	 * A reference to the currently running Game.
@@ -104,11 +104,14 @@ extern class Animation {
 	/**
 	 * This event is dispatched when the Animation changes frame. 
 	 * By default this event is disabled due to its intensive nature. Enable it with: Animation.enableUpdate = true.
+	 * Note that the event is only dispatched with the current frame. In a low-FPS environment Animations
+	 * will automatically frame-skip to try and claw back time, so do not base your code on expecting to 
+	 * receive a perfectly sequential set of frames from this event.
 	 */
 	var onUpdate:Dynamic;
 	
 	/**
-	 * This event is dispatched when this Animation completes playback. If the animation is set to loop this is never fired, listen for onAnimationLoop instead.
+	 * This event is dispatched when this Animation completes playback. If the animation is set to loop this is never fired, listen for onLoop instead.
 	 */
 	var onComplete:phaser.core.Signal;
 	

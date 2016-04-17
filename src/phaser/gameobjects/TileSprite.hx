@@ -79,6 +79,6 @@ extern class TileSprite extends phaser.gameobjects.components.Smoothed {
 	 * sets alive, exists, visible and renderable all to true. Also resets the outOfBounds state.
 	 * If the TileSprite has a physics body that too is reset.
 	 */
-	function reset (x:Float, y:Float):Dynamic;
+	function reset (x:Float, y:Float):phaser.gameobjects.TileSprite;
 	
 }

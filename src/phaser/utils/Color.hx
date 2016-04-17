@@ -79,7 +79,7 @@ extern class Color {
 	static function createColor (?r:Float = 0, ?g:Float = 0, ?b:Float = 0, ?a:Float = 1, ?h:Float = 0, ?s:Float = 0, ?l:Float = 0, ?v:Float = 0):Dynamic;
 	
 	/**
-	 * Takes a color object and updates the rgba property.
+	 * Takes a color object and updates the rgba, color and color32 properties.
 	 */
 	static function updateColor (out:Dynamic):Float;
 	
@@ -165,7 +165,7 @@ extern class Color {
 	 * Set the min value to start each channel from the given offset.
 	 * Set the max value to restrict the maximum color used per channel.
 	 */
-	static function getRandomColor (min:Float, max:Float, alpha:Float):Float;
+	static function getRandomColor (?min:Float = 0, ?max:Float = 255, ?alpha:Float = 255):Float;
 	
 	/**
 	 * Return the component parts of a color as an Object with the properties alpha, red, green, blue.

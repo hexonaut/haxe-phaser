@@ -249,11 +249,6 @@ extern class Tilemap {
 	function getImageIndex (name:String):Float;
 	
 	/**
-	 * Gets the object index based on its name.
-	 */
-	function getObjectIndex (name:String):Float;
-	
-	/**
 	 * Sets a global collision callback for the given tile index within the layer. This will affect all tiles on this layer that have the same index.
 	 * If a callback is already set for the tile index it will be replaced. Set the callback to null to remove it.
 	 * If you want to set a callback for a tile at a specific location on the map then see setTileLocationCallback.

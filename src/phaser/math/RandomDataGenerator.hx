@@ -13,7 +13,8 @@ extern class RandomDataGenerator {
 	 *  - <a href='https://github.com/nquinlan/better-random-numbers-for-javascript-mirror'>https://github.com/nquinlan/better-random-numbers-for-javascript-mirror</a>
 	 *  - <a href='http://baagoe.org/en/wiki/Better_random_numbers_for_javascript'>http://baagoe.org/en/wiki/Better_random_numbers_for_javascript</a> (original, perm. 404)
 	 */
-	function new (?seeds:Dynamic);
+	@:overload(function (?seeds:Dynamic):Void {})
+	function new (?seeds:String);
 	
 	/**
 	 * Internal var.
@@ -99,6 +100,11 @@ extern class RandomDataGenerator {
 	function pick (ary:Array<Dynamic>):Dynamic;
 	
 	/**
+	 * Returns a sign to be used with multiplication operator.
+	 */
+	function sign ():Float;
+	
+	/**
 	 * Returns a random member of array, favoring the earlier entries.
 	 */
 	function weightedPick (ary:Array<Dynamic>):Dynamic;
@@ -112,5 +118,20 @@ extern class RandomDataGenerator {
 	 * Returns a random angle between -180 and 180.
 	 */
 	function angle ():Float;
+	
+	/**
+	 * Gets or Sets the state of the generator. This allows you to retain the values
+	 * that the generator is using between games, i.e. in a game save file.
+	 * 
+	 * To seed this generator with a previously saved state you can pass it as the 
+	 * seed value in your game config, or call this method directly after Phaser has booted.
+	 * 
+	 * Call this method with no parameters to return the current state.
+	 * 
+	 * If providing a state it should match the same format that this method
+	 * returns, which is a string with a header !rnd followed by the c,
+	 * s0, s1 and s2 values respectively, each comma-delimited. 
+	 */
+	function state (?state:String):String;
 	
 }

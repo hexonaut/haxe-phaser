@@ -86,7 +86,7 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	/**
 	 * If {@link #enableBody} is true this is the type of physics body that is created on new Sprites.
 	 * 
-	 * The valid values are {@link Phaser.Physics.ARCADE}, {@link Phaser.Physics.P2}, {@link Phaser.Physics.NINJA}, etc.
+	 * The valid values are {@link Phaser.Physics.ARCADE}, {@link Phaser.Physics.P2JS}, {@link Phaser.Physics.NINJA}, etc.
 	 */
 	var physicsBodyType:Int;
 	
@@ -194,10 +194,18 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	/**
 	 * Creates a new Phaser.Sprite object and adds it to the top of this group.
 	 * 
-	 * Use {@link #classType} to change the type of object creaded.
+	 * Use {@link #classType} to change the type of object created.
 	 */
-	@:overload(function (x:Float, y:Float, key:String, ?frame:Int, ?exists:Bool = true):Dynamic {})
-	function create (x:Float, y:Float, key:String, ?frame:String, ?exists:Bool = true):Dynamic;
+	@:overload(function (x:Float, y:Float, ?key:String, ?frame:String, ?exists:Bool = true):Dynamic {})
+	@:overload(function (x:Float, y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:String, ?exists:Bool = true):Dynamic {})
+	@:overload(function (x:Float, y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:String, ?exists:Bool = true):Dynamic {})
+	@:overload(function (x:Float, y:Float, ?key:phaser.gameobjects.Video, ?frame:String, ?exists:Bool = true):Dynamic {})
+	@:overload(function (x:Float, y:Float, ?key:phaser.pixi.textures.Texture, ?frame:String, ?exists:Bool = true):Dynamic {})
+	@:overload(function (x:Float, y:Float, ?key:String, ?frame:Float, ?exists:Bool = true):Dynamic {})
+	@:overload(function (x:Float, y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:Float, ?exists:Bool = true):Dynamic {})
+	@:overload(function (x:Float, y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:Float, ?exists:Bool = true):Dynamic {})
+	@:overload(function (x:Float, y:Float, ?key:phaser.gameobjects.Video, ?frame:Float, ?exists:Bool = true):Dynamic {})
+	function create (x:Float, y:Float, ?key:phaser.pixi.textures.Texture, ?frame:Float, ?exists:Bool = true):Dynamic;
 	
 	/**
 	 * Creates multiple Phaser.Sprite objects and adds them to the top of this group.
@@ -273,7 +281,7 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	/**
 	 * Reverses all children in this group.
 	 * 
-	 * This operaation applies only to immediate children and does not propagate to subgroups.
+	 * This operation applies only to immediate children and does not propagate to subgroups.
 	 */
 	function reverse ():Void;
 	
@@ -462,7 +470,11 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	 * Sort the children in the group according to a particular key and ordering.
 	 * 
 	 * Call this function to sort the group according to a particular key value and order.
+	 * 
 	 * For example to depth sort Sprites for Zelda-style game you might call group.sort('y', Phaser.Group.SORT_ASCENDING) at the bottom of your State.update().
+	 * 
+	 * Internally this uses a standard JavaScript Array sort, so everything that applies there also applies here, including
+	 * alphabetical sorting, mixing strings and numbers, and Unicode sorting. See MDN for more details.
 	 */
 	function sort (?key:String = 'z', ?order:Int):Void;
 	
@@ -509,22 +521,88 @@ extern class Group extends phaser.pixi.display.DisplayObjectContainer {
 	
 	/**
 	 * Get the first display object that exists, or doesn't exist.
+	 * 
+	 * You can use the optional argument createIfNull to create a new Game Object if none matching your exists argument were found in this Group.
+	 * 
+	 * It works by calling Group.create passing it the parameters given to this method, and returning the new child.
+	 * 
+	 * If a child <em>was</em> found , createIfNull is false and you provided the additional arguments then the child
+	 * will be reset and/or have a new texture loaded on it. This is handled by Group.resetChild.
 	 */
-	function getFirstExists (?exists:Bool = true):Dynamic;
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:String, ?frame:String):Dynamic {})
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:String):Dynamic {})
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:String):Dynamic {})
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:String):Dynamic {})
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:String):Dynamic {})
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:String, ?frame:Float):Dynamic {})
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:Float):Dynamic {})
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:Float):Dynamic {})
+	@:overload(function (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:Float):Dynamic {})
+	function getFirstExists (?exists:Bool = true, ?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:Float):Dynamic;
 	
 	/**
 	 * Get the first child that is alive (child.alive === true).
 	 * 
-	 * This is handy for checking if everything has been wiped out, or choosing a squad leader, etc.
+	 * This is handy for choosing a squad leader, etc.
+	 * 
+	 * You can use the optional argument createIfNull to create a new Game Object if no alive ones were found in this Group.
+	 * 
+	 * It works by calling Group.create passing it the parameters given to this method, and returning the new child.
+	 * 
+	 * If a child <em>was</em> found , createIfNull is false and you provided the additional arguments then the child
+	 * will be reset and/or have a new texture loaded on it. This is handled by Group.resetChild.
 	 */
-	function getFirstAlive ():Dynamic;
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:String, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:String, ?frame:Float):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:Float):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:Float):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:Float):Dynamic {})
+	function getFirstAlive (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:Float):Dynamic;
 	
 	/**
 	 * Get the first child that is dead (child.alive === false).
 	 * 
-	 * This is handy for checking if everything has been wiped out, or choosing a squad leader, etc.
+	 * This is handy for checking if everything has been wiped out and adding to the pool as needed.
+	 * 
+	 * You can use the optional argument createIfNull to create a new Game Object if no dead ones were found in this Group.
+	 * 
+	 * It works by calling Group.create passing it the parameters given to this method, and returning the new child.
+	 * 
+	 * If a child <em>was</em> found , createIfNull is false and you provided the additional arguments then the child
+	 * will be reset and/or have a new texture loaded on it. This is handled by Group.resetChild.
 	 */
-	function getFirstDead ():Dynamic;
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:String, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:String):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:String, ?frame:Float):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:Float):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:Float):Dynamic {})
+	@:overload(function (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:Float):Dynamic {})
+	function getFirstDead (?createIfNull:Bool = false, ?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:Float):Dynamic;
+	
+	/**
+	 * Takes a child and if the x and y arguments are given it calls child.reset(x, y) on it.
+	 * 
+	 * If the key and optionally the frame arguments are given, it calls child.loadTexture(key, frame) on it.
+	 * 
+	 * The two operations are separate. For example if you just wish to load a new texture then pass null as the x and y values.
+	 */
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:String, ?frame:String):Dynamic {})
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:String):Dynamic {})
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:String):Dynamic {})
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:String):Dynamic {})
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:String):Dynamic {})
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:String, ?frame:Float):Dynamic {})
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:phaser.gameobjects.RenderTexture, ?frame:Float):Dynamic {})
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:phaser.gameobjects.BitmapData, ?frame:Float):Dynamic {})
+	@:overload(function (child:Dynamic, ?x:Float, ?y:Float, ?key:phaser.gameobjects.Video, ?frame:Float):Dynamic {})
+	function resetChild (child:Dynamic, ?x:Float, ?y:Float, ?key:phaser.pixi.textures.Texture, ?frame:Float):Dynamic;
 	
 	/**
 	 * Return the child at the top of this group.

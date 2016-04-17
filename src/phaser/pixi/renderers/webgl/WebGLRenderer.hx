@@ -14,7 +14,12 @@ extern class WebGLRenderer {
 	 * So no need for Sprite Batches or Sprite Clouds.
 	 * Don't forget to add the view to your DOM or you will not see anything :)
 	 */
-	function new (Number:Dynamic, Number:Dynamic, Object:Dynamic, HTMLCanvasElement:Dynamic, Boolean:Dynamic, Boolean:Dynamic, Boolean:Dynamic, Boolean:Dynamic, Number:Dynamic);
+	function new (Phaser:Dynamic);
+	
+	/**
+	 * A reference to the Phaser Game instance.
+	 */
+	var game:phaser.core.Game;
 	
 	/**
 	 * @property type
@@ -110,7 +115,7 @@ extern class WebGLRenderer {
 	var blendModeManager:Dynamic;
 	
 	/**
-	 * TODO remove
+	 * @property renderSession
 	 */
 	var renderSession:Dynamic;
 	

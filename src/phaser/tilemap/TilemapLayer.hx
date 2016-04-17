@@ -191,7 +191,7 @@ extern class TilemapLayer extends phaser.gameobjects.Sprite {
 	function resetTilesetCache ():Void;
 	
 	/**
-	 * This method will set the scale of the tilemap as well as update the underlying block data of this layer
+	 * This method will set the scale of the tilemap as well as update the underlying block data of this layer.
 	 */
 	function setScale (?xScale:Float = 1, ?yScale:Float):Void;
 	
