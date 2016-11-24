@@ -23,4 +23,10 @@ extern class DisplayObjectContainer extends phaser.pixi.display.DisplayObject {
 	 */
 	function getLocalBounds():phaser.geom.Rectangle;
 	
+	/**
+	 * Changes the position of an existing child in the display object container
+	 * @param	child The child DisplayObject instance for which you want to change the index number
+	 * @param	index  The resulting index number for the child display object
+	 */
+	function setChildIndex(child: phaser.pixi.display.DisplayObject, index:Int);
 }
