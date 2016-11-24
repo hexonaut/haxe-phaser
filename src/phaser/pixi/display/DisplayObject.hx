@@ -171,4 +171,28 @@ extern class DisplayObject {
 	 */
 	function toLocal (position:phaser.pixi.geom.Point, from:phaser.pixi.display.DisplayObject):phaser.pixi.geom.Point;
 	
+	/**
+	 * Adds a child to the container.
+	 */
+	function addChild(child:DisplayObject):DisplayObject;
+	
+	/**
+	 * Adds a child to the container at a specified index. If the index is out of bounds an error will be thrown
+	 */
+	function addChildAt(child:DisplayObject, index:Int):DisplayObject;
+	
+	/**
+	 * Returns the child at the specified index
+	 */
+	function getChildAt(index:Int) : DisplayObject;
+	
+	/**
+	 * Returns the index position of a child DisplayObject instance
+	 */
+	function getChildIndex(child:DisplayObject) : Int;
+	
+	/**
+	 * Removes a child from the container.
+	 */
+	function removeChild(child: DisplayObject) : DisplayObject;
 }
