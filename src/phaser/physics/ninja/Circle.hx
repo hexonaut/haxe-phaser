@@ -1,157 +1,144 @@
 package phaser.physics.ninja;
 
+/**
+* Ninja Physics Circle constructor.
+* Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
+*/
 @:native("Phaser.Physics.Ninja.Circle")
 extern class Circle {
+
+	/**
+	* Ninja Physics Circle constructor.
+	* Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
+	* 
+	* @param body The body that owns this shape.
+	* @param x The x coordinate to create this shape at.
+	* @param y The y coordinate to create this shape at.
+	* @param radius The radius of this Circle.
+	*/
+	function new(body:phaser.physics.ninja.Body, x:Float, y:Float, radius:Float);
+	
+	var COL_NONE:Float;
+	
+	var COL_AXIS:Float;
+	
+	var COL_OTHER:Float;
 	
 	/**
-	 * Ninja Physics Circle constructor.
-	 * Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
-	 */
-	function new (body:phaser.physics.ninja.Body, x:Float, y:Float, radius:Float);
-	
-	/**
-	 * A reference to the body that owns this shape.
-	 */
+	* A reference to the body that owns this shape.
+	*/
 	var body:phaser.physics.ninja.Body;
 	
 	/**
-	 * A reference to the physics system.
-	 */
-	var system:phaser.physics.ninja.World;
+	* All of the collision response handlers.
+	*/
+	var circleTileProjections:Dynamic;
+	
+	var oldPos:phaser.Point;
 	
 	/**
-	 * The position of this object.
-	 */
-	var pos:phaser.geom.Point;
+	* The height.
+	*/
+	var height:Float;
 	
 	/**
-	 * The position of this object in the previous update.
-	 */
-	var oldpos:phaser.geom.Point;
+	* The position of this object.
+	*/
+	var pos:phaser.Point;
 	
 	/**
-	 * The radius of this circle shape.
-	 */
+	* The radius of this circle shape.
+	*/
 	var radius:Float;
 	
 	/**
-	 * Half the width.
-	 */
-	var xw(default, null):Float;
+	* A reference to the physics system.
+	*/
+	var system:phaser.physics.Ninja;
+	
+	var type:Float;
 	
 	/**
-	 * Half the height.
-	 */
-	var yw(default, null):Float;
+	* The velocity of this object.
+	*/
+	var velocity:phaser.Point;
 	
 	/**
-	 * The width.
-	 */
-	var width(default, null):Float;
+	* The width.
+	*/
+	var width:Float;
 	
 	/**
-	 * The height.
-	 */
-	var height(default, null):Float;
+	* Half the width.
+	*/
+	var xw:Float;
 	
 	/**
-	 * Internal var.
-	 */
-	var oH:Float;
+	* Half the height.
+	*/
+	var yw:Float;
 	
 	/**
-	 * Internal var.
-	 */
-	var oV:Float;
+	* Collides this Circle with a Tile.
+	* 
+	* @param t The Tile involved in the collision.
+	* @return True if they collide, otherwise false.
+	*/
+	function collideCircleVsTile(tile:phaser.physics.ninja.Tile):Bool;
 	
 	/**
-	 * The velocity of this object.
-	 */
-	var velocity:phaser.geom.Point;
+	* Collides this Circle against the world bounds.
+	*/
+	function collideWorldBounds():Void;
 	
 	/**
-	 * All of the collision response handlers.
-	 */
-	var circleTileProjections:Dynamic;
+	* Destroys this Circle's reference to Body and System
+	*/
+	function destroy():Void;
+	
+	function distance(dest:Float, ?round:Bool):Float;
 	
 	/**
-	 * Updates this Circles position.
-	 */
-	function integrate ():Void;
+	* Updates this Circles position.
+	*/
+	function integrate():Void;
 	
 	/**
-	 * Process a world collision and apply the resulting forces.
-	 */
-	function reportCollisionVsWorld (px:Float, py:Float, dx:Float, dy:Float, obj:Float):Void;
+	* Render this circle for debugging purposes.
+	* 
+	* @param context The context to render to.
+	* @param xOffset X offset from circle's position to render at.
+	* @param yOffset Y offset from circle's position to render at.
+	* @param color color of the debug shape to be rendered. (format is css color string).
+	* @param filled Render the shape as solid (true) or hollow (false).
+	*/
+	function render(context:Dynamic, xOffset:Float, yOffset:Float, color:String, filled:Bool):Void;
 	
 	/**
-	 * Collides this Circle against the world bounds.
-	 */
-	function collideWorldBounds ():Void;
+	* Process a world collision and apply the resulting forces.
+	* 
+	* @param px The tangent velocity
+	* @param py The tangent velocity
+	* @param dx Collision normal
+	* @param dy Collision normal
+	* @param obj Object this Circle collided with
+	*/
+	function reportCollisionVsWorld(px:Float, py:Float, dx:Float, dy:Float, obj:Dynamic):Void;
+	
+	function reportCollisionVsBody(px:Float, py:Float, dx:Float, dy:Float, obj:Dynamic):Void;
 	
 	/**
-	 * Collides this Circle with a Tile.
-	 */
-	function collideCircleVsTile (t:phaser.physics.ninja.Tile):Bool;
-	
-	/**
-	 * Resolves tile collision.
-	 */
-	function resolveCircleTile (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves Full tile collision.
-	 */
-	function projCircle_Full (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves 45 Degree tile collision.
-	 */
-	function projCircle_45Deg (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves Concave tile collision.
-	 */
-	function projCircle_Concave (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves Convex tile collision.
-	 */
-	function projCircle_Convex (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves Half tile collision.
-	 */
-	function projCircle_Half (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves 22 Degree tile collision.
-	 */
-	function projCircle_22DegS (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves 22 Degree tile collision.
-	 */
-	function projCircle_22DegB (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves 67 Degree tile collision.
-	 */
-	function projCircle_67DegS (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Resolves 67 Degree tile collision.
-	 */
-	function projCircle_67DegB (x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Float;
-	
-	/**
-	 * Destroys this Circle's reference to Body and System
-	 */
-	function destroy ():Void;
-	
-	/**
-	 * Render this circle for debugging purposes.
-	 */
-	function render (context:Dynamic, xOffset:Float, yOffset:Float, color:String, filled:Bool):Void;
+	* Resolves tile collision.
+	* 
+	* @param x Penetration depth on the x axis.
+	* @param y Penetration depth on the y axis.
+	* @param oH Grid / voronoi region.
+	* @param oV Grid / voronoi region.
+	* @param obj The Circle involved in the collision.
+	* @param t The Tile involved in the collision.
+	* @return The result of the collision.
+	*/
+	function resolveCircleTile(x:Float, y:Float, oH:Float, oV:Float, obj:phaser.physics.ninja.Circle, t:phaser.physics.ninja.Tile):Bool;
 	
 }
+

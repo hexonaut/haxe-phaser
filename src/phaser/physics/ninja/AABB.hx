@@ -1,167 +1,160 @@
 package phaser.physics.ninja;
 
+/**
+* Ninja Physics AABB constructor.
+* Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
+*/
 @:native("Phaser.Physics.Ninja.AABB")
 extern class AABB {
+
+	/**
+	* Ninja Physics AABB constructor.
+	* Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
+	* 
+	* @param body The body that owns this shape.
+	* @param x The x coordinate to create this shape at.
+	* @param y The y coordinate to create this shape at.
+	* @param width The width of this AABB.
+	* @param height The height of this AABB.
+	*/
+	function new(body:phaser.physics.ninja.Body, x:Float, y:Float, width:Float, height:Float);
+	
+	static var COL_NONE:Float;
+	
+	static var COL_AXIS:Float;
+	
+	static var COL_OTHER:Float;
 	
 	/**
-	 * Ninja Physics AABB constructor.
-	 * Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
-	 */
-	function new (body:phaser.physics.ninja.Body, x:Float, y:Float, width:Float, height:Float);
-	
-	/**
-	 * A reference to the body that owns this shape.
-	 */
-	var body:phaser.physics.ninja.Body;
-	
-	/**
-	 * A reference to the physics system.
-	 */
-	var system:phaser.physics.ninja.World;
-	
-	/**
-	 * The position of this object.
-	 */
-	var pos:phaser.geom.Point;
-	
-	/**
-	 * The position of this object in the previous update.
-	 */
-	var oldpos:phaser.geom.Point;
-	
-	/**
-	 * Half the width.
-	 */
-	var xw(default, null):Float;
-	
-	/**
-	 * Half the height.
-	 */
-	var yw(default, null):Float;
-	
-	/**
-	 * The width.
-	 */
-	var width(default, null):Float;
-	
-	/**
-	 * The height.
-	 */
-	var height(default, null):Float;
-	
-	/**
-	 * Internal var.
-	 */
-	var oH:Float;
-	
-	/**
-	 * Internal var.
-	 */
-	var oV:Float;
-	
-	/**
-	 * The velocity of this object.
-	 */
-	var velocity:phaser.geom.Point;
-	
-	/**
-	 * All of the collision response handlers.
-	 */
+	* All of the collision response handlers.
+	*/
 	var aabbTileProjections:Dynamic;
 	
 	/**
-	 * Updates this AABBs position.
-	 */
-	function integrate ():Void;
+	* A reference to the body that owns this shape.
+	*/
+	var body:phaser.physics.ninja.Body;
 	
 	/**
-	 * Process a collision partner-agnostic collision response and apply the resulting forces.
-	 */
-	function reportCollision (px:Float, py:Float, dx:Float, dy:Float):Void;
+	* The height.
+	*/
+	var height:Float;
+	
+	var oldPos:phaser.Point;
 	
 	/**
-	 * Process a world collision and apply the resulting forces.
-	 */
-	function reportCollisionVsWorld (px:Float, py:Float, dx:Float, dy:Float):Void;
+	* The position of this object.
+	*/
+	var pos:phaser.Point;
 	
 	/**
-	 * Process a body collision and apply the resulting forces. Still very much WIP and doesn't work fully. Feel free to fix!
-	 */
-	function reportCollisionVsBody (px:Float, py:Float, dx:Float, dy:Float, obj:Float):Void;
+	* A reference to the physics system.
+	*/
+	var system:phaser.physics.Ninja;
 	
 	/**
-	 * Collides this AABB against the world bounds.
-	 */
-	function collideWorldBounds ():Void;
+	* The width.
+	*/
+	var width:Float;
 	
 	/**
-	 * Collides this AABB against a AABB.
-	 */
-	function collideAABBVsAABB (aabb:phaser.physics.ninja.AABB):Void;
+	* The velocity of this object.
+	*/
+	var velocity:phaser.Point;
 	
 	/**
-	 * Collides this AABB against a Tile.
-	 */
-	function collideAABBVsTile (tile:phaser.physics.ninja.Tile):Void;
+	* Half the width.
+	*/
+	var xw:Float;
 	
 	/**
-	 * Resolves tile collision.
-	 */
-	function resolveTile (x:Float, y:Float, body:phaser.physics.ninja.AABB, tile:phaser.physics.ninja.Tile):Bool;
+	* Half the height.
+	*/
+	var yw:Float;
 	
 	/**
-	 * Resolves Full tile collision.
-	 */
-	function projAABB_Full (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Collides this AABB against the world bounds.
+	*/
+	function collideWorldBounds():Void;
 	
 	/**
-	 * Resolves Half tile collision.
-	 */
-	function projAABB_Half (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Collides this AABB against a AABB.
+	* 
+	* @param aabb The AABB to collide against.
+	*/
+	function collideAABBVsAABB(aabb:phaser.physics.ninja.AABB):Bool;
 	
 	/**
-	 * Resolves 45 Degree tile collision.
-	 */
-	function projAABB_45Deg (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Collides this AABB against a Tile.
+	* 
+	* @param tile The Tile to collide against.
+	*/
+	function collideAABBVsTile(tile:phaser.physics.ninja.Tile):Bool;
 	
 	/**
-	 * Resolves 22 Degree tile collision.
-	 */
-	function projAABB_22DegS (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Destroys this AABB's reference to Body and System
+	*/
+	function destroy():Void;
 	
 	/**
-	 * Resolves 22 Degree tile collision.
-	 */
-	function projAABB_22DegB (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Updates this AABBs position.
+	*/
+	function integrate():Void;
 	
 	/**
-	 * Resolves 67 Degree tile collision.
-	 */
-	function projAABB_67DegS (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Render this AABB for debugging purposes.
+	* 
+	* @param context The context to render to.
+	* @param xOffset X offset from AABB's position to render at.
+	* @param yOffset Y offset from AABB's position to render at.
+	* @param color color of the debug shape to be rendered. (format is css color string).
+	* @param filled Render the shape as solid (true) or hollow (false).
+	*/
+	function render(context:Dynamic, xOffset:Float, yOffset:Float, color:String, filled:Bool):Void;
 	
 	/**
-	 * Resolves 67 Degree tile collision.
-	 */
-	function projAABB_67DegB (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Process a collision partner-agnostic collision response and apply the resulting forces.
+	* 
+	* @param px The tangent velocity
+	* @param py The tangent velocity
+	* @param dx Collision normal
+	* @param dy Collision normal
+	*/
+	function reportCollision(px:Float, py:Float, dx:Float, dy:Float):Void;
 	
 	/**
-	 * Resolves Convex tile collision.
-	 */
-	function projAABB_Convex (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Process a world collision and apply the resulting forces.
+	* 
+	* @param px The tangent velocity
+	* @param py The tangent velocity
+	* @param dx Collision normal
+	* @param dy Collision normal
+	*/
+	function reportCollisionVsWorld(px:Float, py:Float, dx:Float, dy:Float, obj:Dynamic):Void;
 	
 	/**
-	 * Resolves Concave tile collision.
-	 */
-	function projAABB_Concave (x:Float, y:Float, obj:phaser.physics.ninja.AABB, t:phaser.physics.ninja.Tile):Float;
+	* Process a body collision and apply the resulting forces. Still very much WIP and doesn't work fully. Feel free to fix!
+	* 
+	* @param px The tangent velocity
+	* @param py The tangent velocity
+	* @param dx Collision normal
+	* @param dy Collision normal
+	* @param obj Object this AABB collided with
+	*/
+	function reportCollisionVsBody(px:Float, py:Float, dx:Float, dy:Float, obj:Dynamic):Void;
 	
 	/**
-	 * Destroys this AABB's reference to Body and System
-	 */
-	function destroy ():Void;
+	* Resolves tile collision.
+	* 
+	* @param x Penetration depth on the x axis.
+	* @param y Penetration depth on the y axis.
+	* @param body The AABB involved in the collision.
+	* @param tile The Tile involved in the collision.
+	* @return True if the collision was processed, otherwise false.
+	*/
+	function resolveTile(x:Float, y:Float, body:phaser.physics.ninja.AABB, tile:phaser.physics.ninja.Tile):Bool;
 	
-	/**
-	 * Render this AABB for debugging purposes.
-	 */
-	function render (context:Dynamic, xOffset:Float, yOffset:Float, color:String, filled:Bool):Void;
+	function reverse():Void;
 	
 }
+

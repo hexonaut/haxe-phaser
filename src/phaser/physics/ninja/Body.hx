@@ -1,240 +1,246 @@
 package phaser.physics.ninja;
 
+/**
+* The Physics Body is linked to a single Sprite. All physics operations should be performed against the body rather than
+* the Sprite itself. For example you can set the velocity, bounce values etc all on the Body.
+*/
 @:native("Phaser.Physics.Ninja.Body")
 extern class Body {
+
+	/**
+	* The Physics Body is linked to a single Sprite. All physics operations should be performed against the body rather than
+	* the Sprite itself. For example you can set the velocity, bounce values etc all on the Body.
+	* 
+	* @param system The physics system this Body belongs to.
+	* @param sprite The Sprite object this physics body belongs to.
+	* @param type The type of Ninja shape to create. 1 = AABB, 2 = Circle or 3 = Tile. - Default: 1
+	* @param id If this body is using a Tile shape, you can set the Tile id here, i.e. Phaser.Physics.Ninja.Tile.SLOPE_45DEGpn, Phaser.Physics.Ninja.Tile.CONVEXpp, etc. - Default: 1
+	* @param radius If this body is using a Circle shape this controls the radius. - Default: 16
+	* @param x The x coordinate of this Body. This is only used if a sprite is not provided.
+	* @param y The y coordinate of this Body. This is only used if a sprite is not provided.
+	* @param width The width of this Body. This is only used if a sprite is not provided.
+	* @param height The height of this Body. This is only used if a sprite is not provided.
+	*/
+	function new(system:phaser.physics.Ninja, sprite:phaser.Sprite, ?type:Float, ?id:Float, ?radius:Float, ?x:Float, ?y:Float, ?width:Float, ?height:Float);
 	
 	/**
-	 * The Physics Body is linked to a single Sprite. All physics operations should be performed against the body rather than
-	 * the Sprite itself. For example you can set the velocity, bounce values etc all on the Body.
-	 */
-	function new (system:phaser.physics.ninja.World, sprite:phaser.gameobjects.Sprite, ?type:Float = 1, ?id:Float = 1, ?radius:Float = 16, ?x:Float = 0, ?y:Float = 0, ?width:Float = 0, ?height:Float = 0);
-	
-	/**
-	 * Reference to the parent Sprite.
-	 */
-	var sprite:phaser.gameobjects.Sprite;
-	
-	/**
-	 * Local reference to game.
-	 */
-	var game:phaser.core.Game;
-	
-	/**
-	 * The type of physics system this body belongs to.
-	 */
-	var type:Float;
-	
-	/**
-	 * The parent physics system.
-	 */
-	var system:phaser.physics.ninja.World;
-	
-	/**
-	 * The AABB object this body is using for collision.
-	 */
+	* The AABB object this body is using for collision.
+	*/
 	var aabb:phaser.physics.ninja.AABB;
 	
 	/**
-	 * The Tile object this body is using for collision.
-	 */
-	var tile:phaser.physics.ninja.Tile;
+	* The angle of this Body
+	*/
+	var angle:Float;
 	
 	/**
-	 * The Circle object this body is using for collision.
-	 */
-	var circle:phaser.physics.ninja.Circle;
+	* The bottom value of this Body (same as Body.y + Body.height)
+	*/
+	var bottom:Float;
 	
 	/**
-	 * A local reference to the body shape.
-	 */
-	var shape:Dynamic;
-	
-	/**
-	 * The drag applied to this object as it moves.
-	 */
-	var drag:Float;
-	
-	/**
-	 * The friction applied to this object as it moves.
-	 */
-	var friction:Float;
-	
-	/**
-	 * How much of the world gravity should be applied to this object? 1 = all of it, 0.5 = 50%, etc.
-	 */
-	var gravityScale:Float;
-	
-	/**
-	 * The bounciness of this object when it collides. A value between 0 and 1. We recommend setting it to 0.999 to avoid jittering.
-	 */
+	* The bounciness of this object when it collides. A value between 0 and 1. We recommend setting it to 0.999 to avoid jittering.
+	* Default: 0.3
+	*/
 	var bounce:Float;
 	
 	/**
-	 * The velocity in pixels per second sq. of the Body.
-	 */
-	var velocity:phaser.geom.Point;
+	* Set the checkCollision properties to control which directions collision is processed for this Body.
+	* For example checkCollision.up = false means it won't collide when the collision happened while moving up. An object containing allowed collision.
+	*/
+	var checkCollision:phaser.physics.arcade.FaceChoices;
 	
 	/**
-	 * A const reference to the direction the Body is traveling or facing.
-	 */
-	var facing:Float;
+	* The Circle object this body is using for collision.
+	*/
+	var circle:phaser.physics.ninja.Circle;
 	
 	/**
-	 * An immovable Body will not receive any impacts from other bodies. Not fully implemented.
-	 */
-	var immovable:Bool;
-	
-	/**
-	 * A Body can be set to collide against the World bounds automatically and rebound back into the World if this is set to true. Otherwise it will leave the World.
-	 */
+	* A Body can be set to collide against the World bounds automatically and rebound back into the World if this is set to true. Otherwise it will leave the World. Should the Body collide with the World bounds?
+	*/
 	var collideWorldBounds:Bool;
 	
 	/**
-	 * Set the checkCollision properties to control which directions collision is processed for this Body.
-	 * For example checkCollision.up = false means it won't collide when the collision happened while moving up.
-	 */
-	var checkCollision:Dynamic;
+	* The drag applied to this object as it moves.
+	* Default: 1
+	*/
+	var drag:Float;
 	
 	/**
-	 * This object is populated with boolean values when the Body collides with another.
-	 * touching.up = true means the collision happened to the top of this Body for example.
-	 */
-	var touching:Dynamic;
+	* A const reference to the direction the Body is traveling or facing.
+	*/
+	var facing:Float;
 	
 	/**
-	 * This object is populated with previous touching values from the bodies previous collision.
-	 */
-	var wasTouching:Dynamic;
+	* The friction applied to this object as it moves.
+	* Default: 0.05
+	*/
+	var friction:Float;
 	
 	/**
-	 * The maximum speed this body can travel at (taking drag and friction into account)
-	 */
+	* Local reference to game.
+	*/
+	var game:phaser.Game;
+	
+	/**
+	* How much of the world gravity should be applied to this object? 1 = all of it, 0.5 = 50%, etc.
+	* Default: 1
+	*/
+	var gravityScale:Float;
+	
+	/**
+	* The height of this Body
+	*/
+	var height:Float;
+	
+	/**
+	* An immovable Body will not receive any impacts from other bodies. Not fully implemented.
+	*/
+	var immovable:Bool;
+	
+	/**
+	* The maximum speed this body can travel at (taking drag and friction into account)
+	* Default: 8
+	*/
 	var maxSpeed:Float;
 	
 	/**
-	 * Internal method.
-	 */
-	function preUpdate ():Void;
+	* The right value of this Body (same as Body.x + Body.width)
+	*/
+	var right:Float;
 	
 	/**
-	 * Internal method.
-	 */
-	function postUpdate ():Void;
+	* Reference to the parent Sprite.
+	*/
+	var sprite:phaser.Sprite;
 	
 	/**
-	 * Stops all movement of this body.
-	 */
-	function setZeroVelocity ():Void;
+	* The parent physics system.
+	*/
+	var system:phaser.physics.Ninja;
 	
 	/**
-	 * Moves the Body forwards based on its current angle and the given speed.
-	 * The speed is represented in pixels per second. So a value of 100 would move 100 pixels in 1 second (1000ms).
-	 */
-	function moveTo (speed:Float, angle:Float):Void;
+	* The Tile object this body is using for collision.
+	*/
+	var tile:phaser.physics.ninja.Tile;
 	
 	/**
-	 * Moves the Body backwards based on its current angle and the given speed.
-	 * The speed is represented in pixels per second. So a value of 100 would move 100 pixels in 1 second (1000ms).
-	 */
-	function moveBackward (speed:Float, angle:Float):Void;
+	* This object is populated with boolean values when the Body collides with another.
+	* touching.up = true means the collision happened to the top of this Body for example. An object containing touching results.
+	*/
+	var touching:phaser.physics.arcade.FaceChoices;
 	
 	/**
-	 * If this Body is dynamic then this will move it to the left by setting its x velocity to the given speed.
-	 * The speed is represented in pixels per second. So a value of 100 would move 100 pixels in 1 second (1000ms).
-	 */
-	function moveLeft (speed:Float):Void;
+	* The type of physics system this body belongs to.
+	*/
+	var type:Float;
 	
 	/**
-	 * If this Body is dynamic then this will move it to the right by setting its x velocity to the given speed.
-	 * The speed is represented in pixels per second. So a value of 100 would move 100 pixels in 1 second (1000ms).
-	 */
-	function moveRight (speed:Float):Void;
+	* A local reference to the body shape.
+	*/
+	var shape:Dynamic;
 	
 	/**
-	 * If this Body is dynamic then this will move it up by setting its y velocity to the given speed.
-	 * The speed is represented in pixels per second. So a value of 100 would move 100 pixels in 1 second (1000ms).
-	 */
-	function moveUp (speed:Float):Void;
+	* The speed of this Body
+	*/
+	var speed:Float;
 	
 	/**
-	 * If this Body is dynamic then this will move it down by setting its y velocity to the given speed.
-	 * The speed is represented in pixels per second. So a value of 100 would move 100 pixels in 1 second (1000ms).
-	 */
-	function moveDown (speed:Float):Void;
+	* The velocity in pixels per second sq. of the Body.
+	*/
+	var velocity:phaser.Point;
 	
 	/**
-	 * Resets all Body values and repositions on the Sprite.
-	 */
-	function reset ():Void;
+	* This object is populated with previous touching values from the bodies previous collision. An object containing previous touching results.
+	*/
+	var wasTouching:phaser.physics.arcade.FaceChoices;
 	
 	/**
-	 * Returns the absolute delta x value.
-	 */
-	function deltaAbsX ():Float;
+	* The width of this Body
+	*/
+	var width:Float;
 	
 	/**
-	 * Returns the absolute delta y value.
-	 */
-	function deltaAbsY ():Float;
-	
-	/**
-	 * Returns the delta x value. The difference between Body.x now and in the previous step.
-	 */
-	function deltaX ():Float;
-	
-	/**
-	 * Returns the delta y value. The difference between Body.y now and in the previous step.
-	 */
-	function deltaY ():Float;
-	
-	/**
-	 * Destroys this body's reference to the sprite and system, and destroys its shape.
-	 */
-	function destroy ():Void;
-	
-	/**
-	 * @name Phaser.Physics.Ninja.Body#x
-	 */
+	* The x position.
+	*/
 	var x:Float;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Body#y
-	 */
+	* The y position.
+	*/
 	var y:Float;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Body#width
-	 */
-	var width(default, null):Float;
+	* Returns the absolute delta x value.
+	* 
+	* @return The absolute delta value.
+	*/
+	function deltaAbsX():Float;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Body#height
-	 */
-	var height(default, null):Float;
+	* Returns the absolute delta y value.
+	* 
+	* @return The absolute delta value.
+	*/
+	function deltaAbsY():Float;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Body#bottom
-	 */
-	var bottom(default, null):Float;
+	* Returns the delta x value. The difference between Body.x now and in the previous step.
+	* 
+	* @return The delta value. Positive if the motion was to the right, negative if to the left.
+	*/
+	function deltaX():Float;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Body#right
-	 */
-	var right(default, null):Float;
+	* Returns the delta y value. The difference between Body.y now and in the previous step.
+	* 
+	* @return The delta value. Positive if the motion was downwards, negative if upwards.
+	*/
+	function deltaY():Float;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Body#speed
-	 */
-	var speed(default, null):Float;
+	* Destroys this body's reference to the sprite and system, and destroys its shape.
+	*/
+	function destroy():Void;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Body#angle
-	 */
-	var angle(default, null):Float;
+	* Stops all movement of this body.
+	*/
+	function setZeroVelocity():Void;
+	
+	function moveTo(speed:Float, angle:Float):Void;
+	
+	function moveFrom(speed:Float, angle:Float):Void;
+	
+	function moveLeft(speed:Float):Void;
+	
+	function moveRight(speed:Float):Void;
+	
+	function moveUp(speed:Float):Void;
+	
+	function moveDown(speed:Float):Void;
+	
+	function poseUpdate():Void;
 	
 	/**
-	 * Render Sprite's Body.
-	 */
-	function render (context:Dynamic, body:phaser.physics.ninja.Body, ?color:String = 'rgba(0,255,0,0.4)', ?filled:Bool = true):Void;
+	* Internal method.
+	*/
+	function preUpdate():Void;
+	
+	/**
+	* Render Sprite's Body.
+	* 
+	* @param context The context to render to.
+	* @param body The Body to render.
+	* @param color color of the debug shape to be rendered. (format is css color string). - Default: 'rgba(0,255,0,0.4)'
+	* @param filled Render the shape as a filled (default, true) or a stroked (false) - Default: true
+	*/
+	function render(context:Dynamic, body:phaser.physics.ninja.Body, ?color:String, ?filled:Bool):Void;
+	
+	/**
+	* Resets all Body values and repositions on the Sprite.
+	*/
+	function reset():Void;
 	
 }
+
