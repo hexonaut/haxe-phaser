@@ -1,4 +1,4 @@
-package ;
+package pixi;
 
 import js.html.webgl.RenderingContext as WebGLRenderingContext;
 
