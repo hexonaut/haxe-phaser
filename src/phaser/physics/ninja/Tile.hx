@@ -1,147 +1,149 @@
 package phaser.physics.ninja;
 
+/**
+* Ninja Physics Tile constructor.
+* A Tile is defined by its width, height and type. It's type can include slope data, such as 45 degree slopes, or convex slopes.
+* Understand that for any type including a slope (types 2 to 29) the Tile must be SQUARE, i.e. have an equal width and height.
+* Also note that as Tiles are primarily used for levels they have gravity disabled and world bounds collision disabled by default.
+* 
+* Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
+*/
 @:native("Phaser.Physics.Ninja.Tile")
 extern class Tile {
+
+	/**
+	* Ninja Physics Tile constructor.
+	* A Tile is defined by its width, height and type. It's type can include slope data, such as 45 degree slopes, or convex slopes.
+	* Understand that for any type including a slope (types 2 to 29) the Tile must be SQUARE, i.e. have an equal width and height.
+	* Also note that as Tiles are primarily used for levels they have gravity disabled and world bounds collision disabled by default.
+	* 
+	* Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
+	* 
+	* @param body The body that owns this shape.
+	* @param x The x coordinate to create this shape at.
+	* @param y The y coordinate to create this shape at.
+	* @param width The width of this AABB.
+	* @param height The height of this AABB.
+	* @param type The type of Ninja shape to create. 1 = AABB, 2 = Circle or 3 = Tile. - Default: 1
+	*/
+	function new(body:phaser.physics.ninja.Body, x:Float, y:Float, width:Float, height:Float, ?type:Float);
 	
 	/**
-	 * Ninja Physics Tile constructor.
-	 * A Tile is defined by its width, height and type. It's type can include slope data, such as 45 degree slopes, or convex slopes.
-	 * Understand that for any type including a slope (types 2 to 29) the Tile must be SQUARE, i.e. have an equal width and height.
-	 * Also note that as Tiles are primarily used for levels they have gravity disabled and world bounds collision disabled by default.
-	 * 
-	 * Note: This class could be massively optimised and reduced in size. I leave that challenge up to you.
-	 */
-	function new (body:phaser.physics.ninja.Body, x:Float, y:Float, width:Float, height:Float, ?type:Float = 1);
-	
-	/**
-	 * A reference to the body that owns this shape.
-	 */
+	* A reference to the body that owns this shape.
+	*/
 	var body:phaser.physics.ninja.Body;
 	
 	/**
-	 * A reference to the physics system.
-	 */
-	var system:phaser.physics.ninja.World;
+	* The bottom value of this Body (same as Body.y + Body.height)
+	*/
+	var bottom:Float;
+	
+	var flipped:Bool;
 	
 	/**
-	 * The ID of this Tile.
-	 */
-	var id(default, null):Float;
+	* The height.
+	*/
+	var height:Float;
 	
 	/**
-	 * The type of this Tile.
-	 */
-	var type(default, null):Float;
+	* The ID of this Tile.
+	*/
+	var id:Float;
 	
 	/**
-	 * The position of this object.
-	 */
-	var pos:phaser.geom.Point;
+	* The position of this object in the previous update.
+	*/
+	var oldpos:phaser.Point;
 	
 	/**
-	 * The position of this object in the previous update.
-	 */
-	var oldpos:phaser.geom.Point;
+	* The position of this object.
+	*/
+	var pos:phaser.Point;
 	
 	/**
-	 * Half the width.
-	 */
-	var xw(default, null):Float;
+	* The right value of this Body (same as Body.x + Body.width)
+	*/
+	var right:Float;
+	
+	var rotation:Float;
 	
 	/**
-	 * Half the height.
-	 */
-	var yw(default, null):Float;
+	* A reference to the physics system.
+	*/
+	var system:phaser.physics.Ninja;
 	
 	/**
-	 * The width.
-	 */
-	var width(default, null):Float;
+	* The type of this Tile.
+	*/
+	var type:phaser.physics.ninja.TileType;
 	
 	/**
-	 * The height.
-	 */
-	var height(default, null):Float;
+	* The velocity of this object.
+	*/
+	var velocity:phaser.Point;
 	
 	/**
-	 * The velocity of this object.
-	 */
-	var velocity:phaser.geom.Point;
+	* The width.
+	*/
+	var width:Float;
 	
 	/**
-	 * Internal var.
-	 */
-	var signx:Float;
+	* Half the width.
+	*/
+	var xw:Float;
 	
 	/**
-	 * Internal var.
-	 */
-	var signy:Float;
+	* Half the height.
+	*/
+	var yw:Float;
 	
 	/**
-	 * Internal var.
-	 */
-	var sx:Float;
-	
-	/**
-	 * Internal var.
-	 */
-	var sy:Float;
-	
-	/**
-	 * Updates this objects position.
-	 */
-	function integrate ():Void;
-	
-	/**
-	 * Tiles cannot collide with the world bounds, it's up to you to keep them where you want them. But we need this API stub to satisfy the Body.
-	 */
-	function collideWorldBounds ():Void;
-	
-	/**
-	 * Process a world collision and apply the resulting forces.
-	 */
-	function reportCollisionVsWorld (px:Float, py:Float, dx:Float, dy:Float, obj:Float):Void;
-	
-	/**
-	 * Tiles cannot collide with the world bounds, it's up to you to keep them where you want them. But we need this API stub to satisfy the Body.
-	 */
-	function setType (id:Float):Void;
-	
-	/**
-	 * Sets this tile to be empty.
-	 */
-	function clear ():Void;
-	
-	/**
-	 * Destroys this Tiles reference to Body and System.
-	 */
-	function destroy ():Void;
-	
-	/**
-	 * This converts a tile from implicitly-defined (via id), to explicit (via properties).
-	 * Don't call directly, instead of setType.
-	 */
-	function updateType ():Void;
-	
-	/**
-	 * @name Phaser.Physics.Ninja.Tile#x
-	 */
+	* The x position.
+	*/
 	var x:Float;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Tile#y
-	 */
+	* The y position.
+	*/
 	var y:Float;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Tile#bottom
-	 */
-	var bottom(default, null):Float;
+	* Sets this tile to be empty.
+	*/
+	function clear():Void;
 	
 	/**
-	 * @name Phaser.Physics.Ninja.Tile#right
-	 */
-	var right(default, null):Float;
+	* Tiles cannot collide with the world bounds, it's up to you to keep them where you want them. But we need this API stub to satisfy the Body.
+	*/
+	function collideWorldBounds():Void;
+	
+	/**
+	* Destroys this Tiles reference to Body and System.
+	*/
+	function destroy():Void;
+	
+	/**
+	* Updates this objects position.
+	*/
+	function integrate():Void;
+	
+	/**
+	* Process a world collision and apply the resulting forces.
+	* 
+	* @param px The tangent velocity
+	* @param py The tangent velocity
+	* @param dx Collision normal
+	* @param dy Collision normal
+	* @param obj Object this Tile collided with
+	*/
+	function reportCollisionVsWorld(px:Float, py:Float, dx:Float, dy:Float, obj:Dynamic):Void;
+	
+	/**
+	* Tiles cannot collide with the world bounds, it's up to you to keep them where you want them. But we need this API stub to satisfy the Body.
+	* 
+	* @param id The type of Tile this will use, i.e. Phaser.Physics.Ninja.Tile.SLOPE_45DEGpn, Phaser.Physics.Ninja.Tile.CONVEXpp, etc.
+	*/
+	function setType(id:Float):Float;
 	
 }
+
